@@ -1,6 +1,7 @@
 import { fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
+import { createRequire } from 'module';
 import _import from 'eslint-plugin-import';
 import jsxA11y from 'eslint-plugin-jsx-a11y';
 import prettier from 'eslint-plugin-prettier';
@@ -9,6 +10,8 @@ import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+const require = createRequire(import.meta.url);
+const nextPlugin = require('@next/eslint-plugin-next');
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
@@ -24,6 +27,7 @@ export default [
     )[0],
 
     plugins: {
+      '@next/next': nextPlugin,
       import: fixupPluginRules(_import),
       'jsx-a11y': jsxA11y,
       prettier,
