@@ -84,6 +84,7 @@
     "@storybook/react": "^8.4.5",
     "@storybook/test": "^8.4.5",
     "@storybook/theming": "^8.4.5",
+    "@types/node": "^25.6.0",
     "@types/react": "19.1.10",
     "@types/react-modal-image": "^2.6.3",
     "@types/sanitize-html": "^2.9.4",
@@ -118,7 +119,12 @@
     "stylelint-order": "^6.0.4"
   },
   "pnpm": {
-    "onlyBuiltDependencies": ["core-js-pure", "esbuild", "sharp", "unrs-resolver"],
+    "onlyBuiltDependencies": [
+      "core-js-pure",
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ],
     "overrides": {
       "@types/react": "19.1.10",
       "google-auth-library": "^9.15.1",
