@@ -17,6 +17,7 @@ export const links = (): StylesheetLink[] => {
 const SLImage = ({
   data,
   loadingStrategy = 'lazy',
+  priority = false,
   modMaximisable,
   modWithShadow,
   modRounded,
@@ -84,7 +85,7 @@ const SLImage = ({
             blurDataURL={`data:image/svg+xml;base64,${btoa(
               `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${data.width} ${data.height}"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>`,
             )}`}
-            loading={loadingStrategy}
+            {...(priority ? { priority: true } : { loading: loadingStrategy })}
           />
         </div>
 
