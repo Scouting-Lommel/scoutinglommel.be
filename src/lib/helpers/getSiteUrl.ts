@@ -18,7 +18,12 @@ export async function getSiteUrl(req?: NextRequest): Promise<string> {
     return req.nextUrl.origin;
   }
 
-  // Try to get the URL from request headers (available in server components)
+  // Prefer the env var so static pages don't opt into dynamic rendering by calling headers()
+  if (process.env.SITE_URL) {
+    return process.env.SITE_URL;
+  }
+
+  // Fall back to request headers (this opts the route into dynamic rendering)
   try {
     const headersList = await headers();
     const host = headersList.get('host');
@@ -29,14 +34,7 @@ export async function getSiteUrl(req?: NextRequest): Promise<string> {
     }
   } catch {
     // headers() may not be available in all contexts (e.g., static generation)
-    // Fall through to environment variable
   }
 
-  // Fallback to environment variable
-  if (process.env.SITE_URL) {
-    return process.env.SITE_URL;
-  }
-
-  // Last resort fallback (shouldn't happen in production)
   return 'http://localhost:3000';
 }

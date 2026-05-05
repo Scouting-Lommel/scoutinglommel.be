@@ -1,12 +1,8 @@
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Typography from '@/components/atoms/Typography';
 import { Paragraph as ParagraphProps } from './types';
-import styles from './Paragraph.css';
+import './Paragraph.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Paragraph = ({ title, content }: ParagraphProps): JSX.Element => {
   return (

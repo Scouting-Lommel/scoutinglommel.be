@@ -4,15 +4,11 @@ import cn from 'classnames';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState, useRef, useEffect, useCallback, type JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Icon from '@/components/atoms/Icon';
 import Dropdown from '@/components/molecules/Dropdown';
 import { NavItem as NavItemProps } from './types';
-import styles from './NavItem.css';
+import './NavItem.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const NavItem = ({
   itemKey,

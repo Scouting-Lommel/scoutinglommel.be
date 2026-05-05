@@ -1,16 +1,12 @@
 import cn from 'classnames';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Button from '@/components/atoms/Button';
 import Typography from '@/components/atoms/Typography';
 import AutoBreadcrumbs from '@/components/molecules/Breadcrumbs';
 import YearTheme from '@/components/molecules/YearTheme';
 import { Hero as HeroProps } from './types';
-import styles from './Hero.css';
+import './Hero.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Hero = ({
   title,

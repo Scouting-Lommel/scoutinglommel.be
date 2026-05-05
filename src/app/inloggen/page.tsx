@@ -2,7 +2,7 @@
 
 import { useSearchParams } from 'next/navigation';
 import { getProviders, signIn } from 'next-auth/react';
-import { useEffect, useState, type JSX } from 'react';
+import { Suspense, useEffect, useState, type JSX } from 'react';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Button from '@/components/atoms/Button';
 import Loader from '@/components/atoms/Loader';
@@ -13,7 +13,7 @@ interface Provider {
   name: string;
 }
 
-const SignInPage = (): JSX.Element => {
+const SignInContent = (): JSX.Element => {
   const searchParams = useSearchParams();
   const callbackUrl = searchParams?.get('callbackUrl');
 
@@ -61,5 +61,11 @@ const SignInPage = (): JSX.Element => {
     </div>
   );
 };
+
+const SignInPage = (): JSX.Element => (
+  <Suspense>
+    <SignInContent />
+  </Suspense>
+);
 
 export default SignInPage;

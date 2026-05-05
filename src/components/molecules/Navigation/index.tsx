@@ -1,21 +1,17 @@
 'use client';
 
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import AuthButton from '@/components/molecules/AuthButton';
 import NavItem from '@/components/molecules/NavItem';
 import { Navigation as NavigationProps } from './types';
-import styles from './Navigation.css';
+import './Navigation.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Navigation = ({ navItems, groups, rentalLocations }: NavigationProps): JSX.Element => {
   return (
     <nav className="navigation__wrapper">
-      <ul className="navigation">
-        <span className="navigation__list">
+      <div className="navigation">
+        <ul className="navigation__list">
           {navItems.map((navItem, i) => {
             const dropdownBtn = navItem.dropdownButton
               ? {
@@ -45,11 +41,11 @@ const Navigation = ({ navItems, groups, rentalLocations }: NavigationProps): JSX
               />
             );
           })}
-        </span>
-        <span className="navigation__list">
+        </ul>
+        <ul className="navigation__list">
           <AuthButton />
-        </span>
-      </ul>
+        </ul>
+      </div>
     </nav>
   );
 };

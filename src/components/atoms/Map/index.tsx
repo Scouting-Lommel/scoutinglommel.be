@@ -1,12 +1,8 @@
 import cn from 'classnames';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import { EmbeddedMapProps as MapProps } from './types';
-import styles from './Map.css';
+import './Map.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const fallbackQuery = 'Scouting Lommel';
 

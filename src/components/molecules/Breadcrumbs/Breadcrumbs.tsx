@@ -1,14 +1,10 @@
 import { Fragment, type JSX } from 'react';
 import { useWindowSizes } from '@/lib/helpers/useWindowSizes';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Icon from '@/components/atoms/Icon';
 import SLLink from '@/components/atoms/Link';
 import { Breadcrumbs as BreadcrumbsProps } from './types';
-import styles from './Breadcrumbs.css';
+import './Breadcrumbs.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Breadcrumbs = ({ items }: BreadcrumbsProps): JSX.Element => {
   const { isMobile } = useWindowSizes();

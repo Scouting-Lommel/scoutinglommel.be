@@ -4,16 +4,12 @@ import { useTranslations } from 'next-intl';
 import { useContext, useEffect, useState, type JSX } from 'react';
 import { FormStatus } from '@/lib/constants/enums/formStatus';
 import { FormContext } from '@/lib/contexts/FormContext';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Icon from '@/components/atoms/Icon';
 import Loader from '@/components/atoms/Loader';
 import Typography from '@/components/atoms/Typography';
-import styles from '../Attachment.css';
+import '../Attachment.css';
 import { Link as LinkProps } from '../types';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Link = ({
   id,

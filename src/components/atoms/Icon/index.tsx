@@ -1,14 +1,10 @@
 import cn from 'classnames';
 import * as icons from 'lucide-react';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import { Icon as IconProps } from './types';
 import { iconMap } from './IconMap';
-import styles from './Icon.css';
+import './Icon.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Icon = ({ name, size, className, ...props }: IconProps): JSX.Element => {
   const mappedName = iconMap[name];

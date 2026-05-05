@@ -7,6 +7,8 @@ import Form from '@/components/organisms/Forms';
 import { getGeneralData } from '../api';
 import { getRegisterPage, getGeneralDataForRegisterPage } from './api';
 
+export const revalidate = 3600;
+
 export const generateMetadata = async (): Promise<Metadata> => {
   const { generalData } = await getGeneralData();
   const { registerPage } = await getRegisterPage();

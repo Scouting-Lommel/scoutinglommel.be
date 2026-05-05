@@ -1,14 +1,10 @@
 import Link from 'next/link';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Typography from '@/components/atoms/Typography';
 import { DropdownItem as DropdownItemProps } from './types';
 import Icon from '../Icon';
-import styles from './DropdownItem.css';
+import './DropdownItem.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const DropdownItem = ({
   title,

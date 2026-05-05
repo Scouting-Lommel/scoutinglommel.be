@@ -1,12 +1,8 @@
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Button from '@/components/atoms/Button';
 import { ActionTitle as ActionTitleProps } from './types';
-import styles from './ActionTitle.css';
+import './ActionTitle.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const ActionTitle = ({ title, tagName = 'h2', button }: ActionTitleProps): JSX.Element => {
   const TagName = tagName;

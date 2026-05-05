@@ -1,14 +1,10 @@
 import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Typography from '@/components/atoms/Typography';
 import Hero from '@/components/organisms/Hero';
-import styles from './Unauthorized.css';
+import './Unauthorized.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Unauthorized = (): JSX.Element => {
   const t = useTranslations('common.unauthorized');

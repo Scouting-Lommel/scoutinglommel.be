@@ -6,6 +6,8 @@ import Blocks from '@/content-blocks';
 import { getGeneralData } from '../api';
 import { getDAPage } from './api';
 
+export const revalidate = 3600;
+
 export const generateMetadata = async (): Promise<Metadata> => {
   const { generalData } = await getGeneralData();
   const { drugsAlcoholPolicyPage } = await getDAPage();

@@ -1,12 +1,8 @@
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Typography from '@/components/atoms/Typography';
 import { TableOfContents as TableOfContentsProps } from './types';
-import styles from './TableOfContents.css';
+import './TableOfContents.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const TableOfContents = ({ sections }: TableOfContentsProps): JSX.Element => {
   return (

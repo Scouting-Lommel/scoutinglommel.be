@@ -1,15 +1,11 @@
 import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Button from '@/components/atoms/Button';
 import Typography from '@/components/atoms/Typography';
 import YearTheme from '@/components/molecules/YearTheme';
 import { YearThemeSection as YearThemeSectionProps } from './types';
-import styles from './YearThemeSection.css';
+import './YearThemeSection.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const YearThemeSection = ({ yearTheme }: YearThemeSectionProps): JSX.Element => {
   const t = useTranslations('common');

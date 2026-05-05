@@ -3,17 +3,13 @@
 import { useTranslations } from 'next-intl';
 import { Fragment, useCallback, useEffect, useState, type JSX } from 'react';
 import { getFiles } from '@/lib/api/files/api';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Link from '@/components/atoms/Link';
 import Loader from '@/components/atoms/Loader';
 import Typography from '@/components/atoms/Typography';
 import Attachment from '@/components/molecules/Attachment';
 import { FileSection as FileBlockProps } from './types';
-import styles from './FileSection.css';
+import './FileSection.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const FileSection = ({ title, groupSlug, className }: FileBlockProps): JSX.Element => {
   const [groupFiles, setFiles] = useState<any>(null);

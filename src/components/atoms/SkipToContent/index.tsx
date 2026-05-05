@@ -1,13 +1,9 @@
 import cn from 'classnames';
 import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import { SkipToContent as SkipToContentProps } from './types';
-import styles from './SkipToContent.css';
+import './SkipToContent.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const SkipToContent = ({ className }: SkipToContentProps): JSX.Element => {
   const t = useTranslations('common');

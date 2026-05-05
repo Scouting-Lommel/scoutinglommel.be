@@ -52,7 +52,6 @@
     "next-intl": "^3.20.0",
     "normalize.css": "^8.0.1",
     "react": "19.1.1",
-    "react-blurhash": "^0.3.0",
     "react-dom": "19.1.1",
     "react-hook-form": "^7.51.3",
     "react-markdown": "^10.1.0",
@@ -68,6 +67,9 @@
   "devDependencies": {
     "@chromatic-com/storybook": "^3.2.2",
     "@csstools/postcss-global-data": "^3.0.0",
+    "@eslint/compat": "^2.0.5",
+    "@eslint/eslintrc": "^3.3.5",
+    "@eslint/js": "^10.0.1",
     "@ls-lint/ls-lint": "^2.3.0",
     "@react-email/preview-server": "5.0.5",
     "@storybook/addon-a11y": "^8.4.5",
@@ -82,6 +84,7 @@
     "@storybook/react": "^8.4.5",
     "@storybook/test": "^8.4.5",
     "@storybook/theming": "^8.4.5",
+    "@types/node": "^25.6.0",
     "@types/react": "19.1.10",
     "@types/react-modal-image": "^2.6.3",
     "@types/sanitize-html": "^2.9.4",
@@ -94,6 +97,7 @@
     "eslint-config-next": "15.4.6",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "^5.2.1",
     "file-loader": "^6.2.0",
     "husky": "^9.1.7",
@@ -115,6 +119,12 @@
     "stylelint-order": "^6.0.4"
   },
   "pnpm": {
+    "onlyBuiltDependencies": [
+      "core-js-pure",
+      "esbuild",
+      "sharp",
+      "unrs-resolver"
+    ],
     "overrides": {
       "@types/react": "19.1.10",
       "google-auth-library": "^9.15.1",

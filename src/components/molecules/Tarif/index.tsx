@@ -1,13 +1,9 @@
 import type { JSX } from 'react';
 import { formatPrice } from '@/lib/helpers/formatPrice';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Typography from '@/components/atoms/Typography';
 import { Tarif as TarifProps } from './types';
-import styles from './Tarif.css';
+import './Tarif.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Tarif = ({ name, dayPrice, minimumPrice, example }: TarifProps): JSX.Element => {
   return (

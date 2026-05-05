@@ -14,6 +14,8 @@ export type CloudinaryImage = {
 export type Image = {
   data: CloudinaryImage;
   loadingStrategy?: 'lazy' | 'eager';
+  priority?: boolean;
+  sizes?: string;
   modMaximisable?: boolean;
   modWithShadow?: boolean;
   modRounded?: boolean;

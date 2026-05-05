@@ -1,14 +1,10 @@
 import cn from 'classnames';
 import NextLink from 'next/link';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Icon from '@/components/atoms/Icon';
 import { IconButton as IconButtonProps } from './types';
-import styles from './IconButton.css';
+import './IconButton.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const IconButton = ({
   label,

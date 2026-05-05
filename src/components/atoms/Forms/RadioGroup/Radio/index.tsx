@@ -1,13 +1,9 @@
 import cn from 'classnames';
 import { forwardRef, type JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Typography from '@/components/atoms/Typography';
 import { Radio as RadioProps } from './types';
-import styles from './Radio.css';
+import './Radio.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Radio = forwardRef((props: RadioProps, ref: any): JSX.Element => {
   const { hasError, ...radioProps } = props;

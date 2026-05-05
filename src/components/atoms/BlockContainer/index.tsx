@@ -1,15 +1,11 @@
 import cn from 'classnames';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import SLImage from '@/components/atoms/Image';
 import CallToAction from '@/components/molecules/CallToAction';
 import SocialsCta from '@/components/molecules/SocialsCta';
 import { BlockContainer as BlockContainerProps } from './types';
-import styles from './BlockContainer.css';
+import './BlockContainer.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const BlockContainer = ({
   variant = 'light',
@@ -18,6 +14,8 @@ const BlockContainer = ({
   cta,
   socialsCta,
   bgImage,
+  bgImagePriority,
+  bgImageSizes,
   modSmallPadding,
   modNoPadding,
   modMargin,
@@ -49,7 +47,7 @@ const BlockContainer = ({
       <div className={bgClassnames}>
         {bgImage && (
           <div className="block-container__bg-image__img">
-            <SLImage data={bgImage} />
+            <SLImage data={bgImage} priority={bgImagePriority} sizes={bgImageSizes} />
           </div>
         )}
       </div>

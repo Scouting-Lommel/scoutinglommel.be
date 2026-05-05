@@ -1,11 +1,7 @@
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import { FooterHead as FooterHeadProps } from './types';
-import styles from './FooterHead.css';
+import './FooterHead.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const FooterHead = ({ siteName, vatNumber, groupNumber }: FooterHeadProps): JSX.Element => {
   return (

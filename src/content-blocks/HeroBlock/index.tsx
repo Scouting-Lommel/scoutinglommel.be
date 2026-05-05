@@ -23,6 +23,8 @@ const HeroBlock = ({
   return (
     <BlockContainer
       bgImage={bgImage?.data?.attributes}
+      bgImagePriority
+      bgImageSizes="100vw"
       socialsCta={socialsCta && socialsCallToAction}
       variant={variant === 'simple' ? 'light' : 'dark'}
       orientation="default"

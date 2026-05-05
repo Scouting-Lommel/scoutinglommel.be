@@ -1,10 +1,23 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { JSX } from 'react';
+import { getNavigationData } from '@/lib/api/general/api';
 import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import Blocks from '@/content-blocks';
 import { getRentalLocationPage } from './api';
 import { getGeneralData } from '../../api';
+
+export async function generateStaticParams() {
+  try {
+    const data = await getNavigationData();
+    return data.rentalLocations.data.map((location: any) => ({
+      slug: location.attributes.slug,
+    }));
+  } catch (error) {
+    console.warn('[generateStaticParams] Failed to fetch rental location slugs, falling back to SSR:', error);
+    return [];
+  }
+}
 
 type Props = { params: Promise<{ slug: string }> };
 

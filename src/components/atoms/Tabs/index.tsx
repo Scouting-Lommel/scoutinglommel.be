@@ -2,14 +2,10 @@
 
 import cn from 'classnames';
 import React, { useState, type JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import { Tabs as TabsProps, Tab as TabProps } from './types';
 import Tab from './Tab';
-import styles from './Tabs.css';
+import './Tabs.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Tabs = ({ children }: TabsProps): JSX.Element => {
   const [activeTab, setActiveTab] = useState<number>(0);

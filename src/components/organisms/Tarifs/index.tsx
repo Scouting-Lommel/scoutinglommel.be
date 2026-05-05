@@ -1,15 +1,11 @@
 import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Button from '@/components/atoms/Button';
 import Typography from '@/components/atoms/Typography';
 import Tarif from '@/components/molecules/Tarif';
 import { Tarifs as TarifsProps } from './types';
-import styles from './Tarifs.css';
+import './Tarifs.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Tarifs = ({ tarifs, cta }: TarifsProps): JSX.Element => {
   const t = useTranslations('common.tarifs');
