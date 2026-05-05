@@ -14,8 +14,8 @@ export const links = (): StylesheetLink[] => {
 const Navigation = ({ navItems, groups, rentalLocations }: NavigationProps): JSX.Element => {
   return (
     <nav className="navigation__wrapper">
-      <ul className="navigation">
-        <span className="navigation__list">
+      <div className="navigation">
+        <ul className="navigation__list">
           {navItems.map((navItem, i) => {
             const dropdownBtn = navItem.dropdownButton
               ? {
@@ -45,11 +45,11 @@ const Navigation = ({ navItems, groups, rentalLocations }: NavigationProps): JSX
               />
             );
           })}
-        </span>
-        <span className="navigation__list">
+        </ul>
+        <ul className="navigation__list">
           <AuthButton />
-        </span>
-      </ul>
+        </ul>
+      </div>
     </nav>
   );
 };
