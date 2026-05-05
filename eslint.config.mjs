@@ -2,6 +2,8 @@ import { fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
 import _import from 'eslint-plugin-import';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import prettier from 'eslint-plugin-prettier';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -23,6 +25,8 @@ export default [
 
     plugins: {
       import: fixupPluginRules(_import),
+      'jsx-a11y': jsxA11y,
+      prettier,
     },
 
     settings: {
