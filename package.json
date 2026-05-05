@@ -1,5 +1,5 @@
 {
-  "name": "scouting-lommel-website",
+  "name": "scoutinglommel.be",
   "private": true,
   "scripts": {
     "build:css": "pnpm run \"/^build:css:[^:]+$/\"",
