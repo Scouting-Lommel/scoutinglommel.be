@@ -10,6 +10,7 @@ export type BlockContainer = {
   socialsCta?: SocialsCta;
   bgImage?: CloudinaryImage;
   bgImagePriority?: boolean;
+  bgImageSizes?: string;
   modSmallPadding?: boolean;
   modNoPadding?: boolean;
   modMargin?: boolean;

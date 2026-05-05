@@ -19,6 +19,7 @@ const BlockContainer = ({
   socialsCta,
   bgImage,
   bgImagePriority,
+  bgImageSizes,
   modSmallPadding,
   modNoPadding,
   modMargin,
@@ -50,7 +51,7 @@ const BlockContainer = ({
       <div className={bgClassnames}>
         {bgImage && (
           <div className="block-container__bg-image__img">
-            <SLImage data={bgImage} priority={bgImagePriority} />
+            <SLImage data={bgImage} priority={bgImagePriority} sizes={bgImageSizes} />
           </div>
         )}
       </div>

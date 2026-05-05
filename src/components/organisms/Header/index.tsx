@@ -48,7 +48,7 @@ const Header = ({ logo, mainNavigation, groups, rentalLocations }: HeaderProps):
         <header className="sl-layout">
           <div className="header__content">
             <Link href="/" className="header__link">
-              <SLImage data={logo.data.attributes} loadingStrategy="lazy" />
+              <SLImage data={logo.data.attributes} loadingStrategy="eager" />
             </Link>
             <div className={navClassnames}>
               <Navigation
