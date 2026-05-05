@@ -86,9 +86,6 @@ importers:
       react:
         specifier: 19.1.1
         version: 19.1.1
-      react-blurhash:
-        specifier: ^0.3.0
-        version: 0.3.0(blurhash@2.0.5)(react@19.1.1)
       react-dom:
         specifier: 19.1.1
         version: 19.1.1(react@19.1.1)
@@ -6111,12 +6108,6 @@ packages:
   range-parser@1.2.1:
     resolution: {integrity: sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==}
     engines: {node: '>= 0.6'}
-
-  react-blurhash@0.3.0:
-    resolution: {integrity: sha512-XlKr4Ns1iYFRnk6DkAblNbAwN/bTJvxTVoxMvmTcURdc5oLoXZwqAF9N3LZUh/HT+QFlq5n6IS6VsDGsviYAiQ==}
-    peerDependencies:
-      blurhash: ^2.0.3
-      react: '>=15'
 
   react-confetti@6.4.0:
     resolution: {integrity: sha512-5MdGUcqxrTU26I2EU7ltkWPwxvucQTuqMm8dUz72z2YMqTD6s9vMcDUysk7n9jnC+lXuCPeJJ7Knf98VEYE9Rg==}
@@ -13970,11 +13961,6 @@ snapshots:
       safe-buffer: 5.2.1
 
   range-parser@1.2.1: {}
-
-  react-blurhash@0.3.0(blurhash@2.0.5)(react@19.1.1):
-    dependencies:
-      blurhash: 2.0.5
-      react: 19.1.1
 
   react-confetti@6.4.0(react@19.1.1):
     dependencies:

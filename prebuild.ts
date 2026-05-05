@@ -1,8 +1,6 @@
 console.log('> prebuilding...');
 const path = require('node:path');
 const fs = require('fs');
-const rimraf = require('rimraf');
-
 const baseDir = process.cwd();
 
 const patchNextRequireHook = async () => {
@@ -15,11 +13,10 @@ const patchNextRequireHook = async () => {
   );
 };
 
-const invalidateNextCache = async () => {
-  // cache invalidation
+const invalidateNextCache = () => {
   try {
     const dir = path.join(baseDir, '.next');
-    await rimraf.sync(dir);
+    fs.rmSync(dir, { recursive: true, force: true });
   } catch {}
 };
 

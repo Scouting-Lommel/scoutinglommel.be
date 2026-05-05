@@ -52,7 +52,6 @@
     "next-intl": "^3.20.0",
     "normalize.css": "^8.0.1",
     "react": "19.1.1",
-    "react-blurhash": "^0.3.0",
     "react-dom": "19.1.1",
     "react-hook-form": "^7.51.3",
     "react-markdown": "^10.1.0",
