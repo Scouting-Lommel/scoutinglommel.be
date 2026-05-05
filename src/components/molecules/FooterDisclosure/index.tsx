@@ -1,12 +1,8 @@
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import { FooterDisclosure as FooterDisclosureProps } from './types';
 import { RingtailLogo } from '@/components/atoms/RingtailLogo';
-import styles from './FooterDisclosure.css';
+import './FooterDisclosure.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const FooterDisclosure = ({ siteName }: FooterDisclosureProps): JSX.Element => {
   const currentYear = new Date().getFullYear();

@@ -1,15 +1,11 @@
 'use client';
 
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import AuthButton from '@/components/molecules/AuthButton';
 import NavItem from '@/components/molecules/NavItem';
 import { Navigation as NavigationProps } from './types';
-import styles from './Navigation.css';
+import './Navigation.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Navigation = ({ navItems, groups, rentalLocations }: NavigationProps): JSX.Element => {
   return (

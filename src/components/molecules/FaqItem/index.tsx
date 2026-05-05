@@ -2,17 +2,13 @@
 
 import cn from 'classnames';
 import { useState, type JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Button from '@/components/atoms/Button';
 import Icon from '@/components/atoms/Icon';
 import SLImage from '@/components/atoms/Image';
 import Typography from '@/components/atoms/Typography';
 import { FaqItem as FAQProps } from './types';
-import styles from './FaqItem.css';
+import './FaqItem.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const FAQItem = ({ question, answer, image, callToAction }: FAQProps): JSX.Element => {
   const [isOpen, setOpen] = useState<boolean>(false);

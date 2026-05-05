@@ -2,17 +2,13 @@
 
 import { useTranslations } from 'next-intl';
 import { Fragment, useState, type JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Button from '@/components/atoms/Button';
 import Input from '@/components/atoms/Forms/Input';
 import IconButton from '@/components/atoms/IconButton';
 import ArticleCard from '@/components/molecules/ArticleCard';
 import { ArticleGrid as ArticleGridProps } from './types';
-import styles from './ArticleGrid.css';
+import './ArticleGrid.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const MAX_ARTICLES = 5;
 

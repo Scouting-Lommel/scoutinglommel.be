@@ -1,15 +1,11 @@
 import Image from 'next/image';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import ProfilePicture from '@/assets/img/default-avatar.png';
 import SLImage from '@/components/atoms/Image';
 import Typography from '@/components/atoms/Typography';
 import { Leader as LeaderProps } from './types';
-import styles from './Leader.css';
+import './Leader.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Leader = ({ firstName, lastName, image }: LeaderProps): JSX.Element => {
   return (

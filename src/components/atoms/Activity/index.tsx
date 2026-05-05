@@ -1,14 +1,10 @@
 import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
 import { formatDate, formatStrapiTime } from '@/lib/helpers/dateTime';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Typography from '@/components/atoms/Typography';
 import { Activity as ActivityProps } from './types';
-import styles from './Activity.css';
+import './Activity.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Activity = ({
   title,

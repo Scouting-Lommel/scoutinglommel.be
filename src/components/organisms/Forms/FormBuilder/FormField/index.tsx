@@ -1,6 +1,5 @@
 import cn from 'classnames';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Divider from '@/components/atoms/Divider';
 import Captcha from '@/components/atoms/Forms/Captcha';
 import Checkbox from '@/components/atoms/Forms/Checkbox';
@@ -11,11 +10,8 @@ import Select from '@/components/atoms/Forms/Select';
 import TextArea from '@/components/atoms/Forms/TextArea';
 import Typography from '@/components/atoms/Typography';
 import { FormField as FormFieldProps } from './types';
-import styles from './FormField.css';
+import './FormField.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const FormField = (props: FormFieldProps): JSX.Element => {
   const errorMessage = props.errors && props.name ? props.errors[props.name]?.message : undefined;

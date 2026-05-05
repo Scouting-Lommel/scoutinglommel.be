@@ -1,13 +1,9 @@
 import { useTranslations } from 'next-intl';
 import { useRef, useEffect, useCallback, type JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Icon from '@/components/atoms/Icon';
 import { Modal as ModalProps } from './types';
-import styles from './Modal.css';
+import './Modal.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Modal = ({ id, title, children, open, handleCloseModal }: ModalProps): JSX.Element => {
   const t = useTranslations('common');

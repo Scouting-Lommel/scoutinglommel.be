@@ -1,15 +1,11 @@
 import cn from 'classnames';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Icon from '@/components/atoms/Icon';
 import { IconNames } from '@/components/atoms/Icon/IconMap';
 import SLLink from '@/components/atoms/Link';
 import { SocialsCta as SocialsCtaProps } from './types';
-import styles from './SocialsCta.css';
+import './SocialsCta.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const SocialsCta = ({ title, socialItems, className }: SocialsCtaProps): JSX.Element => {
   interface icons {

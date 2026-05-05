@@ -1,12 +1,8 @@
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Leader from '@/components/molecules/Leader';
 import { Leaders as LeadersProps } from './types';
-import styles from './Leaders.css';
+import './Leaders.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Leaders = ({ leaders }: LeadersProps): JSX.Element => {
   return (

@@ -1,15 +1,11 @@
 import cn from 'classnames';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Typography from '@/components/atoms/Typography';
 import { RadioGroup as RadioGroupProps } from './types';
 import Radio from './Radio';
 import { Radio as RadioProps } from './Radio/types';
-import styles from './RadioGroup.css';
+import './RadioGroup.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const RadioGroup = ({
   id,

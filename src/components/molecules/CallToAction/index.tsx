@@ -1,13 +1,9 @@
 import cn from 'classnames';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Button from '@/components/atoms/Button';
 import { CallToAction as CallToActionProps } from './types';
-import styles from './CallToAction.css';
+import './CallToAction.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const CallToAction = ({
   title,

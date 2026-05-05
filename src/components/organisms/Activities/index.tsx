@@ -4,17 +4,13 @@ import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useState, type JSX } from 'react';
 import { getActivities } from '@/lib/api/activities/api';
 import { getEvents } from '@/lib/api/events/api';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Activity from '@/components/atoms/Activity';
 import Button from '@/components/atoms/Button';
 import Link from '@/components/atoms/Link';
 import Loader from '@/components/atoms/Loader';
 import { ActivitySection as ActivityProps } from './types';
-import styles from './Activities.css';
+import './Activities.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);

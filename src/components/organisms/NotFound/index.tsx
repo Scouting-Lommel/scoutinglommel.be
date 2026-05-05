@@ -1,14 +1,10 @@
 import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Typography from '@/components/atoms/Typography';
 import Hero from '@/components/organisms/Hero';
-import styles from './NotFound.css';
+import './NotFound.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const NotFound = (): JSX.Element => {
   const t = useTranslations('common.notFound');

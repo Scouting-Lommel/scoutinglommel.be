@@ -1,14 +1,10 @@
 'use client';
 
 import { useEffect, useState, type JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Loader from '@/components/atoms/Loader';
-import styles from './CalendarRevalidator.css';
+import './CalendarRevalidator.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const CalendarRevalidator = (): JSX.Element => {
   const [currState, setCurrState] = useState(

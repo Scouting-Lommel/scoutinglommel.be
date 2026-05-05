@@ -1,13 +1,9 @@
 import cn from 'classnames';
 import { forwardRef, type JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Typography from '@/components/atoms/Typography';
 import { FormTextArea as FormTextAreaProps } from './types';
-import styles from './TextArea.css';
+import './TextArea.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const TextArea = forwardRef((props: FormTextAreaProps, ref: any): JSX.Element => {
   const { error, ...textareaProps } = props;

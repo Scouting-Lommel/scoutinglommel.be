@@ -1,13 +1,9 @@
 import cn from 'classnames';
 import { ChangeEvent, forwardRef } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Typography from '@/components/atoms/Typography';
 import { Checkbox as CheckboxProps } from './types';
-import styles from './Checkbox.css';
+import './Checkbox.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Checkbox = forwardRef((props: CheckboxProps, ref: any) => {
   const { customChangeBehaviour, error, ...checkboxProps } = props;

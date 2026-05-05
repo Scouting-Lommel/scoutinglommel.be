@@ -6,15 +6,11 @@ import { useTranslations } from 'next-intl';
 import { useState, type JSX } from 'react';
 import { formatDateTime } from '@/lib/helpers/dateTime';
 import { formatCallbackUrl } from '@/lib/helpers/formatCallbackUrl';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Icon from '@/components/atoms/Icon';
 import Typography from '@/components/atoms/Typography';
 import { ArticleCard as ArticleCardProps } from './types';
-import styles from './ArticleCard.css';
+import './ArticleCard.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const ArticleCard = ({
   title,

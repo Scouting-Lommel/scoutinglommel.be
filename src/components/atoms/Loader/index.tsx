@@ -1,13 +1,9 @@
 import cn from 'classnames';
 import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import { Loader as LoaderProps } from './types';
-import styles from './Loader.css';
+import './Loader.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Loader = ({ size = 'md', modLabelVisible, className }: LoaderProps): JSX.Element => {
   const t = useTranslations('common');

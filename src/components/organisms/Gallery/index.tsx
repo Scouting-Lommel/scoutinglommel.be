@@ -2,15 +2,11 @@
 
 import { useTranslations } from 'next-intl';
 import { useState, type JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Button from '@/components/atoms/Button';
 import SLImage from '@/components/atoms/Image';
 import { Gallery as GalleryProps } from './types';
-import styles from './Gallery.css';
+import './Gallery.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const Gallery = ({ title, initialItems, images }: GalleryProps): JSX.Element => {
   const [isOpen, setOpen] = useState(false);

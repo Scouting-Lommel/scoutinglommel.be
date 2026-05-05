@@ -7,16 +7,12 @@ import { Lightbox } from 'react-modal-image';
 import { FormStatus } from '@/lib/constants/enums/formStatus';
 import { FormContext } from '@/lib/contexts/FormContext';
 import { formatFileSize } from '@/lib/helpers/formatFileSize';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Icon from '@/components/atoms/Icon';
 import Loader from '@/components/atoms/Loader';
 import Typography from '@/components/atoms/Typography';
-import styles from '../Attachment.css';
+import '../Attachment.css';
 import { File as FileProps, Extensions } from '../types';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const extMap: Extensions = {
   pdf: 'document',

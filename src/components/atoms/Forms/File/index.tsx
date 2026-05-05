@@ -1,13 +1,9 @@
 import cn from 'classnames';
 import { forwardRef, type JSX } from 'react';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import Typography from '@/components/atoms/Typography';
 import { FormFile as FormFileProps } from './types';
-import styles from './File.css';
+import './File.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const File = forwardRef((props: FormFileProps, ref: any): JSX.Element => {
   const { error, ...fileProps } = props;

@@ -6,13 +6,9 @@ import { useTranslations } from 'next-intl';
 import { useRef, useState, type JSX } from 'react';
 import { Lightbox } from 'react-modal-image';
 import { generateImageUrl } from '@/lib/helpers/image';
-import { StylesheetLink } from '@/types/StyleSheetLink';
 import { Image as ImageProps } from './types';
-import styles from './Image.css';
+import './Image.css';
 
-export const links = (): StylesheetLink[] => {
-  return [{ rel: 'stylesheet', href: styles }];
-};
 
 const SLImage = ({
   data,
