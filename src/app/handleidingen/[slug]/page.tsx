@@ -44,7 +44,8 @@ const ManualPage = async (props: Props): Promise<JSX.Element> => {
   if (!manual) notFound();
 
   if (!(session && session.user) && manual.locked) {
-    redirect(`/inloggen?callbackUrl=/handleidingen/${manual.slug}`);
+    const callbackUrl = `/handleidingen/${manual.slug}`;
+    redirect(`/inloggen?callbackUrl=${encodeURIComponent(callbackUrl)}`);
   }
 
   return (
