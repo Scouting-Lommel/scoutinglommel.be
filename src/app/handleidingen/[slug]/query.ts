@@ -6,7 +6,7 @@ const MANUAL_PAGE_QUERY = gql`
   ${PAGE_META_FRAGMENT}
   ${IMAGE_FRAGMENT}
 
-  query GetManualPage($slug: String) {
+  query GetManualPage($slug: String!) {
     manuals(filters: { slug: { eq: $slug } }) {
       documentId
       pageMeta {

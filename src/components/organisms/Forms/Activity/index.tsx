@@ -45,7 +45,7 @@ const Activity = (props: any): JSX.Element => {
   const handleSubmitForm = async (data: any) => {
     if (props.activity) {
       let activity = {
-        id: data['activity-id'],
+        documentId: data['activity-id'],
         title: data.title,
         description: data.description,
         startDate: data.start.split('T')[0],
@@ -72,7 +72,7 @@ const Activity = (props: any): JSX.Element => {
         startTime: `${data.start.split('T')[1]}:00.000`,
         endDate: data.end.split('T')[0],
         endTime: `${data.end.split('T')[1]}:00.000`,
-        groupId: props.groupId,
+        groupDocumentId: props.groupId,
       };
 
       try {

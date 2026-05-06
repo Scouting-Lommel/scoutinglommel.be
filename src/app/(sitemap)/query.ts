@@ -58,6 +58,13 @@ const SITEMAP_QUERY = gql`
         noIndex
       }
     }
+    articlesPage {
+      updatedAt
+      pageMeta {
+        slug
+        noIndex
+      }
+    }
     drugsAlcoholPolicyPage {
       updatedAt
       pageMeta {

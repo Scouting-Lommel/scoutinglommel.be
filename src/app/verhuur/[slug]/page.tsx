@@ -26,7 +26,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
   const { generalData } = await getGeneralData();
   const { rentalLocations } = await getRentalLocationPage(slug);
-  const rentalLocation = rentalLocations[0];
+  const rentalLocation = rentalLocations?.[0];
 
   if (!rentalLocation || !generalData) return {};
 
@@ -43,7 +43,7 @@ const RentalLocationPage = async (props: Props): Promise<JSX.Element> => {
   const { slug } = await props.params;
 
   const { rentalLocations } = await getRentalLocationPage(slug);
-  const rentalLocation = rentalLocations[0];
+  const rentalLocation = rentalLocations?.[0];
 
   if (!rentalLocation) notFound();
 

@@ -27,16 +27,17 @@ const InfoPage = async (): Promise<JSX.Element> => {
 
   if (!infoPage) notFound();
 
-  const blockIndex = infoPage.blocks.findIndex(
+  const blocks = [...(infoPage.blocks ?? [])];
+  const blockIndex = blocks.findIndex(
     (el: any) => el.__typename === 'ComponentContentBlocksYearThemeBlock',
   );
   if (blockIndex >= 0 && yearThemes?.[0]) {
-    infoPage.blocks[blockIndex].yearTheme = yearThemes[0];
+    blocks[blockIndex] = { ...blocks[blockIndex], yearTheme: yearThemes[0] };
   }
 
   return (
     <>
-      <Blocks content={infoPage.blocks} />
+      <Blocks content={blocks} />
     </>
   );
 };

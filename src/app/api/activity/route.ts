@@ -38,7 +38,7 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       {
         error: error.message || 'Unknown error occurred',
         action,
-        data: data ? { ...data, groupId: data.groupId ? '[REDACTED]' : undefined } : undefined,
+        data: data ? { ...data, groupDocumentId: data.groupDocumentId ? '[REDACTED]' : undefined } : undefined,
       },
       {
         status: 500,

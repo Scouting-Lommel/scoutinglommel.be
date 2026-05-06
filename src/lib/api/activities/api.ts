@@ -20,7 +20,7 @@ export function createActivity({
   endDate,
   endTime,
   description,
-  groupId,
+  groupDocumentId,
 }: {
   title: string;
   startDate: string;
@@ -28,17 +28,17 @@ export function createActivity({
   endDate: string;
   endTime: string;
   description: string;
-  groupId: string;
+  groupDocumentId: string;
 }): Promise<any> {
   return generateApiQuery({
-    variables: { title, startDate, startTime, endDate, endTime, description, groupId },
+    variables: { title, startDate, startTime, endDate, endTime, description, groupDocumentId },
     query: CREATE_ACTIVITY_MUTATION,
     operation: 'mutation',
   });
 }
 
 export function updateActivity({
-  id,
+  documentId,
   title,
   startDate,
   startTime,
@@ -46,7 +46,7 @@ export function updateActivity({
   endTime,
   description,
 }: {
-  id: string;
+  documentId: string;
   title: string;
   startDate: string;
   startTime: string;
@@ -55,15 +55,15 @@ export function updateActivity({
   description: string;
 }): Promise<any> {
   return generateApiQuery({
-    variables: { id, title, startDate, startTime, endDate, endTime, description },
+    variables: { documentId, title, startDate, startTime, endDate, endTime, description },
     query: UPDATE_ACTIVITY_MUTATION,
     operation: 'mutation',
   });
 }
 
-export function deleteActivity(id: string): Promise<any> {
+export function deleteActivity(documentId: string): Promise<any> {
   return generateApiQuery({
-    variables: { id },
+    variables: { documentId },
     query: DELETE_ACTIVITY_MUTATION,
     operation: 'mutation',
   });

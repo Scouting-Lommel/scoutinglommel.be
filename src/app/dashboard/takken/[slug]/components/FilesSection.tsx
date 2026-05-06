@@ -25,19 +25,19 @@ const FilesSection = ({ group }: Props): JSX.Element => {
   const fetchFiles = useCallback(async () => {
     setError(false);
     setLoading(true);
-
-    const data = await getFiles(group.slug);
-
-    if (!data) {
+    try {
+      const data = await getFiles(group.slug);
+      if (!data) {
+        setError(true);
+        return;
+      }
+      setFiles(data?.groups?.[0]?.files);
+      setLinks(data?.groups?.[0]?.links);
+    } catch {
       setError(true);
+    } finally {
       setLoading(false);
-      return;
     }
-
-    setFiles(data?.groups?.[0]?.files);
-    setLinks(data?.groups?.[0]?.links);
-
-    setLoading(false);
   }, [group]);
 
   useEffect(() => {
