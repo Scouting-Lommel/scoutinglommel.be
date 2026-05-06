@@ -1,10 +1,9 @@
+import 'dotenv/config';
 import type { CodegenConfig } from '@graphql-codegen/cli';
-
-const schemaUrl = process.env.STRAPI_SCHEMA_URL;
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: schemaUrl,
+  schema: `${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/graphql`,
   documents: ['src/**/*.{ts,tsx}', 'src/**/*.gql'],
   ignoreNoDocuments: true,
   generates: {
