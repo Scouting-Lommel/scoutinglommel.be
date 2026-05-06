@@ -51,7 +51,7 @@ const Hero = ({
 
       {yearTheme && (
         <YearTheme
-          image={yearTheme.image.data.attributes}
+          image={yearTheme.image}
           href="/algemene-informatie#jaarthema"
           className="hero__year-theme"
         />

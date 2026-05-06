@@ -11,9 +11,9 @@ const Leaders = ({ leaders }: LeadersProps): JSX.Element => {
         {leaders.map((leader, i) => {
           return (
             <Leader
-              firstName={leader.attributes.firstName}
-              lastName={leader.attributes.lastName}
-              image={leader.attributes.image}
+              firstName={leader.firstName}
+              lastName={leader.lastName}
+              image={leader.image}
               key={i}
             />
           );

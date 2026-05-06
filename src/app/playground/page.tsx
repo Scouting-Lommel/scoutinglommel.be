@@ -18,7 +18,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
       pageDescription: 'Development playground',
       slug: 'playground',
     },
-    generalData.data.attributes,
+    generalData,
   );
 
   return { ...metadata };

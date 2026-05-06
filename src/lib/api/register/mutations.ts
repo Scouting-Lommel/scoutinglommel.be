@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const REGISTER_MEMBER_MUTATION = gql`
-  mutation (
+  mutation RegisterMember(
     $firstName: String
     $lastName: String
     $birthday: Date
@@ -31,9 +31,7 @@ const REGISTER_MEMBER_MUTATION = gql`
         workingYear: $workingYear
       }
     ) {
-      data {
-        id
-      }
+      documentId
     }
   }
 `;

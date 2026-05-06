@@ -14,8 +14,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
   if (!rentalPage || !generalData) return {};
 
   const metadata = await generateMetadataForPage(
-    rentalPage.data.attributes.pageMeta,
-    generalData.data.attributes,
+    rentalPage.pageMeta,
+    generalData,
   );
 
   return { ...metadata };
@@ -28,7 +28,7 @@ const RentalPage = async (): Promise<JSX.Element> => {
 
   return (
     <>
-      <Blocks content={rentalPage.data.attributes.blocks} />
+      <Blocks content={rentalPage.blocks} />
     </>
   );
 };

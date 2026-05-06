@@ -3,11 +3,7 @@ fragment TextImageBlockFragment on ComponentContentBlocksTextImageBlock {
   content
   orientation: variant
   images {
-    data {
-      attributes {
-        ...ImageFragment
-      }
-    }
+    ...ImageFragment
   }
   ctaButton {
     label

@@ -19,19 +19,13 @@ export const getSeoData = (): Promise<any> => {
   });
 };
 
-// Combined function for layout that gets all data at once but in parallel
 export const getLayoutData = async (): Promise<any> => {
   const [navigationData, footerData] = await Promise.all([getNavigationData(), getFooterData()]);
 
-  // Merge the data structure to match existing component props
   return {
     generalData: {
-      data: {
-        attributes: {
-          ...navigationData.generalData.data.attributes,
-          ...footerData.generalData.data.attributes,
-        },
-      },
+      ...navigationData.generalData,
+      ...footerData.generalData,
     },
     groups: navigationData.groups,
     rentalLocations: navigationData.rentalLocations,

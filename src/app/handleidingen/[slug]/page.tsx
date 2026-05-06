@@ -18,13 +18,13 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
   const { generalData } = await getGeneralData();
   const { manuals } = await getManualPage(slug);
-  const manual = manuals.data[0];
+  const manual = manuals[0];
 
   if (!manual || !generalData) return {};
 
   const metadata = await generateMetadataForPage(
-    manual.attributes.pageMeta,
-    generalData.data.attributes,
+    manual.pageMeta,
+    generalData,
     'handleidingen',
   );
 
@@ -37,34 +37,34 @@ const ManualPage = async (props: Props): Promise<JSX.Element> => {
   const session = await getServerSession();
 
   const { manuals } = await getManualPage(slug);
-  const manual = manuals.data[0];
+  const manual = manuals[0];
 
   const t = await getTranslations('common');
 
   if (!manual) notFound();
 
-  if (!(session && session.user) && manual.attributes.locked) {
-    redirect(`/inloggen?callbackUrl=/handleidingen/${manual.attributes.slug}`);
+  if (!(session && session.user) && manual.locked) {
+    redirect(`/inloggen?callbackUrl=/handleidingen/${manual.slug}`);
   }
 
   return (
     <article className="sl-layout--narrow">
-      <BlockContainer slug={`${manual?.attributes?.slug}-hero`}>
+      <BlockContainer slug={`${manual?.slug}-hero`}>
         <Hero
           variant="simple"
-          title={manual?.attributes?.title}
-          subtitle={manual?.attributes?.description}
+          title={manual?.title}
+          subtitle={manual?.description}
         />
       </BlockContainer>
 
-      <BlockContainer slug={`${manual?.attributes?.slug}-body`} modSmallPadding>
-        <Typography data={manual?.attributes?.body} />
+      <BlockContainer slug={`${manual?.slug}-body`} modSmallPadding>
+        <Typography data={manual?.body} />
       </BlockContainer>
 
-      <BlockContainer slug={`${manual?.attributes?.slug}-body`} modSmallPadding>
+      <BlockContainer slug={`${manual?.slug}-body`} modSmallPadding>
         <Typography
           variant="muted"
-          data={`${t('lastChanged')}: ${formatDateTime(manual?.attributes?.updatedAt)}`}
+          data={`${t('lastChanged')}: ${formatDateTime(manual?.updatedAt)}`}
         />
       </BlockContainer>
     </article>

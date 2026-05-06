@@ -10,34 +10,26 @@ const REGISTER_PAGE_QUERY = gql`
   ${PAGE_META_FRAGMENT}
   ${IMAGE_FRAGMENT}
 
-  query {
+  query RegisterPage {
     registerPage {
-      data {
-        attributes {
-          pageMeta {
-            ...PageMetaFragment
-          }
-          blocks {
-            __typename
-            ...HeroBlockFragment
-            ...DividerFragment
-          }
-        }
+      pageMeta {
+        ...PageMetaFragment
+      }
+      blocks {
+        __typename
+        ...HeroBlockFragment
+        ...DividerFragment
       }
     }
   }
 `;
 
 const GENERAL_DATA_FOR_REGISTER_PAGE = gql`
-  query {
+  query GeneralDataForRegisterPage {
     generalData {
-      data {
-        attributes {
-          leaderPrice
-          memberPrice
-          bankAccountNumber
-        }
-      }
+      leaderPrice
+      memberPrice
+      bankAccountNumber
     }
   }
 `;

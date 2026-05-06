@@ -16,12 +16,12 @@ const Gallery = ({ title, initialItems, images }: GalleryProps): JSX.Element => 
     <div>
       <h2 className="t-headline-2 t-align-center">{title}</h2>
       <div className="gallery__imagecontainer">
-        {[...Array(isOpen ? images.data.length : initialItems)].map((_, i) => {
-          if (images.data.length > i) {
+        {[...Array(isOpen ? images.length : initialItems)].map((_, i) => {
+          if (images.length > i) {
             return (
               <div key={i}>
                 <SLImage
-                  data={images.data[i].attributes}
+                  data={images[i]}
                   loadingStrategy="lazy"
                   className="gallery__image"
                   modMaximisable

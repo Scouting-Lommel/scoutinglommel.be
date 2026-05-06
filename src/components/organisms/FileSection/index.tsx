@@ -38,14 +38,8 @@ const FileSection = ({ title, groupSlug, className }: FileBlockProps): JSX.Eleme
         return;
       }
 
-      setFiles(
-        data?.groups?.data[0]?.attributes?.files?.data?.map((file: any) => ({
-          ...file.attributes,
-          id: file.id,
-        })),
-      );
-
-      setLinks(data?.groups?.data[0]?.attributes.links);
+      setFiles(data?.groups?.[0]?.files);
+      setLinks(data?.groups?.[0]?.links);
 
       setLoading(false);
     } catch (e) {

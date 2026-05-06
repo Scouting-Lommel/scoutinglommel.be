@@ -10,34 +10,20 @@ fragment HeroBlockFragment on ComponentContentBlocksHeroBlock {
   socialsCta {
     title
     socialItems {
-      data {
-        attributes {
-          title
-          link
-          icon
-        }
-      }
+      documentId
+      title
+      link
+      icon
     }
   }
   yearTheme {
-    data {
-      attributes {
-        title
-        image {
-          data {
-            attributes {
-              ...ImageFragment
-            }
-          }
-        }
-      }
+    documentId
+    title
+    image {
+      ...ImageFragment
     }
   }
   bgImage {
-    data {
-      attributes {
-        ...ImageFragment
-      }
-    }
+    ...ImageFragment
   }
 }

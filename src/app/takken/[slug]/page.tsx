@@ -10,8 +10,8 @@ import { getGeneralData } from '../../api';
 export async function generateStaticParams() {
   try {
     const data = await getNavigationData();
-    return data.groups.data.map((group: any) => ({
-      slug: group.attributes.slug,
+    return data.groups.map((group: any) => ({
+      slug: group.slug,
     }));
   } catch (error) {
     console.warn('[generateStaticParams] Failed to fetch group slugs, falling back to SSR:', error);
@@ -26,13 +26,13 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
   const { generalData } = await getGeneralData();
   const { groups } = await getGroupPage(slug);
-  const group = groups.data[0];
+  const group = groups[0];
 
   if (!group || !generalData) return {};
 
   const metadata = await generateMetadataForPage(
-    group.attributes.pageMeta,
-    generalData.data.attributes,
+    group.pageMeta,
+    generalData,
     'takken',
   );
 
@@ -43,25 +43,25 @@ const GroupPage = async (props: Props): Promise<JSX.Element> => {
   const { slug } = await props.params;
 
   const { groups } = await getGroupPage(slug);
-  const group = groups.data[0];
+  const group = groups[0];
 
   if (!group) notFound();
 
-  group.attributes.blocks.forEach((block: any) => {
+  group.blocks.forEach((block: any) => {
     switch (block.__typename) {
       case 'ComponentContentBlocksFilesBlock':
       case 'ComponentContentBlocksActivitiesBlock':
-        block.groupSlug = group.attributes.pageMeta.slug;
+        block.groupSlug = group.pageMeta.slug;
         break;
       case 'ComponentContentBlocksLeadersBlock':
-        block.leaders = group.attributes.leaders;
+        block.leaders = group.leaders;
         break;
     }
   });
 
   return (
     <>
-      <Blocks content={group.attributes.blocks} />
+      <Blocks content={group.blocks} />
     </>
   );
 };

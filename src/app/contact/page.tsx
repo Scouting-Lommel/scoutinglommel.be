@@ -17,8 +17,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
   if (!contactPage || !generalData) return {};
 
   const metadata = await generateMetadataForPage(
-    contactPage.data.attributes.pageMeta,
-    generalData.data.attributes,
+    contactPage.pageMeta,
+    generalData,
   );
 
   return { ...metadata };
@@ -32,7 +32,7 @@ const ContactPage = async (props: Props): Promise<JSX.Element> => {
 
   return (
     <>
-      <Blocks content={contactPage.data.attributes.blocks} />
+      <Blocks content={contactPage.blocks} />
       <Form variant="contact" blockProperties={{ slug: 'contact-form' }} props={searchParams} />
     </>
   );

@@ -15,14 +15,12 @@ const HeroBlock = ({
 }: HeroBlockProps): JSX.Element => {
   const socialsCallToAction: SocialsCta = {
     title: socialsCta?.title || '',
-    socialItems: socialsCta?.socialItems.data.map((item: any) => {
-      return item.attributes;
-    }),
+    socialItems: socialsCta?.socialItems || [],
   };
 
   return (
     <BlockContainer
-      bgImage={bgImage?.data?.attributes}
+      bgImage={bgImage}
       bgImagePriority
       bgImageSizes="100vw"
       socialsCta={socialsCta && socialsCallToAction}
@@ -36,7 +34,7 @@ const HeroBlock = ({
         subtitle={subtitle}
         variant={variant}
         callToAction={callToAction}
-        yearTheme={yearTheme?.data?.attributes}
+        yearTheme={yearTheme}
         className="sl-layout"
       />
     </BlockContainer>

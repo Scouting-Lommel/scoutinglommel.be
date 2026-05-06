@@ -1,14 +1,11 @@
 fragment TarifsBlockFragment on ComponentContentBlocksTarifsBlock {
   title
   tarifs {
-    data {
-      attributes {
-        name
-        minimumPrice
-        dayPrice
-        example
-      }
-    }
+    documentId
+    name
+    minimumPrice
+    dayPrice
+    example
   }
   blockProperties {
     variant

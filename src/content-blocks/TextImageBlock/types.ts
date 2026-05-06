@@ -5,7 +5,7 @@ import { CloudinaryImage } from '@/components/atoms/Image/types';
 export type TextImageBlock = {
   title: string;
   content: string;
-  images: { data: { attributes: CloudinaryImage }[] };
+  images: CloudinaryImage[];
   ctaButton: Button;
   blockProperties: BlockContainer;
   orientation: 'default' | 'reversed';

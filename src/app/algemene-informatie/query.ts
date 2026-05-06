@@ -18,23 +18,19 @@ const INFO_PAGE_QUERY = gql`
   ${PAGE_META_FRAGMENT}
   ${IMAGE_FRAGMENT}
 
-  query {
+  query InfoPage {
     infoPage {
-      data {
-        attributes {
-          pageMeta {
-            ...PageMetaFragment
-          }
-          blocks {
-            __typename
-            ...HeroBlockFragment
-            ...TextImageBlockFragment
-            ...YearThemeBlockFragment
-            ...FAQBlockFragment
-            ...MapBlockFragment
-            ...DividerFragment
-          }
-        }
+      pageMeta {
+        ...PageMetaFragment
+      }
+      blocks {
+        __typename
+        ...HeroBlockFragment
+        ...TextImageBlockFragment
+        ...YearThemeBlockFragment
+        ...FAQBlockFragment
+        ...MapBlockFragment
+        ...DividerFragment
       }
     }
   }
@@ -43,21 +39,14 @@ const INFO_PAGE_QUERY = gql`
 const YEAR_THEME_QUERY = gql`
   ${IMAGE_FRAGMENT}
 
-  query {
+  query YearTheme {
     yearThemes(sort: "endYear:desc", pagination: { limit: 1 }) {
-      data {
-        attributes {
-          title
-          description
-          link
-          image {
-            data {
-              attributes {
-                ...ImageFragment
-              }
-            }
-          }
-        }
+      documentId
+      title
+      description
+      link
+      image {
+        ...ImageFragment
       }
     }
   }

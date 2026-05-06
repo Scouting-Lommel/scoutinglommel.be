@@ -15,7 +15,7 @@ const FaqBlock = ({
       orientation={blockProperties?.orientation}
       slug={blockProperties?.slug}
     >
-      <FAQ title={title} faqItems={faqItems.data} bottomText={bottomText} className="sl-layout" />
+      <FAQ title={title} faqItems={faqItems} bottomText={bottomText} className="sl-layout" />
     </BlockContainer>
   );
 };

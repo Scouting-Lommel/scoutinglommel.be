@@ -6,5 +6,5 @@ export type LeadersBLock = {
   title: string;
   cta: CallToAction;
   blockProperties: BlockContainer;
-  leaders: { data: { attributes: Leader }[] };
+  leaders: Leader[];
 } & React.HTMLAttributes<HTMLElement>;

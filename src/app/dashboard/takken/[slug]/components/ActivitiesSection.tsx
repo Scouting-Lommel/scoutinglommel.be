@@ -31,7 +31,7 @@ const ActivitiesSection = ({ group }: Props): JSX.Element => {
     const day = date.getDate().toString().padStart(2, '0');
     const dateString = `${year}-${month}-${day}`;
 
-    const { activities } = await getActivities(group.attributes.slug, dateString);
+    const { activities } = await getActivities(group.slug, dateString);
 
     if (!activities) {
       setError(true);
@@ -39,7 +39,7 @@ const ActivitiesSection = ({ group }: Props): JSX.Element => {
       return;
     }
 
-    setActivities(activities.data);
+    setActivities(activities);
     setLoading(false);
   }, [group]);
 
@@ -57,7 +57,7 @@ const ActivitiesSection = ({ group }: Props): JSX.Element => {
     <BlockContainer slug="group-activities-section">
       <SectionTitle
         title={t('title')}
-        groupId={group.id}
+        groupId={group.documentId}
         type="activity"
         callback={addActivityCallback}
       />
@@ -88,10 +88,10 @@ const ActivitiesSection = ({ group }: Props): JSX.Element => {
               <Form
                 variant="activity"
                 props={{
-                  activity: { ...activity.attributes, id: activity.id },
+                  activity: { ...activity, id: activity.documentId },
                   callback: fetchActivities,
                 }}
-                blockProperties={{ slug: `activity-${activity.id}`, modSmallPadding: true }}
+                blockProperties={{ slug: `activity-${activity.documentId}`, modSmallPadding: true }}
               />
               {key + 1 < groupActivities?.length && <hr />}
             </Fragment>

@@ -12,20 +12,16 @@ const RENTAL_PAGE_QUERY = gql`
   ${PAGE_META_FRAGMENT}
   ${IMAGE_FRAGMENT}
 
-  query {
+  query RentalPage {
     rentalPage {
-      data {
-        attributes {
-          pageMeta {
-            ...PageMetaFragment
-          }
-          blocks {
-            __typename
-            ...HeroBlockFragment
-            ...TextImageBlockFragment
-            ...DividerFragment
-          }
-        }
+      pageMeta {
+        ...PageMetaFragment
+      }
+      blocks {
+        __typename
+        ...HeroBlockFragment
+        ...TextImageBlockFragment
+        ...DividerFragment
       }
     }
   }

@@ -37,6 +37,9 @@ build-storybook.log
 # generated stylesheets
 src/**/*.css
 
+# generated graphql types (run pnpm codegen to regenerate)
+src/types/generated/
+
 # typescript 
 tsconfig.tsbuildinfo
 

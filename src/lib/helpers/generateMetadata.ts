@@ -6,32 +6,16 @@ type PageMetaObj = {
   pageDescription: string;
   slug: string;
   noIndex?: boolean;
-  metaImage?: { data: { attributes: { url: string } } };
+  metaImage?: { url: string };
 };
 
 type MetaDataObj = {
   siteName: string;
   siteDescription: string;
   url: string;
-  image: { data: { attributes: { url: string } } };
+  image: { url: string };
 };
 
-/**
- * Generates metadata for the root layout of the website.
- *
- * @param metaData - An object containing metadata information.
- * @returns An object containing metadata properties for the website.
- *
- * @property {string} metaData.siteName - The name of the site.
- * @property {string} metaData.siteDescription - The description of the site.
- * @property {string} metaData.url - The URL of the site.
- * @property {object} metaData.image - An object containing image data.
- * @property {object} metaData.image.data - An object containing image attributes.
- * @property {object} metaData.image.data.attributes - An object containing image attributes.
- * @property {string} metaData.image.data.attributes.url - The URL of the image.
- *
- * @returns {Metadata} An object containing metadata properties for the website.
- */
 const generateMetadataForRootLayout = async (metaData: MetaDataObj): Promise<Metadata> => {
   const siteUrl = await getSiteUrl();
 
@@ -59,25 +43,17 @@ const generateMetadataForRootLayout = async (metaData: MetaDataObj): Promise<Met
       siteName: metaData.siteName || 'Scouting Sint-Pieter Lommel',
       title: metaData.siteName || 'Scouting Sint-Pieter Lommel',
       description: metaData.siteDescription,
-      images: metaData.image.data?.attributes.url,
+      images: metaData.image?.url,
     },
     twitter: {
       card: 'summary_large_image',
       title: metaData.siteName || 'Scouting Sint-Pieter Lommel',
       description: metaData.siteDescription,
-      images: metaData.image.data?.attributes.url,
+      images: metaData.image?.url,
     },
   };
 };
 
-/**
- * Generates metadata for a page based on the provided page metadata and site metadata.
- *
- * @param {PageMetaObj} pageMeta - The metadata specific to the page.
- * @param {MetaDataObj} metaData - The general metadata for the site.
- * @param {string} [path] - The optional path for the page.
- * @returns {Metadata} The generated metadata object.
- */
 const generateMetadataForPage = async (
   pageMeta: PageMetaObj,
   metaData: MetaDataObj,
@@ -101,13 +77,13 @@ const generateMetadataForPage = async (
       siteName: metaData.siteName || 'Scouting Sint-Pieter Lommel',
       title: `${pageMeta?.pageTitle} • ${metaData.siteName}`,
       description: pageMeta?.pageDescription,
-      images: pageMeta?.metaImage?.data?.attributes.url,
+      images: pageMeta?.metaImage?.url,
     },
     twitter: {
       card: 'summary_large_image',
       title: pageMeta?.pageTitle,
       description: pageMeta?.pageDescription,
-      images: pageMeta?.metaImage?.data?.attributes.url,
+      images: pageMeta?.metaImage?.url,
     },
   };
 };

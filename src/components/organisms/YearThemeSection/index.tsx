@@ -24,7 +24,7 @@ const YearThemeSection = ({ yearTheme }: YearThemeSectionProps): JSX.Element => 
           />
         )}
       </div>
-      <YearTheme className="year-theme-section__image" image={yearTheme.image.data.attributes} />
+      <YearTheme className="year-theme-section__image" image={yearTheme.image} />
     </div>
   );
 };

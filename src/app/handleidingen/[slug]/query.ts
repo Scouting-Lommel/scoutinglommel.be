@@ -6,21 +6,18 @@ const MANUAL_PAGE_QUERY = gql`
   ${PAGE_META_FRAGMENT}
   ${IMAGE_FRAGMENT}
 
-  query getManualPage($slug: String) {
+  query GetManualPage($slug: String) {
     manuals(filters: { slug: { eq: $slug } }) {
-      data {
-        attributes {
-          pageMeta {
-            ...PageMetaFragment
-          }
-          updatedAt
-          title
-          slug
-          locked
-          description
-          body
-        }
+      documentId
+      pageMeta {
+        ...PageMetaFragment
       }
+      updatedAt
+      title
+      slug
+      locked
+      description
+      body
     }
   }
 `;

@@ -29,7 +29,7 @@ const FAQItem = ({ question, answer, image, callToAction }: FAQProps): JSX.Eleme
       </summary>
       <div
         className={cn('faq-item__answer', {
-          'faq-item__answer--with-image': image?.data,
+          'faq-item__answer--with-image': image,
         })}
       >
         <div className="faq-item__answer__content">
@@ -45,10 +45,10 @@ const FAQItem = ({ question, answer, image, callToAction }: FAQProps): JSX.Eleme
             </div>
           )}
         </div>
-        {image?.data && image.data.attributes && (
+        {image && (
           <div className="faq-item__answer_image-container">
             <SLImage
-              data={image.data.attributes}
+              data={image}
               loadingStrategy="lazy"
               className="faq-item__answer__image"
               modMaximisable

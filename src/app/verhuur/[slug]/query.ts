@@ -20,27 +20,24 @@ const RENTAL_LOCATION_PAGE_QUERY = gql`
   ${PAGE_META_FRAGMENT}
   ${IMAGE_FRAGMENT}
 
-  query getRentalLocationPage($slug: String) {
+  query GetRentalLocationPage($slug: String) {
     rentalLocations(filters: { slug: { eq: $slug } }) {
-      data {
-        attributes {
-          pageMeta {
-            ...PageMetaFragment
-          }
-          pageTitle
-          slug
-          description
-          blocks {
-            __typename
-            ...HeroBlockFragment
-            ...TextImageBlockFragment
-            ...GalleryBlockFragment
-            ...TarifsBlockFragment
-            ...CalendarBlockFragment
-            ...MapBlockFragment
-            ...DividerFragment
-          }
-        }
+      documentId
+      pageMeta {
+        ...PageMetaFragment
+      }
+      pageTitle
+      slug
+      description
+      blocks {
+        __typename
+        ...HeroBlockFragment
+        ...TextImageBlockFragment
+        ...GalleryBlockFragment
+        ...TarifsBlockFragment
+        ...CalendarBlockFragment
+        ...MapBlockFragment
+        ...DividerFragment
       }
     }
   }

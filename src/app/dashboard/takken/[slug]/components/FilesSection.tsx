@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import { Fragment, useCallback, useEffect, useState, type JSX } from 'react';
 import { getFiles } from '@/lib/api/files/api';
 import { FormProvider } from '@/lib/contexts/FormContext';
-// import Banner from '@/components/atoms/Banner';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Loader from '@/components/atoms/Loader';
 import Attachment from '@/components/molecules/Attachment';
@@ -22,13 +21,12 @@ const FilesSection = ({ group }: Props): JSX.Element => {
   const [error, setError] = useState<boolean>(false);
 
   const t = useTranslations('dashboard.groupsDetail.sections.filesSection');
-  // const tAlert = useTranslations('dashboard.groupsDetail');
 
   const fetchFiles = useCallback(async () => {
     setError(false);
     setLoading(true);
 
-    const data = await getFiles(group.attributes.slug);
+    const data = await getFiles(group.slug);
 
     if (!data) {
       setError(true);
@@ -36,14 +34,8 @@ const FilesSection = ({ group }: Props): JSX.Element => {
       return;
     }
 
-    setFiles(
-      data?.groups?.data[0]?.attributes?.files?.data?.map((file: any) => ({
-        ...file.attributes,
-        id: file.id,
-      })),
-    );
-
-    setLinks(data?.groups?.data[0]?.attributes.links);
+    setFiles(data?.groups?.[0]?.files);
+    setLinks(data?.groups?.[0]?.links);
 
     setLoading(false);
   }, [group]);
@@ -63,14 +55,12 @@ const FilesSection = ({ group }: Props): JSX.Element => {
       <FormProvider>
         <SectionTitle
           title={t('title')}
-          groupId={group.id}
+          groupId={group.documentId}
           type="file"
           allFiles={groupFiles}
           allLinks={groupLinks}
           callback={addFileCallback}
         />
-
-        {/* <Banner variant="neutral">{tAlert('alert')}</Banner> */}
 
         <BlockContainer slug="group-files" modNoPadding>
           <FileStatus />
@@ -99,7 +89,7 @@ const FilesSection = ({ group }: Props): JSX.Element => {
                     <Attachment
                       variant="link"
                       link={link}
-                      groupId={group.id}
+                      groupId={group.documentId}
                       allLinks={groupLinks}
                       deleteCallback={() => fetchFiles()}
                       modDeleteable

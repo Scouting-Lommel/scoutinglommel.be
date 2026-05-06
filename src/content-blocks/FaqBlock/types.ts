@@ -4,6 +4,6 @@ import { FaqItem } from '@/components/molecules/FaqItem/types';
 export type FaqBlock = {
   title: string;
   bottomText?: string;
-  faqItems: { data: { attributes: FaqItem }[] };
+  faqItems: FaqItem[];
   blockProperties: BlockContainer;
 } & React.HTMLAttributes<HTMLElement>;

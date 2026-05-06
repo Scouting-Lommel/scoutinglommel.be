@@ -12,13 +12,13 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
 
   const { generalData } = await getGeneralData();
   const { rentalLocations } = await getRentalLocationPage(slug);
-  const rentalLocation = rentalLocations.data[0];
+  const rentalLocation = rentalLocations[0];
 
   if (!rentalLocation || !generalData) return {};
 
   const metadata = await generateMetadataForPage(
-    rentalLocation.attributes.pageMeta,
-    generalData.data.attributes,
+    rentalLocation.pageMeta,
+    generalData,
     'verhuur/verhuursettings/revalidate',
   );
 

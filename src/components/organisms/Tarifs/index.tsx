@@ -24,10 +24,10 @@ const Tarifs = ({ tarifs, cta }: TarifsProps): JSX.Element => {
             return (
               <Tarif
                 key={i}
-                dayPrice={tarif.attributes.dayPrice}
-                example={tarif.attributes.example}
-                minimumPrice={tarif.attributes.minimumPrice}
-                name={tarif.attributes.name}
+                dayPrice={tarif.dayPrice}
+                example={tarif.example}
+                minimumPrice={tarif.minimumPrice}
+                name={tarif.name}
               />
             );
           })}

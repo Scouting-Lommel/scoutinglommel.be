@@ -14,8 +14,8 @@ export const generateMetadata = async (): Promise<Metadata> => {
   if (!privacyPolicyPage || !generalData) return {};
 
   const metadata = await generateMetadataForPage(
-    privacyPolicyPage.data.attributes.pageMeta,
-    generalData.data.attributes,
+    privacyPolicyPage.pageMeta,
+    generalData,
   );
 
   return { ...metadata };
@@ -28,7 +28,7 @@ const PrivacyPolicyPage = async (): Promise<JSX.Element> => {
 
   return (
     <>
-      <Blocks content={privacyPolicyPage.data.attributes.blocks} />
+      <Blocks content={privacyPolicyPage.blocks} />
     </>
   );
 };

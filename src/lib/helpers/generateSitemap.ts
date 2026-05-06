@@ -1,23 +1,3 @@
-/**
- * Generates a sitemap array based on the provided sitemap data.
- *
- * @param {any} sitemapData - The data used to generate the sitemap. It should contain the following properties:
- *   - homePage: Object containing data and attributes for the home page.
- *   - groupsPage: Object containing data and attributes for the groups page.
- *   - groups: Array of objects containing data and attributes for individual group pages.
- *   - rentalPage: Object containing data and attributes for the rental page.
- *   - rentalLocations: Array of objects containing data and attributes for individual rental location pages.
- *   - infoPage: Object containing data and attributes for the info page.
- *   - registerPage: Object containing data and attributes for the register page.
- *   - contactPage: Object containing data and attributes for the contact page.
- *   - articlesPage: Object containing data and attributes for the articles page.
- *   - drugsAlcoholPolicyPage: Object containing data and attributes for the drugs and alcohol policy page.
- *   - privacyPolicyPage: Object containing data and attributes for the privacy policy page.
- *
- * @returns {Array<Object>} An array of objects representing the sitemap. Each object contains:
- *   - url: The URL of the page.
- *   - lastModified: The last modified date of the page.
- */
 const generateSitemap = (sitemapData: any): Array<object> => {
   const {
     homePage,
@@ -36,124 +16,95 @@ const generateSitemap = (sitemapData: any): Array<object> => {
   const out = [];
 
   // Home page
-  let page = homePage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
+  if (homePage && !homePage.pageMeta?.noIndex) {
+    out.push({
       url: `${process.env.SITE_URL}/`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
+      lastModified: homePage.updatedAt,
+    });
   }
 
   // Groups page
-  page = groupsPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
+  if (groupsPage && !groupsPage.pageMeta?.noIndex) {
+    out.push({
+      url: `${process.env.SITE_URL}/${groupsPage.pageMeta.slug}`,
+      lastModified: groupsPage.updatedAt,
+    });
   }
 
-  // Groups pages
-  groups?.data?.forEach(({ attributes }: { attributes: any }) => {
-    if (attributes && !attributes.pageMeta?.noIndex) {
-      const pageObject = {
-        url: `${process.env.SITE_URL}/takken/${attributes.slug}`,
-        lastModified: attributes.updatedAt,
-      };
-      out.push(pageObject);
+  // Group pages
+  groups?.forEach((group: any) => {
+    if (group && !group.pageMeta?.noIndex) {
+      out.push({
+        url: `${process.env.SITE_URL}/takken/${group.slug}`,
+        lastModified: group.updatedAt,
+      });
     }
   });
 
   // Rental page
-  page = rentalPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
+  if (rentalPage && !rentalPage.pageMeta?.noIndex) {
+    out.push({
+      url: `${process.env.SITE_URL}/${rentalPage.pageMeta.slug}`,
+      lastModified: rentalPage.updatedAt,
+    });
   }
 
   // Rental location pages
-  rentalLocations?.data?.forEach(({ attributes }: { attributes: any }) => {
-    if (attributes && !attributes.pageMeta?.noIndex) {
-      const pageObject = {
-        url: `${process.env.SITE_URL}/verhuur/${attributes.slug}`,
-        lastModified: attributes.updatedAt,
-      };
-      out.push(pageObject);
+  rentalLocations?.forEach((location: any) => {
+    if (location && !location.pageMeta?.noIndex) {
+      out.push({
+        url: `${process.env.SITE_URL}/verhuur/${location.slug}`,
+        lastModified: location.updatedAt,
+      });
     }
   });
 
   // Info page
-  page = infoPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
+  if (infoPage && !infoPage.pageMeta?.noIndex) {
+    out.push({
+      url: `${process.env.SITE_URL}/${infoPage.pageMeta.slug}`,
+      lastModified: infoPage.updatedAt,
+    });
   }
 
   // Register page
-  page = registerPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
+  if (registerPage && !registerPage.pageMeta?.noIndex) {
+    out.push({
+      url: `${process.env.SITE_URL}/${registerPage.pageMeta.slug}`,
+      lastModified: registerPage.updatedAt,
+    });
   }
 
   // Contact page
-  page = contactPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
+  if (contactPage && !contactPage.pageMeta?.noIndex) {
+    out.push({
+      url: `${process.env.SITE_URL}/${contactPage.pageMeta.slug}`,
+      lastModified: contactPage.updatedAt,
+    });
   }
 
   // Articles page
-  page = articlesPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
+  if (articlesPage && !articlesPage.pageMeta?.noIndex) {
+    out.push({
+      url: `${process.env.SITE_URL}/${articlesPage.pageMeta.slug}`,
+      lastModified: articlesPage.updatedAt,
+    });
   }
 
   // Drugs and alcohol policy page
-  page = drugsAlcoholPolicyPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
+  if (drugsAlcoholPolicyPage && !drugsAlcoholPolicyPage.pageMeta?.noIndex) {
+    out.push({
+      url: `${process.env.SITE_URL}/${drugsAlcoholPolicyPage.pageMeta.slug}`,
+      lastModified: drugsAlcoholPolicyPage.updatedAt,
+    });
   }
 
   // Privacy policy page
-  page = privacyPolicyPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
+  if (privacyPolicyPage && !privacyPolicyPage.pageMeta?.noIndex) {
+    out.push({
+      url: `${process.env.SITE_URL}/${privacyPolicyPage.pageMeta.slug}`,
+      lastModified: privacyPolicyPage.updatedAt,
+    });
   }
 
   return out;

@@ -13,7 +13,7 @@ const LeadersBlock = ({ title, leaders, cta, blockProperties }: LeadersBlockProp
     >
       <div className="sl-layout">
         <h2 className="t-headline-2 t-align-center">{title}</h2>
-        <Leaders leaders={leaders.data} />
+        <Leaders leaders={leaders} />
       </div>
     </BlockContainer>
   );

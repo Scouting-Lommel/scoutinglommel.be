@@ -46,7 +46,7 @@ const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.El
         return;
       }
 
-      setActivities(activities.data);
+      setActivities(activities);
       setLoading(false);
     } catch (e) {
       setError(true);
@@ -75,7 +75,7 @@ const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.El
         return;
       }
 
-      setActivities(events.data);
+      setActivities(events);
       setLoading(false);
     } catch (e) {
       setError(true);
@@ -110,12 +110,12 @@ const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.El
               return (
                 <Activity
                   key={i}
-                  title={act.attributes.title}
-                  startDate={act.attributes.startDate}
-                  startTime={act.attributes.startTime}
-                  endDate={act.attributes.endDate}
-                  endTime={act.attributes.endTime}
-                  description={act.attributes.description}
+                  title={act.title}
+                  startDate={act.startDate}
+                  startTime={act.startTime}
+                  endDate={act.endDate}
+                  endTime={act.endTime}
+                  description={act.description}
                 />
               );
             }

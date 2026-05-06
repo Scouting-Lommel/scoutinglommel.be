@@ -11,7 +11,7 @@ const CarouselItem = ({ logo, name, slug }: CarouselItemProps): JSX.Element => {
       <a className="embla__slide__card" href={'/takken/' + slug}>
         <div className="embla__image__container">
           <SLImage
-            data={logo.data?.attributes}
+            data={logo}
             loadingStrategy="lazy"
             className="embla__slide__img"
           />

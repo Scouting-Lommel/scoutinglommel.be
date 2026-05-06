@@ -18,56 +18,43 @@ const GROUP_PAGE_QUERY = gql`
   ${PAGE_META_FRAGMENT}
   ${IMAGE_FRAGMENT}
 
-  query getGroupPage($slug: String) {
+  query GetGroupPage($slug: String) {
     groups(filters: { slug: { eq: $slug } }) {
-      data {
-        attributes {
-          pageMeta {
-            ...PageMetaFragment
-          }
-          files {
-            data {
-              attributes {
-                ext
-                url
-                name
-                size
-              }
-            }
-          }
-          links {
-            id
-            label
-            link
-          }
-          pageTitle
-          subtitle
-          leaders {
-            data {
-              attributes {
-                active
-                firstName
-                lastName
-                image {
-                  data {
-                    attributes {
-                      ...ImageFragment
-                    }
-                  }
-                }
-              }
-            }
-          }
-          blocks {
-            __typename
-            ...HeroBlockFragment
-            ...TextImageBlockFragment
-            ...LeadersBlockFragment
-            ...FilesBlockFragment
-            ...ActivityBlockFragment
-            ...DividerFragment
-          }
+      documentId
+      pageMeta {
+        ...PageMetaFragment
+      }
+      files {
+        documentId
+        ext
+        url
+        name
+        size
+      }
+      links {
+        id
+        label
+        link
+      }
+      pageTitle
+      subtitle
+      leaders {
+        documentId
+        active
+        firstName
+        lastName
+        image {
+          ...ImageFragment
         }
+      }
+      blocks {
+        __typename
+        ...HeroBlockFragment
+        ...TextImageBlockFragment
+        ...LeadersBlockFragment
+        ...FilesBlockFragment
+        ...ActivityBlockFragment
+        ...DividerFragment
       }
     }
   }

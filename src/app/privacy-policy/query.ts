@@ -12,20 +12,16 @@ const PRIVACY_PAGE_QUERY = gql`
   ${PAGE_META_FRAGMENT}
   ${IMAGE_FRAGMENT}
 
-  query {
+  query PrivacyPolicyPage {
     privacyPolicyPage {
-      data {
-        attributes {
-          pageMeta {
-            ...PageMetaFragment
-          }
-          blocks {
-            __typename
-            ...HeroBlockFragment
-            ...PolicyBlockFragment
-            ...DividerFragment
-          }
-        }
+      pageMeta {
+        ...PageMetaFragment
+      }
+      blocks {
+        __typename
+        ...HeroBlockFragment
+        ...PolicyBlockFragment
+        ...DividerFragment
       }
     }
   }

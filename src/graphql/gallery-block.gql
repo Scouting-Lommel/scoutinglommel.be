@@ -2,11 +2,7 @@ fragment GalleryBlockFragment on ComponentContentBlocksGalleryBlock {
   title
   initialItems
   images {
-    data {
-      attributes {
-        ...ImageFragment
-      }
-    }
+    ...ImageFragment
   }
   cta: callToAction {
     title

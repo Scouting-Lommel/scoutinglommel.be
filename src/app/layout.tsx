@@ -46,7 +46,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const data = await getSeoData();
   if (!data) return {};
 
-  const metadata = await generateMetadataForRootLayout(data.generalData.data.attributes);
+  const metadata = await generateMetadataForRootLayout(data.generalData);
 
   return { ...metadata };
 };
@@ -54,7 +54,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
 const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
   const data = await getLayoutData();
 
-  const globalAlert = data.generalData.data.attributes.globalAlert;
+  const globalAlert = data.generalData.globalAlert;
 
   return (
     <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
@@ -69,10 +69,10 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
               )}
 
               <Header
-                logo={data.generalData.data.attributes.logo}
-                mainNavigation={data.generalData.data.attributes.mainNavigation}
-                groups={data.groups.data.map((item: any) => item.attributes)}
-                rentalLocations={data.rentalLocations.data.map((item: any) => item.attributes)}
+                logo={data.generalData.logo}
+                mainNavigation={data.generalData.mainNavigation}
+                groups={data.groups}
+                rentalLocations={data.rentalLocations}
               />
 
               <main className="sl-main" id="main">
@@ -80,12 +80,12 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
               </main>
 
               <Footer
-                siteName={data.generalData.data.attributes.siteName}
-                vatNumber={data.generalData.data.attributes.vatNumber}
-                groupNumber={data.generalData.data.attributes.groupNumber}
-                address={data.generalData.data.attributes.address}
-                contactItems={data.generalData.data.attributes.contactItems}
-                footerNavigation={data.generalData.data.attributes.footerNavigation}
+                siteName={data.generalData.siteName}
+                vatNumber={data.generalData.vatNumber}
+                groupNumber={data.generalData.groupNumber}
+                address={data.generalData.address}
+                contactItems={data.generalData.contactItems}
+                footerNavigation={data.generalData.footerNavigation}
               />
             </DataProvider>
           </SessionProvider>
@@ -93,7 +93,7 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateStructuredData(data.generalData?.data?.attributes)),
+            __html: JSON.stringify(generateStructuredData(data.generalData)),
           }}
         />
         <Analytics />

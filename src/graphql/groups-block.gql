@@ -1,18 +1,11 @@
 fragment GroupsBlockFragment on ComponentContentBlocksGroupsBlock {
   title
   groups {
-    data {
-      attributes {
-        name
-        slug
-        logo {
-          data {
-            attributes {
-              ...ImageFragment
-            }
-          }
-        }
-      }
+    documentId
+    name
+    slug
+    logo {
+      ...ImageFragment
     }
   }
   blockProperties {

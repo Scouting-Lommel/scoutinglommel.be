@@ -16,10 +16,10 @@ const FAQ = ({ title, bottomText, faqItems, className }: FAQProps): JSX.Element 
         {faqItems.map((item, i) => {
           return (
             <FAQItem
-              question={item.attributes.question}
-              answer={item.attributes.answer}
-              image={item.attributes.image}
-              callToAction={item.attributes.callToAction}
+              question={item.question}
+              answer={item.answer}
+              image={item.image}
+              callToAction={item.callToAction}
               key={i}
             />
           );
