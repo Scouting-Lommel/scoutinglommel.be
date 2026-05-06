@@ -45,6 +45,7 @@ tsconfig.tsbuildinfo
 
 # claude
 CLAUDE.md
+.claude/
 
 
 # cursor
