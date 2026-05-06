@@ -1,6 +1,6 @@
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
-const schemaUrl = process.env.STRAPI_SCHEMA_URL || 'https://admin.scoutinglommel.test/graphql';
+const schemaUrl = process.env.STRAPI_SCHEMA_URL;
 
 const config: CodegenConfig = {
   overwrite: true,

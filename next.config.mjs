@@ -15,11 +15,6 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'admin.scoutinglommel.test',
-        pathname: '/uploads/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'admin.scoutinglommel.be',
         pathname: '/uploads/**',
       },
