@@ -8,7 +8,7 @@ import { defaultLocale } from '@/i18n/locales';
 import { getLayoutData, getSeoData } from '@/lib/api/general/api';
 import { DataProvider } from '@/lib/contexts/DataContext';
 import { generateMetadataForRootLayout } from '@/lib/helpers/generateMetadata';
-import { generateStructuredData } from '@/lib/helpers/generateStructuredData';
+import { generateStructuredData, generateWebSiteSchema } from '@/lib/helpers/generateStructuredData';
 import {
   transformMainNavigation,
   transformFooterNavigation,
@@ -104,6 +104,7 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
 
   return (
     <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
+      <link rel="preconnect" href="https://res.cloudinary.com" />
       <body>
         <NextIntlClientProvider
           messages={{ common: commonMessages, dashboard: dashboardMessages, forms: formsMessages }}
@@ -153,6 +154,14 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
             ),
           }}
         />
+        {generateWebSiteSchema(data.generalData) && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(generateWebSiteSchema(data.generalData)).replace(/</g, '\\u003c'),
+            }}
+          />
+        )}
         <BreadcrumbJsonLd />
         <Analytics />
         <SpeedInsights />

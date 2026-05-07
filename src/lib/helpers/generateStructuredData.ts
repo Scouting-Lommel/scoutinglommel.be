@@ -11,7 +11,7 @@ type StructuredDataInput = {
 const generateStructuredData = (data: StructuredDataInput | null | undefined) => {
   if (!data) return {};
 
-  const phoneItem = (data.contactItems ?? []).find((item) => item?.link?.startsWith('tel:'));
+const phoneItem = (data.contactItems ?? []).find((item) => item?.link?.startsWith('tel:'));
   const telephone = phoneItem?.link?.replace('tel:', '') ?? undefined;
 
   // socials is a v5 flat array: [{ title, link, icon }]
@@ -29,7 +29,27 @@ const generateStructuredData = (data: StructuredDataInput | null | undefined) =>
     description: data.siteDescription,
     url: data.url,
     foundingDate: '1958-11-18',
-    knowsAbout: ['Scouting', 'Jeugdbeweging', 'Scouts & Gidsen Vlaanderen', 'Lommel Sahara'],
+    knowsAbout: [
+      'Scouting Lommel',
+      'Scouting Sint-Pieter Lommel',
+      'Scouting Sint-Pieter',
+      'Scouts Lommel',
+      'Scouts Sint-Pieter Lommel',
+      'Scouts Sint-Pieter',
+      'Scouting',
+      'Scouts',
+      'Gidsen',
+      'Scouts en Gidsen',
+      'Scouts & Gidsen',
+      'Jeugdbeweging',
+      'Scouts & Gidsen Vlaanderen',
+      'Scouts en Gidsen Vlaanderen',
+      'Lommel Sahara',
+      'Lommelse Sahara',
+      'Sahara Lommel',
+      'Sahara',
+      'Kampplaats',
+    ],
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Nieuwe Kopen 4',
@@ -40,11 +60,11 @@ const generateStructuredData = (data: StructuredDataInput | null | undefined) =>
     geo: {
       '@type': 'GeoCoordinates',
       // TODO: verify exact coordinates for Nieuwe Kopen 4, 3920 Lommel via Google Maps
-      latitude: 51.2296,
-      longitude: 5.3127,
+      latitude: 51.24558081692069,
+      longitude: 5.301134634828866,
     },
     areaServed: [
-      { '@type': 'City', name: 'Lommel', sameAs: 'https://www.wikidata.org/wiki/Q57045' },
+      { '@type': 'City', name: 'Lommel', sameAs: 'https://www.wikidata.org/wiki/Q194366' },
       { '@type': 'AdministrativeArea', name: 'Limburg' },
     ],
     contactPoint: {
@@ -64,6 +84,23 @@ const generateStructuredData = (data: StructuredDataInput | null | undefined) =>
 };
 
 export { generateStructuredData };
+
+export const generateWebSiteSchema = (data: StructuredDataInput | null | undefined) => {
+  if (!data?.url) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${data.url}/#website`,
+    name: data.siteName,
+    url: data.url,
+    description: data.siteDescription,
+    inLanguage: 'nl-BE',
+    publisher: {
+      '@type': 'Organization',
+      '@id': data.url,
+    },
+  };
+};
 
 export const generateFaqSchema = (
   faqItems: Array<{ question?: string | null; answer?: string | null }>,
