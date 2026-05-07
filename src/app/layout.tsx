@@ -93,7 +93,7 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateStructuredData(data.generalData)),
+            __html: JSON.stringify(generateStructuredData(data.generalData)).replace(/</g, '\\u003c'),
           }}
         />
         <Analytics />

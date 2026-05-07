@@ -75,7 +75,10 @@ const generateMetadataForPage = async (
       locale: 'nl',
       type: 'website',
       siteName: metaData?.siteName || 'Scouting Sint-Pieter Lommel',
-      title: `${pageMeta?.pageTitle} • ${metaData?.siteName}`,
+      title:
+        pageMeta?.pageTitle && metaData?.siteName
+          ? `${pageMeta.pageTitle} • ${metaData.siteName}`
+          : pageMeta?.pageTitle ?? metaData?.siteName ?? undefined,
       description: pageMeta?.pageDescription ?? undefined,
       images: pageMeta?.metaImage?.url ?? undefined,
     },
