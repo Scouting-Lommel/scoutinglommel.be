@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { JSX } from 'react';
 import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
+import { generateFaqSchema } from '@/lib/helpers/generateStructuredData';
 import Blocks from '@/content-blocks';
 import { getGeneralData } from '../api';
 import { getInfoPage, getYearTheme } from './api';
@@ -35,9 +36,21 @@ const InfoPage = async (): Promise<JSX.Element> => {
     blocks[blockIndex] = { ...blocks[blockIndex], yearTheme: yearThemes[0] };
   }
 
+  const faqBlocks = blocks.filter(
+    (b: any) => b.__typename === 'ComponentContentBlocksFaqBlock',
+  );
+  const allFaqItems = faqBlocks.flatMap((b: any) => b.faqItems ?? []);
+  const faqSchema = allFaqItems.length ? generateFaqSchema(allFaqItems) : null;
+
   return (
     <>
       <Blocks content={blocks} />
+      {faqSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}
+        />
+      )}
     </>
   );
 };

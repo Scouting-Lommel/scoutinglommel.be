@@ -50,9 +50,13 @@ export default function middleware(req: NextRequest) {
     return groupsMiddleware(req);
   }
 
-  return NextResponse.next();
+  // Inject pathname so server components (e.g. BreadcrumbJsonLd) can read the current route
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set('x-pathname', url);
+  return NextResponse.next({ request: { headers: requestHeaders } });
 }
 
 export const config = {
-  matcher: ['/inloggen', '/dashboard/:path*', '/playground'],
+  // Run on all routes except Next.js internals and static assets
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|assets).*)'],
 };

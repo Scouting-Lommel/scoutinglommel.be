@@ -14,6 +14,7 @@ import {
   transformFooterNavigation,
 } from '@/lib/helpers/transformNavigation';
 import SessionProvider from '@/lib/providers/SessionProvider';
+import BreadcrumbJsonLd from '@/components/atoms/BreadcrumbJsonLd';
 import GlobalAlert from '@/components/atoms/GlobalAlert';
 import SkipToContent from '@/components/atoms/SkipToContent';
 import Footer from '@/components/organisms/Footer';
@@ -152,6 +153,7 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
             ),
           }}
         />
+        <BreadcrumbJsonLd />
         <Analytics />
         <SpeedInsights />
       </body>

@@ -4,6 +4,7 @@ import { getSiteUrl } from './getSiteUrl';
 type PageMetaObj = {
   pageTitle?: string | null;
   pageDescription?: string | null;
+  slug?: string | null;
   noIndex?: boolean | null;
   metaImage?: { url?: string | null } | null;
 };
@@ -37,11 +38,12 @@ const generateMetadataForRootLayout = async (metaData: MetaDataObj): Promise<Met
       shortcut: { url: '/assets/head/favicon.ico' },
     },
     openGraph: {
-      locale: 'nl',
+      locale: 'nl_BE',
       type: 'website',
       siteName: metaData.siteName || 'Scouting Sint-Pieter Lommel',
       title: metaData.siteName || 'Scouting Sint-Pieter Lommel',
       description: metaData.siteDescription ?? undefined,
+      url: baseUrl ?? undefined,
       images: metaData.image?.url ?? undefined,
     },
     twitter: {
@@ -60,18 +62,20 @@ const generateMetadataForPage = async (
 ): Promise<Metadata> => {
   const siteUrl = await getSiteUrl();
 
+  const pageUrl = `${siteUrl}${path ? '/' + path : ''}${pageMeta?.slug ? '/' + pageMeta?.slug : ''}`;
+
   return {
     title: pageMeta?.pageTitle ?? undefined,
     description: pageMeta?.pageDescription ?? undefined,
     alternates: {
-      canonical: `${siteUrl}${path ? '/' + path : ''}`,
+      canonical: pageUrl,
     },
     robots: {
       index: !(pageMeta?.noIndex ?? false),
       follow: !(pageMeta?.noIndex ?? false),
     },
     openGraph: {
-      locale: 'nl',
+      locale: 'nl_BE',
       type: 'website',
       siteName: metaData?.siteName || 'Scouting Sint-Pieter Lommel',
       title:
@@ -79,6 +83,7 @@ const generateMetadataForPage = async (
           ? `${pageMeta.pageTitle} • ${metaData.siteName}`
           : (pageMeta?.pageTitle ?? metaData?.siteName ?? undefined),
       description: pageMeta?.pageDescription ?? undefined,
+      url: pageUrl,
       images: pageMeta?.metaImage?.url ?? undefined,
     },
     twitter: {
