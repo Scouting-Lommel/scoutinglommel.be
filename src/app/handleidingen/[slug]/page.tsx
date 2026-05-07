@@ -59,13 +59,13 @@ const ManualPage = async (props: Props): Promise<JSX.Element> => {
       </BlockContainer>
 
       <BlockContainer slug={`${manual?.slug}-body`} modSmallPadding>
-        <Typography data={manual?.body} />
+        <Typography data={manual?.body as any} />
       </BlockContainer>
 
       <BlockContainer slug={`${manual?.slug}-footer`} modSmallPadding>
         <Typography
           variant="muted"
-          data={`${t('lastChanged')}: ${formatDateTime(manual?.updatedAt)}`}
+          data={`${t('lastChanged')}: ${formatDateTime(manual?.updatedAt ?? '')}`}
         />
       </BlockContainer>
     </article>

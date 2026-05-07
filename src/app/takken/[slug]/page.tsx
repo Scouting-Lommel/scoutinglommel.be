@@ -47,7 +47,7 @@ const GroupPage = async (props: Props): Promise<JSX.Element> => {
 
   if (!group) notFound();
 
-  group.blocks.forEach((block: any) => {
+  group.blocks?.forEach((block: any) => {
     switch (block.__typename) {
       case 'ComponentContentBlocksFilesBlock':
       case 'ComponentContentBlocksActivitiesBlock':

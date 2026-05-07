@@ -1,20 +1,21 @@
 import { generateApiQuery } from '@/lib/api';
+import type { FooterDataQuery, NavigationDataQuery, SeoDataQuery } from '@/types/generated/Graphql';
 import { NAVIGATION_DATA, FOOTER_DATA, SEO_DATA } from './queries';
 
-export const getNavigationData = (): Promise<any> => {
-  return generateApiQuery({
+export const getNavigationData = (): Promise<NavigationDataQuery> => {
+  return generateApiQuery<NavigationDataQuery>({
     query: NAVIGATION_DATA,
   });
 };
 
-export const getFooterData = (): Promise<any> => {
-  return generateApiQuery({
+export const getFooterData = (): Promise<FooterDataQuery> => {
+  return generateApiQuery<FooterDataQuery>({
     query: FOOTER_DATA,
   });
 };
 
-export const getSeoData = (): Promise<any> => {
-  return generateApiQuery({
+export const getSeoData = (): Promise<SeoDataQuery> => {
+  return generateApiQuery<SeoDataQuery>({
     query: SEO_DATA,
   });
 };

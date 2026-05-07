@@ -44,7 +44,7 @@ export const viewport = async (): Promise<Viewport> => {
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const data = await getSeoData();
-  if (!data) return {};
+  if (!data || !data.generalData) return {};
 
   const metadata = await generateMetadataForRootLayout(data.generalData);
 

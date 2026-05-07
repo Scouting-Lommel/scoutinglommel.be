@@ -1,4 +1,14 @@
 import { generateApiQuery } from '@/lib/api';
+import type {
+  CreateActivityMutation,
+  CreateActivityMutationVariables,
+  DeleteActivityMutation,
+  DeleteActivityMutationVariables,
+  GetActivitiesQuery,
+  GetActivitiesQueryVariables,
+  UpdateActivityMutation,
+  UpdateActivityMutationVariables,
+} from '@/types/generated/Graphql';
 import {
   CREATE_ACTIVITY_MUTATION,
   DELETE_ACTIVITY_MUTATION,
@@ -6,9 +16,9 @@ import {
 } from './mutations';
 import { GET_ACTIVITIES_QUERY } from './queries';
 
-export const getActivities = (slug: string, date: string): Promise<any> => {
-  return generateApiQuery({
-    variables: { slug: slug, currDate: date },
+export const getActivities = (slug: string, date: string): Promise<GetActivitiesQuery> => {
+  return generateApiQuery<GetActivitiesQuery, GetActivitiesQueryVariables>({
+    variables: { slug, currDate: date },
     query: GET_ACTIVITIES_QUERY,
   });
 };
@@ -29,8 +39,8 @@ export function createActivity({
   endTime: string;
   description: string;
   groupDocumentId: string;
-}): Promise<any> {
-  return generateApiQuery({
+}): Promise<CreateActivityMutation> {
+  return generateApiQuery<CreateActivityMutation, CreateActivityMutationVariables>({
     variables: { title, startDate, startTime, endDate, endTime, description, groupDocumentId },
     query: CREATE_ACTIVITY_MUTATION,
     operation: 'mutation',
@@ -53,16 +63,16 @@ export function updateActivity({
   endDate: string;
   endTime: string;
   description: string;
-}): Promise<any> {
-  return generateApiQuery({
+}): Promise<UpdateActivityMutation> {
+  return generateApiQuery<UpdateActivityMutation, UpdateActivityMutationVariables>({
     variables: { documentId, title, startDate, startTime, endDate, endTime, description },
     query: UPDATE_ACTIVITY_MUTATION,
     operation: 'mutation',
   });
 }
 
-export function deleteActivity(documentId: string): Promise<any> {
-  return generateApiQuery({
+export function deleteActivity(documentId: string): Promise<DeleteActivityMutation> {
+  return generateApiQuery<DeleteActivityMutation, DeleteActivityMutationVariables>({
     variables: { documentId },
     query: DELETE_ACTIVITY_MUTATION,
     operation: 'mutation',

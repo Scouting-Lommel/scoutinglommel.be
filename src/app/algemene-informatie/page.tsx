@@ -27,7 +27,7 @@ const InfoPage = async (): Promise<JSX.Element> => {
 
   if (!infoPage) notFound();
 
-  const blocks = [...(infoPage.blocks ?? [])];
+  const blocks = [...(infoPage.blocks ?? [])] as any[];
   const blockIndex = blocks.findIndex(
     (el: any) => el.__typename === 'ComponentContentBlocksYearThemeBlock',
   );

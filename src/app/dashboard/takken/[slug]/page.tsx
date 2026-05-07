@@ -31,7 +31,7 @@ const DashboardGroupPage = async (props: Props): Promise<JSX.Element> => {
   return (
     <div className="sl-layout">
       <BlockContainer slug="group-hero">
-        <Hero title={group.pageTitle} subtitle={t('subtitle')} variant="simple" />
+        <Hero title={group.pageTitle ?? ''} subtitle={t('subtitle')} variant="simple" />
       </BlockContainer>
 
       <FileSection group={group} />

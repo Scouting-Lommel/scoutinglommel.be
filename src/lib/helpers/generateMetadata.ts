@@ -2,18 +2,18 @@ import { Metadata } from 'next';
 import { getSiteUrl } from './getSiteUrl';
 
 type PageMetaObj = {
-  pageTitle: string;
-  pageDescription: string;
-  slug: string;
-  noIndex?: boolean;
-  metaImage?: { url: string };
+  pageTitle?: string | null;
+  pageDescription?: string | null;
+  slug?: string | null;
+  noIndex?: boolean | null;
+  metaImage?: { url?: string | null } | null;
 };
 
 type MetaDataObj = {
-  siteName: string;
-  siteDescription: string;
-  url: string;
-  image: { url: string };
+  siteName?: string | null;
+  siteDescription?: string | null;
+  url?: string | null;
+  image?: { url?: string | null } | null;
 };
 
 const generateMetadataForRootLayout = async (metaData: MetaDataObj): Promise<Metadata> => {
@@ -26,7 +26,7 @@ const generateMetadataForRootLayout = async (metaData: MetaDataObj): Promise<Met
       default: metaData.siteName || 'Scouting Sint-Pieter Lommel',
       template: `%s • ${metaData.siteName || 'Scouting Sint-Pieter Lommel'}`,
     },
-    description: metaData.siteDescription,
+    description: metaData.siteDescription ?? undefined,
     metadataBase: baseUrl ? new URL(baseUrl) : null,
     manifest: '/assets/head/site.webmanifest',
     icons: {
@@ -42,28 +42,28 @@ const generateMetadataForRootLayout = async (metaData: MetaDataObj): Promise<Met
       type: 'website',
       siteName: metaData.siteName || 'Scouting Sint-Pieter Lommel',
       title: metaData.siteName || 'Scouting Sint-Pieter Lommel',
-      description: metaData.siteDescription,
-      images: metaData.image?.url,
+      description: metaData.siteDescription ?? undefined,
+      images: metaData.image?.url ?? undefined,
     },
     twitter: {
       card: 'summary_large_image',
       title: metaData.siteName || 'Scouting Sint-Pieter Lommel',
-      description: metaData.siteDescription,
-      images: metaData.image?.url,
+      description: metaData.siteDescription ?? undefined,
+      images: metaData.image?.url ?? undefined,
     },
   };
 };
 
 const generateMetadataForPage = async (
-  pageMeta: PageMetaObj,
-  metaData: MetaDataObj,
+  pageMeta: PageMetaObj | null | undefined,
+  metaData: MetaDataObj | null | undefined,
   path?: string,
 ): Promise<Metadata> => {
   const siteUrl = await getSiteUrl();
 
   return {
-    title: pageMeta?.pageTitle,
-    description: pageMeta?.pageDescription,
+    title: pageMeta?.pageTitle ?? undefined,
+    description: pageMeta?.pageDescription ?? undefined,
     alternates: {
       canonical: `${siteUrl}${path ? '/' + path : ''}${pageMeta?.slug ? '/' + pageMeta?.slug : ''}`,
     },
@@ -74,16 +74,16 @@ const generateMetadataForPage = async (
     openGraph: {
       locale: 'nl',
       type: 'website',
-      siteName: metaData.siteName || 'Scouting Sint-Pieter Lommel',
-      title: `${pageMeta?.pageTitle} • ${metaData.siteName}`,
-      description: pageMeta?.pageDescription,
-      images: pageMeta?.metaImage?.url,
+      siteName: metaData?.siteName || 'Scouting Sint-Pieter Lommel',
+      title: `${pageMeta?.pageTitle} • ${metaData?.siteName}`,
+      description: pageMeta?.pageDescription ?? undefined,
+      images: pageMeta?.metaImage?.url ?? undefined,
     },
     twitter: {
       card: 'summary_large_image',
-      title: pageMeta?.pageTitle,
-      description: pageMeta?.pageDescription,
-      images: pageMeta?.metaImage?.url,
+      title: pageMeta?.pageTitle ?? undefined,
+      description: pageMeta?.pageDescription ?? undefined,
+      images: pageMeta?.metaImage?.url ?? undefined,
     },
   };
 };
