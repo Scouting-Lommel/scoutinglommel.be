@@ -47,6 +47,8 @@ tsconfig.tsbuildinfo
 CLAUDE.md
 .claude/
 
+# sisyphus
+.sisyphus/
 
 # cursor
 .cursor/rules
