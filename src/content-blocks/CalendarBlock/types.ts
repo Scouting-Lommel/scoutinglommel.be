@@ -3,8 +3,8 @@ import { CalendarEvent } from '@/components/atoms/Calendar/types';
 import { CallToAction } from '@/components/molecules/CallToAction/types';
 
 export type CalendarBlock = {
-  title: string;
+  calendarTitle: string;
   calendarEvents: CalendarEvent[];
   cta: CallToAction;
-  blockProperties: BlockContainer;
+  calendarBlockProperties: BlockContainer;
 } & React.HTMLAttributes<HTMLElement>;

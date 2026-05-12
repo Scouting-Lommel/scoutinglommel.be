@@ -4,21 +4,21 @@ import Gallery from '@/components/organisms/Gallery';
 import { GalleryBlock as GalleryBlockProps } from './types';
 
 const GalleryBlock = ({
-  title,
-  initialItems,
-  images,
-  blockProperties,
+  galleryTitle,
+  galleryInitialItems,
+  galleryImages,
+  galleryBlockProperties,
   cta,
 }: GalleryBlockProps): JSX.Element => {
   return (
     <BlockContainer
-      variant={blockProperties?.variant}
-      orientation={blockProperties?.orientation}
-      slug={blockProperties?.slug}
+      variant={galleryBlockProperties?.variant}
+      orientation={galleryBlockProperties?.orientation}
+      slug={galleryBlockProperties?.slug}
       cta={cta}
     >
       <section className="sl-layout">
-        <Gallery title={title} initialItems={initialItems} images={images} />
+        <Gallery title={galleryTitle} initialItems={galleryInitialItems} images={galleryImages} />
       </section>
     </BlockContainer>
   );

@@ -3,12 +3,12 @@ import { CloudinaryImage } from '@/components/atoms/Image/types';
 import { CallToAction } from '@/components/molecules/CallToAction/types';
 
 export type GroupsBlock = {
-  title: string;
-  groups: {
+  groupsTitle: string;
+  groupsItems: {
     name: string;
     slug: string;
     logo: CloudinaryImage;
   }[];
   cta: CallToAction;
-  blockProperties: BlockContainer;
+  groupsBlockProperties: BlockContainer;
 } & React.HTMLAttributes<HTMLElement>;

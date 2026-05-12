@@ -1,3 +1,3 @@
 export type Divider = {
-  variant: 'default' | 'dark';
+  dividerVariant: 'default' | 'dark';
 } & React.HTMLAttributes<HTMLElement>;

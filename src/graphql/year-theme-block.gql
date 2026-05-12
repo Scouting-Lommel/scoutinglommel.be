@@ -1,11 +1,11 @@
 fragment YearThemeBlockFragment on ComponentContentBlocksYearThemeBlock {
-  title
-  blockProperties {
+  yearThemeTitle
+  yearThemeBlockProperties {
     variant
     orientation
     slug
   }
-  cta: callToAction {
+  cta: yearThemeCallToAction {
     title
     intro
     ctaLabel

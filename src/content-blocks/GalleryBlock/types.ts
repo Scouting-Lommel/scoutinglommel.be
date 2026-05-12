@@ -1,8 +1,11 @@
 import { BlockContainer } from '@/components/atoms/BlockContainer/types';
+import { CloudinaryImage } from '@/components/atoms/Image/types';
 import { CallToAction } from '@/components/molecules/CallToAction/types';
-import { Gallery } from '@/components/organisms/Gallery/types';
 
-export type GalleryBlock = Gallery & {
-  blockProperties: BlockContainer;
+export type GalleryBlock = {
+  galleryTitle: string;
+  galleryInitialItems: number;
+  galleryImages: CloudinaryImage[];
+  galleryBlockProperties: BlockContainer;
   cta: CallToAction;
 } & React.HTMLAttributes<HTMLElement>;

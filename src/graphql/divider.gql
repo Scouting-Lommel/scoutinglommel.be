@@ -1,3 +1,4 @@
 fragment DividerFragment on ComponentContentBlocksDivider {
   id
+  dividerVariant
 }

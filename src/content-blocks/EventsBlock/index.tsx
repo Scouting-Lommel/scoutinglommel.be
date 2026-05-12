@@ -6,22 +6,22 @@ import { EventsBlock as EventsBlockProps } from './types';
 
 const EventsBlock = ({
   blockTitle,
-  initialItems,
+  eventsInitialItems,
   callToAction,
-  blockProperties,
+  eventsBlockProperties,
 }: EventsBlockProps): JSX.Element => {
   return (
     <>
       <BlockContainer
-        variant={blockProperties.variant}
-        orientation={blockProperties.orientation}
-        slug={blockProperties.slug}
+        variant={eventsBlockProperties.variant}
+        orientation={eventsBlockProperties.orientation}
+        slug={eventsBlockProperties.slug}
         cta={callToAction}
       >
         <section className="sl-layout">
           <h2 className="t-headline-2 t-align-center">{blockTitle}</h2>
 
-          <Activities variant="events" initialItems={initialItems} />
+          <Activities variant="events" initialItems={eventsInitialItems} />
         </section>
       </BlockContainer>
     </>

@@ -3,12 +3,12 @@ import BlockContainer from '@/components/atoms/BlockContainer';
 import Policy from '@/components/organisms/Policy';
 import { PolicyBlock as PolicyBlockProps } from './types';
 
-const PolicyBlock = ({ title, sections }: PolicyBlockProps): JSX.Element => {
+const PolicyBlock = ({ policyTitle, policySections }: PolicyBlockProps): JSX.Element => {
   return (
     <>
-      <BlockContainer variant="light" orientation="default" slug={title + 'Policy'}>
+      <BlockContainer variant="light" orientation="default" slug={policyTitle + 'Policy'}>
         <div className="sl-layout">
-          <Policy sections={sections} title={title} />
+          <Policy sections={policySections} title={policyTitle} />
         </div>
       </BlockContainer>
     </>

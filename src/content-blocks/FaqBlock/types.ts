@@ -2,8 +2,8 @@ import { BlockContainer } from '@/components/atoms/BlockContainer/types';
 import { FaqItem } from '@/components/molecules/FaqItem/types';
 
 export type FaqBlock = {
-  title: string;
-  bottomText?: string;
+  faqTitle: string;
+  faqBottomText?: string;
   faqItems: FaqItem[];
-  blockProperties: BlockContainer;
+  faqBlockProperties: BlockContainer;
 } & React.HTMLAttributes<HTMLElement>;

@@ -4,20 +4,20 @@ import Calendar from '@/components/atoms/Calendar';
 import { CalendarBlock as CalendarBlockProps } from './types';
 
 const CalendarBlock = ({
-  title,
+  calendarTitle,
   calendarEvents,
   cta,
-  blockProperties,
+  calendarBlockProperties,
 }: CalendarBlockProps): JSX.Element => {
   return (
     <BlockContainer
-      variant={blockProperties.variant}
-      orientation={blockProperties.orientation}
-      slug={blockProperties.slug}
+      variant={calendarBlockProperties.variant}
+      orientation={calendarBlockProperties.orientation}
+      slug={calendarBlockProperties.slug}
       cta={cta}
     >
       <section className="sl-layout">
-        <h2 className="t-headline-2 t-align-center">{title}</h2>
+        <h2 className="t-headline-2 t-align-center">{calendarTitle}</h2>
         <Calendar events={calendarEvents} />
       </section>
     </BlockContainer>

@@ -1,6 +1,6 @@
 fragment GroupsBlockFragment on ComponentContentBlocksGroupsBlock {
-  title
-  groups {
+  groupsTitle
+  groupsItems {
     documentId
     name
     slug
@@ -8,12 +8,12 @@ fragment GroupsBlockFragment on ComponentContentBlocksGroupsBlock {
       ...ImageFragment
     }
   }
-  blockProperties {
+  groupsBlockProperties {
     variant
     orientation
     slug
   }
-  cta: callToAction {
+  cta: groupsCallToAction {
     title
     intro
     ctaLabel

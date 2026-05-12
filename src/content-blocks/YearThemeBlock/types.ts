@@ -3,8 +3,8 @@ import { CallToAction } from '@/components/molecules/CallToAction/types';
 import { YearTheme } from '@/components/molecules/YearTheme/types';
 
 export type YearThemeBlock = {
-  title: string;
-  blockProperties: BlockContainer;
+  yearThemeTitle: string;
+  yearThemeBlockProperties: BlockContainer;
   yearTheme: YearTheme;
   cta: CallToAction;
 } & React.HTMLAttributes<HTMLElement>;

@@ -1,6 +1,6 @@
 fragment FAQBlockFragment on ComponentContentBlocksFaqBlock {
-  title
-  bottomText
+  faqTitle
+  faqBottomText
   faqItems {
     documentId
     question
@@ -14,7 +14,7 @@ fragment FAQBlockFragment on ComponentContentBlocksFaqBlock {
       variant
     }
   }
-  blockProperties {
+  faqBlockProperties {
     variant
     orientation
     slug

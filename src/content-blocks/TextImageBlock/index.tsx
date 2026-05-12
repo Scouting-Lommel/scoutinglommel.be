@@ -4,25 +4,25 @@ import TextImage from '@/components/organisms/TextImage';
 import { TextImageBlock as TextImageBlockProps } from './types';
 
 const ImageTextBlock = ({
-  title,
-  content,
-  images,
+  textImageTitle,
+  textImageContent,
+  textImageImages,
   orientation,
-  ctaButton,
-  blockProperties,
+  textImageCtaButton,
+  textImageBlockProperties,
 }: TextImageBlockProps): JSX.Element => {
   return (
     <BlockContainer
-      variant={blockProperties?.variant}
-      orientation={blockProperties?.orientation}
-      slug={blockProperties?.slug}
+      variant={textImageBlockProperties?.variant}
+      orientation={textImageBlockProperties?.orientation}
+      slug={textImageBlockProperties?.slug}
       modMargin
     >
       <TextImage
-        title={title}
-        content={content}
-        images={images?.length > 0 ? images : undefined}
-        ctaButton={ctaButton}
+        title={textImageTitle}
+        content={textImageContent}
+        images={textImageImages}
+        ctaButton={textImageCtaButton}
         variant={orientation}
         className="sl-layout"
       />

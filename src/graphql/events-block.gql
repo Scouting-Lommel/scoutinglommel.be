@@ -1,7 +1,7 @@
 fragment EventsBlockFragment on ComponentContentBlocksEventsBlock {
-  blockTitle: title
-  initialItems
-  blockProperties {
+  blockTitle: eventsTitle
+  eventsInitialItems
+  eventsBlockProperties {
     variant
     orientation
     slug
