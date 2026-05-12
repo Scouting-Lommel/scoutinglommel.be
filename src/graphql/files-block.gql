@@ -1,6 +1,6 @@
 fragment FilesBlockFragment on ComponentContentBlocksFilesBlock {
-  filesTitle
-  filesBlockProperties {
+  title: filesTitle
+  blockProperties: filesBlockProperties {
     variant
     orientation
     slug

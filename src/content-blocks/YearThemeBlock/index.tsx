@@ -3,12 +3,12 @@ import BlockContainer from '@/components/atoms/BlockContainer';
 import YearThemeSection from '@/components/organisms/YearThemeSection';
 import { YearThemeBlock as YearThemeBlockProps } from './types';
 
-const YearThemeBlock = ({ cta, yearThemeBlockProperties, yearTheme }: YearThemeBlockProps): JSX.Element => {
+const YearThemeBlock = ({ cta, blockProperties, yearTheme }: YearThemeBlockProps): JSX.Element => {
   return (
     <BlockContainer
-      variant={yearThemeBlockProperties?.variant}
-      orientation={yearThemeBlockProperties?.orientation}
-      slug={yearThemeBlockProperties?.slug}
+      variant={blockProperties?.variant}
+      orientation={blockProperties?.orientation}
+      slug={blockProperties?.slug}
       cta={cta}
     >
       <div className="sl-layout">

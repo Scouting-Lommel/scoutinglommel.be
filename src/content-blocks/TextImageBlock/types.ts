@@ -3,10 +3,10 @@ import { Button } from '@/components/atoms/Button/types';
 import { CloudinaryImage } from '@/components/atoms/Image/types';
 
 export type TextImageBlock = {
-  textImageTitle: string;
-  textImageContent: string;
-  textImageImages: CloudinaryImage[];
-  textImageCtaButton: Button;
-  textImageBlockProperties: BlockContainer;
+  title: string;
+  content: string;
+  images: CloudinaryImage[];
+  ctaButton: Button;
+  blockProperties: BlockContainer;
   orientation: 'default' | 'reversed';
 } & React.HTMLAttributes<HTMLElement>;

@@ -4,18 +4,18 @@ import FAQ from '@/components/organisms/FAQ';
 import { FaqBlock as TextImageBlockProps } from './types';
 
 const FaqBlock = ({
-  faqTitle,
-  faqBottomText,
+  title,
+  bottomText,
   faqItems,
-  faqBlockProperties,
+  blockProperties,
 }: TextImageBlockProps): JSX.Element => {
   return (
     <BlockContainer
-      variant={faqBlockProperties?.variant}
-      orientation={faqBlockProperties?.orientation}
-      slug={faqBlockProperties?.slug}
+      variant={blockProperties?.variant}
+      orientation={blockProperties?.orientation}
+      slug={blockProperties?.slug}
     >
-      <FAQ title={faqTitle} faqItems={faqItems} bottomText={faqBottomText} className="sl-layout" />
+      <FAQ title={title} faqItems={faqItems} bottomText={bottomText} className="sl-layout" />
     </BlockContainer>
   );
 };

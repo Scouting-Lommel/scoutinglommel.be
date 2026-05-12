@@ -3,7 +3,7 @@ import { CallToAction } from '@/components/molecules/CallToAction/types';
 
 export type EventsBlock = {
   blockTitle: string;
-  eventsInitialItems: number;
-  eventsBlockProperties: BlockContainer;
+  initialItems: number;
+  blockProperties: BlockContainer;
   callToAction?: CallToAction;
 } & React.HTMLAttributes<HTMLElement>;

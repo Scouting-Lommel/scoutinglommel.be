@@ -1,13 +1,13 @@
 fragment HeroBlockFragment on ComponentContentBlocksHeroBlock {
-  heroTitle
-  heroSubtitle
-  heroVariant
-  heroCta {
+  title: heroTitle
+  subtitle: heroSubtitle
+  variant: heroVariant
+  callToAction: heroCta {
     label
     link
     variant
   }
-  heroSocialsCta {
+  socialsCta: heroSocialsCta {
     title
     socialItems {
       documentId
@@ -16,14 +16,14 @@ fragment HeroBlockFragment on ComponentContentBlocksHeroBlock {
       icon
     }
   }
-  heroYearTheme {
+  yearTheme: heroYearTheme {
     documentId
     title
     image {
       ...ImageFragment
     }
   }
-  heroBgImage {
+  bgImage: heroBgImage {
     ...ImageFragment
   }
 }

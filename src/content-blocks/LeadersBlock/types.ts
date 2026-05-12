@@ -3,8 +3,8 @@ import { CallToAction } from '@/components/molecules/CallToAction/types';
 import { Leader } from '@/components/molecules/Leader/types';
 
 export type LeadersBLock = {
-  leadersTitle: string;
+  title: string;
   cta: CallToAction;
-  leadersBlockProperties: BlockContainer;
+  blockProperties: BlockContainer;
   leaders: Leader[];
 } & React.HTMLAttributes<HTMLElement>;

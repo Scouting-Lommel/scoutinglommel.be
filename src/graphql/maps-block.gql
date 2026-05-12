@@ -1,8 +1,8 @@
 fragment MapBlockFragment on ComponentContentBlocksMapBlock {
-  mapTitle
-  mapLocation
+  title: mapTitle
+  location: mapLocation
   query: mapQuery
-  mapBlockProperties {
+  blockProperties: mapBlockProperties {
     variant
     orientation
     slug

@@ -1,6 +1,6 @@
 fragment YearThemeBlockFragment on ComponentContentBlocksYearThemeBlock {
-  yearThemeTitle
-  yearThemeBlockProperties {
+  title: yearThemeTitle
+  blockProperties: yearThemeBlockProperties {
     variant
     orientation
     slug

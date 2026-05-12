@@ -5,36 +5,36 @@ import Hero from '@/components/organisms/Hero';
 import { HeroBlock as HeroBlockProps } from './types';
 
 const HeroBlock = ({
-  heroTitle,
-  heroSubtitle,
-  heroVariant,
-  heroCta,
-  heroSocialsCta,
-  heroYearTheme,
-  heroBgImage,
+  title,
+  subtitle,
+  variant,
+  callToAction,
+  socialsCta,
+  yearTheme,
+  bgImage,
 }: HeroBlockProps): JSX.Element => {
   const socialsCallToAction: SocialsCta = {
-    title: heroSocialsCta?.title || '',
-    socialItems: heroSocialsCta?.socialItems || [],
+    title: socialsCta?.title || '',
+    socialItems: socialsCta?.socialItems || [],
   };
 
   return (
     <BlockContainer
-      bgImage={heroBgImage}
+      bgImage={bgImage}
       bgImagePriority
       bgImageSizes="100vw"
-      socialsCta={heroSocialsCta && socialsCallToAction}
-      variant={heroVariant === 'simple' ? 'light' : 'dark'}
+      socialsCta={socialsCta && socialsCallToAction}
+      variant={variant === 'simple' ? 'light' : 'dark'}
       orientation="default"
       slug="hero"
-      modSmallPadding={heroVariant === 'simple'}
+      modSmallPadding={variant === 'simple'}
     >
       <Hero
-        title={heroTitle}
-        subtitle={heroSubtitle}
-        variant={heroVariant}
-        callToAction={heroCta}
-        yearTheme={heroYearTheme}
+        title={title}
+        subtitle={subtitle}
+        variant={variant}
+        callToAction={callToAction}
+        yearTheme={yearTheme}
         className="sl-layout"
       />
     </BlockContainer>

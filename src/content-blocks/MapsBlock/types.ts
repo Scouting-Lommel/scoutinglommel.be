@@ -2,8 +2,7 @@ import { MapsLocation } from '@/types/MapsLocation';
 import { BlockContainer } from '@/components/atoms/BlockContainer/types';
 
 export type MapBlock = {
-  mapTitle: string;
-  mapBlockProperties: BlockContainer;
+  blockProperties: BlockContainer;
   query?: string;
-  mapLocation?: MapsLocation;
+  location?: MapsLocation;
 } & React.HTMLAttributes<HTMLElement>;

@@ -1,13 +1,13 @@
 fragment TarifsBlockFragment on ComponentContentBlocksTarifsBlock {
-  tarifsTitle
-  tarifsItems {
+  title: tarifsTitle
+  tarifs: tarifsItems {
     documentId
     name
     minimumPrice
     dayPrice
     example
   }
-  tarifsBlockProperties {
+  blockProperties: tarifsBlockProperties {
     variant
     orientation
     slug

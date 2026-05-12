@@ -1,6 +1,6 @@
 fragment PolicyBlockFragment on ComponentContentBlocksPolicyBlock {
-  title
-  sections(pagination: { limit: 20 }) {
+  policyTitle
+  policySections(pagination: { limit: 20 }) {
     title
     content
   }

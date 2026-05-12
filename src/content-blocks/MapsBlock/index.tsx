@@ -3,19 +3,19 @@ import BlockContainer from '@/components/atoms/BlockContainer';
 import GoogleMap from '@/components/atoms/Map';
 import { MapBlock as MapBlockProps } from './types';
 
-const MapsBlock = ({ mapTitle, query, mapLocation, mapBlockProperties }: MapBlockProps): JSX.Element => {
+const MapsBlock = ({ title, query, location, blockProperties }: MapBlockProps): JSX.Element => {
   return (
     <BlockContainer
-      variant={mapBlockProperties?.variant}
-      orientation={mapBlockProperties?.orientation}
-      slug={mapBlockProperties?.slug}
+      variant={blockProperties?.variant}
+      orientation={blockProperties?.orientation}
+      slug={blockProperties?.slug}
     >
-      <h2 className="t-headline-2 t-align-center">{mapTitle}</h2>
+      <h2 className="t-headline-2 t-align-center">{title}</h2>
       <GoogleMap
-        lng={mapLocation?.coordinates?.lng}
-        lat={mapLocation?.coordinates?.lat}
+        lng={location?.coordinates?.lng}
+        lat={location?.coordinates?.lat}
         query={query}
-        address={mapLocation?.address}
+        address={location?.address}
         className="sl-layout"
       />
     </BlockContainer>

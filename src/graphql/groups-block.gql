@@ -1,6 +1,6 @@
 fragment GroupsBlockFragment on ComponentContentBlocksGroupsBlock {
-  groupsTitle
-  groupsItems {
+  title: groupsTitle
+  groups: groupsItems {
     documentId
     name
     slug
@@ -8,7 +8,7 @@ fragment GroupsBlockFragment on ComponentContentBlocksGroupsBlock {
       ...ImageFragment
     }
   }
-  groupsBlockProperties {
+  blockProperties: groupsBlockProperties {
     variant
     orientation
     slug

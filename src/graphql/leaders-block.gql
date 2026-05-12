@@ -1,6 +1,6 @@
 fragment LeadersBlockFragment on ComponentContentBlocksLeadersBlock {
-  leadersTitle
-  leadersBlockProperties {
+  title: leadersTitle
+  blockProperties: leadersBlockProperties {
     variant
     orientation
     slug

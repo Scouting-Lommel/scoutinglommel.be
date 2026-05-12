@@ -1,6 +1,6 @@
 fragment CalendarBlockFragment on ComponentContentBlocksCalendarBlock {
-  calendarTitle
-  calendarBlockProperties {
+  title: calendarTitle
+  blockProperties: calendarBlockProperties {
     variant
     orientation
     slug

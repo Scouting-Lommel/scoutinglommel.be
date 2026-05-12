@@ -1,16 +1,16 @@
 fragment TextImageBlockFragment on ComponentContentBlocksTextImageBlock {
-  textImageTitle
-  textImageContent
+  title: textImageTitle
+  content: textImageContent
   orientation: textImageLayout
-  textImageImages {
+  images: textImageImages {
     ...ImageFragment
   }
-  textImageCtaButton {
+  ctaButton: textImageCtaButton {
     label
     link
     variant
   }
-  textImageBlockProperties {
+  blockProperties: textImageBlockProperties {
     variant
     orientation
     slug

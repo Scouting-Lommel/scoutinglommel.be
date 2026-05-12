@@ -1,7 +1,7 @@
 fragment GalleryBlockFragment on ComponentContentBlocksGalleryBlock {
-  galleryTitle
-  galleryInitialItems
-  galleryImages {
+  title: galleryTitle
+  initialItems: galleryInitialItems
+  images: galleryImages {
     ...ImageFragment
   }
   cta: galleryCallToAction {
@@ -10,7 +10,7 @@ fragment GalleryBlockFragment on ComponentContentBlocksGalleryBlock {
     ctaLabel
     ctaLink
   }
-  galleryBlockProperties {
+  blockProperties: galleryBlockProperties {
     variant
     orientation
     slug

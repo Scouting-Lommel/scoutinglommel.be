@@ -3,16 +3,16 @@ import BlockContainer from '@/components/atoms/BlockContainer';
 import Tarifs from '@/components/organisms/Tarifs';
 import { TarifsBlock as TarifsBlockProps } from './types';
 
-const TarifsBlock = ({ tarifsTitle, tarifsItems, cta, tarifsBlockProperties }: TarifsBlockProps): JSX.Element => {
+const TarifsBlock = ({ title, tarifs, cta, blockProperties }: TarifsBlockProps): JSX.Element => {
   return (
     <BlockContainer
-      variant={tarifsBlockProperties.variant}
-      orientation={tarifsBlockProperties.orientation}
-      slug={tarifsBlockProperties.slug}
+      variant={blockProperties.variant}
+      orientation={blockProperties.orientation}
+      slug={blockProperties.slug}
     >
       <div className="sl-layout">
-        <h2 className="t-headline-2 t-align-center">{tarifsTitle}</h2>
-        <Tarifs tarifs={tarifsItems} cta={cta} />
+        <h2 className="t-headline-2 t-align-center">{title}</h2>
+        <Tarifs tarifs={tarifs} cta={cta} />
       </div>
     </BlockContainer>
   );
