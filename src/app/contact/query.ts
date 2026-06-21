@@ -12,6 +12,7 @@ const CONTACT_PAGE_QUERY = gql`
 
   query ContactPage {
     contactPage {
+      slug
       pageMeta {
         ...PageMetaFragment
       }

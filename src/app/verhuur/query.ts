@@ -14,6 +14,7 @@ const RENTAL_PAGE_QUERY = gql`
 
   query RentalPage {
     rentalPage {
+      slug
       pageMeta {
         ...PageMetaFragment
       }

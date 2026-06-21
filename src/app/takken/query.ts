@@ -16,6 +16,7 @@ const GROUPS_PAGE_QUERY = gql`
 
   query GroupsPage {
     groupsPage {
+      slug
       pageMeta {
         ...PageMetaFragment
       }

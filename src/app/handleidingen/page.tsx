@@ -16,6 +16,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const metadata = await generateMetadataForPage(
     manualsOverviewPage.pageMeta,
     generalData,
+    manualsOverviewPage.slug,
   );
 
   return { ...metadata };

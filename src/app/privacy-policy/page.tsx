@@ -16,6 +16,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const metadata = await generateMetadataForPage(
     privacyPolicyPage.pageMeta,
     generalData,
+    privacyPolicyPage.slug,
   );
 
   return { ...metadata };

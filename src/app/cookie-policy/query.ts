@@ -14,6 +14,7 @@ const COOKIE_PAGE_QUERY = gql`
 
   query CookiePolicyPage {
     cookiePolicyPage {
+      slug
       pageMeta {
         ...PageMetaFragment
       }

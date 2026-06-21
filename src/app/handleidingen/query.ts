@@ -12,6 +12,7 @@ const MANUALS_PAGE_QUERY = gql`
 
   query ManualsOverviewPage {
     manualsOverviewPage {
+      slug
       pageMeta {
         ...PageMetaFragment
       }

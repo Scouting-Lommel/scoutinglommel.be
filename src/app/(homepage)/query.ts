@@ -18,6 +18,7 @@ const HOMEPAGE_QUERY = gql`
 
   query HomePage {
     homePage {
+      slug
       pageMeta {
         ...PageMetaFragment
       }

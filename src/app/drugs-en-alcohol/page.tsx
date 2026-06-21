@@ -16,6 +16,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const metadata = await generateMetadataForPage(
     drugsAlcoholPolicyPage.pageMeta,
     generalData,
+    drugsAlcoholPolicyPage.slug,
   );
 
   return { ...metadata };

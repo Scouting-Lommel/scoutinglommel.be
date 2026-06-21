@@ -12,6 +12,7 @@ const REGISTER_PAGE_QUERY = gql`
 
   query RegisterPage {
     registerPage {
+      slug
       pageMeta {
         ...PageMetaFragment
       }

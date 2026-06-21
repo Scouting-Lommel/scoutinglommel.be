@@ -56,7 +56,7 @@ const generateMetadataForRootLayout = async (metaData: MetaDataObj): Promise<Met
 const generateMetadataForPage = async (
   pageMeta: PageMetaObj | null | undefined,
   metaData: MetaDataObj | null | undefined,
-  path?: string,
+  path?: string | null,
 ): Promise<Metadata> => {
   const siteUrl = await getSiteUrl();
 

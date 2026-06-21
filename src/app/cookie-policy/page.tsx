@@ -16,6 +16,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const metadata = await generateMetadataForPage(
     cookiePolicyPage.pageMeta,
     generalData,
+    cookiePolicyPage.slug,
   );
 
   return { ...metadata };

@@ -14,6 +14,7 @@ const PRIVACY_PAGE_QUERY = gql`
 
   query PrivacyPolicyPage {
     privacyPolicyPage {
+      slug
       pageMeta {
         ...PageMetaFragment
       }

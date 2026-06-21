@@ -14,6 +14,7 @@ const DA_PAGE_QUERY = gql`
 
   query DrugsAlcoholPolicyPage {
     drugsAlcoholPolicyPage {
+      slug
       pageMeta {
         ...PageMetaFragment
       }

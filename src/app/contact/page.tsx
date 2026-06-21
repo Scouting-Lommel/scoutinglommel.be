@@ -19,6 +19,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const metadata = await generateMetadataForPage(
     contactPage.pageMeta,
     generalData,
+    contactPage.slug,
   );
 
   return { ...metadata };

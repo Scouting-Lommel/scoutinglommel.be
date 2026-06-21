@@ -20,6 +20,7 @@ const INFO_PAGE_QUERY = gql`
 
   query InfoPage {
     infoPage {
+      slug
       pageMeta {
         ...PageMetaFragment
       }
