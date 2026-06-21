@@ -39,15 +39,17 @@ src/**/*.css
 
 # generated graphql types (run pnpm codegen to regenerate)
 src/types/generated/
+schema.graphql
 
-# typescript 
+# typescript
 tsconfig.tsbuildinfo
 
 # claude
 CLAUDE.md
 .claude/
 
-# sisyphus
+# opencode
+.omo
 .sisyphus/
 
 # cursor
