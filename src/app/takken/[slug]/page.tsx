@@ -51,7 +51,7 @@ const GroupPage = async (props: Props): Promise<JSX.Element> => {
     switch (block.__typename) {
       case 'ComponentContentBlocksFilesBlock':
       case 'ComponentContentBlocksActivitiesBlock':
-        block.groupSlug = group.pageMeta?.slug;
+        block.groupSlug = group.slug;
         break;
       case 'ComponentContentBlocksLeadersBlock':
         block.leaders = group.leaders;

@@ -21,6 +21,7 @@ const GROUP_PAGE_QUERY = gql`
   query GetGroupPage($slug: String) {
     groups(filters: { slug: { eq: $slug } }) {
       documentId
+      slug
       pageMeta {
         ...PageMetaFragment
       }
