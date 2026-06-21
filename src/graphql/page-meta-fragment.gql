@@ -2,7 +2,6 @@ fragment PageMetaFragment on ComponentGeneralPageMeta {
   pageTitle
   pageDescription
   noIndex
-  slug
   metaImage {
     ...ImageFragment
   }

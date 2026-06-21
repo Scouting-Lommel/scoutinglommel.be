@@ -12,7 +12,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
     {
       pageTitle: 'Pagina niet gevonden',
       pageDescription: 'Scouting Sint-Pieter Lommel',
-      slug: '',
     },
     generalData,
   );

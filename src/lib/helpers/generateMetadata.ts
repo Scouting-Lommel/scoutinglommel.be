@@ -4,7 +4,6 @@ import { getSiteUrl } from './getSiteUrl';
 type PageMetaObj = {
   pageTitle?: string | null;
   pageDescription?: string | null;
-  slug?: string | null;
   noIndex?: boolean | null;
   metaImage?: { url?: string | null } | null;
 };
@@ -65,7 +64,7 @@ const generateMetadataForPage = async (
     title: pageMeta?.pageTitle ?? undefined,
     description: pageMeta?.pageDescription ?? undefined,
     alternates: {
-      canonical: `${siteUrl}${path ? '/' + path : ''}${pageMeta?.slug ? '/' + pageMeta?.slug : ''}`,
+      canonical: `${siteUrl}${path ? '/' + path : ''}`,
     },
     robots: {
       index: pageMeta?.noIndex || true,

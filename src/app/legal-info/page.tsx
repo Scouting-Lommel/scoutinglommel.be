@@ -15,7 +15,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
     {
       pageTitle: 'Registratiedetails',
       pageDescription: 'Scouting Sint-Pieter Lommel',
-      slug: 'legal-info',
     },
     generalData,
   );

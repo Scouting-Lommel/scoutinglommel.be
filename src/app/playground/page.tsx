@@ -16,7 +16,6 @@ export const generateMetadata = async (): Promise<Metadata> => {
     {
       pageTitle: 'Development playground',
       pageDescription: 'Development playground',
-      slug: 'playground',
     },
     generalData,
   );
