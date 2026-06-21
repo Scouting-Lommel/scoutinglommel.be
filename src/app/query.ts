@@ -29,35 +29,6 @@ const GENERAL_DATA = gql`
         label
         link
       }
-      mainNavigation {
-        label
-        link
-        page
-        dropdownItems {
-          label
-          page
-          link
-        }
-        dropdownCta {
-          title
-          intro
-          ctaLink
-          ctaLabel
-        }
-        dropdownTitle
-        dropdownButton {
-          label
-          link
-          variant
-        }
-      }
-      footerNavigation {
-        title
-        navItems {
-          label
-          link
-        }
-      }
       socials {
         documentId
         title

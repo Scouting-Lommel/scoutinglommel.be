@@ -11,5 +11,5 @@ export type Footer = {
   groupNumber: string;
   address: string;
   contactItems: Link[];
-  footerNavigation: FooterNavigation[];
+  footerNavigation?: FooterNavigation[];
 } & React.HTMLAttributes<HTMLElement>;

@@ -4,7 +4,7 @@ import { NavItem } from '@/components/molecules/Navigation/types';
 
 export type Header = {
   logo: CloudinaryImage;
-  mainNavigation: NavItem[];
+  mainNavigation?: NavItem[];
   groups: DropdownNavItem[];
   rentalLocations: DropdownNavItem[];
 } & React.HTMLAttributes<HTMLElement>;

@@ -70,7 +70,6 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
 
               <Header
                 logo={data.generalData.logo}
-                mainNavigation={data.generalData.mainNavigation}
                 groups={data.groups}
                 rentalLocations={data.rentalLocations}
               />
@@ -85,7 +84,6 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
                 groupNumber={data.generalData.groupNumber}
                 address={data.generalData.address}
                 contactItems={data.generalData.contactItems}
-                footerNavigation={data.generalData.footerNavigation}
               />
             </DataProvider>
           </SessionProvider>

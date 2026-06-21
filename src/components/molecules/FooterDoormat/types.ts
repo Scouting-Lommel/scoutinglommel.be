@@ -17,5 +17,5 @@ export type DoormatCol = {
 export type FooterDoormat = {
   address: string;
   contactItems: Link[];
-  footerNavigation: FooterNavigation[];
+  footerNavigation?: FooterNavigation[];
 } & React.HTMLAttributes<HTMLElement>;

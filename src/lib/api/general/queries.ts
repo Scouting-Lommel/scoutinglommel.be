@@ -9,28 +9,6 @@ export const NAVIGATION_DATA = gql`
       logo {
         ...ImageFragment
       }
-      mainNavigation {
-        label
-        link
-        page
-        dropdownItems {
-          label
-          page
-          link
-        }
-        dropdownCta {
-          title
-          intro
-          ctaLink
-          ctaLabel
-        }
-        dropdownTitle
-        dropdownButton {
-          label
-          link
-          variant
-        }
-      }
       globalAlert {
         label
         variant
@@ -63,13 +41,6 @@ export const FOOTER_DATA = gql`
       contactItems {
         label
         link
-      }
-      footerNavigation {
-        title
-        navItems {
-          label
-          link
-        }
       }
       socials {
         documentId

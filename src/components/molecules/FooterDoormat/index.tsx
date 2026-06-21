@@ -35,7 +35,7 @@ const DoormatCol = ({ title, address, links }: DoormatColProps): JSX.Element => 
 const FooterDoormat = ({
   address,
   contactItems,
-  footerNavigation,
+  footerNavigation = [],
 }: FooterDoormatProps): JSX.Element => {
   return (
     <div className="footer-doormat">
@@ -43,11 +43,13 @@ const FooterDoormat = ({
         <DoormatCol title="Adres" address={address} />
         <DoormatCol title="Contact" links={contactItems} />
       </div>
-      <div className="footer-doormat__section">
-        {footerNavigation.map((el, i) => {
-          return <DoormatCol key={i} title={el.title} links={el.navItems} />;
-        })}
-      </div>
+      {footerNavigation.length > 0 && (
+        <div className="footer-doormat__section">
+          {footerNavigation.map((el, i) => {
+            return <DoormatCol key={i} title={el.title} links={el.navItems} />;
+          })}
+        </div>
+      )}
     </div>
   );
 };
