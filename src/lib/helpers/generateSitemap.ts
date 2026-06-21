@@ -19,24 +19,24 @@ const generateSitemap = (sitemapData: any): Array<object> => {
   const out = [];
 
   // Home page
-  if (homePage && !homePage.pageMeta?.noIndex) {
+  if (homePage && homePage.slug && !homePage.pageMeta?.noIndex) {
     out.push({
-      url: `${siteUrl}/`,
+      url: `${siteUrl}/${homePage.slug}`,
       lastModified: homePage.updatedAt,
     });
   }
 
   // Groups page
-  if (groupsPage && groupsPage.pageMeta?.slug && !groupsPage.pageMeta?.noIndex) {
+  if (groupsPage && groupsPage.slug && !groupsPage.pageMeta?.noIndex) {
     out.push({
-      url: `${siteUrl}/${groupsPage.pageMeta.slug}`,
+      url: `${siteUrl}/${groupsPage.slug}`,
       lastModified: groupsPage.updatedAt,
     });
   }
 
   // Group pages
   groups?.forEach((group: any) => {
-    if (group && !group.pageMeta?.noIndex) {
+    if (group && group.slug && !group.pageMeta?.noIndex) {
       out.push({
         url: `${siteUrl}/takken/${group.slug}`,
         lastModified: group.updatedAt,
@@ -45,16 +45,16 @@ const generateSitemap = (sitemapData: any): Array<object> => {
   });
 
   // Rental page
-  if (rentalPage && rentalPage.pageMeta?.slug && !rentalPage.pageMeta?.noIndex) {
+  if (rentalPage && rentalPage.slug && !rentalPage.pageMeta?.noIndex) {
     out.push({
-      url: `${siteUrl}/${rentalPage.pageMeta.slug}`,
+      url: `${siteUrl}/${rentalPage.slug}`,
       lastModified: rentalPage.updatedAt,
     });
   }
 
   // Rental location pages
   rentalLocations?.forEach((location: any) => {
-    if (location && !location.pageMeta?.noIndex) {
+    if (location && location.slug && !location.pageMeta?.noIndex) {
       out.push({
         url: `${siteUrl}/verhuur/${location.slug}`,
         lastModified: location.updatedAt,
@@ -63,49 +63,49 @@ const generateSitemap = (sitemapData: any): Array<object> => {
   });
 
   // Info page
-  if (infoPage && infoPage.pageMeta?.slug && !infoPage.pageMeta?.noIndex) {
+  if (infoPage && infoPage.slug && !infoPage.pageMeta?.noIndex) {
     out.push({
-      url: `${siteUrl}/${infoPage.pageMeta.slug}`,
+      url: `${siteUrl}/${infoPage.slug}`,
       lastModified: infoPage.updatedAt,
     });
   }
 
   // Register page
-  if (registerPage && registerPage.pageMeta?.slug && !registerPage.pageMeta?.noIndex) {
+  if (registerPage && registerPage.slug && !registerPage.pageMeta?.noIndex) {
     out.push({
-      url: `${siteUrl}/${registerPage.pageMeta.slug}`,
+      url: `${siteUrl}/${registerPage.slug}`,
       lastModified: registerPage.updatedAt,
     });
   }
 
   // Contact page
-  if (contactPage && contactPage.pageMeta?.slug && !contactPage.pageMeta?.noIndex) {
+  if (contactPage && contactPage.slug && !contactPage.pageMeta?.noIndex) {
     out.push({
-      url: `${siteUrl}/${contactPage.pageMeta.slug}`,
+      url: `${siteUrl}/${contactPage.slug}`,
       lastModified: contactPage.updatedAt,
     });
   }
 
   // Articles page
-  if (articlesPage && articlesPage.pageMeta?.slug && !articlesPage.pageMeta?.noIndex) {
+  if (articlesPage && articlesPage.slug && !articlesPage.pageMeta?.noIndex) {
     out.push({
-      url: `${siteUrl}/${articlesPage.pageMeta.slug}`,
+      url: `${siteUrl}/${articlesPage.slug}`,
       lastModified: articlesPage.updatedAt,
     });
   }
 
   // Drugs and alcohol policy page
-  if (drugsAlcoholPolicyPage && drugsAlcoholPolicyPage.pageMeta?.slug && !drugsAlcoholPolicyPage.pageMeta?.noIndex) {
+  if (drugsAlcoholPolicyPage && drugsAlcoholPolicyPage.slug && !drugsAlcoholPolicyPage.pageMeta?.noIndex) {
     out.push({
-      url: `${siteUrl}/${drugsAlcoholPolicyPage.pageMeta.slug}`,
+      url: `${siteUrl}/${drugsAlcoholPolicyPage.slug}`,
       lastModified: drugsAlcoholPolicyPage.updatedAt,
     });
   }
 
   // Privacy policy page
-  if (privacyPolicyPage && privacyPolicyPage.pageMeta?.slug && !privacyPolicyPage.pageMeta?.noIndex) {
+  if (privacyPolicyPage && privacyPolicyPage.slug && !privacyPolicyPage.pageMeta?.noIndex) {
     out.push({
-      url: `${siteUrl}/${privacyPolicyPage.pageMeta.slug}`,
+      url: `${siteUrl}/${privacyPolicyPage.slug}`,
       lastModified: privacyPolicyPage.updatedAt,
     });
   }

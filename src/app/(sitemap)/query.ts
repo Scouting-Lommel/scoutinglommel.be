@@ -4,15 +4,15 @@ const SITEMAP_QUERY = gql`
   query Sitemap {
     homePage {
       updatedAt
+      slug
       pageMeta {
-        slug
         noIndex
       }
     }
     groupsPage {
       updatedAt
+      slug
       pageMeta {
-        slug
         noIndex
       }
     }
@@ -25,8 +25,8 @@ const SITEMAP_QUERY = gql`
     }
     rentalPage {
       updatedAt
+      slug
       pageMeta {
-        slug
         noIndex
       }
     }
@@ -39,43 +39,43 @@ const SITEMAP_QUERY = gql`
     }
     infoPage {
       updatedAt
+      slug
       pageMeta {
-        slug
         noIndex
       }
     }
     registerPage {
       updatedAt
+      slug
       pageMeta {
-        slug
         noIndex
       }
     }
     contactPage {
       updatedAt
+      slug
       pageMeta {
-        slug
         noIndex
       }
     }
     articlesPage {
       updatedAt
+      slug
       pageMeta {
-        slug
         noIndex
       }
     }
     drugsAlcoholPolicyPage {
       updatedAt
+      slug
       pageMeta {
-        slug
         noIndex
       }
     }
     privacyPolicyPage {
       updatedAt
+      slug
       pageMeta {
-        slug
         noIndex
       }
     }
