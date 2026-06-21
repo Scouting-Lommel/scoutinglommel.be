@@ -13,9 +13,9 @@ const EventsBlock = ({
   return (
     <>
       <BlockContainer
-        variant={blockProperties.variant}
-        orientation={blockProperties.orientation}
-        slug={blockProperties.slug}
+        variant={blockProperties?.variant}
+        orientation={blockProperties?.orientation}
+        slug={blockProperties?.slug}
         cta={callToAction}
       >
         <section className="sl-layout">

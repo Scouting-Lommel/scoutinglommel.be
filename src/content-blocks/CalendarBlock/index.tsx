@@ -11,9 +11,9 @@ const CalendarBlock = ({
 }: CalendarBlockProps): JSX.Element => {
   return (
     <BlockContainer
-      variant={blockProperties.variant}
-      orientation={blockProperties.orientation}
-      slug={blockProperties.slug}
+      variant={blockProperties?.variant}
+      orientation={blockProperties?.orientation}
+      slug={blockProperties?.slug}
       cta={cta}
     >
       <section className="sl-layout">

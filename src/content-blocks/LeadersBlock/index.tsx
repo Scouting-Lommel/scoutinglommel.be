@@ -6,9 +6,9 @@ import { LeadersBLock as LeadersBlockProps } from './types';
 const LeadersBlock = ({ title, leaders, cta, blockProperties }: LeadersBlockProps): JSX.Element => {
   return (
     <BlockContainer
-      variant={blockProperties.variant}
-      orientation={blockProperties.orientation}
-      slug={blockProperties.slug}
+      variant={blockProperties?.variant}
+      orientation={blockProperties?.orientation}
+      slug={blockProperties?.slug}
       cta={cta}
     >
       <div className="sl-layout">
