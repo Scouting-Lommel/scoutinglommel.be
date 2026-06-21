@@ -33,7 +33,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
   const metadata = await generateMetadataForPage(
     rentalLocation.pageMeta,
     generalData,
-    'verhuur',
+    `verhuur/${slug}`,
   );
 
   return { ...metadata };

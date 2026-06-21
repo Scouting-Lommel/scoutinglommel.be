@@ -19,7 +19,6 @@ export async function generateMetadata(props: Props): Promise<Metadata> {
   const metadata = await generateMetadataForPage(
     rentalLocation.pageMeta,
     generalData,
-    'verhuur/verhuursettings/revalidate',
   );
 
   return { ...metadata };

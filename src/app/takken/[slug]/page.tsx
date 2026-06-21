@@ -33,7 +33,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
   const metadata = await generateMetadataForPage(
     group.pageMeta,
     generalData,
-    'takken',
+    `takken/${slug}`,
   );
 
   return { ...metadata };
