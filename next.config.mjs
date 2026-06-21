@@ -18,6 +18,11 @@ const nextConfig = {
         hostname: 'admin.scoutinglommel.be',
         pathname: '/uploads/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'staging.admin.scoutinglommel.be',
+        pathname: '/uploads/**',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],

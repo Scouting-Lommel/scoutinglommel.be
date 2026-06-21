@@ -23,8 +23,10 @@ const fetchAPI = async (
       break;
     }
     default: {
+      const token = process.env.STRAPI_API_TOKEN;
       headers = {
         'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       };
 
       // Determine cache strategy based on query content
@@ -58,12 +60,29 @@ const fetchAPI = async (
   const json = await res.json();
 
   if (json.errors) {
+    const isAuthError = json.errors.some(
+      (error: any) =>
+        error.extensions?.code === 'FORBIDDEN' ||
+        error.message?.includes('Forbidden access') ||
+        error.message?.includes('Unauthorized'),
+    );
+
+    if (isAuthError) {
+      console.warn(`GraphQL auth error (${res.status}):`, json.errors);
+      return {};
+    }
+
     console.error('GraphQL Errors:', json.errors);
     const errorMessage = json.errors.map((error: any) => error.message).join(', ');
     throw new Error(`GraphQL Error: ${errorMessage}`);
   }
 
   if (!res.ok) {
+    if (res.status === 401 || res.status === 403) {
+      console.warn(`HTTP auth error: ${res.status} ${res.statusText}`);
+      return {};
+    }
+
     console.error('HTTP Error:', res.status, res.statusText);
     throw new Error(`HTTP Error: ${res.status} ${res.statusText}`);
   }

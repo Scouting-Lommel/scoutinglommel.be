@@ -1,14 +1,9 @@
 import 'dotenv/config';
 import type { CodegenConfig } from '@graphql-codegen/cli';
 
-const backendUrl = process.env.NEXT_PUBLIC_APP_BACKEND_URL;
-if (!backendUrl) {
-  throw new Error('NEXT_PUBLIC_APP_BACKEND_URL is not set — cannot run codegen');
-}
-
 const config: CodegenConfig = {
   overwrite: true,
-  schema: new URL('/graphql', backendUrl).toString(),
+  schema: './schema.graphql',
   documents: ['src/**/*.{ts,tsx}', 'src/**/*.gql'],
   ignoreNoDocuments: true,
   generates: {
