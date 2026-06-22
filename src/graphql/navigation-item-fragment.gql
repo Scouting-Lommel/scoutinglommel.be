@@ -4,18 +4,42 @@ fragment NavigationItemFragment on NavigationItem {
   path
   externalPath
   menuAttached
+  related {
+    ... on Group {
+      description
+    }
+    ... on RentalLocation {
+      description
+    }
+  }
   items {
     title
     type
     path
     externalPath
     menuAttached
+    related {
+      ... on Group {
+        description
+      }
+      ... on RentalLocation {
+        description
+      }
+    }
     items {
       title
       type
       path
       externalPath
       menuAttached
+      related {
+        ... on Group {
+          description
+        }
+        ... on RentalLocation {
+          description
+        }
+      }
     }
   }
 }

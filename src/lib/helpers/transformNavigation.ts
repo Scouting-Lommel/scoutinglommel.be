@@ -12,6 +12,13 @@ function derivePageFromPath(path: string | null | undefined): string {
   return path.replace(/^\//, '').replace(/-/g, '_');
 }
 
+function getDescriptionFromRelated(
+  related: NavigationItem['related'],
+): string | undefined {
+  if (!related || !('description' in related)) return undefined;
+  return related.description ?? undefined;
+}
+
 export function transformMainNavigation(
   items: Array<NavigationItem | null> | null | undefined,
 ): NavItem[] {
@@ -32,7 +39,7 @@ export function transformMainNavigation(
               label: child.title,
               page: derivePageFromPath(child.path),
               link: child.type === NavigationItemType.External ? child.externalPath ?? null : child.path ?? null,
-              description: undefined,
+              description: getDescriptionFromRelated(child.related),
               modTargetBlank: child.type === NavigationItemType.External,
             }))
           : [],
