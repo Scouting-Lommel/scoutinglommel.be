@@ -92,22 +92,23 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
         headers: getCacheHeaders('USER'),
       },
     );
-  } catch (error: any) {
-    console.error(`Error fetching org unit data for ${email}:`, error.message);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    console.error(`Error fetching org unit data for ${email}:`, message);
 
-    if (error.message?.includes('Login Required') || error.message?.includes('401')) {
+    if (message.includes('Login Required') || message.includes('401')) {
       return NextResponse.json(
         {
           error:
             'Google Admin API authentication failed. Check service account configuration and domain-wide delegation.',
-          details: error.message,
+          details: message,
         },
         { status: 401, headers: getCacheHeaders('WRITE') },
       );
     }
 
     return NextResponse.json(
-      { error: error.message || 'Failed to fetch organization unit data' },
+      { error: message || 'Failed to fetch organization unit data' },
       {
         status: 500,
         headers: getCacheHeaders('WRITE'),

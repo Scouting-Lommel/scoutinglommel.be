@@ -32,11 +32,12 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         headers: getCacheHeaders('WRITE'),
       },
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error(`Activity API Error (${action}):`, error);
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
       {
-        error: error.message || 'Unknown error occurred',
+        error: message || 'Unknown error occurred',
         action,
         data: data ? { ...data, groupDocumentId: data.groupDocumentId ? '[REDACTED]' : undefined } : undefined,
       },

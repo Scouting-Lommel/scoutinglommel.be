@@ -14,9 +14,10 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         headers: getCacheHeaders('WRITE'),
       },
     );
-  } catch (error: any) {
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: error.message },
+      { error: message },
       {
         status: 500,
         headers: getCacheHeaders('WRITE'),
