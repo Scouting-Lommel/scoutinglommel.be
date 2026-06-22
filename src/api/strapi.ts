@@ -34,18 +34,20 @@ const fetchAPI = async (
         ...(token ? { Authorization: `Bearer ${token}` } : {}),
       };
 
-      // Determine cache strategy based on query content
+      // Determine cache strategy based on query content.
+      // User data takes precedence over static data so mixed queries
+      // (e.g. groups + activities) do not get cached as static.
       const queryString = print(query);
+      const isUserData = queryString.includes('activities') || queryString.includes('files');
       const isStaticData =
         queryString.includes('generalData') ||
         queryString.includes('groups') ||
         queryString.includes('rentalLocations');
-      const isUserData = queryString.includes('activities') || queryString.includes('files');
 
-      if (isStaticData) {
-        cacheOptions = getCacheOptions('STATIC');
-      } else if (isUserData) {
+      if (isUserData) {
         cacheOptions = getCacheOptions('USER');
+      } else if (isStaticData) {
+        cacheOptions = getCacheOptions('STATIC');
       } else {
         cacheOptions = getCacheOptions('DYNAMIC');
       }
