@@ -29,7 +29,7 @@ const RentalLocationPage = async (props: { params: Promise<{ slug: string; key: 
 
   const { slug, key } = params;
 
-  if (slug != 'settings' || key != 'revalidate') notFound();
+  if (slug !== 'settings' || key !== 'revalidate') notFound();
 
   return (
     <>
