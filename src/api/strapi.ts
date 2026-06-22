@@ -1,13 +1,18 @@
 import { DocumentNode, print } from 'graphql';
 import { getCacheOptions } from '@/lib/api/cache';
 
+type GraphQLError = {
+  message: string;
+  extensions?: { code?: string };
+};
+
 const fetchAPI = async (
   query: DocumentNode,
   variables?: unknown,
   operation: 'query' | 'mutation' = 'query',
 ) => {
-  let headers: any;
-  let cacheOptions: any = {};
+  let headers: Record<string, string>;
+  let cacheOptions: ReturnType<typeof getCacheOptions> | { cache: 'no-store' };
 
   switch (operation) {
     case 'mutation': {
@@ -61,7 +66,7 @@ const fetchAPI = async (
 
   if (json.errors) {
     const isAuthError = json.errors.some(
-      (error: any) =>
+      (error: GraphQLError) =>
         error.extensions?.code === 'FORBIDDEN' ||
         error.message?.includes('Forbidden access') ||
         error.message?.includes('Unauthorized'),
@@ -73,7 +78,7 @@ const fetchAPI = async (
     }
 
     console.error('GraphQL Errors:', json.errors);
-    const errorMessage = json.errors.map((error: any) => error.message).join(', ');
+    const errorMessage = json.errors.map((error: GraphQLError) => error.message).join(', ');
     throw new Error(`GraphQL Error: ${errorMessage}`);
   }
 

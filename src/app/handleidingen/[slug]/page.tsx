@@ -1,3 +1,4 @@
+import { BlocksContent } from '@strapi/blocks-react-renderer';
 import { Metadata } from 'next';
 import { notFound, redirect } from 'next/navigation';
 import { getServerSession } from 'next-auth';
@@ -59,7 +60,7 @@ const ManualPage = async (props: Props): Promise<JSX.Element> => {
       </BlockContainer>
 
       <BlockContainer slug={`${manual?.slug}-body`} modSmallPadding>
-        <Typography data={manual?.body as any} />
+        <Typography data={manual?.body as string | BlocksContent | undefined} />
       </BlockContainer>
 
       <BlockContainer slug={`${manual?.slug}-footer`} modSmallPadding>

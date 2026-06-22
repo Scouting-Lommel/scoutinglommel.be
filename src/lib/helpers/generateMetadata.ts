@@ -67,8 +67,8 @@ const generateMetadataForPage = async (
       canonical: `${siteUrl}${path ? '/' + path : ''}`,
     },
     robots: {
-      index: pageMeta?.noIndex || true,
-      follow: pageMeta?.noIndex || true,
+      index: !(pageMeta?.noIndex ?? false),
+      follow: !(pageMeta?.noIndex ?? false),
     },
     openGraph: {
       locale: 'nl',
