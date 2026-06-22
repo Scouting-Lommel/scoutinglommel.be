@@ -1,0 +1,21 @@
+fragment NavigationItemFragment on NavigationItem {
+  title
+  type
+  path
+  externalPath
+  menuAttached
+  items {
+    title
+    type
+    path
+    externalPath
+    menuAttached
+    items {
+      title
+      type
+      path
+      externalPath
+      menuAttached
+    }
+  }
+}

@@ -127,29 +127,27 @@ const NavItem = ({
           />
         </button>
 
-        {dropdownTitle && dropdownCta && (
-          <dialog className="nav-item__dropdown" ref={modal} role="none">
-            <button
-              ref={closeButton}
-              onClick={() => closeClickHandler()}
-              type="button"
-              className="u-visually-hidden"
-            >
-              Close dropdown
-            </button>
-            <Dropdown
-              itemKey={itemKey}
-              path={href}
-              dropdownItems={dropdownItems}
-              dropdownTitle={dropdownTitle}
-              dropdownCta={dropdownCta}
-              dropdownButton={dropdownButton}
-              groups={groups}
-              rentalLocations={rentalLocations}
-              toggleDropdown={closeDropdown}
-            />
-          </dialog>
-        )}
+        <dialog className="nav-item__dropdown" ref={modal} role="none">
+          <button
+            ref={closeButton}
+            onClick={() => closeClickHandler()}
+            type="button"
+            className="u-visually-hidden"
+          >
+            Close dropdown
+          </button>
+          <Dropdown
+            itemKey={itemKey}
+            path={href}
+            dropdownItems={dropdownItems}
+            dropdownTitle={dropdownTitle}
+            dropdownCta={dropdownCta}
+            dropdownButton={dropdownButton}
+            groups={groups}
+            rentalLocations={rentalLocations}
+            toggleDropdown={closeDropdown}
+          />
+        </dialog>
       </li>
     );
   }

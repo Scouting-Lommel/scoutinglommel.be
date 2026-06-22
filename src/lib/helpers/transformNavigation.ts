@@ -1,0 +1,63 @@
+import {
+  NavigationItemType,
+} from '@/types/generated/Graphql';
+import type {
+  NavigationItem,
+} from '@/types/generated/Graphql';
+import type { NavItem } from '@/components/molecules/Navigation/types';
+import type { FooterNavigation } from '@/components/molecules/FooterDoormat/types';
+
+function derivePageFromPath(path: string | null | undefined): string {
+  if (!path || path === '/') return 'home';
+  return path.replace(/^\//, '').replace(/-/g, '_');
+}
+
+export function transformMainNavigation(
+  items: Array<NavigationItem | null> | null | undefined,
+): NavItem[] {
+  if (!items) return [];
+
+  return items
+    .filter((item): item is NavigationItem => item !== null)
+    .map((item) => {
+      const children = item.items?.filter((child): child is NavigationItem => child !== null);
+      const hasChildren = children && children.length > 0;
+
+      return {
+        label: item.title,
+        page: derivePageFromPath(item.path),
+        link: item.type === NavigationItemType.External ? item.externalPath ?? null : null,
+        dropdownItems: hasChildren
+          ? children.map((child) => ({
+              label: child.title,
+              page: derivePageFromPath(child.path),
+              link: child.type === NavigationItemType.External ? child.externalPath ?? null : null,
+              description: undefined,
+              modTargetBlank: child.type === NavigationItemType.External,
+            }))
+          : [],
+        dropdownTitle: hasChildren ? item.title : null,
+        dropdownCta: null,
+        dropdownButton: undefined,
+      };
+    });
+}
+
+export function transformFooterNavigation(
+  items: Array<NavigationItem | null> | null | undefined,
+): FooterNavigation[] {
+  if (!items) return [];
+
+  return items
+    .filter((item): item is NavigationItem => item !== null)
+    .map((item) => ({
+      title: item.title,
+      navItems:
+        item.items
+          ?.filter((child): child is NavigationItem => child !== null)
+          .map((child) => ({
+            label: child.title,
+            link: child.path || child.externalPath || '#',
+          })) || [],
+    }));
+}

@@ -9,6 +9,10 @@ import { getLayoutData, getSeoData } from '@/lib/api/general/api';
 import { DataProvider } from '@/lib/contexts/DataContext';
 import { generateMetadataForRootLayout } from '@/lib/helpers/generateMetadata';
 import { generateStructuredData } from '@/lib/helpers/generateStructuredData';
+import {
+  transformMainNavigation,
+  transformFooterNavigation,
+} from '@/lib/helpers/transformNavigation';
 import SessionProvider from '@/lib/providers/SessionProvider';
 import GlobalAlert from '@/components/atoms/GlobalAlert';
 import SkipToContent from '@/components/atoms/SkipToContent';
@@ -55,6 +59,8 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
   const data = await getLayoutData();
 
   const globalAlert = data.generalData.globalAlert;
+  const mainNavigation = transformMainNavigation(data.mainNavigation);
+  const footerNavigation = transformFooterNavigation(data.footerNavigation);
 
   return (
     <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
@@ -70,6 +76,7 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
 
               <Header
                 logo={data.generalData.logo}
+                mainNavigation={mainNavigation}
                 groups={data.groups}
                 rentalLocations={data.rentalLocations}
               />
@@ -84,6 +91,7 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
                 groupNumber={data.generalData.groupNumber}
                 address={data.generalData.address}
                 contactItems={data.generalData.contactItems}
+                footerNavigation={footerNavigation}
               />
             </DataProvider>
           </SessionProvider>

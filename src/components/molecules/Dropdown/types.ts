@@ -26,9 +26,9 @@ export type DropdownCta = {
 export type Dropdown = {
   itemKey: number;
   path?: string;
-  dropdownTitle: string;
+  dropdownTitle?: string | null;
   dropdownButton?: Button;
-  dropdownCta: DropdownCta;
+  dropdownCta?: DropdownCta | null;
   dropdownItems?: DropdownItem[];
   groups?: DropdownNavItem[];
   rentalLocations?: DropdownNavItem[];

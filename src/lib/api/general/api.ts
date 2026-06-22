@@ -1,6 +1,18 @@
 import { generateApiQuery } from '@/lib/api';
-import type { FooterDataQuery, NavigationDataQuery, SeoDataQuery } from '@/types/generated/Graphql';
-import { NAVIGATION_DATA, FOOTER_DATA, SEO_DATA } from './queries';
+import type {
+  FooterDataQuery,
+  FooterNavigationQuery,
+  MainNavigationQuery,
+  NavigationDataQuery,
+  SeoDataQuery,
+} from '@/types/generated/Graphql';
+import {
+  NAVIGATION_DATA,
+  FOOTER_DATA,
+  SEO_DATA,
+  MAIN_NAVIGATION_QUERY,
+  FOOTER_NAVIGATION_QUERY,
+} from './queries';
 
 export const getNavigationData = (): Promise<NavigationDataQuery> => {
   return generateApiQuery<NavigationDataQuery>({
@@ -20,8 +32,25 @@ export const getSeoData = (): Promise<SeoDataQuery> => {
   });
 };
 
+export const getMainNavigation = (): Promise<MainNavigationQuery> => {
+  return generateApiQuery<MainNavigationQuery>({
+    query: MAIN_NAVIGATION_QUERY,
+  });
+};
+
+export const getFooterNavigation = (): Promise<FooterNavigationQuery> => {
+  return generateApiQuery<FooterNavigationQuery>({
+    query: FOOTER_NAVIGATION_QUERY,
+  });
+};
+
 export const getLayoutData = async (): Promise<any> => {
-  const [navigationData, footerData] = await Promise.all([getNavigationData(), getFooterData()]);
+  const [navigationData, footerData, mainNavData, footerNavData] = await Promise.all([
+    getNavigationData(),
+    getFooterData(),
+    getMainNavigation(),
+    getFooterNavigation(),
+  ]);
 
   return {
     generalData: {
@@ -30,5 +59,7 @@ export const getLayoutData = async (): Promise<any> => {
     },
     groups: navigationData.groups,
     rentalLocations: navigationData.rentalLocations,
+    mainNavigation: mainNavData.renderNavigation,
+    footerNavigation: footerNavData.renderNavigation,
   };
 };
