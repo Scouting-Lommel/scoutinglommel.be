@@ -45,7 +45,13 @@ export function transformMainNavigation(
           : [],
         dropdownTitle: hasChildren ? item.title : null,
         dropdownCta: null,
-        dropdownButton: undefined,
+        dropdownButton: hasChildren
+          ? {
+              label: `Bekijk alle ${item.title.toLowerCase()}`,
+              link: item.path ?? '',
+              variant: 'primary',
+            }
+          : undefined,
       };
     });
 }
