@@ -26,12 +26,12 @@ export function transformMainNavigation(
       return {
         label: item.title,
         page: derivePageFromPath(item.path),
-        link: item.type === NavigationItemType.External ? item.externalPath ?? null : null,
+        link: item.type === NavigationItemType.External ? item.externalPath ?? null : item.path ?? null,
         dropdownItems: hasChildren
           ? children.map((child) => ({
               label: child.title,
               page: derivePageFromPath(child.path),
-              link: child.type === NavigationItemType.External ? child.externalPath ?? null : null,
+              link: child.type === NavigationItemType.External ? child.externalPath ?? null : child.path ?? null,
               description: undefined,
               modTargetBlank: child.type === NavigationItemType.External,
             }))
