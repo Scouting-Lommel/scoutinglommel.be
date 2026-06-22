@@ -19,7 +19,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
   const { generalData } = await getGeneralData();
   const { manuals } = await getManualPage(slug);
-  const manual = manuals[0];
+  const manual = manuals?.[0];
 
   if (!manual || !generalData) return {};
 
@@ -38,9 +38,7 @@ const ManualPage = async (props: Props): Promise<JSX.Element> => {
   const session = await getServerSession();
 
   const { manuals } = await getManualPage(slug);
-  const manual = manuals[0];
-
-  const t = await getTranslations('common');
+  const manual = manuals?.[0];
 
   if (!manual) notFound();
 

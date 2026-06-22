@@ -26,7 +26,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
   const { generalData } = await getGeneralData();
   const { groups } = await getGroupPage(slug);
-  const group = groups[0];
+  const group = groups?.[0];
 
   if (!group || !generalData) return {};
 
@@ -43,7 +43,7 @@ const GroupPage = async (props: Props): Promise<JSX.Element> => {
   const { slug } = await props.params;
 
   const { groups } = await getGroupPage(slug);
-  const group = groups[0];
+  const group = groups?.[0];
 
   if (!group) notFound();
 
