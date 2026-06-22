@@ -9,7 +9,7 @@ import { MarkdownRendererProps } from '../types';
 const MarkdownRenderer = ({ data, className }: MarkdownRendererProps): JSX.Element => {
   return (
     <div className={className}>
-      <ReactMarkdown remarkPlugins={[remarkGfm as any]} rehypePlugins={[rehypeRaw as any]}>
+      <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]}>
         {sanitizeHtml(data)}
       </ReactMarkdown>
     </div>

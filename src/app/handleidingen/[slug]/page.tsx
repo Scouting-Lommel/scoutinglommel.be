@@ -40,6 +40,8 @@ const ManualPage = async (props: Props): Promise<JSX.Element> => {
   const { manuals } = await getManualPage(slug);
   const manual = manuals?.[0];
 
+  const t = await getTranslations('common');
+
   if (!manual) notFound();
 
   if (!(session && session.user) && manual.locked) {

@@ -1,5 +1,6 @@
 import FormDataLib from 'form-data';
 import Mailgun from 'mailgun.js';
+import type { MailgunMessageData } from 'mailgun.js/definitions';
 import { NextResponse } from 'next/server';
 import { Email } from '@/lib/helpers/sendEmail';
 
@@ -16,7 +17,7 @@ export const handleSendEmail = async (email: Email): Promise<NextResponse> => {
   });
 
   try {
-    await mg.messages.create('mg.scoutinglommel.be', email as any);
+    await mg.messages.create('mg.scoutinglommel.be', email as MailgunMessageData);
     return NextResponse.json({ message: 'Email sent successfully' }, { status: 200 });
   } catch (error) {
     return NextResponse.json({ error: `Error when sending email: ${error}` }, { status: 500 });
