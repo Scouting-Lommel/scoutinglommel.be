@@ -45,21 +45,26 @@ export const getFooterNavigation = (): Promise<FooterNavigationQuery> => {
 };
 
 export const getLayoutData = async (): Promise<any> => {
-  const [navigationData, footerData, mainNavData, footerNavData] = await Promise.all([
+  const [navigationData, footerData, mainNavData, footerNavData] = await Promise.allSettled([
     getNavigationData(),
     getFooterData(),
     getMainNavigation(),
     getFooterNavigation(),
   ]);
 
+  const navData = navigationData.status === 'fulfilled' ? navigationData.value : null;
+  const footData = footerData.status === 'fulfilled' ? footerData.value : null;
+  const mainNav = mainNavData.status === 'fulfilled' ? mainNavData.value : null;
+  const footerNav = footerNavData.status === 'fulfilled' ? footerNavData.value : null;
+
   return {
     generalData: {
-      ...navigationData.generalData,
-      ...footerData.generalData,
+      ...(navData?.generalData || {}),
+      ...(footData?.generalData || {}),
     },
-    groups: navigationData.groups,
-    rentalLocations: navigationData.rentalLocations,
-    mainNavigation: mainNavData.renderNavigation,
-    footerNavigation: footerNavData.renderNavigation,
+    groups: navData?.groups || [],
+    rentalLocations: navData?.rentalLocations || [],
+    mainNavigation: mainNav?.renderNavigation || [],
+    footerNavigation: footerNav?.renderNavigation || [],
   };
 };

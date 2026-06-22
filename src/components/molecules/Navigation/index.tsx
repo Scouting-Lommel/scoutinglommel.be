@@ -37,7 +37,7 @@ const Navigation = ({ navItems = [], groups, rentalLocations }: NavigationProps)
                 dropdownButton={dropdownBtn}
                 groups={groups}
                 rentalLocations={rentalLocations}
-                modDropdown={navItem.dropdownItems.length > 0}
+                modDropdown={navItem.dropdownItems && navItem.dropdownItems.length > 0}
               />
             );
           })}
