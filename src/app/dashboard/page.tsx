@@ -34,7 +34,7 @@ const DashboardPage = async (): Promise<JSX.Element> => {
       <BlockContainer slug="dashboard-title">
         <Hero
           title={t('title')}
-          subtitle={t('subtitle', { name: session?.user?.name })}
+          subtitle={t('subtitle', { name: session?.user?.name ?? '' })}
           variant="simple"
         />
       </BlockContainer>

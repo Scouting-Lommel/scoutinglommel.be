@@ -50,7 +50,7 @@ const NavAuthButton = ({ session }: { session: Session | null }): JSX.Element =>
     if (session) {
       return {
         title: session.user?.name || t('leaderProfile'),
-        intro: t('loggedInAs', { role: session.role }),
+        intro: t('loggedInAs', { role: session.role ?? '' }),
         ctaLabel: t('signOut'),
         ctaOnClick: () => signOut(),
       };
