@@ -58,6 +58,18 @@ export const generateMetadata = async (): Promise<Metadata> => {
 const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
   const data = await getLayoutData();
 
+  if (!data?.generalData) {
+    return (
+      <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
+        <body>
+          <main className="sl-main" id="main">
+            {children}
+          </main>
+        </body>
+      </html>
+    );
+  }
+
   const globalAlert = data.generalData.globalAlert;
   const mainNavigation = transformMainNavigation(data.mainNavigation);
   const footerNavigation = transformFooterNavigation(data.footerNavigation);
