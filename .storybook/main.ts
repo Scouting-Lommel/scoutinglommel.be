@@ -1,5 +1,4 @@
 import type { StorybookConfig } from '@storybook/nextjs';
-import { fixSvg } from './build/svgr';
 
 /** @type { import('@storybook/nextjs').StorybookConfig } */
 const config: StorybookConfig = {
@@ -13,11 +12,6 @@ const config: StorybookConfig = {
     '@storybook/addon-mdx-gfm',
     '@chromatic-com/storybook',
   ],
-
-  webpackFinal: async (config) => {
-    await fixSvg(config);
-    return config;
-  },
 
   framework: {
     name: '@storybook/nextjs',
