@@ -1,32 +1,76 @@
 import dynamic from 'next/dynamic';
 import { ComponentType, type JSX } from 'react';
 
+type BlockContent = {
+  __typename: string;
+  [key: string]: unknown;
+};
+
 type BlockList = {
-  [key: string]: ComponentType<any>;
+  [key: string]: ComponentType<BlockContent>;
 };
 
 const blockList: BlockList = {
-  ComponentContentBlocksHeroBlock: dynamic(() => import('./HeroBlock')),
-  ComponentContentBlocksTextImageBlock: dynamic(() => import('./TextImageBlock')),
-  ComponentContentBlocksGroupsBlock: dynamic(() => import('./GroupsBlock')),
-  ComponentContentBlocksEventsBlock: dynamic(() => import('./EventsBlock')),
-  ComponentContentBlocksGalleryBlock: dynamic(() => import('./GalleryBlock')),
-  ComponentContentBlocksPolicyBlock: dynamic(() => import('./PolicyBlock')),
-  ComponentContentBlocksLeadersBlock: dynamic(() => import('./LeadersBlock')),
-  ComponentContentBlocksTarifsBlock: dynamic(() => import('./TarifsBlock')),
-  ComponentContentBlocksFilesBlock: dynamic(() => import('./FilesBlock')),
-  ComponentContentBlocksFaqBlock: dynamic(() => import('./FaqBlock')),
-  ComponentContentBlocksMapBlock: dynamic(() => import('./MapsBlock')),
-  ComponentContentBlocksActivitiesBlock: dynamic(() => import('./ActivitiesBlock')),
-  ComponentContentBlocksCalendarBlock: dynamic(() => import('./CalendarBlock')),
-  ComponentContentBlocksYearThemeBlock: dynamic(() => import('./YearThemeBlock')),
-  ComponentContentBlocksDivider: dynamic(() => import('./Divider')),
+  ComponentContentBlocksHeroBlock: dynamic(
+    () => import('./HeroBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksTextImageBlock: dynamic(
+    () =>
+      import('./TextImageBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksGroupsBlock: dynamic(
+    () => import('./GroupsBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksEventsBlock: dynamic(
+    () => import('./EventsBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksGalleryBlock: dynamic(
+    () => import('./GalleryBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksPolicyBlock: dynamic(
+    () => import('./PolicyBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksLeadersBlock: dynamic(
+    () => import('./LeadersBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksTarifsBlock: dynamic(
+    () => import('./TarifsBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksFilesBlock: dynamic(
+    () => import('./FilesBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksFaqBlock: dynamic(
+    () => import('./FaqBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksMapBlock: dynamic(
+    () => import('./MapsBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksActivitiesBlock: dynamic(
+    () =>
+      import('./ActivitiesBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksCalendarBlock: dynamic(
+    () => import('./CalendarBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksYearThemeBlock: dynamic(
+    () =>
+      import('./YearThemeBlock') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
+  ComponentContentBlocksDivider: dynamic(
+    () => import('./Divider') as unknown as Promise<{ default: ComponentType<BlockContent> }>,
+  ),
 };
 
-const Blocks = ({ content }: { content: any }): JSX.Element => {
+const Blocks = ({
+  content,
+}: {
+  content: Array<BlockContent | null> | null | undefined;
+}): JSX.Element => {
   if (!content || !content.length) return <></>;
 
-  const contentBlocks = content.map((block: any) => {
+  const validBlocks = content.filter((block): block is BlockContent => block !== null);
+
+  const contentBlocks = validBlocks.map((block) => {
     const key = block.__typename;
 
     if (!(key in blockList)) {
@@ -39,8 +83,8 @@ const Blocks = ({ content }: { content: any }): JSX.Element => {
 
   return (
     <>
-      {contentBlocks?.map((Component: any, i: number) => {
-        return Component ? <Component key={i} {...content[i]} /> : false;
+      {contentBlocks.map((Component, i) => {
+        return Component ? <Component key={i} {...validBlocks[i]} /> : false;
       })}
     </>
   );

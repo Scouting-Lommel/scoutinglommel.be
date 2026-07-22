@@ -25,7 +25,7 @@ const InfoPage = async (): Promise<JSX.Element> => {
   if (!infoPage) notFound();
 
   const blocks = [...(infoPage.blocks ?? [])] as Array<{
-    __typename?: string;
+    __typename: string;
     [key: string]: unknown;
   }>;
   const blockIndex = blocks.findIndex(
