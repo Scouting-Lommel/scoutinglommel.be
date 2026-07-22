@@ -32,10 +32,17 @@ const ManualsPage = async (): Promise<JSX.Element> => {
     <>
       <Blocks content={manualsOverviewPage.blocks} />
       <ArticleGrid
-        articles={manuals?.map((manual: any) => ({
-          id: manual.documentId,
-          ...manual,
-        }))}
+        articles={
+          manuals?.map((manual) => ({
+            id: manual?.documentId,
+            title: manual?.title ?? '',
+            description: manual?.description ?? '',
+            updatedAt: manual?.updatedAt ?? '',
+            slug: manual?.slug ?? '',
+            locked: manual?.locked ?? false,
+            loginCallbackUrl: '/handleidingen',
+          })) ?? []
+        }
         loginCallbackUrl="/handleidingen"
         modWithToolbar
       />

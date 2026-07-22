@@ -4,15 +4,20 @@ import type { JSX } from 'react';
 import { getNavigationData } from '@/lib/api/general/api';
 import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import Blocks from '@/content-blocks';
+import type { GetGroupPageQuery, NavigationDataQuery } from '@/types/generated/Graphql';
 import { getGroupPage } from './api';
 import { getGeneralData } from '../../api';
+
+type NavigationGroup = NonNullable<NavigationDataQuery['groups'][number]>;
 
 export async function generateStaticParams() {
   try {
     const data = await getNavigationData();
-    return data.groups.map((group: any) => ({
-      slug: group.slug,
-    }));
+    return data.groups
+      .filter((group): group is NavigationGroup => !!group && !!group.slug)
+      .map((group) => ({
+        slug: group.slug,
+      }));
   } catch (error) {
     console.warn('[generateStaticParams] Failed to fetch group slugs, falling back to SSR:', error);
     return [];
@@ -43,11 +48,19 @@ const GroupPage = async (props: Props): Promise<JSX.Element> => {
 
   if (!group) notFound();
 
-  group.blocks?.forEach((block: any) => {
+  type Group = NonNullable<GetGroupPageQuery['groups'][number]>;
+
+  type MutableBlock = {
+    __typename: string;
+    groupSlug?: string;
+    leaders?: Group['leaders'];
+  } & Record<string, unknown>;
+
+  (group.blocks as MutableBlock[] | undefined)?.forEach((block) => {
     switch (block.__typename) {
       case 'ComponentContentBlocksFilesBlock':
       case 'ComponentContentBlocksActivitiesBlock':
-        block.groupSlug = group.slug;
+        block.groupSlug = group.slug ?? '';
         break;
       case 'ComponentContentBlocksLeadersBlock':
         block.leaders = group.leaders;
@@ -57,7 +70,7 @@ const GroupPage = async (props: Props): Promise<JSX.Element> => {
 
   return (
     <>
-      <Blocks content={group.blocks} />
+      <Blocks content={group.blocks as MutableBlock[] | null | undefined} />
     </>
   );
 };
