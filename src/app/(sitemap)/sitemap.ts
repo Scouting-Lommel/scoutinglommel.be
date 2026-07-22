@@ -1,7 +1,8 @@
+import type { MetadataRoute } from 'next';
 import generateSitemap from '@/lib/helpers/generateSitemap';
 import { getSitemap } from './api';
 
-const Sitemap = async (): Promise<any> => {
+const Sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   try {
     const data = await getSitemap();
     return generateSitemap(data);

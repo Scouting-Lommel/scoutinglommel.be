@@ -1,6 +1,18 @@
 import type { SitemapQuery } from '@/types/generated/Graphql';
 
-const generateSitemap = (sitemapData: SitemapQuery): Array<{ url: string; lastModified?: string | null }> => {
+type SitemapEntry = { url: string; lastModified?: string };
+
+type SitemapPage = {
+  slug?: string | null;
+  updatedAt?: string | null;
+  pageMeta?: { noIndex?: boolean | null } | null;
+};
+
+const createEntry = (siteUrl: string, slug: string, updatedAt?: string | null): SitemapEntry => {
+  return updatedAt ? { url: `${siteUrl}/${slug}`, lastModified: updatedAt } : { url: `${siteUrl}/${slug}` };
+};
+
+const generateSitemap = (sitemapData: SitemapQuery): SitemapEntry[] => {
   const siteUrl = process.env.SITE_URL;
   if (!siteUrl) return [];
 
@@ -18,103 +30,48 @@ const generateSitemap = (sitemapData: SitemapQuery): Array<{ url: string; lastMo
     privacyPolicyPage,
   } = sitemapData;
 
-  const out = [];
+  const out: SitemapEntry[] = [];
+
+  const pushIfIndexable = (page?: SitemapPage | null, path?: string) => {
+    if (!page || page.pageMeta?.noIndex) return;
+    const slug = page.slug;
+    if (!slug) return;
+
+    out.push(createEntry(siteUrl, path ? `${path}/${slug}` : slug, page.updatedAt));
+  };
 
   // Home page
-  if (homePage && homePage.slug && !homePage.pageMeta?.noIndex) {
-    out.push({
-      url: `${siteUrl}/${homePage.slug}`,
-      lastModified: homePage.updatedAt,
-    });
-  }
+  pushIfIndexable(homePage);
 
   // Groups page
-  if (groupsPage && groupsPage.slug && !groupsPage.pageMeta?.noIndex) {
-    out.push({
-      url: `${siteUrl}/${groupsPage.slug}`,
-      lastModified: groupsPage.updatedAt,
-    });
-  }
+  pushIfIndexable(groupsPage);
 
   // Group pages
-  groups?.forEach((group) => {
-    if (group && group.slug && !group.pageMeta?.noIndex) {
-      out.push({
-        url: `${siteUrl}/takken/${group.slug}`,
-        lastModified: group.updatedAt,
-      });
-    }
-  });
+  groups?.forEach((group) => pushIfIndexable(group, 'takken'));
 
   // Rental page
-  if (rentalPage && rentalPage.slug && !rentalPage.pageMeta?.noIndex) {
-    out.push({
-      url: `${siteUrl}/${rentalPage.slug}`,
-      lastModified: rentalPage.updatedAt,
-    });
-  }
+  pushIfIndexable(rentalPage);
 
   // Rental location pages
-  rentalLocations?.forEach((location) => {
-    if (location && location.slug && !location.pageMeta?.noIndex) {
-      out.push({
-        url: `${siteUrl}/verhuur/${location.slug}`,
-        lastModified: location.updatedAt,
-      });
-    }
-  });
+  rentalLocations?.forEach((location) => pushIfIndexable(location, 'verhuur'));
 
   // Info page
-  if (infoPage && infoPage.slug && !infoPage.pageMeta?.noIndex) {
-    out.push({
-      url: `${siteUrl}/${infoPage.slug}`,
-      lastModified: infoPage.updatedAt,
-    });
-  }
+  pushIfIndexable(infoPage);
 
   // Register page
-  if (registerPage && registerPage.slug && !registerPage.pageMeta?.noIndex) {
-    out.push({
-      url: `${siteUrl}/${registerPage.slug}`,
-      lastModified: registerPage.updatedAt,
-    });
-  }
+  pushIfIndexable(registerPage);
 
   // Contact page
-  if (contactPage && contactPage.slug && !contactPage.pageMeta?.noIndex) {
-    out.push({
-      url: `${siteUrl}/${contactPage.slug}`,
-      lastModified: contactPage.updatedAt,
-    });
-  }
+  pushIfIndexable(contactPage);
 
   // Articles page
-  if (articlesPage && articlesPage.slug && !articlesPage.pageMeta?.noIndex) {
-    out.push({
-      url: `${siteUrl}/${articlesPage.slug}`,
-      lastModified: articlesPage.updatedAt,
-    });
-  }
+  pushIfIndexable(articlesPage);
 
   // Drugs and alcohol policy page
-  if (
-    drugsAlcoholPolicyPage &&
-    drugsAlcoholPolicyPage.slug &&
-    !drugsAlcoholPolicyPage.pageMeta?.noIndex
-  ) {
-    out.push({
-      url: `${siteUrl}/${drugsAlcoholPolicyPage.slug}`,
-      lastModified: drugsAlcoholPolicyPage.updatedAt,
-    });
-  }
+  pushIfIndexable(drugsAlcoholPolicyPage);
 
   // Privacy policy page
-  if (privacyPolicyPage && privacyPolicyPage.slug && !privacyPolicyPage.pageMeta?.noIndex) {
-    out.push({
-      url: `${siteUrl}/${privacyPolicyPage.slug}`,
-      lastModified: privacyPolicyPage.updatedAt,
-    });
-  }
+  pushIfIndexable(privacyPolicyPage);
 
   return out;
 };
