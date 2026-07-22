@@ -7,13 +7,22 @@ import Tabs, { Tab } from '@/components/atoms/Tabs';
 import ActionTitle from '@/components/molecules/ActionTitle';
 import Form from '@/components/organisms/Forms';
 
+type SectionTitleFile = {
+  id: string | number;
+};
+
+type SectionTitleLink = {
+  label: string;
+  link: string;
+};
+
 type SectionTitleProps = {
   title: string;
   groupId: string;
   type: 'activity' | 'file';
-  allFiles?: any;
-  allLinks?: any;
-  callback: any;
+  allFiles?: SectionTitleFile[];
+  allLinks?: SectionTitleLink[];
+  callback: () => void;
 };
 
 const SectionTitle = ({

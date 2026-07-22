@@ -7,7 +7,7 @@ export type File = {
   name: string;
   size: number;
   modDeleteable?: boolean;
-  deleteCallback?: any;
+  deleteCallback?: () => void;
 } & React.HTMLAttributes<HTMLElement>;
 
 export type Link = {
@@ -17,12 +17,12 @@ export type Link = {
   groupId?: string;
   allLinks?: Link[];
   modDeleteable?: boolean;
-  deleteCallback?: any;
+  deleteCallback?: () => void;
 } & React.HTMLAttributes<HTMLElement>;
 
 type BaseBlock = {
   modDeleteable?: boolean;
-  deleteCallback?: any;
+  deleteCallback?: () => void;
 };
 
 interface FileBlock extends BaseBlock {

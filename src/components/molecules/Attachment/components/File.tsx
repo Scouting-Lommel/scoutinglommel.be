@@ -50,6 +50,8 @@ const File = ({
   const handleDeleteFile = async (e: React.MouseEvent) => {
     e.stopPropagation();
 
+    if (!deleteCallback) return;
+
     if (confirm(t('confirmation', { attachmentTitle: name }))) {
       try {
         setLoading(true);
@@ -57,7 +59,7 @@ const File = ({
         await callApi(id);
         deleteCallback();
         setFormStatus(FormStatus.STATUS_DELETE_SUCCESS);
-      } catch (err: any) {
+      } catch (err) {
         console.error(err);
         setFormStatus(FormStatus.STATUS_DELETE_ERROR);
       }
@@ -66,7 +68,7 @@ const File = ({
     setLoading(false);
   };
 
-  const callApi = async (data: any) => {
+  const callApi = async (data: string) => {
     const response = await fetch('/api/file-attachment', {
       method: 'POST',
       headers: {
