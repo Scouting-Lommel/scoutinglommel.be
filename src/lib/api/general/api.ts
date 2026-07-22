@@ -1,4 +1,5 @@
 import { generateApiQuery } from '@/lib/api';
+import type { GeneralData } from '@/lib/contexts/DataContext';
 import type {
   FooterDataQuery,
   FooterNavigationQuery,
@@ -13,6 +14,11 @@ import {
   MAIN_NAVIGATION_QUERY,
   FOOTER_NAVIGATION_QUERY,
 } from './queries';
+
+type LayoutData = GeneralData & {
+  mainNavigation: MainNavigationQuery['renderNavigation'];
+  footerNavigation: FooterNavigationQuery['renderNavigation'];
+};
 
 export const getNavigationData = (): Promise<NavigationDataQuery> => {
   return generateApiQuery<NavigationDataQuery>({
@@ -44,7 +50,7 @@ export const getFooterNavigation = (): Promise<FooterNavigationQuery> => {
   });
 };
 
-export const getLayoutData = async (): Promise<any> => {
+export const getLayoutData = async (): Promise<LayoutData> => {
   const [navigationData, footerData, mainNavData, footerNavData] = await Promise.allSettled([
     getNavigationData(),
     getFooterData(),

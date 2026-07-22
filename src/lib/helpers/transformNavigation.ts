@@ -1,27 +1,37 @@
-import { NavigationItemType } from '@/types/generated/Graphql';
-import type { NavigationItem } from '@/types/generated/Graphql';
+import {
+  FooterNavigationQuery,
+  MainNavigationQuery,
+  NavigationItemType,
+} from '@/types/generated/Graphql';
 import type { FooterNavigation } from '@/components/molecules/FooterDoormat/types';
 import type { NavItem } from '@/components/molecules/Navigation/types';
+
+type MainNavigationItem = MainNavigationQuery['renderNavigation'][number];
+type FooterNavigationItem = FooterNavigationQuery['renderNavigation'][number];
 
 function derivePageFromPath(path: string | null | undefined): string {
   if (!path || path === '/') return 'home';
   return path.replace(/^\//, '').replace(/-/g, '_');
 }
 
-function getDescriptionFromRelated(related: NavigationItem['related']): string | undefined {
+function getDescriptionFromRelated(
+  related: NonNullable<MainNavigationItem>['related'],
+): string | undefined {
   if (!related || !('description' in related)) return undefined;
   return related.description ?? undefined;
 }
 
 export function transformMainNavigation(
-  items: Array<NavigationItem | null> | null | undefined,
+  items: MainNavigationQuery['renderNavigation'] | null | undefined,
 ): NavItem[] {
   if (!items) return [];
 
   return items
-    .filter((item): item is NavigationItem => item !== null)
+    .filter((item): item is NonNullable<MainNavigationItem> => item !== null)
     .map((item) => {
-      const children = item.items?.filter((child): child is NavigationItem => child !== null);
+      const children = item.items?.filter(
+        (child): child is NonNullable<MainNavigationItem> => child !== null,
+      );
       const hasChildren = children && children.length > 0;
 
       return {
@@ -57,17 +67,17 @@ export function transformMainNavigation(
 }
 
 export function transformFooterNavigation(
-  items: Array<NavigationItem | null> | null | undefined,
+  items: FooterNavigationQuery['renderNavigation'] | null | undefined,
 ): FooterNavigation[] {
   if (!items) return [];
 
   return items
-    .filter((item): item is NavigationItem => item !== null)
+    .filter((item): item is NonNullable<FooterNavigationItem> => item !== null)
     .map((item) => ({
       title: item.title,
       navItems:
         item.items
-          ?.filter((child): child is NavigationItem => child !== null)
+          ?.filter((child): child is NonNullable<FooterNavigationItem> => child !== null)
           .map((child) => ({
             label: child.title,
             link: child.path || child.externalPath || '#',

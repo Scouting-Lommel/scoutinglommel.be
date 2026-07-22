@@ -74,6 +74,33 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
   const mainNavigation = transformMainNavigation(data.mainNavigation);
   const footerNavigation = transformFooterNavigation(data.footerNavigation);
 
+  const groups = data.groups
+    .filter((group): group is NonNullable<(typeof data.groups)[number]> => group !== null)
+    .map((group) => ({
+      name: group.name,
+      description: group.description ?? '',
+      slug: group.slug ?? '',
+    }));
+  const rentalLocations = data.rentalLocations
+    .filter(
+      (location): location is NonNullable<(typeof data.rentalLocations)[number]> =>
+        location !== null,
+    )
+    .map((location) => ({
+      name: location.name ?? '',
+      description: location.description ?? '',
+      slug: location.slug ?? '',
+    }));
+  const contactItems = (data.generalData.contactItems ?? [])
+    .filter(
+      (item): item is NonNullable<NonNullable<typeof data.generalData.contactItems>[number]> =>
+        item !== null,
+    )
+    .map((item) => ({
+      label: item.label ?? '',
+      link: item.link ?? '',
+    }));
+
   return (
     <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
       <body>
@@ -84,27 +111,33 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
             <DataProvider data={data}>
               <SkipToContent className="skip-to-content" />
 
-              {globalAlert && globalAlert?.enabled && (
-                <GlobalAlert label={globalAlert?.label} variant={globalAlert?.variant} />
+              {globalAlert && globalAlert.enabled && globalAlert.label && (
+                <GlobalAlert label={globalAlert.label} variant={globalAlert.variant} />
               )}
 
-              <Header
-                logo={data.generalData.logo}
-                mainNavigation={mainNavigation}
-                groups={data.groups}
-                rentalLocations={data.rentalLocations}
-              />
+              {data.generalData.logo && (
+                <Header
+                  logo={{
+                    ...data.generalData.logo,
+                    width: data.generalData.logo.width ?? null,
+                    height: data.generalData.logo.height ?? null,
+                  }}
+                  mainNavigation={mainNavigation}
+                  groups={groups}
+                  rentalLocations={rentalLocations}
+                />
+              )}
 
               <main className="sl-main" id="main">
                 {children}
               </main>
 
               <Footer
-                siteName={data.generalData.siteName}
-                vatNumber={data.generalData.vatNumber}
-                groupNumber={data.generalData.groupNumber}
-                address={data.generalData.address}
-                contactItems={data.generalData.contactItems}
+                siteName={data.generalData.siteName ?? ''}
+                vatNumber={data.generalData.vatNumber ?? ''}
+                groupNumber={data.generalData.groupNumber ?? ''}
+                address={data.generalData.address ?? ''}
+                contactItems={contactItems}
                 footerNavigation={footerNavigation}
               />
             </DataProvider>
