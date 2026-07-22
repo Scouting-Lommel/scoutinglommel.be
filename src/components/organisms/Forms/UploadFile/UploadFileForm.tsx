@@ -30,7 +30,7 @@ const UploadFileForm = ({
 
   const formSchema = generateFormSchema({ fields: formFields, t });
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = (data: Record<string, unknown>) => {
     submitForm(data, formFields);
   };
 

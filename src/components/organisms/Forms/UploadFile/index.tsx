@@ -5,7 +5,14 @@ import { FormContext } from '@/lib/contexts/FormContext';
 import Banner from '@/components/atoms/Banner';
 import UploadFileForm from './UploadFileForm';
 
-const UploadFile = (props: any): JSX.Element => {
+type UploadFileProps = {
+  groupId: string;
+  callback: () => void;
+  closeClickHandler: () => void;
+  allFiles?: Array<{ id: string | number }>;
+};
+
+const UploadFile = (props: UploadFileProps): JSX.Element => {
   const t = useTranslations('forms.uploadFileForm');
 
   const { formStatus, setFormStatus } = useContext(FormContext);
@@ -14,24 +21,24 @@ const UploadFile = (props: any): JSX.Element => {
     groupId: props.groupId,
   };
 
-  const handleSubmitForm = async (data: any) => {
+  const handleSubmitForm = async (data: Record<string, unknown>) => {
     try {
-      await uploadFile(data.file);
+      await uploadFile(data.file as File);
       setFormStatus(FormStatus.STATUS_SUCCESS);
       props.callback();
       props.closeClickHandler();
       setFormStatus(FormStatus.STATUS_READY);
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
       setFormStatus(FormStatus.STATUS_ERROR);
     }
   };
 
-  const uploadFile = async (data: any) => {
+  const uploadFile = async (data: File) => {
     const formData = new FormData();
     formData.append('files', data);
 
-    const allFiles = props.allFiles?.map((file: any) => String(file.id)) || [];
+    const allFiles = props.allFiles?.map((file) => String(file.id)) || [];
 
     try {
       const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/api/upload`, {
@@ -54,12 +61,12 @@ const UploadFile = (props: any): JSX.Element => {
       props.callback();
       props.closeClickHandler();
       setFormStatus(FormStatus.STATUS_READY);
-    } catch (err: any) {
-      throw new Error('Failed to perform action:', err);
+    } catch (err) {
+      throw new Error('Failed to perform action', { cause: err });
     }
   };
 
-  const callApi = async (data: any) => {
+  const callApi = async (data: { id: string; files: string[] }) => {
     const response = await fetch('/api/file-attachment', {
       method: 'POST',
       headers: {
