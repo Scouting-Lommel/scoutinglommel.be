@@ -6,7 +6,6 @@ import { Tabs as TabsProps, Tab as TabProps } from './types';
 import Tab from './Tab';
 import './Tabs.css';
 
-
 const Tabs = ({ children }: TabsProps): JSX.Element => {
   const [activeTab, setActiveTab] = useState<number>(0);
 

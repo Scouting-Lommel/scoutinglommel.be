@@ -69,4 +69,8 @@ ignore:
   - .git
   - .next
   - .storybook
+  - .omo
+  - .playwright-mcp
+  - .codegraph
   - node_modules
+  - storybook-static

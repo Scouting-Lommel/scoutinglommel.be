@@ -9,7 +9,6 @@ import Dropdown from '@/components/molecules/Dropdown';
 import { NavItem as NavItemProps } from './types';
 import './NavItem.css';
 
-
 const NavItem = ({
   itemKey,
   label,

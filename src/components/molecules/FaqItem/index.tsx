@@ -9,7 +9,6 @@ import Typography from '@/components/atoms/Typography';
 import { FaqItem as FAQProps } from './types';
 import './FaqItem.css';
 
-
 const FAQItem = ({ question, answer, image, callToAction }: FAQProps): JSX.Element => {
   const [isOpen, setOpen] = useState<boolean>(false);
 

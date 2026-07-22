@@ -5,7 +5,6 @@ import FAQItem from '@/components/molecules/FaqItem';
 import { FAQ as FAQProps } from './types';
 import './FAQ.css';
 
-
 const FAQ = ({ title, bottomText, faqItems, className }: FAQProps): JSX.Element => {
   const faqClassNames = cn('faq', className);
 

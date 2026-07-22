@@ -4,7 +4,6 @@ import type { JSX } from 'react';
 import { Loader as LoaderProps } from './types';
 import './Loader.css';
 
-
 const Loader = ({ size = 'md', modLabelVisible, className }: LoaderProps): JSX.Element => {
   const t = useTranslations('common');
 

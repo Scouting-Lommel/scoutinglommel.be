@@ -4,7 +4,6 @@ import TableOfContents from '@/components/molecules/TableOfContents';
 import { Policy as PolicyProps } from './types';
 import './Policy.css';
 
-
 const Policy = ({ sections }: PolicyProps): JSX.Element => {
   return (
     <>

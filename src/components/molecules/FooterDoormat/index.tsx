@@ -4,7 +4,6 @@ import Typography from '@/components/atoms/Typography';
 import { FooterDoormat as FooterDoormatProps, DoormatCol as DoormatColProps } from './types';
 import './FooterDoormat.css';
 
-
 const DoormatCol = ({ title, address, links }: DoormatColProps): JSX.Element => {
   return (
     <div className="doormat-col">

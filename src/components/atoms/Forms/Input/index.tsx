@@ -4,7 +4,6 @@ import Typography from '@/components/atoms/Typography';
 import { FormInput as FormInputProps } from './types';
 import './Input.css';
 
-
 const Input = forwardRef((props: FormInputProps, ref: any): JSX.Element => {
   const { customChangeBehaviour, error, modShowLabel = true, ...inputProps } = props;
   const inputClassName = cn(

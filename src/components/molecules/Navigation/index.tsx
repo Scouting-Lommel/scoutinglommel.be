@@ -6,7 +6,6 @@ import NavItem from '@/components/molecules/NavItem';
 import { Navigation as NavigationProps } from './types';
 import './Navigation.css';
 
-
 const Navigation = ({ navItems = [], groups, rentalLocations }: NavigationProps): JSX.Element => {
   return (
     <nav className="navigation__wrapper">

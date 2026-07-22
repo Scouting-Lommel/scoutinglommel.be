@@ -9,7 +9,6 @@ import FormField from './FormField';
 import { FormField as FormFieldType } from './FormField/types';
 import './Form.css';
 
-
 const FormBuilder = ({
   formId,
   fields,

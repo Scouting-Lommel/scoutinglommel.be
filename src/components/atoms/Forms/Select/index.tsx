@@ -5,7 +5,6 @@ import Typography from '@/components/atoms/Typography';
 import { FormSelect as FormSelectProps } from './types';
 import './Select.css';
 
-
 const Select = forwardRef((props: FormSelectProps, ref: any): JSX.Element => {
   const { customChangeBehaviour, error, ...selectProps } = props;
   const selectClassName = cn(

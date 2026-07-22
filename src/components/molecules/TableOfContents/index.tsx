@@ -3,7 +3,6 @@ import Typography from '@/components/atoms/Typography';
 import { TableOfContents as TableOfContentsProps } from './types';
 import './TableOfContents.css';
 
-
 const TableOfContents = ({ sections }: TableOfContentsProps): JSX.Element => {
   return (
     <ul className="table-of-contents">

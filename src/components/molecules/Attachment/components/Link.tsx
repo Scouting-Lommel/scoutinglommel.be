@@ -10,7 +10,6 @@ import Typography from '@/components/atoms/Typography';
 import '../Attachment.css';
 import { Link as LinkProps } from '../types';
 
-
 const Link = ({
   id,
   label,

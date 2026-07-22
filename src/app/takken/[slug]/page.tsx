@@ -30,11 +30,7 @@ export const generateMetadata = async (props: Props): Promise<Metadata> => {
 
   if (!group || !generalData) return {};
 
-  const metadata = await generateMetadataForPage(
-    group.pageMeta,
-    generalData,
-    `takken/${slug}`,
-  );
+  const metadata = await generateMetadataForPage(group.pageMeta, generalData, `takken/${slug}`);
 
   return { ...metadata };
 };

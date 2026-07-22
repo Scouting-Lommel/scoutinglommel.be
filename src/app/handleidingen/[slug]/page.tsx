@@ -52,11 +52,7 @@ const ManualPage = async (props: Props): Promise<JSX.Element> => {
   return (
     <article className="sl-layout--narrow">
       <BlockContainer slug={`${manual?.slug}-hero`}>
-        <Hero
-          variant="simple"
-          title={manual?.title}
-          subtitle={manual?.description}
-        />
+        <Hero variant="simple" title={manual?.title} subtitle={manual?.description} />
       </BlockContainer>
 
       <BlockContainer slug={`${manual?.slug}-body`} modSmallPadding>

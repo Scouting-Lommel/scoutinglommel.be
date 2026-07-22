@@ -1,8 +1,8 @@
 'use client';
 
-import { signIn, signOut, useSession } from 'next-auth/react';
-import type { Session } from 'next-auth';
 import { useRouter } from 'next/navigation';
+import type { Session } from 'next-auth';
+import { signIn, signOut, useSession } from 'next-auth/react';
 import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
 import { checkOrganisationPermission } from '@/lib/helpers/checkOrganisationPermission';

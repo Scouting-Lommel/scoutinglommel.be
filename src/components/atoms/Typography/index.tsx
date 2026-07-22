@@ -9,7 +9,6 @@ import MarkdownRenderer from './renderers/MarkdownRenderer';
 import StructuredTextRenderer from './renderers/StructuredTextRenderer';
 import './Typography.css';
 
-
 const hasMoreLines = (element: HTMLElement, maxLines: number) => {
   const lineHeight = parseInt(window.getComputedStyle(element).lineHeight) || 1.3;
   const height = element.scrollHeight;

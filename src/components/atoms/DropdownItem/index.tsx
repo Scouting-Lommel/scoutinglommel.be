@@ -5,7 +5,6 @@ import { DropdownItem as DropdownItemProps } from './types';
 import Icon from '../Icon';
 import './DropdownItem.css';
 
-
 const DropdownItem = ({
   title,
   description,

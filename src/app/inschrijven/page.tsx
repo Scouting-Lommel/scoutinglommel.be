@@ -32,11 +32,7 @@ const RegisterPage = async (): Promise<JSX.Element> => {
   return (
     <>
       <Blocks content={registerPage.blocks} />
-      <Form
-        variant="register"
-        blockProperties={{ slug: 'register-form' }}
-        props={generalData}
-      />
+      <Form variant="register" blockProperties={{ slug: 'register-form' }} props={generalData} />
     </>
   );
 };

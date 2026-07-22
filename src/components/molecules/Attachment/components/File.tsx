@@ -13,7 +13,6 @@ import Typography from '@/components/atoms/Typography';
 import '../Attachment.css';
 import { File as FileProps, Extensions } from '../types';
 
-
 const extMap: Extensions = {
   pdf: 'document',
   doc: 'document',

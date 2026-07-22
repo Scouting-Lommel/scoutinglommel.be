@@ -12,7 +12,6 @@ import Typography from '@/components/atoms/Typography';
 import { FormField as FormFieldProps } from './types';
 import './FormField.css';
 
-
 const FormField = (props: FormFieldProps): JSX.Element => {
   const errorMessage = props.errors && props.name ? props.errors[props.name]?.message : undefined;
 

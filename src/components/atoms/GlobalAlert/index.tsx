@@ -9,7 +9,6 @@ import Typography from '@/components/atoms/Typography';
 import { GlobalAlert as GlobalAlertProps } from './types';
 import './GlobalAlert.css';
 
-
 const GlobalAlert = ({ label, variant = 'info' }: GlobalAlertProps): JSX.Element => {
   const t = useTranslations('common');
 

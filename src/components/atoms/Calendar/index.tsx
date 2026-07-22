@@ -7,7 +7,6 @@ import Typography from '@/components/atoms/Typography';
 import { Calendar as CalendarProps } from './types';
 import './Calendar.css';
 
-
 const daysOfWeek = ['Zondag', 'Maandag', 'Dinsdag', 'Woensdag', 'Donderdag', 'Vrijdag', 'Zaterdag'];
 
 const Calendar = ({ events }: CalendarProps): JSX.Element => {

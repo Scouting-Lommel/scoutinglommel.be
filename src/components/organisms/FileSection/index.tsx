@@ -10,7 +10,6 @@ import Attachment from '@/components/molecules/Attachment';
 import { FileSection as FileBlockProps } from './types';
 import './FileSection.css';
 
-
 const FileSection = ({ title, groupSlug, className }: FileBlockProps): JSX.Element => {
   const [groupFiles, setFiles] = useState<any>(null);
   const [groupLinks, setLinks] = useState<any>(null);

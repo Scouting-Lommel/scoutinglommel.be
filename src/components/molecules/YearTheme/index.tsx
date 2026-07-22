@@ -4,7 +4,6 @@ import SLImage from '@/components/atoms/Image';
 import { YearTheme as YearThemeProps } from './types';
 import './YearTheme.css';
 
-
 const YearTheme = ({ href, image, className }: YearThemeProps): JSX.Element => {
   const yearThemeClassnames = cn('year-theme', className);
 

@@ -3,7 +3,6 @@ import type { JSX } from 'react';
 import { EmbeddedMapProps as MapProps } from './types';
 import './Map.css';
 
-
 const fallbackQuery = 'Scouting Lommel';
 
 const GoogleMap = ({ lat, lng, query, zoom = 17, address, className }: MapProps): JSX.Element => {

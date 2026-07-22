@@ -1,6 +1,6 @@
 import 'dotenv/config';
-import { writeFileSync } from 'fs';
 import { getIntrospectionQuery, buildClientSchema, printSchema } from 'graphql';
+import { writeFileSync } from 'fs';
 
 const backendUrl = process.env.NEXT_PUBLIC_APP_BACKEND_URL;
 const token = process.env.STRAPI_API_TOKEN;

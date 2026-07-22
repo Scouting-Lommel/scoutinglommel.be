@@ -6,7 +6,6 @@ import SLLink from '@/components/atoms/Link';
 import { SocialsCta as SocialsCtaProps } from './types';
 import './SocialsCta.css';
 
-
 const SocialsCta = ({ title, socialItems, className }: SocialsCtaProps): JSX.Element => {
   interface icons {
     [key: string]: IconNames;

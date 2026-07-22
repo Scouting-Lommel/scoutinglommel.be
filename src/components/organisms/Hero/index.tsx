@@ -7,7 +7,6 @@ import YearTheme from '@/components/molecules/YearTheme';
 import { Hero as HeroProps } from './types';
 import './Hero.css';
 
-
 const Hero = ({
   title,
   subtitle,

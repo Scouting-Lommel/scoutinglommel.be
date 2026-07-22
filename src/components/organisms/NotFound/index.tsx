@@ -5,7 +5,6 @@ import Typography from '@/components/atoms/Typography';
 import Hero from '@/components/organisms/Hero';
 import './NotFound.css';
 
-
 const NotFound = (): JSX.Element => {
   const t = useTranslations('common.notFound');
 

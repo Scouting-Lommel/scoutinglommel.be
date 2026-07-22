@@ -7,7 +7,6 @@ import SLImage from '@/components/atoms/Image';
 import { Gallery as GalleryProps } from './types';
 import './Gallery.css';
 
-
 const Gallery = ({ title, initialItems, images }: GalleryProps): JSX.Element => {
   const [isOpen, setOpen] = useState(false);
   const t = useTranslations('common.gallery');

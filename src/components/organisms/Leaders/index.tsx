@@ -3,7 +3,6 @@ import Leader from '@/components/molecules/Leader';
 import { Leaders as LeadersProps } from './types';
 import './Leaders.css';
 
-
 const Leaders = ({ leaders }: LeadersProps): JSX.Element => {
   return (
     <div className="leaders__container">

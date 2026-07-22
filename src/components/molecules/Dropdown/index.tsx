@@ -6,7 +6,6 @@ import Typography from '@/components/atoms/Typography';
 import { Dropdown as DropdownProps, DropdownNavItem } from './types';
 import './Dropdown.css';
 
-
 const Dropdown = ({
   itemKey,
   path,
@@ -44,9 +43,7 @@ const Dropdown = ({
             Terug
           </Button>
           <div className="dropdown__nav">
-            {dropdownTitle && (
-              <p className="dropdown__nav__title t-headline-2">{dropdownTitle}</p>
-            )}
+            {dropdownTitle && <p className="dropdown__nav__title t-headline-2">{dropdownTitle}</p>}
             <ul className="dropdown__nav__list">
               {dropdownItems!.map((item, i) => {
                 const description =

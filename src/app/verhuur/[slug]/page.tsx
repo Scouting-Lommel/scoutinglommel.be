@@ -14,7 +14,10 @@ export async function generateStaticParams() {
       slug: location.slug,
     }));
   } catch (error) {
-    console.warn('[generateStaticParams] Failed to fetch rental location slugs, falling back to SSR:', error);
+    console.warn(
+      '[generateStaticParams] Failed to fetch rental location slugs, falling back to SSR:',
+      error,
+    );
     return [];
   }
 }

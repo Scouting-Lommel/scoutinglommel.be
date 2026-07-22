@@ -1,20 +1,14 @@
-import {
-  NavigationItemType,
-} from '@/types/generated/Graphql';
-import type {
-  NavigationItem,
-} from '@/types/generated/Graphql';
-import type { NavItem } from '@/components/molecules/Navigation/types';
+import { NavigationItemType } from '@/types/generated/Graphql';
+import type { NavigationItem } from '@/types/generated/Graphql';
 import type { FooterNavigation } from '@/components/molecules/FooterDoormat/types';
+import type { NavItem } from '@/components/molecules/Navigation/types';
 
 function derivePageFromPath(path: string | null | undefined): string {
   if (!path || path === '/') return 'home';
   return path.replace(/^\//, '').replace(/-/g, '_');
 }
 
-function getDescriptionFromRelated(
-  related: NavigationItem['related'],
-): string | undefined {
+function getDescriptionFromRelated(related: NavigationItem['related']): string | undefined {
   if (!related || !('description' in related)) return undefined;
   return related.description ?? undefined;
 }
@@ -33,12 +27,18 @@ export function transformMainNavigation(
       return {
         label: item.title,
         page: derivePageFromPath(item.path),
-        link: item.type === NavigationItemType.External ? item.externalPath ?? null : item.path ?? null,
+        link:
+          item.type === NavigationItemType.External
+            ? (item.externalPath ?? null)
+            : (item.path ?? null),
         dropdownItems: hasChildren
           ? children.map((child) => ({
               label: child.title,
               page: derivePageFromPath(child.path),
-              link: child.type === NavigationItemType.External ? child.externalPath ?? null : child.path ?? null,
+              link:
+                child.type === NavigationItemType.External
+                  ? (child.externalPath ?? null)
+                  : (child.path ?? null),
               description: getDescriptionFromRelated(child.related),
               modTargetBlank: child.type === NavigationItemType.External,
             }))

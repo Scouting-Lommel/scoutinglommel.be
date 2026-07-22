@@ -4,7 +4,6 @@ import type { JSX } from 'react';
 import { Link as LinkProps } from './types';
 import './Link.css';
 
-
 const SLLink = ({
   href,
   variant = 'link1',

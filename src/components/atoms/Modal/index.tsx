@@ -4,7 +4,6 @@ import Icon from '@/components/atoms/Icon';
 import { Modal as ModalProps } from './types';
 import './Modal.css';
 
-
 const Modal = ({ id, title, children, open, handleCloseModal }: ModalProps): JSX.Element => {
   const t = useTranslations('common');
 

@@ -6,7 +6,6 @@ import Tarif from '@/components/molecules/Tarif';
 import { Tarifs as TarifsProps } from './types';
 import './Tarifs.css';
 
-
 const Tarifs = ({ tarifs, cta }: TarifsProps): JSX.Element => {
   const t = useTranslations('common.tarifs');
 

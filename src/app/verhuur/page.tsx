@@ -13,11 +13,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const { rentalPage } = await getRentalPage();
   if (!rentalPage || !generalData) return {};
 
-  const metadata = await generateMetadataForPage(
-    rentalPage.pageMeta,
-    generalData,
-    rentalPage.slug,
-  );
+  const metadata = await generateMetadataForPage(rentalPage.pageMeta, generalData, rentalPage.slug);
 
   return { ...metadata };
 };

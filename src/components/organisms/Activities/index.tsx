@@ -11,7 +11,6 @@ import Loader from '@/components/atoms/Loader';
 import { ActivitySection as ActivityProps } from './types';
 import './Activities.css';
 
-
 const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const [groupActivities, setActivities] = useState<any>(null);

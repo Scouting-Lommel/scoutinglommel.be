@@ -11,7 +11,6 @@ import Navigation from '@/components/molecules/Navigation';
 import { Header as HeaderProps } from './types';
 import './Header.css';
 
-
 const Header = ({ logo, mainNavigation, groups, rentalLocations }: HeaderProps): JSX.Element => {
   const t = useTranslations('common.header');
 

@@ -4,7 +4,6 @@ import Typography from '@/components/atoms/Typography';
 import { FormTextArea as FormTextAreaProps } from './types';
 import './TextArea.css';
 
-
 const TextArea = forwardRef((props: FormTextAreaProps, ref: any): JSX.Element => {
   const { error, ...textareaProps } = props;
   const textAreaClassName = cn(

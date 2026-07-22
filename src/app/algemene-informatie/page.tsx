@@ -13,11 +13,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const { infoPage } = await getInfoPage();
   if (!infoPage || !generalData) return {};
 
-  const metadata = await generateMetadataForPage(
-    infoPage.pageMeta,
-    generalData,
-    infoPage.slug,
-  );
+  const metadata = await generateMetadataForPage(infoPage.pageMeta, generalData, infoPage.slug);
 
   return { ...metadata };
 };

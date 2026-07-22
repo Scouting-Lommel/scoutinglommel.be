@@ -11,7 +11,6 @@ import Typography from '@/components/atoms/Typography';
 import { ArticleCard as ArticleCardProps } from './types';
 import './ArticleCard.css';
 
-
 const ArticleCard = ({
   title,
   description,

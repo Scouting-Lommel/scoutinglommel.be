@@ -6,7 +6,6 @@ import YearTheme from '@/components/molecules/YearTheme';
 import { YearThemeSection as YearThemeSectionProps } from './types';
 import './YearThemeSection.css';
 
-
 const YearThemeSection = ({ yearTheme }: YearThemeSectionProps): JSX.Element => {
   const t = useTranslations('common');
 

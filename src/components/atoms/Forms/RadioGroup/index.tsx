@@ -6,7 +6,6 @@ import Radio from './Radio';
 import { Radio as RadioProps } from './Radio/types';
 import './RadioGroup.css';
 
-
 const RadioGroup = ({
   id,
   label,

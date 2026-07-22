@@ -77,7 +77,7 @@ const generateMetadataForPage = async (
       title:
         pageMeta?.pageTitle && metaData?.siteName
           ? `${pageMeta.pageTitle} • ${metaData.siteName}`
-          : pageMeta?.pageTitle ?? metaData?.siteName ?? undefined,
+          : (pageMeta?.pageTitle ?? metaData?.siteName ?? undefined),
       description: pageMeta?.pageDescription ?? undefined,
       images: pageMeta?.metaImage?.url ?? undefined,
     },

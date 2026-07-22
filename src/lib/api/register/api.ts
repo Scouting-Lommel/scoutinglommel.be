@@ -1,11 +1,14 @@
 import { generateApiQuery } from '@/lib/api';
-import type { RegisterMemberMutation, RegisterMemberMutationVariables } from '@/types/generated/Graphql';
-import { Enum_Member_Gender } from '@/types/generated/Graphql';
 import {
   formatDataForGoogleSheets,
   validateGoogleSheetsData,
 } from '@/lib/helpers/formatDataForGoogleSheets';
 import { appendToGoogleSheet } from '@/lib/services/google-sheets';
+import type {
+  RegisterMemberMutation,
+  RegisterMemberMutationVariables,
+} from '@/types/generated/Graphql';
+import { Enum_Member_Gender } from '@/types/generated/Graphql';
 import { REGISTER_MEMBER_MUTATION } from './mutations';
 
 type RegisterMemberProps = {

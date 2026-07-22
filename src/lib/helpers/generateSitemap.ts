@@ -95,7 +95,11 @@ const generateSitemap = (sitemapData: any): Array<object> => {
   }
 
   // Drugs and alcohol policy page
-  if (drugsAlcoholPolicyPage && drugsAlcoholPolicyPage.slug && !drugsAlcoholPolicyPage.pageMeta?.noIndex) {
+  if (
+    drugsAlcoholPolicyPage &&
+    drugsAlcoholPolicyPage.slug &&
+    !drugsAlcoholPolicyPage.pageMeta?.noIndex
+  ) {
     out.push({
       url: `${siteUrl}/${drugsAlcoholPolicyPage.slug}`,
       lastModified: drugsAlcoholPolicyPage.updatedAt,

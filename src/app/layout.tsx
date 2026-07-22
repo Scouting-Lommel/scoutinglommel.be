@@ -77,7 +77,9 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
   return (
     <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
       <body>
-        <NextIntlClientProvider messages={{ common: commonMessages, dashboard: dashboardMessages, forms: formsMessages }}>
+        <NextIntlClientProvider
+          messages={{ common: commonMessages, dashboard: dashboardMessages, forms: formsMessages }}
+        >
           <SessionProvider>
             <DataProvider data={data}>
               <SkipToContent className="skip-to-content" />
@@ -111,7 +113,10 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateStructuredData(data.generalData)).replace(/</g, '\\u003c'),
+            __html: JSON.stringify(generateStructuredData(data.generalData)).replace(
+              /</g,
+              '\\u003c',
+            ),
           }}
         />
         <Analytics />
