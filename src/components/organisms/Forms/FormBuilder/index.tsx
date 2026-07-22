@@ -1,6 +1,6 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useContext, type JSX } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldErrors, FieldValues, Resolver, SubmitHandler, UseFormRegister, useForm } from 'react-hook-form';
 import { FormStatus } from '@/lib/constants/enums/formStatus';
 import { FormContext } from '@/lib/contexts/FormContext';
 import Button from '@/components/atoms/Button';
@@ -9,7 +9,7 @@ import FormField from './FormField';
 import { FormField as FormFieldType } from './FormField/types';
 import './Form.css';
 
-const FormBuilder = ({
+const FormBuilder = <TFormValues extends FieldValues = FieldValues>({
   formId,
   fields,
   initialValues,
@@ -17,22 +17,11 @@ const FormBuilder = ({
   submitForm,
   submitButtonLabel,
   secondaryButton,
-}: FormBuilderProps): JSX.Element => {
+}: FormBuilderProps<TFormValues>): JSX.Element => {
   const { formStatus, setFormStatus } = useContext(FormContext);
 
-  const onSubmit = async (_: any, event: any) => {
-    setFormStatus(FormStatus.STATUS_LOADING);
-
-    const body = new FormData(event.target as HTMLFormElement);
-    const token = body.get('cf-turnstile-response');
-    const formValues = getFormValues(body);
-    formValues['captcha-token'] = token;
-
-    submitForm(formValues);
-  };
-
-  const getFormValues = (formData: any) => {
-    const formValues: Record<string, any> = {};
+  const getFormValues = (formData: FormData): Record<string, FormDataEntryValue | null> => {
+    const formValues: Record<string, FormDataEntryValue | null> = {};
 
     const mapFields = (formFields: FormFieldType[]) => {
       formFields.forEach((field: FormFieldType) => {
@@ -54,12 +43,23 @@ const FormBuilder = ({
     return formValues;
   };
 
+  const onSubmit: SubmitHandler<TFormValues> = async (_, event) => {
+    setFormStatus(FormStatus.STATUS_LOADING);
+
+    const body = new FormData(event?.target as HTMLFormElement);
+    const token = body.get('cf-turnstile-response');
+    const formValues = getFormValues(body);
+    formValues['captcha-token'] = token;
+
+    submitForm(formValues);
+  };
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
-    resolver: yupResolver(formSchema),
+  } = useForm<TFormValues>({
+    resolver: yupResolver(formSchema) as Resolver<TFormValues>,
     defaultValues: initialValues,
   });
 
@@ -67,7 +67,12 @@ const FormBuilder = ({
     <form noValidate id={formId} name={formId} className="form" onSubmit={handleSubmit(onSubmit)}>
       {/* Form Fields */}
       {fields?.map((field) => (
-        <FormField key={field.id} register={register} errors={errors} {...field} />
+        <FormField
+          key={field.id}
+          register={register as UseFormRegister<FieldValues>}
+          errors={errors as FieldErrors<FieldValues>}
+          {...field}
+        />
       ))}
 
       {/* Form footer */}

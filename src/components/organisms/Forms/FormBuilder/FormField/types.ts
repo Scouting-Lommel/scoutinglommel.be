@@ -1,5 +1,5 @@
 import { ChangeEventHandler } from 'react';
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
 import { Radio } from '@/components/atoms/Forms/RadioGroup/Radio/types';
 import { SelectOption } from '@/components/atoms/Forms/Select/types';
 
@@ -7,8 +7,8 @@ export type BaseField = {
   id: string;
   name: string;
   required?: boolean;
-  register?: UseFormRegister<any>;
-  errors?: FieldErrors<any>;
+  register?: UseFormRegister<FieldValues>;
+  errors?: FieldErrors<FieldValues>;
 } & React.HTMLAttributes<HTMLElement>;
 
 export interface RowField extends BaseField {
@@ -18,7 +18,7 @@ export interface RowField extends BaseField {
 
 export interface TextField extends BaseField {
   type: 'text';
-  className?: any;
+  className?: string;
   text: string;
 }
 
