@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useMemo, useState, type JSX } from 'react';
+import { ChangeEventHandler, useCallback, useEffect, useMemo, useState, type JSX } from 'react';
 import { Groups } from '@/lib/constants/enums/groups';
 import { Recipients } from '@/lib/constants/enums/recipients';
 import { generateFormSchema } from '@/lib/helpers/generateFormSchema';
@@ -18,8 +18,8 @@ const ContactForm = ({ initialValues, submitForm }: ContactFormProps): JSX.Eleme
   const isRecipientRow = (field: FormField): boolean => field.id === 'recipientRow';
   const isGroupField = (field: FormField): boolean => field.id === 'group';
 
-  const onRecipientChange = (event: any) => {
-    updateFields(event.target.value);
+  const onRecipientChange: ChangeEventHandler<HTMLElement> = (event) => {
+    updateFields((event.target as HTMLSelectElement).value as Recipients);
   };
 
   const groupSelect = useMemo<FormField>(
@@ -145,12 +145,12 @@ const ContactForm = ({ initialValues, submitForm }: ContactFormProps): JSX.Eleme
   const [fields, setFields] = useState<FormField[]>(formFields);
   const formSchema = generateFormSchema({ fields: formFields, t });
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = (data: Record<string, unknown>) => {
     submitForm(data, fields);
   };
 
   useEffect(() => {
-    updateFields(initialValues.recipient);
+    updateFields(initialValues.recipient as Recipients);
   }, [initialValues.recipient, updateFields]);
 
   return (

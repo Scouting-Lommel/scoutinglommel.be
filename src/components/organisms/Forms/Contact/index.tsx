@@ -12,7 +12,12 @@ import { FormField } from '@/components/organisms/Forms/FormBuilder/FormField/ty
 import ContactConfirmation from './Confirmation';
 import ContactForm from './ContactForm';
 
-const Contact = (props: any): JSX.Element => {
+type ContactProps = {
+  recipient?: string;
+  group?: string;
+};
+
+const Contact = (props: ContactProps): JSX.Element => {
   const t = useTranslations('forms.contactForm');
 
   const { formStatus, setFormStatus } = useContext(FormContext);
@@ -26,9 +31,9 @@ const Contact = (props: any): JSX.Element => {
     body: '',
   };
 
-  const submitForm = async (data: any, formFields: FormField[]) => {
+  const submitForm = async (data: Record<string, unknown>, formFields: FormField[]) => {
     let recipient: string;
-    const captchaToken = data['captcha-token'];
+    const captchaToken = data['captcha-token'] as string;
 
     switch (data.recipient) {
       case Recipients.RENTALS: {
@@ -53,10 +58,10 @@ const Contact = (props: any): JSX.Element => {
       formTitle: t('email.title'),
       formData: generateFormDataWithLabel(data, formFields),
       to: recipient,
-      replyTo: data.email,
+      replyTo: data.email as string,
     });
 
-    const callback = (resp: any) => {
+    const callback = (resp: Response) => {
       if (resp.status === 200) {
         setFormStatus(FormStatus.STATUS_SUCCESS);
         return;
