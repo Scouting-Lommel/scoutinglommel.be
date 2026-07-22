@@ -1,6 +1,14 @@
 import { revalidatePath, revalidateTag } from 'next/cache';
 import { NextRequest, NextResponse } from 'next/server';
 
+type RevalidateWebhookBody = {
+  model?: string;
+  entry?: {
+    slug?: string;
+    documentId?: string;
+  };
+};
+
 // Models that feed into layout/navigation data (STATIC cache tier)
 const STATIC_MODELS = new Set(['general', 'group', 'rental-location']);
 
@@ -14,7 +22,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  let body: Record<string, any>;
+  let body: RevalidateWebhookBody;
   try {
     body = await req.json();
   } catch {

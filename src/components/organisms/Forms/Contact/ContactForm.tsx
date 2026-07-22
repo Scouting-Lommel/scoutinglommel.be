@@ -1,5 +1,5 @@
 import { useTranslations } from 'next-intl';
-import { useEffect, useState, type JSX } from 'react';
+import { useCallback, useEffect, useMemo, useState, type JSX } from 'react';
 import { Groups } from '@/lib/constants/enums/groups';
 import { Recipients } from '@/lib/constants/enums/recipients';
 import { generateFormSchema } from '@/lib/helpers/generateFormSchema';
@@ -22,11 +22,24 @@ const ContactForm = ({ initialValues, submitForm }: ContactFormProps): JSX.Eleme
     updateFields(event.target.value);
   };
 
-  const updateFields = (recipient: Recipients) => {
-    const rowIndex = fields.findIndex(isRecipientRow);
+  const groupSelect = useMemo<FormField>(
+    () => ({
+      id: 'group',
+      type: 'select',
+      name: 'group',
+      label: t('contactForm.fields.group.label'),
+      options: Object.values(Groups).map((group) => ({ label: group, value: group })),
+      required: false,
+    }),
+    [t],
+  );
 
-    if (rowIndex > -1) {
+  const updateFields = useCallback(
+    (recipient: Recipients) => {
       setFields((prevFields) => {
+        const rowIndex = prevFields.findIndex(isRecipientRow);
+        if (rowIndex === -1) return prevFields;
+
         const newFields = [...prevFields];
         const field = newFields[rowIndex];
 
@@ -51,17 +64,9 @@ const ContactForm = ({ initialValues, submitForm }: ContactFormProps): JSX.Eleme
 
         return newFields;
       });
-    }
-  };
-
-  const groupSelect: FormField = {
-    id: 'group',
-    type: 'select',
-    name: 'group',
-    label: t('contactForm.fields.group.label'),
-    options: Object.values(Groups).map((group) => ({ label: group, value: group })),
-    required: false,
-  };
+    },
+    [groupSelect],
+  );
 
   const formFields: FormField[] = [
     {
@@ -146,8 +151,7 @@ const ContactForm = ({ initialValues, submitForm }: ContactFormProps): JSX.Eleme
 
   useEffect(() => {
     updateFields(initialValues.recipient);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Execute only on first render
+  }, [initialValues.recipient, updateFields]);
 
   return (
     <FormBuilder

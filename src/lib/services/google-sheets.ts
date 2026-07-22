@@ -110,8 +110,15 @@ export async function appendToGoogleSheet(data: RegisterFormData): Promise<void>
         }),
       },
     );
-  } catch (error: any) {
-    if (error.message?.includes('Login Required') || error.status === 401 || error.code === 401) {
+  } catch (error) {
+    const isAuthError =
+      (error instanceof Error && error.message?.includes('Login Required')) ||
+      (typeof error === 'object' &&
+        error !== null &&
+        ((error as { status?: number }).status === 401 ||
+          (error as { code?: number }).code === 401));
+
+    if (isAuthError) {
       const serviceAccountEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
       const impersonatedUser = process.env.GOOGLE_SHEETS_IMPERSONATE_EMAIL;
       throw new Error(

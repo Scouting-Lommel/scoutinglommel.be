@@ -27,7 +27,9 @@ async function fetchSchema() {
   const { data, errors } = await res.json();
 
   if (errors) {
-    throw new Error(`Introspection error: ${errors.map((e: any) => e.message).join(', ')}`);
+    throw new Error(
+      `Introspection error: ${errors.map((e: { message?: string }) => e.message ?? 'Unknown error').join(', ')}`,
+    );
   }
 
   // Build schema from introspection and print to SDL.
