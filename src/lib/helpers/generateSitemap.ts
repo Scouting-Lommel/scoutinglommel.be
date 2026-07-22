@@ -9,7 +9,9 @@ type SitemapPage = {
 };
 
 const createEntry = (siteUrl: string, slug: string, updatedAt?: string | null): SitemapEntry => {
-  return updatedAt ? { url: `${siteUrl}/${slug}`, lastModified: updatedAt } : { url: `${siteUrl}/${slug}` };
+  return updatedAt
+    ? { url: `${siteUrl}/${slug}`, lastModified: updatedAt }
+    : { url: `${siteUrl}/${slug}` };
 };
 
 const generateSitemap = (sitemapData: SitemapQuery): SitemapEntry[] => {

@@ -3,11 +3,14 @@
 import { useTranslations } from 'next-intl';
 import { Fragment, useCallback, useEffect, useState, type JSX } from 'react';
 // import Banner from '@/components/atoms/Banner';
+import type {
+  GetDashboardActivitiesQuery,
+  GetDashboardGroupPageQuery,
+} from '@/types/generated/Graphql';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Loader from '@/components/atoms/Loader';
 import Form from '@/components/organisms/Forms';
 import SectionTitle from './SectionTitle';
-import type { GetDashboardActivitiesQuery, GetDashboardGroupPageQuery } from '@/types/generated/Graphql';
 import { getActivities } from '../api';
 
 type Group = NonNullable<GetDashboardGroupPageQuery['groups'][number]>;

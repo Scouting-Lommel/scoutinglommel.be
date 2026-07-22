@@ -1,5 +1,6 @@
 import { generateApiQuery } from '@/lib/api';
 import type {
+  ComponentGeneralLinkInput,
   UpdateGroupFilesMutation,
   UpdateGroupFilesMutationVariables,
   UpdateGroupLinkMutation,
@@ -15,7 +16,10 @@ export function addFile(id: string, files: string[]): Promise<UpdateGroupFilesMu
   });
 }
 
-export function editLinks(id: string, links: any[]): Promise<UpdateGroupLinkMutation> {
+export function editLinks(
+  id: string,
+  links: ComponentGeneralLinkInput[],
+): Promise<UpdateGroupLinkMutation> {
   return generateApiQuery<UpdateGroupLinkMutation, UpdateGroupLinkMutationVariables>({
     variables: { documentId: id, links },
     query: EDIT_LINKS_MUTATION,

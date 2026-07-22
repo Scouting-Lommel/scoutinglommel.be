@@ -12,7 +12,9 @@ export function formatDataForGoogleSheets(data: Record<string, unknown>): Regist
     city: (data.city as string) || '',
     telephoneNumber: (data.telephoneNumber as string) || '',
     email: (data.email as string) || '',
-    gender: (['m', 'v', 'x'].includes(genderValue) ? genderValue : '') as RegisterFormData['gender'],
+    gender: (['m', 'v', 'x'].includes(genderValue)
+      ? genderValue
+      : '') as RegisterFormData['gender'],
     comments: (data.comments as string) || '',
     workingYear: (data.workingYear as string) || '',
     memberGroup: (data.memberGroup as string) || '',

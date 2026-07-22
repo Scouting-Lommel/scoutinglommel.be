@@ -3,18 +3,25 @@
 import { useTranslations } from 'next-intl';
 import { Fragment, useCallback, useEffect, useState, type JSX } from 'react';
 import { getFiles } from '@/lib/api/files/api';
-import type { GetDashboardGroupPageQuery, GetGroupWithFilesQuery } from '@/types/generated/Graphql';
 import { FormProvider } from '@/lib/contexts/FormContext';
+import type { GetDashboardGroupPageQuery, GetGroupWithFilesQuery } from '@/types/generated/Graphql';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Loader from '@/components/atoms/Loader';
 import Attachment from '@/components/molecules/Attachment';
-import type { File as AttachmentFile, Link as AttachmentLink } from '@/components/molecules/Attachment/types';
+import type {
+  File as AttachmentFile,
+  Link as AttachmentLink,
+} from '@/components/molecules/Attachment/types';
 import FileStatus from './FileStatus';
 import SectionTitle from './SectionTitle';
 
 type Group = NonNullable<GetDashboardGroupPageQuery['groups'][number]>;
-type GraphQLFile = NonNullable<NonNullable<GetGroupWithFilesQuery['groups'][number]>['files'][number]>;
-type GraphQLLink = NonNullable<NonNullable<NonNullable<GetGroupWithFilesQuery['groups'][number]>['links']>[number]>;
+type GraphQLFile = NonNullable<
+  NonNullable<GetGroupWithFilesQuery['groups'][number]>['files'][number]
+>;
+type GraphQLLink = NonNullable<
+  NonNullable<NonNullable<GetGroupWithFilesQuery['groups'][number]>['links']>[number]
+>;
 
 type Props = {
   group: Group;

@@ -3,8 +3,8 @@ import { useContext, type JSX } from 'react';
 import { FormStatus } from '@/lib/constants/enums/formStatus';
 import { FormContext } from '@/lib/contexts/FormContext';
 import Banner from '@/components/atoms/Banner';
-import ActivityForm from './ActivityForm';
 import type { Activity } from './types';
+import ActivityForm from './ActivityForm';
 
 type ActivityProps = {
   activity?: Activity;
