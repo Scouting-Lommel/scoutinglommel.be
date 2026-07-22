@@ -1,6 +1,6 @@
-import React from 'react';
-import { themes } from '@storybook/theming';
 import { SessionProvider } from 'next-auth/react';
+import React from 'react';
+import { themes } from 'storybook/theming';
 import Withi18n from './i18n';
 
 import '../src/app/global.css';

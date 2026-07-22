@@ -1,7 +1,6 @@
-import React, { type JSX } from 'react';
 import { notFound } from 'next/navigation';
 import { NextIntlClientProvider } from 'next-intl';
-
+import React, { type JSX } from 'react';
 import { NAMESPACES, defaultLocale } from '../src/i18n/locales';
 
 export const metadata = {

@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Default as imageStory } from '@/components/atoms/Image/Image.stories';
 import Gallery from '.';
 
@@ -14,27 +14,13 @@ export const Default: Story = {
   args: {
     title: 'Fotogalerij',
     initialItems: 3,
-    images: {
-      data: [
-        {
-          attributes: imageStory.args!.data!,
-        },
-        {
-          attributes: imageStory.args!.data!,
-        },
-        {
-          attributes: imageStory.args!.data!,
-        },
-        {
-          attributes: imageStory.args!.data!,
-        },
-        {
-          attributes: imageStory.args!.data!,
-        },
-        {
-          attributes: imageStory.args!.data!,
-        },
-      ],
-    },
+    images: [
+      imageStory.args!.data!,
+      imageStory.args!.data!,
+      imageStory.args!.data!,
+      imageStory.args!.data!,
+      imageStory.args!.data!,
+      imageStory.args!.data!,
+    ],
   },
 };

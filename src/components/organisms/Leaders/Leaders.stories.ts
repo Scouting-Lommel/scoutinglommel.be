@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Default as imageStory } from '@/components/atoms/Image/Image.stories';
 import Leaders from '.';
 
@@ -14,32 +14,18 @@ export const Default: Story = {
   args: {
     leaders: [
       {
-        attributes: {
-          firstName: 'Akela',
-          lastName: '',
-          image: {
-            data: {
-              attributes: imageStory.args!.data!,
-            },
-          },
-        },
+        firstName: 'Akela',
+        lastName: '',
+        image: imageStory.args!.data!,
       },
       {
-        attributes: {
-          firstName: 'Rikki Tikki',
-          lastName: 'Tavi',
-          image: {
-            data: {
-              attributes: imageStory.args!.data!,
-            },
-          },
-        },
+        firstName: 'Rikki Tikki',
+        lastName: 'Tavi',
+        image: imageStory.args!.data!,
       },
       {
-        attributes: {
-          firstName: 'De',
-          lastName: 'Roy',
-        },
+        firstName: 'De',
+        lastName: 'Roy',
       },
     ],
   },

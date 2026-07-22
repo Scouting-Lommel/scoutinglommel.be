@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import { Default as yearThemeStory } from '@/components/molecules/YearTheme/YearTheme.stories';
 import YearThemeSection from '.';

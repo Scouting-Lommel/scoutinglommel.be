@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import Header from '.';
 
 const meta: Meta<typeof Header> = {
@@ -15,17 +15,13 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   args: {
     logo: {
-      data: {
-        attributes: {
-          name: 'Logo Scouts Lommel.png',
-          width: 841,
-          height: 1177,
-          url: 'https://res.cloudinary.com/scoutinglommel/image/upload/v1673444920/Logo_Scouts_Lommel_ec953a55cf.png',
-          hash: 'Logo_Scouts_Lommel_ec953a55cf',
-          alternativeText: 'Logo Scouts Lommel.png',
-          caption: 'Logo Scouts Lommel.png',
-        },
-      },
+      name: 'Logo Scouts Lommel.png',
+      width: 841,
+      height: 1177,
+      url: 'https://res.cloudinary.com/scoutinglommel/image/upload/v1673444920/Logo_Scouts_Lommel_ec953a55cf.png',
+      hash: 'Logo_Scouts_Lommel_ec953a55cf',
+      alternativeText: 'Logo Scouts Lommel.png',
+      caption: 'Logo Scouts Lommel.png',
     },
     mainNavigation: [
       {

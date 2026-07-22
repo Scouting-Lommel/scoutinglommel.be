@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import { Default as imageStory } from '@/components/atoms/Image/Image.stories';
 import Hero from '.';

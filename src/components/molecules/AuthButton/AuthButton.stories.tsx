@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { NavAuthButton } from '.';
 
 const meta: Meta<typeof NavAuthButton> = {
@@ -30,6 +30,7 @@ export const Authenticated: Story = {
       },
       orgUnit: '/',
       role: 'webmaster',
+      expires: '2099-01-01T00:00:00.000Z',
     },
   },
   decorators: [
