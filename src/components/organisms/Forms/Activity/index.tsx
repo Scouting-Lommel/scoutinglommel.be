@@ -4,19 +4,38 @@ import { FormStatus } from '@/lib/constants/enums/formStatus';
 import { FormContext } from '@/lib/contexts/FormContext';
 import Banner from '@/components/atoms/Banner';
 import ActivityForm from './ActivityForm';
+import type { Activity } from './types';
 
-const Activity = (props: any): JSX.Element => {
+type ActivityProps = {
+  activity?: Activity;
+  groupId?: string;
+  callback: () => void;
+  closeClickHandler?: () => void;
+};
+
+type ActivityInput = {
+  documentId?: string;
+  title: string;
+  description: string;
+  startDate: string;
+  startTime: string;
+  endDate: string;
+  endTime: string;
+  groupDocumentId?: string;
+};
+
+const Activity = (props: ActivityProps): JSX.Element => {
   const t = useTranslations('forms.activityForm');
 
   const { formStatus, setFormStatus } = useContext(FormContext);
-  let initialValues = {};
+  let initialValues: Record<string, unknown> = {};
 
   if (props.activity) {
     initialValues = {
-      title: props.activity.title,
-      start: `${props.activity.startDate}T${props.activity.startTime}`,
-      end: `${props.activity.endDate}T${props.activity.endTime}`,
-      description: props.activity.description,
+      title: props.activity.title ?? '',
+      start: `${props.activity.startDate ?? ''}T${props.activity.startTime ?? ''}`,
+      end: `${props.activity.endDate ?? ''}T${props.activity.endTime ?? ''}`,
+      description: props.activity.description ?? '',
     };
   }
 
@@ -42,36 +61,39 @@ const Activity = (props: any): JSX.Element => {
     };
   }
 
-  const handleSubmitForm = async (data: any) => {
+  const handleSubmitForm = async (data: Record<string, unknown>) => {
+    const start = data.start as string;
+    const end = data.end as string;
+
     if (props.activity) {
-      let activity = {
-        documentId: data['activity-id'],
-        title: data.title,
-        description: data.description,
-        startDate: data.start.split('T')[0],
-        startTime: `${data.start.split('T')[1]}:00.000`,
-        endDate: data.end.split('T')[0],
-        endTime: `${data.end.split('T')[1]}:00.000`,
+      const activity: ActivityInput = {
+        documentId: data['activity-id'] as string,
+        title: data.title as string,
+        description: data.description as string,
+        startDate: start.split('T')[0],
+        startTime: `${start.split('T')[1]}:00.000`,
+        endDate: end.split('T')[0],
+        endTime: `${end.split('T')[1]}:00.000`,
       };
 
       try {
         await callApi('update', activity);
         setFormStatus(FormStatus.STATUS_SUCCESS);
         props.callback();
-      } catch (err: any) {
+      } catch (err) {
         console.error(err);
         setFormStatus(FormStatus.STATUS_ERROR);
       }
     }
 
     if (props.groupId) {
-      let activity = {
-        title: data.title,
-        description: data.description,
-        startDate: data.start.split('T')[0],
-        startTime: `${data.start.split('T')[1]}:00.000`,
-        endDate: data.end.split('T')[0],
-        endTime: `${data.end.split('T')[1]}:00.000`,
+      const activity: ActivityInput = {
+        title: data.title as string,
+        description: data.description as string,
+        startDate: start.split('T')[0],
+        startTime: `${start.split('T')[1]}:00.000`,
+        endDate: end.split('T')[0],
+        endTime: `${end.split('T')[1]}:00.000`,
         groupDocumentId: props.groupId,
       };
 
@@ -79,9 +101,9 @@ const Activity = (props: any): JSX.Element => {
         await callApi('create', activity);
         setFormStatus(FormStatus.STATUS_SUCCESS);
         props.callback();
-        props.closeClickHandler();
+        props.closeClickHandler?.();
         setFormStatus(FormStatus.STATUS_READY);
-      } catch (err: any) {
+      } catch (err) {
         console.error(err);
         setFormStatus(FormStatus.STATUS_ERROR);
       }
@@ -89,19 +111,19 @@ const Activity = (props: any): JSX.Element => {
   };
 
   const handleDeleteActivity = async () => {
-    if (confirm(t('deleteConfirmation', { activityTitle: props.activity.title }))) {
+    if (confirm(t('deleteConfirmation', { activityTitle: props.activity?.title ?? '' }))) {
       try {
-        await callApi('delete', props.activity.id);
+        await callApi('delete', props.activity?.id ?? '');
         setFormStatus(FormStatus.STATUS_DELETE_SUCCESS);
         props.callback();
-      } catch (err: any) {
+      } catch (err) {
         console.error(err);
         setFormStatus(FormStatus.STATUS_DELETE_ERROR);
       }
     }
   };
 
-  const callApi = async (action: 'update' | 'create' | 'delete', data: any) => {
+  const callApi = async (action: 'update' | 'create' | 'delete', data: string | ActivityInput) => {
     try {
       const response = await fetch('/api/activity', {
         method: 'POST',
