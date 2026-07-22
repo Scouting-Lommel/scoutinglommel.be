@@ -1,4 +1,6 @@
-const generateSitemap = (sitemapData: any): Array<object> => {
+import type { SitemapQuery } from '@/types/generated/Graphql';
+
+const generateSitemap = (sitemapData: SitemapQuery): Array<{ url: string; lastModified?: string | null }> => {
   const siteUrl = process.env.SITE_URL;
   if (!siteUrl) return [];
 
@@ -35,7 +37,7 @@ const generateSitemap = (sitemapData: any): Array<object> => {
   }
 
   // Group pages
-  groups?.forEach((group: any) => {
+  groups?.forEach((group) => {
     if (group && group.slug && !group.pageMeta?.noIndex) {
       out.push({
         url: `${siteUrl}/takken/${group.slug}`,
@@ -53,7 +55,7 @@ const generateSitemap = (sitemapData: any): Array<object> => {
   }
 
   // Rental location pages
-  rentalLocations?.forEach((location: any) => {
+  rentalLocations?.forEach((location) => {
     if (location && location.slug && !location.pageMeta?.noIndex) {
       out.push({
         url: `${siteUrl}/verhuur/${location.slug}`,

@@ -1,19 +1,21 @@
 import { RegisterFormData } from '@/lib/services/google-sheets';
 
-export function formatDataForGoogleSheets(data: any): RegisterFormData {
+export function formatDataForGoogleSheets(data: Record<string, unknown>): RegisterFormData {
+  const genderValue = (data.gender as string) || '';
+
   return {
-    firstName: data.firstName || '',
-    lastName: data.lastName || '',
-    birthday: data.birthday ? new Date(data.birthday).toISOString().split('T')[0] : '',
-    address: data.address || '',
-    postalCode: data.postalCode || '',
-    city: data.city || '',
-    telephoneNumber: data.telephoneNumber || '',
-    email: data.email || '',
-    gender: data.gender || '',
-    comments: data.comments || '',
-    workingYear: data.workingYear || '',
-    memberGroup: data.memberGroup || '',
+    firstName: (data.firstName as string) || '',
+    lastName: (data.lastName as string) || '',
+    birthday: data.birthday ? new Date(data.birthday as string).toISOString().split('T')[0] : '',
+    address: (data.address as string) || '',
+    postalCode: (data.postalCode as string) || '',
+    city: (data.city as string) || '',
+    telephoneNumber: (data.telephoneNumber as string) || '',
+    email: (data.email as string) || '',
+    gender: (['m', 'v', 'x'].includes(genderValue) ? genderValue : '') as RegisterFormData['gender'],
+    comments: (data.comments as string) || '',
+    workingYear: (data.workingYear as string) || '',
+    memberGroup: (data.memberGroup as string) || '',
     timestamp: new Date()
       .toLocaleString('nl-BE', { timeZone: 'Europe/Brussels' })
       .replace('T', ' '),

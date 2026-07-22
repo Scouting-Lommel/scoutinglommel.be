@@ -1,4 +1,12 @@
-const generateStructuredData = (data: any) => {
+type StructuredDataInput = {
+  url?: string | null;
+  siteName?: string | null;
+  logo?: { url?: string | null } | null;
+  image?: { url?: string | null } | null;
+  siteDescription?: string | null;
+};
+
+const generateStructuredData = (data: StructuredDataInput | null | undefined) => {
   if (!data) return {};
 
   return {
