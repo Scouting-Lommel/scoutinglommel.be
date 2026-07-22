@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
 import { checkOrganisationPermission } from '@/lib/helpers/checkOrganisationPermission';
+import { getErrorMessage } from '@/lib/helpers/getErrorMessage';
 import { isValidOrgUnitPath } from '@/lib/helpers/getOrganisationRole';
 import { getSiteUrl } from '@/lib/helpers/getSiteUrl';
 
@@ -68,7 +69,7 @@ export async function groupsMiddleware(req: NextRequest) {
       return NextResponse.next();
     }
   } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorMessage = getErrorMessage(error);
     console.error(`Error fetching org unit data: ${errorMessage}`, error);
     return unauthorizedRedirect;
   }

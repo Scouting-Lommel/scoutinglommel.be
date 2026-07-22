@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { updateActivity, deleteActivity, createActivity } from '@/lib/api/activities/api';
 import { getCacheHeaders } from '@/lib/api/cache';
+import { getErrorMessage } from '@/lib/helpers/getErrorMessage';
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
   const { action, data } = await request.json();
@@ -34,10 +35,9 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
     );
   } catch (error) {
     console.error(`Activity API Error (${action}):`, error);
-    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
       {
-        error: message || 'Unknown error occurred',
+        error: getErrorMessage(error),
         action,
         data: data
           ? { ...data, groupDocumentId: data.groupDocumentId ? '[REDACTED]' : undefined }

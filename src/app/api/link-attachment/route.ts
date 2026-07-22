@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { getCacheHeaders } from '@/lib/api/cache';
 import { editLinks } from '@/lib/api/groups/api';
+import { getErrorMessage } from '@/lib/helpers/getErrorMessage';
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
   const { data } = await request.json();
@@ -15,9 +16,8 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
       },
     );
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
     return NextResponse.json(
-      { error: message },
+      { error: getErrorMessage(error) },
       {
         status: 500,
         headers: getCacheHeaders('WRITE'),

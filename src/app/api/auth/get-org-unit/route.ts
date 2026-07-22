@@ -1,6 +1,7 @@
 import { JWT } from 'google-auth-library';
 import { NextRequest, NextResponse } from 'next/server';
 import { getCacheHeaders } from '@/lib/api/cache';
+import { getErrorMessage } from '@/lib/helpers/getErrorMessage';
 
 export const GET = async (req: NextRequest): Promise<NextResponse> => {
   const { searchParams } = new URL(req.url);
@@ -93,7 +94,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
       },
     );
   } catch (error) {
-    const message = error instanceof Error ? error.message : String(error);
+    const message = getErrorMessage(error);
     console.error(`Error fetching org unit data for ${email}:`, message);
 
     if (message.includes('Login Required') || message.includes('401')) {

@@ -1,5 +1,6 @@
 import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
+import { getErrorMessage } from '@/lib/helpers/getErrorMessage';
 import { getOrganisationRole } from '@/lib/helpers/getOrganisationRole';
 import { isValidOrgUnitPath } from '@/lib/helpers/getOrganisationRole';
 import { getSiteUrl } from '@/lib/helpers/getSiteUrl';
@@ -97,7 +98,7 @@ export const authOptions: NextAuthOptions = {
           role: getOrganisationRole(data.orgUnitPath),
         };
       } catch (error: unknown) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        const errorMessage = getErrorMessage(error);
         console.error(`Session callback: Error fetching org unit data: ${errorMessage}`, error);
         // Return session without orgUnit/role on error - user can still access basic features
         return {
