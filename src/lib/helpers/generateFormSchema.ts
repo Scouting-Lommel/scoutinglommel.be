@@ -105,17 +105,20 @@ const getFieldSchema = (
 
     case 'file': {
       const fileTest = Yup.mixed()
-        .test('fileSize', t('errorMessage.fileSize'), (value: any) => {
-          if (value.length < 1) return true;
-          return value[0].size <= MAX_FILE_SIZE;
+        .test('fileSize', t('errorMessage.fileSize'), (value: unknown) => {
+          const files = value as FileList;
+          if (files.length < 1) return true;
+          return files[0].size <= MAX_FILE_SIZE;
         })
-        .test('fileFormat', t('errorMessage.fileFormat'), (value: any) => {
-          if (value.length < 1) return true;
-          return SUPPORTED_FILE_FORMATS.includes(value[0].type);
+        .test('fileFormat', t('errorMessage.fileFormat'), (value: unknown) => {
+          const files = value as FileList;
+          if (files.length < 1) return true;
+          return SUPPORTED_FILE_FORMATS.includes(files[0].type);
         });
       return field.required
-        ? fileTest.test('containsFiles', t('errorMessage.required'), (value: any) => {
-            return value.length > 0;
+        ? fileTest.test('containsFiles', t('errorMessage.required'), (value: unknown) => {
+            const files = value as FileList;
+            return files.length > 0;
           })
         : fileTest;
     }
