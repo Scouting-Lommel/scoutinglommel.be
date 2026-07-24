@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import type React from 'react';
-import type { UseFormRegister } from 'react-hook-form';
+import type { FieldValues, UseFormRegister } from 'react-hook-form';
 import type { InputField } from './types';
 import FormField from '.';
 
@@ -18,7 +18,7 @@ const register = ((name: string) => ({
   onChange: () => {},
   onBlur: () => {},
   ref: () => {},
-})) as unknown as UseFormRegister<any>;
+})) as unknown as UseFormRegister<FieldValues>;
 
 export const Default: Story = {
   args: {
