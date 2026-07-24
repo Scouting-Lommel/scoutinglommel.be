@@ -130,7 +130,7 @@ export async function appendToGoogleSheet(data: RegisterFormData): Promise<void>
   }
 }
 
-export async function getSheetData(): Promise<any[]> {
+export async function getSheetData(): Promise<unknown[][]> {
   try {
     const spreadsheetId = getSpreadsheetId();
     const accessToken = await getSheetsAccessToken();
@@ -139,7 +139,7 @@ export async function getSheetData(): Promise<any[]> {
       accessToken,
       `/spreadsheets/${spreadsheetId}/values/${encodedRange}`,
       { method: 'GET' },
-    )) as { values?: any[] };
+    )) as { values?: unknown[][] };
 
     return response.values || [];
   } catch (error) {
