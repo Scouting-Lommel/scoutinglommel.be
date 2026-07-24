@@ -19,7 +19,7 @@ import {
 
 interface FormSubmissionEmailProps {
   formTitle: string;
-  formData: { label: string; data: string }[];
+  formData: { label: string; data: unknown }[];
 }
 
 export const FormSubmissionEmail = ({ formTitle, formData }: FormSubmissionEmailProps) => {
@@ -74,7 +74,7 @@ export const FormSubmissionEmail = ({ formTitle, formData }: FormSubmissionEmail
             </Section>
             <Hr style={hr} />
             {formData.map((dataPoint) => {
-              let tableData = dataPoint.data;
+              const tableData = String(dataPoint.data);
 
               return (
                 <Section style={formDataSection} key={dataPoint.label}>
@@ -82,14 +82,14 @@ export const FormSubmissionEmail = ({ formTitle, formData }: FormSubmissionEmail
                     {dataPoint.label}
                   </Heading>
                   {(() => {
-                    if (phoneRegExValidation.test(dataPoint.data)) {
+                    if (phoneRegExValidation.test(tableData)) {
                       return (
                         <Link style={{ ...text, ...link, ...dataText }} href={`tel:${tableData}`}>
                           {tableData}
                         </Link>
                       );
                     }
-                    if (emailRegExValidation.test(dataPoint.data)) {
+                    if (emailRegExValidation.test(tableData)) {
                       return (
                         <Link
                           style={{ ...text, ...link, ...dataText }}
@@ -99,7 +99,7 @@ export const FormSubmissionEmail = ({ formTitle, formData }: FormSubmissionEmail
                         </Link>
                       );
                     }
-                    if (urlRegExValidation.test(dataPoint.data)) {
+                    if (urlRegExValidation.test(tableData)) {
                       return (
                         <Link style={{ ...text, ...link, ...dataText }} href={tableData}>
                           {tableData}

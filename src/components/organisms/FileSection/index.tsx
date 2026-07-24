@@ -8,12 +8,19 @@ import Link from '@/components/atoms/Link';
 import Loader from '@/components/atoms/Loader';
 import Typography from '@/components/atoms/Typography';
 import Attachment from '@/components/molecules/Attachment';
-import type { File as AttachmentFile, Link as AttachmentLink } from '@/components/molecules/Attachment/types';
+import type {
+  File as AttachmentFile,
+  Link as AttachmentLink,
+} from '@/components/molecules/Attachment/types';
 import { FileSection as FileBlockProps } from './types';
 import './FileSection.css';
 
-type GraphQLFile = NonNullable<NonNullable<GetGroupWithFilesQuery['groups'][number]>['files'][number]>;
-type GraphQLLink = NonNullable<NonNullable<NonNullable<GetGroupWithFilesQuery['groups'][number]>['links']>[number]>;
+type GraphQLFile = NonNullable<
+  NonNullable<GetGroupWithFilesQuery['groups'][number]>['files'][number]
+>;
+type GraphQLLink = NonNullable<
+  NonNullable<NonNullable<GetGroupWithFilesQuery['groups'][number]>['links']>[number]
+>;
 
 const FileSection = ({ title, groupSlug, className }: FileBlockProps): JSX.Element => {
   const [groupFiles, setFiles] = useState<AttachmentFile[] | null>(null);
@@ -97,9 +104,7 @@ const FileSection = ({ title, groupSlug, className }: FileBlockProps): JSX.Eleme
         </>
       )}
       {!error && loading && <Loader className="file-section__loader" size="sm" modLabelVisible />}
-      {!error && !loading && isEmpty && (
-        <p className="t-align-center">{t('noFilesFound')}</p>
-      )}
+      {!error && !loading && isEmpty && <p className="t-align-center">{t('noFilesFound')}</p>}
       {!error && !loading && (hasFiles || hasLinks) && (
         <ul style={{ paddingLeft: 0 }}>
           {hasFiles &&

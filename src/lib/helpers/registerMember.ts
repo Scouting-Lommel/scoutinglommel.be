@@ -1,9 +1,14 @@
 import { Email } from '@/lib/helpers/sendEmail';
 
-type registerMemberProps = {
+type RegisterMemberResponse = {
+  message: unknown;
+  status: number;
+};
+
+type RegisterMemberProps = {
   email: Email;
-  member: any;
-  callback: any;
+  member: Record<string, unknown>;
+  callback: (response: RegisterMemberResponse) => void;
   captchaToken: string;
 };
 
@@ -23,7 +28,7 @@ const registerMember = async ({
   member,
   callback,
   captchaToken,
-}: registerMemberProps): Promise<void> => {
+}: RegisterMemberProps): Promise<void> => {
   const registerMemberRequestData = {
     method: 'POST',
     headers: {

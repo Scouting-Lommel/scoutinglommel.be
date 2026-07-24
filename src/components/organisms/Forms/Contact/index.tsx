@@ -61,7 +61,7 @@ const Contact = (props: ContactProps): JSX.Element => {
       replyTo: data.email as string,
     });
 
-    const callback = (resp: Response) => {
+    const callback = (resp: { status: number }) => {
       if (resp.status === 200) {
         setFormStatus(FormStatus.STATUS_SUCCESS);
         return;
