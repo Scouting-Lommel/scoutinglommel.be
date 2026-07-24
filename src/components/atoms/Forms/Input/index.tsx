@@ -4,13 +4,13 @@ import Typography from '@/components/atoms/Typography';
 import { FormInput as FormInputProps } from './types';
 import './Input.css';
 
-const Input = forwardRef((props: FormInputProps, ref: any): JSX.Element => {
+const Input = forwardRef<HTMLInputElement, FormInputProps>((props, ref): JSX.Element => {
   const { customChangeBehaviour, error, modShowLabel = true, ...inputProps } = props;
   const inputClassName = cn(
     'input',
     props.required && 'input--required',
     props.disabled && 'input--disabled',
-    error && 'input--has-error',
+    !!error && 'input--has-error',
     modShowLabel && 'input--show-label',
   );
   const inputLabelClassNames = cn('input__label', !modShowLabel && 'u-visually-hidden');

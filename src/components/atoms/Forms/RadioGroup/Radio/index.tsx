@@ -4,7 +4,7 @@ import Typography from '@/components/atoms/Typography';
 import { Radio as RadioProps } from './types';
 import './Radio.css';
 
-const Radio = forwardRef((props: RadioProps, ref: any): JSX.Element => {
+const Radio = forwardRef<HTMLInputElement, RadioProps>((props, ref): JSX.Element => {
   const { hasError, ...radioProps } = props;
 
   const radioClassNames = cn(

@@ -13,7 +13,10 @@ import { FormField as FormFieldProps } from './types';
 import './FormField.css';
 
 const FormField = (props: FormFieldProps): JSX.Element => {
-  const errorMessage = props.errors && props.name ? props.errors[props.name]?.message : undefined;
+  const errorMessage =
+    props.errors && props.name
+      ? (props.errors[props.name]?.message as string | undefined)
+      : undefined;
 
   switch (props.type) {
     case 'text': {
@@ -237,17 +240,19 @@ const FormField = (props: FormFieldProps): JSX.Element => {
     case 'radioGroup': {
       return (
         <div className="form-field">
-          <RadioGroup
-            id={props.id}
-            label={props.label!}
-            name={props.name}
-            value={props.value}
-            direction={props.direction}
-            radioButtons={props.radioButtons}
-            required={props.required}
-            register={props.register}
-            error={errorMessage}
-          />
+          {props.register && props.name && (
+            <RadioGroup
+              id={props.id}
+              label={props.label!}
+              name={props.name}
+              value={props.value}
+              direction={props.direction}
+              radioButtons={props.radioButtons}
+              required={props.required}
+              register={props.register}
+              error={errorMessage}
+            />
+          )}
         </div>
       );
     }

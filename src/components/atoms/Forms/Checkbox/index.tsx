@@ -4,9 +4,9 @@ import Typography from '@/components/atoms/Typography';
 import { Checkbox as CheckboxProps } from './types';
 import './Checkbox.css';
 
-const Checkbox = forwardRef((props: CheckboxProps, ref: any) => {
+const Checkbox = forwardRef<HTMLInputElement, CheckboxProps>((props, ref) => {
   const { customChangeBehaviour, error, ...checkboxProps } = props;
-  const checkboxClassNames = cn('checkbox', error && 'checkbox--has-error');
+  const checkboxClassNames = cn('checkbox', !!error && 'checkbox--has-error');
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (customChangeBehaviour) {

@@ -4,12 +4,12 @@ import Typography from '@/components/atoms/Typography';
 import { FormTextArea as FormTextAreaProps } from './types';
 import './TextArea.css';
 
-const TextArea = forwardRef((props: FormTextAreaProps, ref: any): JSX.Element => {
+const TextArea = forwardRef<HTMLTextAreaElement, FormTextAreaProps>((props, ref): JSX.Element => {
   const { error, ...textareaProps } = props;
   const textAreaClassName = cn(
     'text-area',
     props.required && 'text-area--required',
-    error && 'text-area--has-error',
+    !!error && 'text-area--has-error',
   );
 
   return (

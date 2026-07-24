@@ -1,3 +1,4 @@
+import { FieldValues, UseFormRegister } from 'react-hook-form';
 import { Radio } from './Radio/types';
 
 export type RadioGroup = {
@@ -7,6 +8,6 @@ export type RadioGroup = {
   autoComplete?: string;
   direction?: 'row' | 'column';
   radioButtons?: Radio[];
-  register: any;
-  error?: any;
+  register?: UseFormRegister<FieldValues>;
+  error?: string;
 } & React.InputHTMLAttributes<HTMLInputElement>;
