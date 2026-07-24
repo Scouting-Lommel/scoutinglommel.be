@@ -52,8 +52,9 @@ const DashboardGroupsOverviewPage = async (): Promise<JSX.Element> => {
         checkOrganisationPermission(orgUnitData.orgUnitPath, group.permission)
       )
         return group;
+      return undefined;
     })
-    .filter((group) => group);
+    .filter((group): group is Group => !!group);
 
   return (
     <div className="sl-layout">
@@ -61,15 +62,13 @@ const DashboardGroupsOverviewPage = async (): Promise<JSX.Element> => {
         <Hero title={t('title')} subtitle={t('subtitle')} variant="simple" />
       </BlockContainer>
 
-      {availableGroups.map((group: any, key: any) => {
-        return (
-          <BlockContainer key={key} slug={`groups-${group.slug}`}>
-            <Button href={`/dashboard/takken/${group.slug}`}>
-              {t('groupButton.label', { group: group.title })}
-            </Button>
-          </BlockContainer>
-        );
-      })}
+      {availableGroups.map((group, key) => (
+        <BlockContainer key={key} slug={`groups-${group.slug}`}>
+          <Button href={`/dashboard/takken/${group.slug}`}>
+            {t('groupButton.label', { group: group.title })}
+          </Button>
+        </BlockContainer>
+      ))}
     </div>
   );
 };

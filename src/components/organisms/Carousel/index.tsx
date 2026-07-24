@@ -90,9 +90,9 @@ const Carousel = ({ carouselItems }: CarouselProps): JSX.Element => {
       <div className="embla">
         <div className="embla__viewport" ref={emblaRef}>
           <div className="embla__container">
-            {carouselItems.map((item: any, i: number) => {
-              return <CarouselItem logo={item.logo} name={item.name} slug={item.slug} key={i} />;
-            })}
+            {carouselItems.map((item, i) => (
+              <CarouselItem logo={item.logo} name={item.name} slug={item.slug} key={i} />
+            ))}
           </div>
         </div>
 
