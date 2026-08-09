@@ -22,7 +22,7 @@ const DashboardGroupPage = async (props: Props): Promise<JSX.Element> => {
   const { slug } = await props.params;
 
   const { groups } = await getGroupPage(slug);
-  const group = groups[0];
+  const group = groups?.[0];
 
   if (!group) notFound();
 
