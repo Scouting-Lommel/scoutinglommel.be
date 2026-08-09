@@ -21,6 +21,8 @@ const Attachment = (props: AttachmentProps): JSX.Element => {
       return (
         <File
           {...props.file}
+          groupId={props.groupId}
+          allFiles={props.allFiles}
           deleteCallback={props.deleteCallback}
           modDeleteable={props.modDeleteable}
         />

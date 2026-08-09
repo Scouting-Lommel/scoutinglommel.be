@@ -33,6 +33,8 @@ const File = ({
   size,
   modDeleteable,
   deleteCallback,
+  groupId,
+  allFiles,
 }: FileProps): JSX.Element => {
   const t = useTranslations('common.attachment.file');
 
@@ -50,13 +52,16 @@ const File = ({
   const handleDeleteFile = async (e: React.MouseEvent) => {
     e.stopPropagation();
 
-    if (!deleteCallback) return;
+    if (!groupId || !allFiles || allFiles.length < 1 || !deleteCallback) return;
 
     if (confirm(t('confirmation', { attachmentTitle: name }))) {
       try {
         setLoading(true);
         setFormStatus(FormStatus.STATUS_LOADING);
-        await callApi(id);
+        await callApi({
+          id: groupId,
+          files: allFiles.filter((file) => file.id !== id).map((file) => file.id),
+        });
         deleteCallback();
         setFormStatus(FormStatus.STATUS_DELETE_SUCCESS);
       } catch (err) {
@@ -68,7 +73,7 @@ const File = ({
     setLoading(false);
   };
 
-  const callApi = async (data: string) => {
+  const callApi = async (data: { id: string; files: string[] }) => {
     const response = await fetch('/api/file-attachment', {
       method: 'POST',
       headers: {

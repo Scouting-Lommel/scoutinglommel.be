@@ -113,6 +113,8 @@ const FilesSection = ({ group }: Props): JSX.Element => {
                     <Attachment
                       variant="file"
                       file={file}
+                      groupId={group.documentId}
+                      allFiles={groupFiles}
                       deleteCallback={() => fetchFiles()}
                       modDeleteable
                     />
