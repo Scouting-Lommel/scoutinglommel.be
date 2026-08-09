@@ -47,7 +47,7 @@ const nextConfig = {
   async redirects() {
     return [
       { source: '/home', destination: '/', permanent: true },
-      { source: '/drugs-en-alcohol', destination: '/drugs-en-alcoholbeleid', permanent: true }
+      { source: '/drugs-en-alcohol', destination: '/drugs-en-alcoholbeleid', permanent: true },
     ];
   },
 };
