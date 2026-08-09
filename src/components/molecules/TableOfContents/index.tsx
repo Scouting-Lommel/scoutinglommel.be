@@ -6,7 +6,7 @@ import './TableOfContents.css';
 const TableOfContents = ({ sections }: TableOfContentsProps): JSX.Element => {
   return (
     <ul className="table-of-contents">
-      {sections.map((section, i) => {
+      {sections?.map((section, i) => {
         return (
           <li key={i} className="table-of-contents__item">
             <a href={'#' + section.title.toLowerCase().replaceAll(' ', '-')}>

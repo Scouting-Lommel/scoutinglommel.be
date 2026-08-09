@@ -10,7 +10,7 @@ const Policy = ({ sections }: PolicyProps): JSX.Element => {
       <TableOfContents sections={sections} />
 
       <div className="policy">
-        {sections.map((section, i) => {
+        {sections?.map((section, i) => {
           return <Paragraph title={section.title} content={section.content} key={i} />;
         })}
       </div>
