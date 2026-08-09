@@ -16,9 +16,9 @@ const fetchAPI = async (
 
   switch (operation) {
     case 'mutation': {
-      const token = process.env.STRAPI_API_TOKEN;
+      const token = process.env.STRAPI_MUTATION_API_TOKEN;
       if (!token) {
-        throw new Error('STRAPI_API_TOKEN is required for GraphQL mutations');
+        throw new Error('STRAPI_MUTATION_API_TOKEN is required for GraphQL mutations');
       }
       authHeaders = { Authorization: `Bearer ${token}` };
       cacheOptions = { cache: 'no-store' };
