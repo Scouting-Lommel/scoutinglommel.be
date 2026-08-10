@@ -62,6 +62,7 @@ const nextConfig = {
     return [
       { source: '/home', destination: '/', permanent: true },
       { source: '/drugs-en-alcohol', destination: '/drugs-en-alcoholbeleid', permanent: true },
+      { source: '/registratiedetails', destination: '/legal-info', permanent: true },
     ];
   },
 };

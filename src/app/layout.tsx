@@ -9,7 +9,6 @@ import { defaultLocale } from '@/i18n/locales';
 import { getLayoutData, getSeoData } from '@/lib/api/general/api';
 import { DataProvider } from '@/lib/contexts/DataContext';
 import { generateMetadataForRootLayout } from '@/lib/helpers/generateMetadata';
-import { generateStructuredData, generateWebSiteSchema } from '@/lib/helpers/generateStructuredData';
 import {
   transformMainNavigation,
   transformFooterNavigation,
@@ -146,23 +145,6 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
             </DataProvider>
           </SessionProvider>
         </NextIntlClientProvider>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateStructuredData(data.generalData)).replace(
-              /</g,
-              '\\u003c',
-            ),
-          }}
-        />
-        {generateWebSiteSchema(data.generalData) && (
-          <script
-            type="application/ld+json"
-            dangerouslySetInnerHTML={{
-              __html: JSON.stringify(generateWebSiteSchema(data.generalData)).replace(/</g, '\\u003c'),
-            }}
-          />
-        )}
         <BreadcrumbJsonLd />
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
