@@ -1,3 +1,4 @@
+import { formatDate } from '@/lib/helpers/dateTime';
 import { RegisterFormData } from '@/lib/services/google-sheets';
 
 export function formatDataForGoogleSheets(data: Record<string, unknown>): RegisterFormData {
@@ -6,7 +7,7 @@ export function formatDataForGoogleSheets(data: Record<string, unknown>): Regist
   return {
     firstName: (data.firstName as string) || '',
     lastName: (data.lastName as string) || '',
-    birthday: data.birthday ? new Date(data.birthday as string).toISOString().split('T')[0] : '',
+    birthday: data.birthday ? formatDate(data.birthday as string) : '',
     address: (data.address as string) || '',
     postalCode: (data.postalCode as string) || '',
     city: (data.city as string) || '',

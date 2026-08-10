@@ -1,4 +1,5 @@
 import { generateApiQuery } from '@/lib/api';
+import { formatDate } from '@/lib/helpers/dateTime';
 import {
   formatDataForGoogleSheets,
   validateGoogleSheetsData,
@@ -44,7 +45,7 @@ export function registerMember({
     variables: {
       firstName,
       lastName,
-      birthday: birthday instanceof Date ? birthday.toISOString().split('T')[0] : birthday,
+      birthday: formatDate(birthday),
       gender: gender as Enum_Member_Gender,
       telephoneNumber,
       email,
