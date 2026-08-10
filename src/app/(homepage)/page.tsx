@@ -14,8 +14,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
   if (!homePage?.homePage || !seoData?.generalData) return {};
 
   const metadata = await generateMetadataForPage(
-    homePage.homePage.data.attributes.pageMeta,
-    seoData.generalData.data.attributes,
+    homePage.homePage.pageMeta,
+    seoData.generalData,
+    homePage.homePage.slug,
   );
 
   return { ...metadata };
@@ -28,7 +29,7 @@ const HomePage = async (): Promise<JSX.Element> => {
 
   return (
     <>
-      <Blocks content={homePage.data.attributes.blocks} />
+      <Blocks content={homePage.blocks} />
     </>
   );
 };

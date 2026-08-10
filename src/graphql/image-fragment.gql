@@ -1,4 +1,5 @@
 fragment ImageFragment on UploadFile {
+  documentId
   name
   width
   height
@@ -6,5 +7,4 @@ fragment ImageFragment on UploadFile {
   alternativeText
   caption
   hash
-  blurhash
 }

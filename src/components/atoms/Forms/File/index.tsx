@@ -4,14 +4,13 @@ import Typography from '@/components/atoms/Typography';
 import { FormFile as FormFileProps } from './types';
 import './File.css';
 
-
-const File = forwardRef((props: FormFileProps, ref: any): JSX.Element => {
+const File = forwardRef<HTMLInputElement, FormFileProps>((props, ref): JSX.Element => {
   const { error, ...fileProps } = props;
   const fileClassName = cn(
     'file-input',
     props.required && 'file-input--required',
     props.disabled && 'file-input--disabled',
-    error && 'file-input--has-error',
+    !!error && 'file-input--has-error',
   );
 
   return (

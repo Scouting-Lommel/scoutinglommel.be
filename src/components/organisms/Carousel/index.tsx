@@ -10,7 +10,6 @@ import CarouselItem from '@/components/molecules/CarouselItem';
 import { Carousel as CarouselProps, PropType, UsePrevNextButtonsType } from './types';
 import './Carousel.css';
 
-
 const usePrevNextButtons = (emblaApi: EmblaCarouselType | undefined): UsePrevNextButtonsType => {
   const [prevBtnDisabled, setPrevBtnDisabled] = useState(true);
   const [nextBtnDisabled, setNextBtnDisabled] = useState(true);
@@ -91,16 +90,9 @@ const Carousel = ({ carouselItems }: CarouselProps): JSX.Element => {
       <div className="embla">
         <div className="embla__viewport" ref={emblaRef}>
           <div className="embla__container">
-            {carouselItems.data.map((item, i) => {
-              return (
-                <CarouselItem
-                  logo={item.attributes.logo}
-                  name={item.attributes.name}
-                  slug={item.attributes.slug}
-                  key={i}
-                />
-              );
-            })}
+            {carouselItems.map((item, i) => (
+              <CarouselItem logo={item.logo} name={item.name} slug={item.slug} key={i} />
+            ))}
           </div>
         </div>
 

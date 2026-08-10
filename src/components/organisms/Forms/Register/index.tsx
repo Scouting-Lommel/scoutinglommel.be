@@ -11,17 +11,23 @@ import { FormField } from '@/components/organisms/Forms/FormBuilder/FormField/ty
 import RegisterConfirmation from './Confirmation';
 import RegisterForm from './RegisterForm';
 
-const Register = (props: any): JSX.Element => {
+type RegisterProps = {
+  leaderPrice: number;
+  memberPrice: number;
+  bankAccountNumber: string;
+};
+
+const Register = (props: RegisterProps): JSX.Element => {
   const t = useTranslations('forms.registerForm');
 
   const { formStatus, setFormStatus } = useContext(FormContext);
   const [registerPrice, setRegisterPrice] = useState<number>(props.memberPrice);
-  const [member, setMember] = useState<any>({});
+  const [member, setMember] = useState<Record<string, unknown>>({});
 
   const initialValues = {};
 
-  const submitForm = async (data: any, formFields: FormField[]) => {
-    const captchaToken = data['captcha-token'];
+  const submitForm = async (data: Record<string, unknown>, formFields: FormField[]) => {
+    const captchaToken = data['captcha-token'] as string;
     const member = { ...data };
 
     member.isAkabe = member.isAkabe ? true : false;
@@ -40,7 +46,7 @@ const Register = (props: any): JSX.Element => {
       to: registerEmailAddress,
     });
 
-    const callback = (resp: any) => {
+    const callback = (resp: { status: number }) => {
       if (resp.status === 200) {
         setFormStatus(FormStatus.STATUS_SUCCESS);
         setMember(member);
@@ -69,8 +75,8 @@ const Register = (props: any): JSX.Element => {
         <>
           <Banner variant="success">{t('formStatus.success')}</Banner>
           <RegisterConfirmation
-            firstName={member.firstName}
-            lastName={member.lastName}
+            firstName={member.firstName as string}
+            lastName={member.lastName as string}
             price={registerPrice}
             bankAccountNumber={props.bankAccountNumber}
           />

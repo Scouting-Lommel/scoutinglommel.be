@@ -63,7 +63,7 @@ const ActivityForm = ({
     t,
   });
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = (data: Record<string, unknown>) => {
     submitForm(data, formFields);
   };
 

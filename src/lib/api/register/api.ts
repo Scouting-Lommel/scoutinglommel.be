@@ -1,9 +1,15 @@
 import { generateApiQuery } from '@/lib/api';
+import { formatDate } from '@/lib/helpers/dateTime';
 import {
   formatDataForGoogleSheets,
   validateGoogleSheetsData,
 } from '@/lib/helpers/formatDataForGoogleSheets';
 import { appendToGoogleSheet } from '@/lib/services/google-sheets';
+import type {
+  RegisterMemberMutation,
+  RegisterMemberMutationVariables,
+} from '@/types/generated/Graphql';
+import { Enum_Member_Gender } from '@/types/generated/Graphql';
 import { REGISTER_MEMBER_MUTATION } from './mutations';
 
 type RegisterMemberProps = {
@@ -34,14 +40,13 @@ export function registerMember({
   city,
   comments,
   workingYear,
-}: RegisterMemberProps): Promise<any> {
-  return generateApiQuery({
+}: RegisterMemberProps): Promise<RegisterMemberMutation> {
+  return generateApiQuery<RegisterMemberMutation, RegisterMemberMutationVariables>({
     variables: {
       firstName,
       lastName,
-      birthday,
-      memberGroup,
-      gender,
+      birthday: formatDate(birthday),
+      gender: gender as Enum_Member_Gender,
       telephoneNumber,
       email,
       address,

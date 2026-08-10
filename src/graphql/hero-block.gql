@@ -1,43 +1,29 @@
 fragment HeroBlockFragment on ComponentContentBlocksHeroBlock {
-  title
-  subtitle
-  variant
-  callToAction {
+  title: heroTitle
+  subtitle: heroSubtitle
+  variant: heroVariant
+  callToAction: heroCta {
     label
     link
     variant
   }
-  socialsCta {
+  socialsCta: heroSocialsCta {
     title
     socialItems {
-      data {
-        attributes {
-          title
-          link
-          icon
-        }
-      }
+      documentId
+      title
+      link
+      icon
     }
   }
-  yearTheme {
-    data {
-      attributes {
-        title
-        image {
-          data {
-            attributes {
-              ...ImageFragment
-            }
-          }
-        }
-      }
+  yearTheme: heroYearTheme {
+    documentId
+    title
+    image {
+      ...ImageFragment
     }
   }
-  bgImage {
-    data {
-      attributes {
-        ...ImageFragment
-      }
-    }
+  bgImage: heroBgImage {
+    ...ImageFragment
   }
 }

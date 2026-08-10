@@ -14,8 +14,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
   if (!drugsAlcoholPolicyPage || !generalData) return {};
 
   const metadata = await generateMetadataForPage(
-    drugsAlcoholPolicyPage.data.attributes.pageMeta,
-    generalData.data.attributes,
+    drugsAlcoholPolicyPage.pageMeta,
+    generalData,
+    drugsAlcoholPolicyPage.slug,
   );
 
   return { ...metadata };
@@ -28,7 +29,7 @@ const DrugsAndAlcoholPage = async (): Promise<JSX.Element> => {
 
   return (
     <>
-      <Blocks content={drugsAlcoholPolicyPage.data.attributes.blocks} />
+      <Blocks content={drugsAlcoholPolicyPage.blocks} />
     </>
   );
 };

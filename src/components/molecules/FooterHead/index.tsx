@@ -2,7 +2,6 @@ import type { JSX } from 'react';
 import { FooterHead as FooterHeadProps } from './types';
 import './FooterHead.css';
 
-
 const FooterHead = ({ siteName, vatNumber, groupNumber }: FooterHeadProps): JSX.Element => {
   return (
     <div className="footer-head">

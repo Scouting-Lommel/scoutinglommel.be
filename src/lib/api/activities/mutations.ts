@@ -1,14 +1,14 @@
 import gql from 'graphql-tag';
 
 const CREATE_ACTIVITY_MUTATION = gql`
-  mutation createActivity(
+  mutation CreateActivity(
     $title: String!
     $startDate: Date!
     $startTime: Time!
     $endDate: Date!
     $endTime: Time!
     $description: String!
-    $groupId: ID!
+    $groupDocumentId: ID!
   ) {
     createActivity(
       data: {
@@ -18,32 +18,26 @@ const CREATE_ACTIVITY_MUTATION = gql`
         endDate: $endDate
         endTime: $endTime
         description: $description
-        group: $groupId
+        group: $groupDocumentId
       }
     ) {
-      data {
-        id
-        attributes {
-          title
-          startDate
-          startTime
-          endDate
-          endTime
-          description
-          group {
-            data {
-              id
-            }
-          }
-        }
+      documentId
+      title
+      startDate
+      startTime
+      endDate
+      endTime
+      description
+      group {
+        documentId
       }
     }
   }
 `;
 
 const UPDATE_ACTIVITY_MUTATION = gql`
-  mutation updateActivity(
-    $id: ID!
+  mutation UpdateActivity(
+    $documentId: ID!
     $title: String!
     $startDate: Date!
     $startTime: Time!
@@ -52,7 +46,7 @@ const UPDATE_ACTIVITY_MUTATION = gql`
     $description: String!
   ) {
     updateActivity(
-      id: $id
+      documentId: $documentId
       data: {
         title: $title
         startDate: $startDate
@@ -62,27 +56,21 @@ const UPDATE_ACTIVITY_MUTATION = gql`
         description: $description
       }
     ) {
-      data {
-        id
-        attributes {
-          title
-          startDate
-          startTime
-          endDate
-          endTime
-          description
-        }
-      }
+      documentId
+      title
+      startDate
+      startTime
+      endDate
+      endTime
+      description
     }
   }
 `;
 
 const DELETE_ACTIVITY_MUTATION = gql`
-  mutation deleteActivity($id: ID!) {
-    deleteActivity(id: $id) {
-      data {
-        id
-      }
+  mutation DeleteActivity($documentId: ID!) {
+    deleteActivity(documentId: $documentId) {
+      documentId
     }
   }
 `;

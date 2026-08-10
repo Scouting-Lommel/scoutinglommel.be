@@ -2,5 +2,5 @@ import { Paragraph } from '@/components/molecules/Paragraph/types';
 
 export type PolicyBlock = {
   title: string;
-  sections: Paragraph[];
+  policySections: Paragraph[];
 } & React.HTMLAttributes<HTMLElement>;

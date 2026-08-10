@@ -344,7 +344,7 @@ const RegisterForm = ({ initialValues, submitForm }: RegisterFormProps): JSX.Ele
   const [fields, setFields] = useState<FormField[]>(formFields);
   const formSchema = generateFormSchema({ fields: formFields, t });
 
-  const handleSubmit = (data: any) => {
+  const handleSubmit = (data: Record<string, unknown>) => {
     submitForm(data, fields);
   };
 

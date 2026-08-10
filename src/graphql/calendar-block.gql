@@ -1,11 +1,11 @@
 fragment CalendarBlockFragment on ComponentContentBlocksCalendarBlock {
-  title
-  blockProperties {
+  title: calendarTitle
+  blockProperties: calendarBlockProperties {
     variant
     orientation
     slug
   }
-  cta: callToAction {
+  cta: calendarCallToAction {
     title
     intro
     ctaLabel

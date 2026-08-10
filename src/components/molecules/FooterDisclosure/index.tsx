@@ -1,8 +1,7 @@
 import type { JSX } from 'react';
-import { FooterDisclosure as FooterDisclosureProps } from './types';
 import { RingtailLogo } from '@/components/atoms/RingtailLogo';
+import { FooterDisclosure as FooterDisclosureProps } from './types';
 import './FooterDisclosure.css';
-
 
 const FooterDisclosure = ({ siteName }: FooterDisclosureProps): JSX.Element => {
   const currentYear = new Date().getFullYear();

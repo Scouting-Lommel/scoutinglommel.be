@@ -1,26 +1,19 @@
 fragment GroupsBlockFragment on ComponentContentBlocksGroupsBlock {
-  title
-  groups {
-    data {
-      attributes {
-        name
-        slug
-        logo {
-          data {
-            attributes {
-              ...ImageFragment
-            }
-          }
-        }
-      }
+  title: groupsTitle
+  groups: groupsItems {
+    documentId
+    name
+    slug
+    logo {
+      ...ImageFragment
     }
   }
-  blockProperties {
+  blockProperties: groupsBlockProperties {
     variant
     orientation
     slug
   }
-  cta: callToAction {
+  cta: groupsCallToAction {
     title
     intro
     ctaLabel

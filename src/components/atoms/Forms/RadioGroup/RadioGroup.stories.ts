@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import RadioGroup from '.';
 
 const meta: Meta<typeof RadioGroup> = {
@@ -45,7 +45,6 @@ export const Default: Story = {
       },
     ],
     direction: 'row',
-    register: () => {},
   },
 };
 
@@ -77,6 +76,5 @@ export const HasError: Story = {
     direction: 'row',
     error: 'Dit veld is verplicht.',
     required: true,
-    register: () => {},
   },
 };

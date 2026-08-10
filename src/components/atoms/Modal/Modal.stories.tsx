@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import ActivityForm from '@/components/organisms/Forms/Activity/ActivityForm';
 import Modal from '.';
 

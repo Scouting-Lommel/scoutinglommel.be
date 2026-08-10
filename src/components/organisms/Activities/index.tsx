@@ -5,16 +5,16 @@ import { useCallback, useEffect, useState, type JSX } from 'react';
 import { getActivities } from '@/lib/api/activities/api';
 import { getEvents } from '@/lib/api/events/api';
 import Activity from '@/components/atoms/Activity';
+import type { Activity as ActivityItem } from '@/components/atoms/Activity/types';
 import Button from '@/components/atoms/Button';
 import Link from '@/components/atoms/Link';
 import Loader from '@/components/atoms/Loader';
 import { ActivitySection as ActivityProps } from './types';
 import './Activities.css';
 
-
 const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
-  const [groupActivities, setActivities] = useState<any>(null);
+  const [groupActivities, setActivities] = useState<ActivityItem[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
 
@@ -46,7 +46,11 @@ const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.El
         return;
       }
 
-      setActivities(activities.data);
+      setActivities(
+        activities
+          .filter((activity): activity is NonNullable<typeof activity> => !!activity)
+          .map((activity) => ({ ...activity })),
+      );
       setLoading(false);
     } catch (e) {
       setError(true);
@@ -75,7 +79,18 @@ const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.El
         return;
       }
 
-      setActivities(events.data);
+      setActivities(
+        events
+          .filter((event): event is NonNullable<typeof event> => !!event)
+          .map((event) => ({
+            title: event.title,
+            startDate: event.startDate,
+            startTime: event.startTime ?? '',
+            endDate: event.endDate ?? '',
+            endTime: event.endTime ?? '',
+            description: event.description,
+          })),
+      );
       setLoading(false);
     } catch (e) {
       setError(true);
@@ -105,17 +120,17 @@ const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.El
     <div className="activities">
       {groupActivities && groupActivities.length > 0 && (
         <>
-          {groupActivities.map((act: any, i: number) => {
+          {groupActivities.map((act, i) => {
             if (isOpen || i < initialItems) {
               return (
                 <Activity
                   key={i}
-                  title={act.attributes.title}
-                  startDate={act.attributes.startDate}
-                  startTime={act.attributes.startTime}
-                  endDate={act.attributes.endDate}
-                  endTime={act.attributes.endTime}
-                  description={act.attributes.description}
+                  title={act.title}
+                  startDate={act.startDate}
+                  startTime={act.startTime}
+                  endDate={act.endDate}
+                  endTime={act.endTime}
+                  description={act.description}
                 />
               );
             }

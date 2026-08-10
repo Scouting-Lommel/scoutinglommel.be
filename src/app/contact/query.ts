@@ -10,19 +10,16 @@ const CONTACT_PAGE_QUERY = gql`
   ${PAGE_META_FRAGMENT}
   ${IMAGE_FRAGMENT}
 
-  query {
+  query ContactPage {
     contactPage {
-      data {
-        attributes {
-          pageMeta {
-            ...PageMetaFragment
-          }
-          blocks {
-            __typename
-            ...HeroBlockFragment
-            ...DividerFragment
-          }
-        }
+      slug
+      pageMeta {
+        ...PageMetaFragment
+      }
+      blocks {
+        __typename
+        ...HeroBlockFragment
+        ...DividerFragment
       }
     }
   }

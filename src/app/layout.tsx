@@ -9,6 +9,10 @@ import { getLayoutData, getSeoData } from '@/lib/api/general/api';
 import { DataProvider } from '@/lib/contexts/DataContext';
 import { generateMetadataForRootLayout } from '@/lib/helpers/generateMetadata';
 import { generateStructuredData } from '@/lib/helpers/generateStructuredData';
+import {
+  transformMainNavigation,
+  transformFooterNavigation,
+} from '@/lib/helpers/transformNavigation';
 import SessionProvider from '@/lib/providers/SessionProvider';
 import GlobalAlert from '@/components/atoms/GlobalAlert';
 import SkipToContent from '@/components/atoms/SkipToContent';
@@ -44,9 +48,9 @@ export const viewport = async (): Promise<Viewport> => {
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const data = await getSeoData();
-  if (!data) return {};
+  if (!data || !data.generalData) return {};
 
-  const metadata = await generateMetadataForRootLayout(data.generalData.data.attributes);
+  const metadata = await generateMetadataForRootLayout(data.generalData);
 
   return { ...metadata };
 };
@@ -54,38 +58,87 @@ export const generateMetadata = async (): Promise<Metadata> => {
 const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
   const data = await getLayoutData();
 
-  const globalAlert = data.generalData.data.attributes.globalAlert;
+  if (!data?.generalData) {
+    return (
+      <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
+        <body>
+          <main className="sl-main" id="main">
+            {children}
+          </main>
+        </body>
+      </html>
+    );
+  }
+
+  const globalAlert = data.generalData.globalAlert;
+  const mainNavigation = transformMainNavigation(data.mainNavigation);
+  const footerNavigation = transformFooterNavigation(data.footerNavigation);
+
+  const groups = data.groups
+    .filter((group): group is NonNullable<(typeof data.groups)[number]> => group !== null)
+    .map((group) => ({
+      name: group.name,
+      description: group.description ?? '',
+      slug: group.slug ?? '',
+    }));
+  const rentalLocations = data.rentalLocations
+    .filter(
+      (location): location is NonNullable<(typeof data.rentalLocations)[number]> =>
+        location !== null,
+    )
+    .map((location) => ({
+      name: location.name ?? '',
+      description: location.description ?? '',
+      slug: location.slug ?? '',
+    }));
+  const contactItems = (data.generalData.contactItems ?? [])
+    .filter(
+      (item): item is NonNullable<NonNullable<typeof data.generalData.contactItems>[number]> =>
+        item !== null,
+    )
+    .map((item) => ({
+      label: item.label ?? '',
+      link: item.link ?? '',
+    }));
 
   return (
     <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
       <body>
-        <NextIntlClientProvider messages={{ common: commonMessages, dashboard: dashboardMessages, forms: formsMessages }}>
+        <NextIntlClientProvider
+          messages={{ common: commonMessages, dashboard: dashboardMessages, forms: formsMessages }}
+        >
           <SessionProvider>
             <DataProvider data={data}>
               <SkipToContent className="skip-to-content" />
 
-              {globalAlert && globalAlert?.enabled && (
-                <GlobalAlert label={globalAlert?.label} variant={globalAlert?.variant} />
+              {globalAlert && globalAlert.enabled && globalAlert.label && (
+                <GlobalAlert label={globalAlert.label} variant={globalAlert.variant} />
               )}
 
-              <Header
-                logo={data.generalData.data.attributes.logo}
-                mainNavigation={data.generalData.data.attributes.mainNavigation}
-                groups={data.groups.data.map((item: any) => item.attributes)}
-                rentalLocations={data.rentalLocations.data.map((item: any) => item.attributes)}
-              />
+              {data.generalData.logo && (
+                <Header
+                  logo={{
+                    ...data.generalData.logo,
+                    width: data.generalData.logo.width ?? null,
+                    height: data.generalData.logo.height ?? null,
+                  }}
+                  mainNavigation={mainNavigation}
+                  groups={groups}
+                  rentalLocations={rentalLocations}
+                />
+              )}
 
               <main className="sl-main" id="main">
                 {children}
               </main>
 
               <Footer
-                siteName={data.generalData.data.attributes.siteName}
-                vatNumber={data.generalData.data.attributes.vatNumber}
-                groupNumber={data.generalData.data.attributes.groupNumber}
-                address={data.generalData.data.attributes.address}
-                contactItems={data.generalData.data.attributes.contactItems}
-                footerNavigation={data.generalData.data.attributes.footerNavigation}
+                siteName={data.generalData.siteName ?? ''}
+                vatNumber={data.generalData.vatNumber ?? ''}
+                groupNumber={data.generalData.groupNumber ?? ''}
+                address={data.generalData.address ?? ''}
+                contactItems={contactItems}
+                footerNavigation={footerNavigation}
               />
             </DataProvider>
           </SessionProvider>
@@ -93,7 +146,10 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateStructuredData(data.generalData?.data?.attributes)),
+            __html: JSON.stringify(generateStructuredData(data.generalData)).replace(
+              /</g,
+              '\\u003c',
+            ),
           }}
         />
         <Analytics />

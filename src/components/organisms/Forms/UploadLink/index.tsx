@@ -5,7 +5,19 @@ import { FormContext } from '@/lib/contexts/FormContext';
 import Banner from '@/components/atoms/Banner';
 import UploadLinkForm from './UploadLinkForm';
 
-const UploadLink = (props: any): JSX.Element => {
+type Link = {
+  label: string;
+  link: string;
+};
+
+type UploadLinkProps = {
+  groupId: string;
+  callback: () => void;
+  closeClickHandler: () => void;
+  allLinks?: Link[];
+};
+
+const UploadLink = (props: UploadLinkProps): JSX.Element => {
   const t = useTranslations('forms.uploadLinkForm');
 
   const { formStatus, setFormStatus } = useContext(FormContext);
@@ -14,28 +26,30 @@ const UploadLink = (props: any): JSX.Element => {
     groupId: props.groupId,
   };
 
-  const handleSubmitForm = async (data: any) => {
+  const handleSubmitForm = async (data: Record<string, unknown>) => {
     try {
       await addLink(data);
       setFormStatus(FormStatus.STATUS_SUCCESS);
       props.callback();
       props.closeClickHandler();
       setFormStatus(FormStatus.STATUS_READY);
-    } catch (err: any) {
+    } catch (err) {
       console.error(err);
       setFormStatus(FormStatus.STATUS_ERROR);
     }
   };
 
-  const addLink = async (data: any) => {
-    let groupLinks = [...props.allLinks];
-    groupLinks = groupLinks.map((link) => ({ label: link.label, link: link.link }));
-    groupLinks.push({ label: data.linkLabel, link: data.linkUrl });
+  const addLink = async (data: Record<string, unknown>) => {
+    const groupLinks: Link[] = (props.allLinks ?? []).map((link) => ({
+      label: link.label,
+      link: link.link,
+    }));
+    groupLinks.push({ label: data.linkLabel as string, link: data.linkUrl as string });
 
     await callApi({ id: props.groupId, links: groupLinks });
   };
 
-  const callApi = async (data: any) => {
+  const callApi = async (data: { id: string; links: Link[] }) => {
     const response = await fetch('/api/link-attachment', {
       method: 'POST',
       headers: {

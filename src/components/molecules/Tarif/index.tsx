@@ -4,7 +4,6 @@ import Typography from '@/components/atoms/Typography';
 import { Tarif as TarifProps } from './types';
 import './Tarif.css';
 
-
 const Tarif = ({ name, dayPrice, minimumPrice, example }: TarifProps): JSX.Element => {
   return (
     <details className="tarif">

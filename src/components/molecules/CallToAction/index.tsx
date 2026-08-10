@@ -4,7 +4,6 @@ import Button from '@/components/atoms/Button';
 import { CallToAction as CallToActionProps } from './types';
 import './CallToAction.css';
 
-
 const CallToAction = ({
   title,
   intro,

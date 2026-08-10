@@ -1,39 +1,33 @@
-import { fixupPluginRules } from '@eslint/compat';
 import { FlatCompat } from '@eslint/eslintrc';
 import js from '@eslint/js';
-import { createRequire } from 'module';
-import _import from 'eslint-plugin-import';
-import jsxA11y from 'eslint-plugin-jsx-a11y';
-import prettier from 'eslint-plugin-prettier';
+import storybook from 'eslint-plugin-storybook';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const require = createRequire(import.meta.url);
-const nextPlugin = require('@next/eslint-plugin-next');
 const compat = new FlatCompat({
   baseDirectory: __dirname,
   recommendedConfig: js.configs.recommended,
   allConfig: js.configs.all,
 });
 
-export default [
-  {
-    ...compat.extends(
-      'eslint-config-next',
-      'eslint-config-next/core-web-vitals',
-      'plugin:prettier/recommended',
-    )[0],
+const [baseConfig, ...restConfigs] = compat.extends(
+  'eslint-config-next',
+  'eslint-config-next/core-web-vitals',
+  'plugin:prettier/recommended',
+);
 
-    plugins: {
-      '@next/next': nextPlugin,
-      import: fixupPluginRules(_import),
-      'jsx-a11y': jsxA11y,
-      prettier,
-    },
+const config = [
+  {
+    ignores: ['.next/**', 'out/**', 'storybook-static/**'],
+  },
+  {
+    ...baseConfig,
 
     settings: {
+      ...baseConfig.settings,
+
       'import/resolver': {
         node: {
           extensions: ['.js', '.jsx', '.ts', '.tsx'],
@@ -46,6 +40,12 @@ export default [
       },
     },
 
+    rules: {
+      ...baseConfig.rules,
+    },
+  },
+  ...restConfigs,
+  {
     rules: {
       '@next/next/no-html-link-for-pages': 'off',
       '@next/next/no-img-element': 'off',
@@ -136,4 +136,7 @@ export default [
       ],
     },
   },
+  ...storybook.configs['flat/recommended'],
 ];
+
+export default config;

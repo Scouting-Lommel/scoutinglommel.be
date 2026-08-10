@@ -6,7 +6,6 @@ import Tarif from '@/components/molecules/Tarif';
 import { Tarifs as TarifsProps } from './types';
 import './Tarifs.css';
 
-
 const Tarifs = ({ tarifs, cta }: TarifsProps): JSX.Element => {
   const t = useTranslations('common.tarifs');
 
@@ -24,23 +23,25 @@ const Tarifs = ({ tarifs, cta }: TarifsProps): JSX.Element => {
             return (
               <Tarif
                 key={i}
-                dayPrice={tarif.attributes.dayPrice}
-                example={tarif.attributes.example}
-                minimumPrice={tarif.attributes.minimumPrice}
-                name={tarif.attributes.name}
+                dayPrice={tarif.dayPrice}
+                example={tarif.example}
+                minimumPrice={tarif.minimumPrice}
+                name={tarif.name}
               />
             );
           })}
         </div>
       </div>
-      <div className="tarifs__cta__container">
-        <Typography className="tarifs__cta__data__intro" data={cta.intro} />
-        {cta && cta.ctaLabel && cta.ctaLink && (
-          <div className="tarifs__cta__data__button">
-            <Button label={cta.ctaLabel} href={cta.ctaLink || ''} variant="primary" modSmall />
-          </div>
-        )}
-      </div>
+      {cta && (
+        <div className="tarifs__cta__container">
+          <Typography className="tarifs__cta__data__intro" data={cta.intro} />
+          {cta.ctaLabel && cta.ctaLink && (
+            <div className="tarifs__cta__data__button">
+              <Button label={cta.ctaLabel} href={cta.ctaLink || ''} variant="primary" modSmall />
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 };

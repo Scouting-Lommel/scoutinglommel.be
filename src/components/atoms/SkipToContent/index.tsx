@@ -4,7 +4,6 @@ import type { JSX } from 'react';
 import { SkipToContent as SkipToContentProps } from './types';
 import './SkipToContent.css';
 
-
 const SkipToContent = ({ className }: SkipToContentProps): JSX.Element => {
   const t = useTranslations('common');
 

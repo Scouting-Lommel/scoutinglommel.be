@@ -37,12 +37,20 @@ build-storybook.log
 # generated stylesheets
 src/**/*.css
 
-# typescript 
+# generated graphql types (run pnpm codegen to regenerate)
+src/types/generated/
+schema.graphql
+
+# typescript
 tsconfig.tsbuildinfo
 
 # claude
 CLAUDE.md
+.claude/
 
+# opencode
+.omo
+.sisyphus/
 
 # cursor
 .cursor/rules

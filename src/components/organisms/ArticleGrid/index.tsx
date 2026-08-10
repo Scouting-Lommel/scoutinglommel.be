@@ -9,7 +9,6 @@ import ArticleCard from '@/components/molecules/ArticleCard';
 import { ArticleGrid as ArticleGridProps } from './types';
 import './ArticleGrid.css';
 
-
 const MAX_ARTICLES = 5;
 
 const ArticleGrid = ({

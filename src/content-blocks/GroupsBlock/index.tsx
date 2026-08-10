@@ -6,9 +6,9 @@ import { GroupsBlock as GroupsBlockProps } from './types';
 const GroupsBlock = ({ title, groups, cta, blockProperties }: GroupsBlockProps): JSX.Element => {
   return (
     <BlockContainer
-      variant={blockProperties.variant}
-      orientation={blockProperties.orientation}
-      slug={blockProperties.slug}
+      variant={blockProperties?.variant}
+      orientation={blockProperties?.orientation}
+      slug={blockProperties?.slug}
       cta={cta}
     >
       <section className="sl-layout">

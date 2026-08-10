@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Default as imageStory } from '@/components/atoms/Image/Image.stories';
 import CarouselItem from '.';
 
@@ -14,11 +14,7 @@ export const Default: Story = {
   args: {
     name: 'De leidingsgroep',
     slug: 'de-leidingsgroep',
-    logo: {
-      data: {
-        attributes: imageStory.args!.data!,
-      },
-    },
+    logo: imageStory.args!.data!,
   },
   decorators: [
     (Story) => (

@@ -13,10 +13,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const { infoPage } = await getInfoPage();
   if (!infoPage || !generalData) return {};
 
-  const metadata = await generateMetadataForPage(
-    infoPage.data.attributes.pageMeta,
-    generalData.data.attributes,
-  );
+  const metadata = await generateMetadataForPage(infoPage.pageMeta, generalData, infoPage.slug);
 
   return { ...metadata };
 };
@@ -27,14 +24,20 @@ const InfoPage = async (): Promise<JSX.Element> => {
 
   if (!infoPage) notFound();
 
-  const blockIndex = infoPage.data.attributes.blocks.findIndex(
-    (el: any) => el.__typename === 'ComponentContentBlocksYearThemeBlock',
+  const blocks = [...(infoPage.blocks ?? [])] as Array<{
+    __typename: string;
+    [key: string]: unknown;
+  }>;
+  const blockIndex = blocks.findIndex(
+    (el) => el.__typename === 'ComponentContentBlocksYearThemeBlock',
   );
-  infoPage.data.attributes.blocks[blockIndex].yearTheme = yearThemes.data[0].attributes;
+  if (blockIndex >= 0 && yearThemes?.[0]) {
+    blocks[blockIndex] = { ...blocks[blockIndex], yearTheme: yearThemes[0] };
+  }
 
   return (
     <>
-      <Blocks content={infoPage.data.attributes.blocks} />
+      <Blocks content={blocks} />
     </>
   );
 };

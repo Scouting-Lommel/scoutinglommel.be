@@ -5,7 +5,6 @@ import SLLink from '@/components/atoms/Link';
 import { Breadcrumbs as BreadcrumbsProps } from './types';
 import './Breadcrumbs.css';
 
-
 const Breadcrumbs = ({ items }: BreadcrumbsProps): JSX.Element => {
   const { isMobile } = useWindowSizes();
 

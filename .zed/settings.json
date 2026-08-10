@@ -1,0 +1,46 @@
+// Zed project settings
+{
+  "languages": {
+    "TypeScript": {
+      "format_on_save": "on",
+      "formatter": [
+        {
+          "code_action": "source.fixAll.eslint"
+        }
+      ]
+    },
+    "TSX": {
+      "format_on_save": "on",
+      "formatter": [
+        {
+          "code_action": "source.fixAll.eslint"
+        }
+      ]
+    },
+    "JavaScript": {
+      "format_on_save": "on",
+      "formatter": [
+        {
+          "code_action": "source.fixAll.eslint"
+        }
+      ]
+    },
+    "JSX": {
+      "format_on_save": "on",
+      "formatter": [
+        {
+          "code_action": "source.fixAll.eslint"
+        }
+      ]
+    },
+    "JSON": {
+      "format_on_save": "on",
+      "formatter": {
+        "external": {
+          "command": "node_modules/.bin/prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
+        }
+      }
+    }
+  }
+}

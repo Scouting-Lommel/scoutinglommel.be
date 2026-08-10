@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Default as imageStory } from '@/components/atoms/Image/Image.stories';
 import Carousel from '.';
 
@@ -12,76 +12,38 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    carouselItems: {
-      data: [
-        {
-          attributes: {
-            logo: {
-              data: {
-                attributes: imageStory.args!.data!,
-              },
-            },
-            name: 'Kapoenen',
-            slug: 'kapoenen',
-          },
-        },
-        {
-          attributes: {
-            logo: {
-              data: {
-                attributes: imageStory.args!.data!,
-              },
-            },
-            name: 'Welpen',
-            slug: 'welpen',
-          },
-        },
-        {
-          attributes: {
-            logo: {
-              data: {
-                attributes: imageStory.args!.data!,
-              },
-            },
-            name: 'Akabe',
-            slug: 'akabe',
-          },
-        },
-        {
-          attributes: {
-            logo: {
-              data: {
-                attributes: imageStory.args!.data!,
-              },
-            },
-            name: 'Jonggivers',
-            slug: 'jonggivers',
-          },
-        },
-        {
-          attributes: {
-            logo: {
-              data: {
-                attributes: imageStory.args!.data!,
-              },
-            },
-            name: 'Givers',
-            slug: 'givers',
-          },
-        },
-        {
-          attributes: {
-            logo: {
-              data: {
-                attributes: imageStory.args!.data!,
-              },
-            },
-            name: 'Jin',
-            slug: 'jin',
-          },
-        },
-      ],
-    },
+    carouselItems: [
+      {
+        logo: imageStory.args!.data!,
+        name: 'Kapoenen',
+        slug: 'kapoenen',
+      },
+      {
+        logo: imageStory.args!.data!,
+        name: 'Welpen',
+        slug: 'welpen',
+      },
+      {
+        logo: imageStory.args!.data!,
+        name: 'Akabe',
+        slug: 'akabe',
+      },
+      {
+        logo: imageStory.args!.data!,
+        name: 'Jonggivers',
+        slug: 'jonggivers',
+      },
+      {
+        logo: imageStory.args!.data!,
+        name: 'Givers',
+        slug: 'givers',
+      },
+      {
+        logo: imageStory.args!.data!,
+        name: 'Jin',
+        slug: 'jin',
+      },
+    ],
   },
   decorators: [
     (Story) => (

@@ -22,7 +22,7 @@ const DashboardGroupPage = async (props: Props): Promise<JSX.Element> => {
   const { slug } = await props.params;
 
   const { groups } = await getGroupPage(slug);
-  const group = groups.data[0];
+  const group = groups?.[0];
 
   if (!group) notFound();
 
@@ -31,7 +31,7 @@ const DashboardGroupPage = async (props: Props): Promise<JSX.Element> => {
   return (
     <div className="sl-layout">
       <BlockContainer slug="group-hero">
-        <Hero title={group.attributes.pageTitle} subtitle={t('subtitle')} variant="simple" />
+        <Hero title={group.pageTitle ?? ''} subtitle={t('subtitle')} variant="simple" />
       </BlockContainer>
 
       <FileSection group={group} />

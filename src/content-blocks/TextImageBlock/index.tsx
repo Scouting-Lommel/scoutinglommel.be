@@ -21,13 +21,7 @@ const ImageTextBlock = ({
       <TextImage
         title={title}
         content={content}
-        images={
-          images?.data.length > 0
-            ? images?.data.map((image) => {
-                return image.attributes;
-              })
-            : undefined
-        }
+        images={images?.length > 0 ? images : undefined}
         ctaButton={ctaButton}
         variant={orientation}
         className="sl-layout"

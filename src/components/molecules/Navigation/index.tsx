@@ -6,8 +6,7 @@ import NavItem from '@/components/molecules/NavItem';
 import { Navigation as NavigationProps } from './types';
 import './Navigation.css';
 
-
-const Navigation = ({ navItems, groups, rentalLocations }: NavigationProps): JSX.Element => {
+const Navigation = ({ navItems = [], groups, rentalLocations }: NavigationProps): JSX.Element => {
   return (
     <nav className="navigation__wrapper">
       <div className="navigation">
@@ -37,7 +36,7 @@ const Navigation = ({ navItems, groups, rentalLocations }: NavigationProps): JSX
                 dropdownButton={dropdownBtn}
                 groups={groups}
                 rentalLocations={rentalLocations}
-                modDropdown={navItem.dropdownItems.length > 0}
+                modDropdown={navItem.dropdownItems && navItem.dropdownItems.length > 0}
               />
             );
           })}

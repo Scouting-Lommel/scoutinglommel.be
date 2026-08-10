@@ -1,20 +1,16 @@
 fragment GalleryBlockFragment on ComponentContentBlocksGalleryBlock {
-  title
-  initialItems
-  images {
-    data {
-      attributes {
-        ...ImageFragment
-      }
-    }
+  title: galleryTitle
+  initialItems: galleryInitialItems
+  images: galleryImages {
+    ...ImageFragment
   }
-  cta: callToAction {
+  cta: galleryCallToAction {
     title
     intro
     ctaLabel
     ctaLink
   }
-  blockProperties {
+  blockProperties: galleryBlockProperties {
     variant
     orientation
     slug

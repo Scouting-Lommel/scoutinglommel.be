@@ -10,38 +10,31 @@ const MANUALS_PAGE_QUERY = gql`
   ${DIVIDER_FRAGMENT}
   ${IMAGE_FRAGMENT}
 
-  query {
+  query ManualsOverviewPage {
     manualsOverviewPage {
-      data {
-        attributes {
-          pageMeta {
-            ...PageMetaFragment
-          }
-          blocks {
-            __typename
-            ...HeroBlockFragment
-            ...DividerFragment
-          }
-        }
+      slug
+      pageMeta {
+        ...PageMetaFragment
+      }
+      blocks {
+        __typename
+        ...HeroBlockFragment
+        ...DividerFragment
       }
     }
   }
 `;
 
 const MANUALS_QUERY = gql`
-  query {
+  query Manuals {
     manuals {
-      data {
-        id
-        attributes {
-          title
-          description
-          slug
-          locked
-          body
-          updatedAt
-        }
-      }
+      documentId
+      title
+      description
+      slug
+      locked
+      body
+      updatedAt
     }
   }
 `;

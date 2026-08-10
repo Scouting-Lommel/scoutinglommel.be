@@ -7,29 +7,25 @@ import PAGE_META_FRAGMENT from '@/graphql/page-meta-fragment.gql';
 import TEXT_IMAGE_BLOCK_FRAGMENT from '@/graphql/text-image-block.gql';
 
 const GROUPS_PAGE_QUERY = gql`
-  ${HERO_BLOCK_FRAGMENT}    
-  ${TEXT_IMAGE_BLOCK_FRAGMENT}, 
+  ${HERO_BLOCK_FRAGMENT}
+  ${TEXT_IMAGE_BLOCK_FRAGMENT}
   ${GROUPS_BLOCK_FRAGMENT}
   ${DIVIDER_FRAGMENT}
   ${PAGE_META_FRAGMENT}
   ${IMAGE_FRAGMENT}
 
-
-  query {
+  query GroupsPage {
     groupsPage {
-      data {
-        attributes {
-          pageMeta {
-            ...PageMetaFragment
-          }
-          blocks {
-            __typename
-            ...HeroBlockFragment
-            ...TextImageBlockFragment
-            ...GroupsBlockFragment
-            ...DividerFragment
-          }
-        }
+      slug
+      pageMeta {
+        ...PageMetaFragment
+      }
+      blocks {
+        __typename
+        ...HeroBlockFragment
+        ...TextImageBlockFragment
+        ...GroupsBlockFragment
+        ...DividerFragment
       }
     }
   }

@@ -1,24 +1,23 @@
-/**
- * Generates a sitemap array based on the provided sitemap data.
- *
- * @param {any} sitemapData - The data used to generate the sitemap. It should contain the following properties:
- *   - homePage: Object containing data and attributes for the home page.
- *   - groupsPage: Object containing data and attributes for the groups page.
- *   - groups: Array of objects containing data and attributes for individual group pages.
- *   - rentalPage: Object containing data and attributes for the rental page.
- *   - rentalLocations: Array of objects containing data and attributes for individual rental location pages.
- *   - infoPage: Object containing data and attributes for the info page.
- *   - registerPage: Object containing data and attributes for the register page.
- *   - contactPage: Object containing data and attributes for the contact page.
- *   - articlesPage: Object containing data and attributes for the articles page.
- *   - drugsAlcoholPolicyPage: Object containing data and attributes for the drugs and alcohol policy page.
- *   - privacyPolicyPage: Object containing data and attributes for the privacy policy page.
- *
- * @returns {Array<Object>} An array of objects representing the sitemap. Each object contains:
- *   - url: The URL of the page.
- *   - lastModified: The last modified date of the page.
- */
-const generateSitemap = (sitemapData: any): Array<object> => {
+import type { SitemapQuery } from '@/types/generated/Graphql';
+
+type SitemapEntry = { url: string; lastModified?: string };
+
+type SitemapPage = {
+  slug?: string | null;
+  updatedAt?: string | null;
+  pageMeta?: { noIndex?: boolean | null } | null;
+};
+
+const createEntry = (siteUrl: string, slug: string, updatedAt?: string | null): SitemapEntry => {
+  return updatedAt
+    ? { url: `${siteUrl}/${slug}`, lastModified: updatedAt }
+    : { url: `${siteUrl}/${slug}` };
+};
+
+const generateSitemap = (sitemapData: SitemapQuery): SitemapEntry[] => {
+  const siteUrl = process.env.SITE_URL;
+  if (!siteUrl) return [];
+
   const {
     homePage,
     groupsPage,
@@ -33,128 +32,48 @@ const generateSitemap = (sitemapData: any): Array<object> => {
     privacyPolicyPage,
   } = sitemapData;
 
-  const out = [];
+  const out: SitemapEntry[] = [];
+
+  const pushIfIndexable = (page?: SitemapPage | null, path?: string) => {
+    if (!page || page.pageMeta?.noIndex) return;
+    const slug = page.slug;
+    if (!slug) return;
+
+    out.push(createEntry(siteUrl, path ? `${path}/${slug}` : slug, page.updatedAt));
+  };
 
   // Home page
-  let page = homePage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
-  }
+  pushIfIndexable(homePage);
 
   // Groups page
-  page = groupsPage?.data?.attributes;
+  pushIfIndexable(groupsPage);
 
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
-  }
-
-  // Groups pages
-  groups?.data?.forEach(({ attributes }: { attributes: any }) => {
-    if (attributes && !attributes.pageMeta?.noIndex) {
-      const pageObject = {
-        url: `${process.env.SITE_URL}/takken/${attributes.slug}`,
-        lastModified: attributes.updatedAt,
-      };
-      out.push(pageObject);
-    }
-  });
+  // Group pages
+  groups?.forEach((group) => pushIfIndexable(group, 'takken'));
 
   // Rental page
-  page = rentalPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
-  }
+  pushIfIndexable(rentalPage);
 
   // Rental location pages
-  rentalLocations?.data?.forEach(({ attributes }: { attributes: any }) => {
-    if (attributes && !attributes.pageMeta?.noIndex) {
-      const pageObject = {
-        url: `${process.env.SITE_URL}/verhuur/${attributes.slug}`,
-        lastModified: attributes.updatedAt,
-      };
-      out.push(pageObject);
-    }
-  });
+  rentalLocations?.forEach((location) => pushIfIndexable(location, 'verhuur'));
 
   // Info page
-  page = infoPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
-  }
+  pushIfIndexable(infoPage);
 
   // Register page
-  page = registerPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
-  }
+  pushIfIndexable(registerPage);
 
   // Contact page
-  page = contactPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
-  }
+  pushIfIndexable(contactPage);
 
   // Articles page
-  page = articlesPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
-  }
+  pushIfIndexable(articlesPage);
 
   // Drugs and alcohol policy page
-  page = drugsAlcoholPolicyPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
-  }
+  pushIfIndexable(drugsAlcoholPolicyPage);
 
   // Privacy policy page
-  page = privacyPolicyPage?.data?.attributes;
-
-  if (page && !page.pageMeta?.noIndex) {
-    const pageObject = {
-      url: `${process.env.SITE_URL}/${page.pageMeta.slug}`,
-      lastModified: page.updatedAt,
-    };
-    out.push(pageObject);
-  }
+  pushIfIndexable(privacyPolicyPage);
 
   return out;
 };

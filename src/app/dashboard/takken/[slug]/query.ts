@@ -1,36 +1,28 @@
 import gql from 'graphql-tag';
 
 const GROUP_PAGE_QUERY = gql`
-  query getGroupPage($slug: String) {
+  query GetDashboardGroupPage($slug: String) {
     groups(filters: { slug: { eq: $slug } }) {
-      data {
-        id
-        attributes {
-          pageTitle
-          slug
-        }
-      }
+      documentId
+      pageTitle
+      slug
     }
   }
 `;
 
 const ACTIVITIES_QUERY = gql`
-  query getActivities($slug: String, $currDate: Date) {
+  query GetDashboardActivities($slug: String, $currDate: Date) {
     activities(
       filters: { group: { slug: { eq: $slug } }, endDate: { gte: $currDate } }
       sort: "startDate:asc"
     ) {
-      data {
-        id
-        attributes {
-          title
-          startDate
-          startTime
-          endDate
-          endTime
-          description
-        }
-      }
+      documentId
+      title
+      startDate
+      startTime
+      endDate
+      endTime
+      description
     }
   }
 `;

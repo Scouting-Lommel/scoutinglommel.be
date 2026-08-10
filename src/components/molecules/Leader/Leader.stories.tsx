@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/react';
+import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import type { JSX } from 'react';
 import { Default as imageStory } from '@/components/atoms/Image/Image.stories';
 import Leader from '.';
@@ -15,11 +15,7 @@ export const Default: Story = {
   args: {
     firstName: 'Rikki Tikki',
     lastName: 'Tavi',
-    image: {
-      data: {
-        attributes: imageStory.args!.data!,
-      },
-    },
+    image: imageStory.args!.data!,
   },
   decorators: [
     (Story: () => JSX.Element): JSX.Element => (

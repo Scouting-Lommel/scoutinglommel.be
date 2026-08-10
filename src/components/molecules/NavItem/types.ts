@@ -13,5 +13,4 @@ export type NavItem = {
   rentalLocations?: DropdownNavItem[];
   modButton?: boolean;
   modDropdown?: boolean;
-  onClick?: any;
 } & React.HTMLAttributes<HTMLElement>;

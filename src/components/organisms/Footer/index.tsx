@@ -5,7 +5,6 @@ import FooterHead from '@/components/molecules/FooterHead';
 import { Footer as FooterProps } from './types';
 import './Footer.css';
 
-
 const Footer = ({
   siteName,
   vatNumber,

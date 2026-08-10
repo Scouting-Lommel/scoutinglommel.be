@@ -11,5 +11,5 @@ export type FormSelect = {
   name: string;
   options: SelectOption[];
   customChangeBehaviour?: ChangeEventHandler<HTMLElement>;
-  error?: any;
+  error?: string;
 } & React.SelectHTMLAttributes<HTMLElement>;

@@ -5,7 +5,6 @@ import Icon from '@/components/atoms/Icon';
 import { IconButton as IconButtonProps } from './types';
 import './IconButton.css';
 
-
 const IconButton = ({
   label,
   variant = 'primary',

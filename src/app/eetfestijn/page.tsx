@@ -16,16 +16,14 @@ export const generateMetadata = async (): Promise<Metadata> => {
     {
       pageTitle: 'Eetfestijn',
       pageDescription: 'Schrijf je in voor ons eetfestijn!',
-      slug: 'eetfestijn',
     },
-    generalData.data.attributes,
+    generalData,
   );
 
   return { ...metadata };
 };
 
 const EetfestijnPage = async (): Promise<JSX.Element> => {
-  // Return not found page if page is accessed in production or staging
   if (process.env.APP_ENV !== 'development') return notFound();
 
   const t = await getTranslations('forms.eetfestijnForm');

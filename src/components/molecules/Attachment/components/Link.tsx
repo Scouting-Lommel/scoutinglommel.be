@@ -10,7 +10,6 @@ import Typography from '@/components/atoms/Typography';
 import '../Attachment.css';
 import { Link as LinkProps } from '../types';
 
-
 const Link = ({
   id,
   label,
@@ -33,7 +32,7 @@ const Link = ({
     e.preventDefault();
     e.stopPropagation();
 
-    if (!groupId || !allLinks || allLinks.length < 1) return;
+    if (!groupId || !allLinks || allLinks.length < 1 || !deleteCallback) return;
 
     if (confirm(t('confirmation', { attachmentTitle: label }))) {
       try {
@@ -42,7 +41,7 @@ const Link = ({
         await callApi({ id: groupId, links: allLinks.filter((link) => link.id !== id) });
         deleteCallback();
         setFormStatus(FormStatus.STATUS_DELETE_SUCCESS);
-      } catch (err: any) {
+      } catch (err) {
         console.error(err);
         setFormStatus(FormStatus.STATUS_DELETE_ERROR);
       }
@@ -51,7 +50,7 @@ const Link = ({
     setLoading(false);
   };
 
-  const callApi = async (data: any) => {
+  const callApi = async (data: { id: string; links: LinkProps[] }) => {
     const response = await fetch('/api/link-attachment', {
       method: 'POST',
       headers: {

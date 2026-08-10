@@ -7,7 +7,6 @@ import YearTheme from '@/components/molecules/YearTheme';
 import { Hero as HeroProps } from './types';
 import './Hero.css';
 
-
 const Hero = ({
   title,
   subtitle,
@@ -51,7 +50,7 @@ const Hero = ({
 
       {yearTheme && (
         <YearTheme
-          image={yearTheme.image.data.attributes}
+          image={yearTheme.image}
           href="/algemene-informatie#jaarthema"
           className="hero__year-theme"
         />

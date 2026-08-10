@@ -1,7 +1,7 @@
 fragment ActivityBlockFragment on ComponentContentBlocksActivitiesBlock {
-  title
-  initialItems
-  blockProperties {
+  title: activitiesTitle
+  initialItems: activitiesInitialItems
+  blockProperties: activitiesBlockProperties {
     variant
     orientation
     slug

@@ -1,27 +1,20 @@
 fragment FAQBlockFragment on ComponentContentBlocksFaqBlock {
-  title
-  bottomText
+  title: faqTitle
+  bottomText: faqBottomText
   faqItems {
-    data {
-      attributes {
-        question
-        answer
-        image {
-          data {
-            attributes {
-              ...ImageFragment
-            }
-          }
-        }
-        callToAction {
-          label
-          link
-          variant
-        }
-      }
+    documentId
+    question
+    answer
+    image {
+      ...ImageFragment
+    }
+    callToAction {
+      label
+      link
+      variant
     }
   }
-  blockProperties {
+  blockProperties: faqBlockProperties {
     variant
     orientation
     slug

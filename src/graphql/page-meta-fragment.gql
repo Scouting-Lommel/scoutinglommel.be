@@ -2,24 +2,15 @@ fragment PageMetaFragment on ComponentGeneralPageMeta {
   pageTitle
   pageDescription
   noIndex
-  slug
   metaImage {
-    data {
-      attributes {
-        ...ImageFragment
-      }
-    }
+    ...ImageFragment
   }
   metaSocial {
     socialNetwork
     title
     description
     image {
-      data {
-        attributes {
-          ...ImageFragment
-        }
-      }
+      ...ImageFragment
     }
   }
 }

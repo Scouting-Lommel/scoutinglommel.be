@@ -1,8 +1,8 @@
 export type CloudinaryImage = {
   [x: string]: any;
   name: string;
-  width: number;
-  height: number;
+  width: number | null;
+  height: number | null;
   url: string;
   hash: string;
   alternativeText?: string | null;

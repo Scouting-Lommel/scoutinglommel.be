@@ -6,17 +6,11 @@ import Typography from '@/components/atoms/Typography';
 import { Leader as LeaderProps } from './types';
 import './Leader.css';
 
-
 const Leader = ({ firstName, lastName, image }: LeaderProps): JSX.Element => {
   return (
     <div className="leader__container">
-      {image?.data?.attributes ? (
-        <SLImage
-          data={image.data?.attributes}
-          loadingStrategy="lazy"
-          className="leader__image"
-          modMaximisable
-        />
+      {image ? (
+        <SLImage data={image} loadingStrategy="lazy" className="leader__image" modMaximisable />
       ) : (
         <Image
           src={ProfilePicture}

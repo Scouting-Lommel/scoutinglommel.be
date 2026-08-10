@@ -13,10 +13,7 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const { groupsPage } = await getGroupsPage();
   if (!groupsPage || !generalData) return {};
 
-  const metadata = await generateMetadataForPage(
-    groupsPage.data.attributes.pageMeta,
-    generalData.data.attributes,
-  );
+  const metadata = await generateMetadataForPage(groupsPage.pageMeta, generalData, groupsPage.slug);
 
   return { ...metadata };
 };
@@ -28,7 +25,7 @@ const GroupsPage = async (): Promise<JSX.Element> => {
 
   return (
     <>
-      <Blocks content={groupsPage.data.attributes.blocks} />
+      <Blocks content={groupsPage.blocks} />
     </>
   );
 };

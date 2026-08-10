@@ -1,11 +1,13 @@
 'use client';
 
 import { createContext, useContext } from 'react';
+import type { FooterDataQuery, NavigationDataQuery } from '@/types/generated/Graphql';
 
-type GeneralData = {
-  generalData: any;
-  groups: any;
-  rentalLocations: any;
+export type GeneralData = {
+  generalData: Partial<NonNullable<NavigationDataQuery['generalData']>> &
+    Partial<NonNullable<FooterDataQuery['generalData']>>;
+  groups: NavigationDataQuery['groups'];
+  rentalLocations: NavigationDataQuery['rentalLocations'];
 };
 
 const DataContext = createContext<GeneralData | null>(null);

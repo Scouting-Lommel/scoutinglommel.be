@@ -4,7 +4,7 @@ import { Tarif } from '@/components/molecules/Tarif/types';
 
 export type TarifsBlock = {
   title: string;
-  tarifs: { data: { attributes: Tarif }[] };
+  tarifs: Tarif[];
   blockProperties: BlockContainer;
   cta: CallToAction;
 } & React.HTMLAttributes<HTMLElement>;

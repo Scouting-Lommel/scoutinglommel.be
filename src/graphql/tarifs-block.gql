@@ -1,21 +1,18 @@
 fragment TarifsBlockFragment on ComponentContentBlocksTarifsBlock {
-  title
-  tarifs {
-    data {
-      attributes {
-        name
-        minimumPrice
-        dayPrice
-        example
-      }
-    }
+  title: tarifsTitle
+  tarifs: tarifsItems {
+    documentId
+    name
+    minimumPrice
+    dayPrice
+    example
   }
-  blockProperties {
+  blockProperties: tarifsBlockProperties {
     variant
     orientation
     slug
   }
-  cta: callToAction {
+  cta: tarifsCallToAction {
     title
     intro
     ctaLabel

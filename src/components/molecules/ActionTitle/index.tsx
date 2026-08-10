@@ -3,7 +3,6 @@ import Button from '@/components/atoms/Button';
 import { ActionTitle as ActionTitleProps } from './types';
 import './ActionTitle.css';
 
-
 const ActionTitle = ({ title, tagName = 'h2', button }: ActionTitleProps): JSX.Element => {
   const TagName = tagName;
 

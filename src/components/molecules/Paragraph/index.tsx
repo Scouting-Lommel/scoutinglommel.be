@@ -3,7 +3,6 @@ import Typography from '@/components/atoms/Typography';
 import { Paragraph as ParagraphProps } from './types';
 import './Paragraph.css';
 
-
 const Paragraph = ({ title, content }: ParagraphProps): JSX.Element => {
   return (
     <section id={title.toLowerCase().replaceAll(' ', '-')} className="paragraph">

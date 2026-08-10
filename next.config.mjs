@@ -13,6 +13,16 @@ const nextConfig = {
         hostname: 'res.cloudinary.com',
         pathname: '/scoutinglommel/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'admin.scoutinglommel.be',
+        pathname: '/uploads/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'staging.admin.scoutinglommel.be',
+        pathname: '/uploads/**',
+      },
     ],
     formats: ['image/avif', 'image/webp'],
     deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
@@ -35,7 +45,10 @@ const nextConfig = {
     return config;
   },
   async redirects() {
-    return [{ source: '/home', destination: '/', permanent: true }];
+    return [
+      { source: '/home', destination: '/', permanent: true },
+      { source: '/drugs-en-alcohol', destination: '/drugs-en-alcoholbeleid', permanent: true },
+    ];
   },
 };
 

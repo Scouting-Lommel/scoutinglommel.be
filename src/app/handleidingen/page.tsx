@@ -11,11 +11,12 @@ export const generateMetadata = async (): Promise<Metadata> => {
   const { generalData } = await getGeneralData();
   const { manualsOverviewPage } = await getManualsPage();
 
-  if (!manualsOverviewPage?.data || !generalData) return {};
+  if (!manualsOverviewPage || !generalData) return {};
 
   const metadata = await generateMetadataForPage(
-    manualsOverviewPage.data.attributes.pageMeta,
-    generalData.data.attributes,
+    manualsOverviewPage.pageMeta,
+    generalData,
+    manualsOverviewPage.slug,
   );
 
   return { ...metadata };
@@ -25,16 +26,23 @@ const ManualsPage = async (): Promise<JSX.Element> => {
   const { manualsOverviewPage } = await getManualsPage();
   const { manuals } = await getManuals();
 
-  if (!manualsOverviewPage?.data) notFound();
+  if (!manualsOverviewPage) notFound();
 
   return (
     <>
-      <Blocks content={manualsOverviewPage.data.attributes.blocks} />
+      <Blocks content={manualsOverviewPage.blocks} />
       <ArticleGrid
-        articles={manuals?.data?.map((manual: any) => ({
-          id: manual.id,
-          ...manual.attributes,
-        }))}
+        articles={
+          manuals?.map((manual) => ({
+            id: manual?.documentId,
+            title: manual?.title ?? '',
+            description: manual?.description ?? '',
+            updatedAt: manual?.updatedAt ?? '',
+            slug: manual?.slug ?? '',
+            locked: manual?.locked ?? false,
+            loginCallbackUrl: '/handleidingen',
+          })) ?? []
+        }
         loginCallbackUrl="/handleidingen"
         modWithToolbar
       />

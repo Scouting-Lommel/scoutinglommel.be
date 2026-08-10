@@ -1,11 +1,11 @@
 fragment LeadersBlockFragment on ComponentContentBlocksLeadersBlock {
-  title
-  blockProperties {
+  title: leadersTitle
+  blockProperties: leadersBlockProperties {
     variant
     orientation
     slug
   }
-  cta: callToAction {
+  cta: leadersCallToAction {
     title
     intro
     ctaLabel

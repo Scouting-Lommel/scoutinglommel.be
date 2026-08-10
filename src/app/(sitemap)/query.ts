@@ -1,115 +1,82 @@
 import gql from 'graphql-tag';
 
 const SITEMAP_QUERY = gql`
-  query {
+  query Sitemap {
     homePage {
-      data {
-        attributes {
-          updatedAt
-          pageMeta {
-            slug
-            noIndex
-          }
-        }
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
       }
     }
     groupsPage {
-      data {
-        attributes {
-          updatedAt
-          pageMeta {
-            slug
-            noIndex
-          }
-        }
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
       }
     }
     groups {
-      data {
-        attributes {
-          updatedAt
-          slug
-          pageMeta {
-            noIndex
-          }
-        }
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
       }
     }
     rentalPage {
-      data {
-        attributes {
-          updatedAt
-          pageMeta {
-            slug
-            noIndex
-          }
-        }
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
       }
     }
     rentalLocations {
-      data {
-        attributes {
-          updatedAt
-          slug
-          pageMeta {
-            noIndex
-          }
-        }
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
       }
     }
     infoPage {
-      data {
-        attributes {
-          updatedAt
-          pageMeta {
-            slug
-            noIndex
-          }
-        }
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
       }
     }
     registerPage {
-      data {
-        attributes {
-          updatedAt
-          pageMeta {
-            slug
-            noIndex
-          }
-        }
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
       }
     }
     contactPage {
-      data {
-        attributes {
-          updatedAt
-          pageMeta {
-            slug
-            noIndex
-          }
-        }
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
+      }
+    }
+    articlesPage {
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
       }
     }
     drugsAlcoholPolicyPage {
-      data {
-        attributes {
-          updatedAt
-          pageMeta {
-            slug
-            noIndex
-          }
-        }
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
       }
     }
     privacyPolicyPage {
-      data {
-        attributes {
-          updatedAt
-          pageMeta {
-            slug
-            noIndex
-          }
-        }
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
       }
     }
   }

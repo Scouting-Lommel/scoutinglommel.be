@@ -6,7 +6,6 @@ import SocialsCta from '@/components/molecules/SocialsCta';
 import { BlockContainer as BlockContainerProps } from './types';
 import './BlockContainer.css';
 
-
 const BlockContainer = ({
   variant = 'light',
   orientation = 'default',

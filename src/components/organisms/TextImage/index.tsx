@@ -6,7 +6,6 @@ import Typography from '@/components/atoms/Typography';
 import { TextImage as TextImageProps } from './types';
 import './TextImage.css';
 
-
 const ImageText = ({
   title,
   content,

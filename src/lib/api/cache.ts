@@ -45,13 +45,16 @@ export function getCacheHeaders(type: keyof typeof CACHE_CONFIG) {
 }
 
 // Helper function to get Next.js cache options
-export function getCacheOptions(type: keyof typeof CACHE_CONFIG) {
+export function getCacheOptions(type: keyof typeof CACHE_CONFIG): {
+  cache: 'force-cache' | 'no-store';
+  next: { revalidate: number; tags: string[] };
+} {
   const config = CACHE_CONFIG[type];
   return {
     cache: type === 'USER' || type === 'WRITE' ? 'no-store' : 'force-cache',
     next: {
       revalidate: config.revalidate,
-      tags: config.tags,
+      tags: [...config.tags],
     },
   };
 }

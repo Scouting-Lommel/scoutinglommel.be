@@ -13,8 +13,13 @@ export type Email = {
   html?: string;
 };
 
+type FormDataEntry = {
+  label: string;
+  data: unknown;
+};
+
 type GenerateEmailProps = {
-  formData: any;
+  formData: FormDataEntry[];
   formTitle: string;
   to: string;
   replyTo?: string;
@@ -22,9 +27,14 @@ type GenerateEmailProps = {
   bcc?: string;
 };
 
+type SendEmailResponse = {
+  message: unknown;
+  status: number;
+};
+
 type SendEmailProps = {
   email: Email;
-  callback: any;
+  callback: (response: SendEmailResponse) => void;
   captchaToken: string;
 };
 

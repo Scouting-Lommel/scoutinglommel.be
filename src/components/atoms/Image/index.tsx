@@ -9,7 +9,6 @@ import { generateImageUrl } from '@/lib/helpers/image';
 import { Image as ImageProps } from './types';
 import './Image.css';
 
-
 const SLImage = ({
   data,
   loadingStrategy = 'lazy',
@@ -57,12 +56,15 @@ const SLImage = ({
     );
   }
 
+  const { width, height } = data;
+  const hasDimensions = width && height;
+
   return (
     <>
       <figure className={imageWrapperClassNames}>
         <div
           className={imageClassNames}
-          style={{ aspectRatio: `${data.width}/${data.height}` }}
+          style={hasDimensions ? { aspectRatio: `${width}/${height}` } : undefined}
           onClick={() => {
             if (modMaximisable) setImgModalActive(true);
           }}
@@ -71,17 +73,21 @@ const SLImage = ({
             ref={imageRef}
             className={cn(
               'image__img',
-              data.width > data.height ? 'image__img--landscape' : 'image__img--portrait',
+              hasDimensions && width > height ? 'image__img--landscape' : 'image__img--portrait',
             )}
-            style={{ aspectRatio: `${data.width}/${data.height}` }}
+            style={hasDimensions ? { aspectRatio: `${width}/${height}` } : undefined}
             alt={data?.alternativeText || ''}
-            width={data.width}
-            height={data.height}
+            width={width ?? 800}
+            height={height ?? 600}
             src={generateImageUrl(data?.hash)}
-            placeholder="blur"
-            blurDataURL={`data:image/svg+xml;base64,${btoa(
-              `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${data.width} ${data.height}"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>`,
-            )}`}
+            {...(hasDimensions
+              ? {
+                  placeholder: 'blur',
+                  blurDataURL: `data:image/svg+xml;base64,${btoa(
+                    `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="#f2f2f2"/></svg>`,
+                  )}`,
+                }
+              : {})}
             sizes={sizes}
             {...(priority ? { priority: true } : { loading: loadingStrategy })}
           />
@@ -95,7 +101,7 @@ const SLImage = ({
       {modMaximisable && imgModalActive && (
         <Lightbox
           large={generateImageUrl(data?.hash)}
-          alt={data?.alternativeTex || undefined}
+          alt={data?.alternativeText || undefined}
           onClose={() => setImgModalActive(false)}
         />
       )}

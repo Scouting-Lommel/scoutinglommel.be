@@ -15,8 +15,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
   if (!registerPage || !generalData) return {};
 
   const metadata = await generateMetadataForPage(
-    registerPage.data.attributes.pageMeta,
-    generalData.data.attributes,
+    registerPage.pageMeta,
+    generalData,
+    registerPage.slug,
   );
 
   return { ...metadata };
@@ -30,12 +31,8 @@ const RegisterPage = async (): Promise<JSX.Element> => {
 
   return (
     <>
-      <Blocks content={registerPage.data.attributes.blocks} />
-      <Form
-        variant="register"
-        blockProperties={{ slug: 'register-form' }}
-        props={generalData.data.attributes}
-      />
+      <Blocks content={registerPage.blocks} />
+      <Form variant="register" blockProperties={{ slug: 'register-form' }} props={generalData} />
     </>
   );
 };

@@ -5,7 +5,6 @@ import Typography from '@/components/atoms/Typography';
 import { Activity as ActivityProps } from './types';
 import './Activity.css';
 
-
 const Activity = ({
   title,
   startDate,

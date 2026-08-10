@@ -1,8 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { updateActivity, deleteActivity, createActivity } from '@/lib/api/activities/api';
 import { getCacheHeaders } from '@/lib/api/cache';
+import { checkOrganisationPermission } from '@/lib/helpers/checkOrganisationPermission';
+import { getAuthorizedOrgUnit } from '@/lib/helpers/getAuthorizedOrgUnit';
+import { getErrorMessage } from '@/lib/helpers/getErrorMessage';
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
+  const orgUnit = await getAuthorizedOrgUnit(request);
+  if (!orgUnit || !checkOrganisationPermission(orgUnit, 'groups')) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      {
+        status: 401,
+        headers: getCacheHeaders('WRITE'),
+      },
+    );
+  }
+
   const { action, data } = await request.json();
 
   try {
@@ -32,13 +46,15 @@ export const POST = async (request: NextRequest): Promise<NextResponse> => {
         headers: getCacheHeaders('WRITE'),
       },
     );
-  } catch (error: any) {
+  } catch (error) {
     console.error(`Activity API Error (${action}):`, error);
     return NextResponse.json(
       {
-        error: error.message || 'Unknown error occurred',
+        error: getErrorMessage(error),
         action,
-        data: data ? { ...data, groupId: data.groupId ? '[REDACTED]' : undefined } : undefined,
+        data: data
+          ? { ...data, groupDocumentId: data.groupDocumentId ? '[REDACTED]' : undefined }
+          : undefined,
       },
       {
         status: 500,

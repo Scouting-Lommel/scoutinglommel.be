@@ -12,7 +12,7 @@ export type NavItem = {
 };
 
 export type Navigation = {
-  navItems: NavItem[];
+  navItems?: NavItem[];
   groups: DropdownNavItem[];
   rentalLocations: DropdownNavItem[];
 } & React.HTMLAttributes<HTMLElement>;

@@ -110,8 +110,15 @@ export async function appendToGoogleSheet(data: RegisterFormData): Promise<void>
         }),
       },
     );
-  } catch (error: any) {
-    if (error.message?.includes('Login Required') || error.status === 401 || error.code === 401) {
+  } catch (error) {
+    const isAuthError =
+      (error instanceof Error && error.message?.includes('Login Required')) ||
+      (typeof error === 'object' &&
+        error !== null &&
+        ((error as { status?: number }).status === 401 ||
+          (error as { code?: number }).code === 401));
+
+    if (isAuthError) {
       const serviceAccountEmail = process.env.GOOGLE_SHEETS_CLIENT_EMAIL;
       const impersonatedUser = process.env.GOOGLE_SHEETS_IMPERSONATE_EMAIL;
       throw new Error(
@@ -123,7 +130,7 @@ export async function appendToGoogleSheet(data: RegisterFormData): Promise<void>
   }
 }
 
-export async function getSheetData(): Promise<any[]> {
+export async function getSheetData(): Promise<unknown[][]> {
   try {
     const spreadsheetId = getSpreadsheetId();
     const accessToken = await getSheetsAccessToken();
@@ -132,7 +139,7 @@ export async function getSheetData(): Promise<any[]> {
       accessToken,
       `/spreadsheets/${spreadsheetId}/values/${encodedRange}`,
       { method: 'GET' },
-    )) as { values?: any[] };
+    )) as { values?: unknown[][] };
 
     return response.values || [];
   } catch (error) {

@@ -1,4 +1,4 @@
-import { Meta, Story } from '@storybook/blocks';
+import { Meta, Story } from '@storybook/addon-docs/blocks';
 import FormBuilder from '.';
 
 <Meta title="4 Forms/Form Builder/Form Builder" component={FormBuilder} />
@@ -23,7 +23,7 @@ A flexible and powerful form generation component that creates dynamic forms bas
 | `fields`            | `FormField[]`           | Yes      | Array of field configurations               |
 | `initialValues`     | `object`                | No       | Initial values for form fields              |
 | `formSchema`        | `Yup.ObjectSchema`      | Yes      | Yup validation schema                       |
-| `submitForm`        | `(values: any) => void` | Yes      | Form submission handler                     |
+| `submitForm`        | `(values: Record<string, unknown>) => void \| Promise<void>` | Yes      | Form submission handler                     |
 | `submitButtonLabel` | `string`                | Yes      | Label for the submit button                 |
 | `secondaryButton`   | `ButtonProps`           | No       | Configuration for optional secondary button |
 
@@ -87,7 +87,7 @@ const formSchema = generateFormSchema({
 });
 
 const handleSubmit = (data) => {
-  console.log('Form submitted:', data);
+  // Process form data
 };
 
 return (

@@ -14,8 +14,9 @@ export const generateMetadata = async (): Promise<Metadata> => {
   if (!cookiePolicyPage || !generalData) return {};
 
   const metadata = await generateMetadataForPage(
-    cookiePolicyPage.data.attributes.pageMeta,
-    generalData.data.attributes,
+    cookiePolicyPage.pageMeta,
+    generalData,
+    cookiePolicyPage.slug,
   );
 
   return { ...metadata };
@@ -28,7 +29,7 @@ const CookiePolicyPage = async (): Promise<JSX.Element> => {
 
   return (
     <>
-      <Blocks content={cookiePolicyPage.data.attributes.blocks} />
+      <Blocks content={cookiePolicyPage.blocks} />
     </>
   );
 };

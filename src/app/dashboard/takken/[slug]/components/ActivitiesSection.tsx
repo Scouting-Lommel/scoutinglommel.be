@@ -3,18 +3,25 @@
 import { useTranslations } from 'next-intl';
 import { Fragment, useCallback, useEffect, useState, type JSX } from 'react';
 // import Banner from '@/components/atoms/Banner';
+import type {
+  GetDashboardActivitiesQuery,
+  GetDashboardGroupPageQuery,
+} from '@/types/generated/Graphql';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Loader from '@/components/atoms/Loader';
 import Form from '@/components/organisms/Forms';
 import SectionTitle from './SectionTitle';
 import { getActivities } from '../api';
 
+type Group = NonNullable<GetDashboardGroupPageQuery['groups'][number]>;
+type Activity = NonNullable<GetDashboardActivitiesQuery['activities'][number]>;
+
 type Props = {
-  group: any;
+  group: Group;
 };
 
 const ActivitiesSection = ({ group }: Props): JSX.Element => {
-  const [groupActivities, setActivities] = useState<any>(null);
+  const [groupActivities, setActivities] = useState<Activity[] | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
 
@@ -31,7 +38,7 @@ const ActivitiesSection = ({ group }: Props): JSX.Element => {
     const day = date.getDate().toString().padStart(2, '0');
     const dateString = `${year}-${month}-${day}`;
 
-    const { activities } = await getActivities(group.attributes.slug, dateString);
+    const { activities } = await getActivities(group.slug ?? '', dateString);
 
     if (!activities) {
       setError(true);
@@ -39,7 +46,7 @@ const ActivitiesSection = ({ group }: Props): JSX.Element => {
       return;
     }
 
-    setActivities(activities.data);
+    setActivities(activities.filter((activity): activity is Activity => !!activity));
     setLoading(false);
   }, [group]);
 
@@ -57,7 +64,7 @@ const ActivitiesSection = ({ group }: Props): JSX.Element => {
     <BlockContainer slug="group-activities-section">
       <SectionTitle
         title={t('title')}
-        groupId={group.id}
+        groupId={group.documentId}
         type="activity"
         callback={addActivityCallback}
       />
@@ -80,20 +87,20 @@ const ActivitiesSection = ({ group }: Props): JSX.Element => {
         </BlockContainer>
       )}
 
-      {!error && !loading && groupActivities?.length > 0 && (
+      {!error && !loading && groupActivities && groupActivities.length > 0 && (
         <>
           <hr />
-          {groupActivities?.map((activity: any, key: any) => (
+          {groupActivities.map((activity, key) => (
             <Fragment key={`activity-${key}`}>
               <Form
                 variant="activity"
                 props={{
-                  activity: { ...activity.attributes, id: activity.id },
+                  activity: { ...activity, id: activity.documentId },
                   callback: fetchActivities,
                 }}
-                blockProperties={{ slug: `activity-${activity.id}`, modSmallPadding: true }}
+                blockProperties={{ slug: `activity-${activity.documentId}`, modSmallPadding: true }}
               />
-              {key + 1 < groupActivities?.length && <hr />}
+              {key + 1 < groupActivities.length && <hr />}
             </Fragment>
           ))}
         </>
