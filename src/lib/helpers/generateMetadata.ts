@@ -1,19 +1,37 @@
 import { Metadata } from 'next';
 import { getSiteUrl } from './getSiteUrl';
 
+type MetaImage = {
+  url?: string | null;
+  width?: number | null;
+  height?: number | null;
+  alternativeText?: string | null;
+};
+
 type PageMetaObj = {
   pageTitle?: string | null;
   pageDescription?: string | null;
   slug?: string | null;
   noIndex?: boolean | null;
-  metaImage?: { url?: string | null } | null;
+  metaImage?: MetaImage | null;
 };
 
 type MetaDataObj = {
   siteName?: string | null;
   siteDescription?: string | null;
   url?: string | null;
-  image?: { url?: string | null } | null;
+  image?: MetaImage | null;
+};
+
+const toMetadataImage = (image?: MetaImage | null) => {
+  if (!image?.url) return undefined;
+
+  return {
+    url: image.url,
+    ...(image.width ? { width: image.width } : {}),
+    ...(image.height ? { height: image.height } : {}),
+    ...(image.alternativeText ? { alt: image.alternativeText } : {}),
+  };
 };
 
 const generateMetadataForRootLayout = async (metaData: MetaDataObj): Promise<Metadata> => {
@@ -44,13 +62,13 @@ const generateMetadataForRootLayout = async (metaData: MetaDataObj): Promise<Met
       title: metaData.siteName || 'Scouting Sint-Pieter Lommel',
       description: metaData.siteDescription ?? undefined,
       url: baseUrl ?? undefined,
-      images: metaData.image?.url ?? undefined,
+      images: toMetadataImage(metaData.image),
     },
     twitter: {
       card: 'summary_large_image',
       title: metaData.siteName || 'Scouting Sint-Pieter Lommel',
       description: metaData.siteDescription ?? undefined,
-      images: metaData.image?.url ?? undefined,
+      images: toMetadataImage(metaData.image),
     },
   };
 };
@@ -63,6 +81,10 @@ const generateMetadataForPage = async (
   const siteUrl = await getSiteUrl();
 
   const pageUrl = `${siteUrl}${path ? '/' + path : ''}${pageMeta?.slug ? '/' + pageMeta?.slug : ''}`;
+  const socialTitle =
+    pageMeta?.pageTitle && metaData?.siteName
+      ? `${pageMeta.pageTitle} • ${metaData.siteName}`
+      : (pageMeta?.pageTitle ?? metaData?.siteName ?? undefined);
 
   return {
     title: pageMeta?.pageTitle ?? undefined,
@@ -78,19 +100,16 @@ const generateMetadataForPage = async (
       locale: 'nl_BE',
       type: 'website',
       siteName: metaData?.siteName || 'Scouting Sint-Pieter Lommel',
-      title:
-        pageMeta?.pageTitle && metaData?.siteName
-          ? `${pageMeta.pageTitle} • ${metaData.siteName}`
-          : (pageMeta?.pageTitle ?? metaData?.siteName ?? undefined),
+      title: socialTitle,
       description: pageMeta?.pageDescription ?? undefined,
       url: pageUrl,
-      images: pageMeta?.metaImage?.url ?? undefined,
+      images: toMetadataImage(pageMeta?.metaImage ?? metaData?.image),
     },
     twitter: {
       card: 'summary_large_image',
-      title: pageMeta?.pageTitle ?? undefined,
+      title: socialTitle,
       description: pageMeta?.pageDescription ?? undefined,
-      images: pageMeta?.metaImage?.url ?? undefined,
+      images: toMetadataImage(pageMeta?.metaImage ?? metaData?.image),
     },
   };
 };
