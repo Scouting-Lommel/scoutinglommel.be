@@ -41,11 +41,8 @@ const UploadFile = (props: UploadFileProps): JSX.Element => {
     const allFiles = props.allFiles?.map((file) => String(file.id)) || [];
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/api/upload`, {
+      const response = await fetch('/api/upload', {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${process.env.NEXT_PUBLIC_STRAPI_UPLOAD_FILE_TOKEN}`,
-        },
         body: formData,
       });
 

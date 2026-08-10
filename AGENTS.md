@@ -131,7 +131,7 @@ Required for development (see `.env.example`):
 - `NEXT_PUBLIC_APP_BACKEND_URL` — Strapi GraphQL endpoint
 - `STRAPI_API_TOKEN` — For queries (read-only on production)
 - `STRAPI_MUTATION_API_TOKEN` — For mutations
-- `NEXT_PUBLIC_STRAPI_UPLOAD_FILE_TOKEN` — For file uploads
+- `STRAPI_UPLOAD_FILE_TOKEN` — For file uploads (server-side only, via `/api/upload` proxy)
 - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` — Auth
 - `NEXTAUTH_URL`, `NEXTAUTH_SECRET` — NextAuth
 - `MAILGUN_API_KEY` — Email sending
