@@ -1,9 +1,22 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { updateActivity, deleteActivity, createActivity } from '@/lib/api/activities/api';
 import { getCacheHeaders } from '@/lib/api/cache';
+import { checkOrganisationPermission } from '@/lib/helpers/checkOrganisationPermission';
+import { getAuthorizedOrgUnit } from '@/lib/helpers/getAuthorizedOrgUnit';
 import { getErrorMessage } from '@/lib/helpers/getErrorMessage';
 
 export const POST = async (request: NextRequest): Promise<NextResponse> => {
+  const orgUnit = await getAuthorizedOrgUnit(request);
+  if (!orgUnit || !checkOrganisationPermission(orgUnit, 'groups')) {
+    return NextResponse.json(
+      { error: 'Unauthorized' },
+      {
+        status: 401,
+        headers: getCacheHeaders('WRITE'),
+      },
+    );
+  }
+
   const { action, data } = await request.json();
 
   try {
