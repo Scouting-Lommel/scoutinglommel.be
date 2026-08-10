@@ -9,4 +9,5 @@ export type Breadcrumbs = {
 
 export type AutoBreadcrumbs = {
   is404?: boolean;
+  modStandalone?: boolean;
 } & React.HTMLAttributes<HTMLElement>;

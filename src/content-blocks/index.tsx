@@ -1,5 +1,6 @@
 import dynamic from 'next/dynamic';
 import { ComponentType, type JSX } from 'react';
+import AutoBreadcrumbs from '@/components/molecules/Breadcrumbs';
 
 type BlockContent = {
   __typename: string;
@@ -70,6 +71,10 @@ const Blocks = ({
 
   const validBlocks = content.filter((block): block is BlockContent => block !== null);
 
+  const hasHeroBlock = validBlocks.some(
+    (block) => block.__typename === 'ComponentContentBlocksHeroBlock',
+  );
+
   const contentBlocks = validBlocks.map((block) => {
     const key = block.__typename;
 
@@ -83,6 +88,8 @@ const Blocks = ({
 
   return (
     <>
+      {!hasHeroBlock && <AutoBreadcrumbs modStandalone />}
+
       {contentBlocks.map((Component, i) => {
         return Component ? <Component key={i} {...validBlocks[i]} /> : false;
       })}

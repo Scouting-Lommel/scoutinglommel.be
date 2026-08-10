@@ -2,6 +2,8 @@ import { Breadcrumb } from '@/components/molecules/Breadcrumbs/types';
 import { capitalize } from './capitalize';
 import { desluggify } from './slugify';
 
+const GATED_ROUTES = new Set(['inloggen', 'geen-toegang', 'dashboard', 'playground']);
+
 /**
  * Generates an array of breadcrumb objects based on the provided pathname.
  *
@@ -12,6 +14,8 @@ export const getBreadcrumbs = (pathname?: string | null): Breadcrumb[] => {
   if (!pathname) return [];
 
   const breadcrumbs = pathname.split('/').filter((item) => item !== '');
+
+  if (breadcrumbs.length === 0 || GATED_ROUTES.has(breadcrumbs[0])) return [];
 
   return [
     { label: 'Homepagina', href: '/' },
