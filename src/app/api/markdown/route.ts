@@ -94,7 +94,7 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
     },
   });
 
-const existingVary = response.headers.get('vary');
+  const existingVary = response.headers.get('vary');
   response.headers.set('vary', existingVary ? `${existingVary}, Accept` : 'Accept');
 
   return response;

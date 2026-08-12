@@ -3,8 +3,8 @@ import { notFound } from 'next/navigation';
 import type { JSX } from 'react';
 import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import Blocks from '@/content-blocks';
-import { getGeneralData } from '../../api';
 import { getRentalPage } from './api';
+import { getGeneralData } from '../../api';
 
 export const revalidate = 3600;
 
