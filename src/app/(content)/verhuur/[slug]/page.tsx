@@ -6,7 +6,7 @@ import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import Blocks from '@/content-blocks';
 import type { NavigationDataQuery } from '@/types/generated/Graphql';
 import { getRentalLocationPage } from './api';
-import { getGeneralData } from '../../api';
+import { getGeneralData } from '../../../api';
 
 type NavigationRentalLocation = NonNullable<NavigationDataQuery['rentalLocations'][number]>;
 

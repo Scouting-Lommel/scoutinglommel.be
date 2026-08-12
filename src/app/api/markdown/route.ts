@@ -33,10 +33,13 @@ const getMainContent = (html: string): string => {
  */
 export const GET = async (req: NextRequest): Promise<NextResponse> => {
   // Middleware rewrites lose the query param on same-origin requests, but keep
-  // the original pathname — so fall back to it when the param is missing.
+  // the original pathname — so fall back to it (with query string) when missing.
   const pathParam = req.nextUrl.searchParams.get('path');
   const requestedPath =
-    pathParam ?? (req.nextUrl.pathname === '/api/markdown' ? '/' : req.nextUrl.pathname);
+    pathParam ??
+    (req.nextUrl.pathname === '/api/markdown'
+      ? '/'
+      : `${req.nextUrl.pathname}${req.nextUrl.search}`);
   const siteUrl = (await getSiteUrl(req)).replace(/\/+$/, '');
 
   let target: URL;
@@ -83,11 +86,16 @@ export const GET = async (req: NextRequest): Promise<NextResponse> => {
 
   const tokenCount = markdown.trim().split(/\s+/).filter(Boolean).length;
 
-  return new NextResponse(markdown, {
+  const response = new NextResponse(markdown, {
     headers: {
       'Content-Type': 'text/markdown; charset=utf-8',
       'x-markdown-tokens': String(tokenCount),
       'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
     },
   });
+
+const existingVary = response.headers.get('vary');
+  response.headers.set('vary', existingVary ? `${existingVary}, Accept` : 'Accept');
+
+  return response;
 };

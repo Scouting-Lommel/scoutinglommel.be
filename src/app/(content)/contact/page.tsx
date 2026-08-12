@@ -4,7 +4,7 @@ import type { JSX } from 'react';
 import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import Blocks from '@/content-blocks';
 import Form from '@/components/organisms/Forms';
-import { getGeneralData } from '../api';
+import { getGeneralData } from '../../api';
 import { getContactPage } from './api';
 
 type Props = {

@@ -6,7 +6,7 @@ import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Form from '@/components/organisms/Forms';
 import Hero from '@/components/organisms/Hero';
-import { getGeneralData } from '../api';
+import { getGeneralData } from '../../api';
 
 export const generateMetadata = async (): Promise<Metadata> => {
   const { generalData } = await getGeneralData();

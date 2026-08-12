@@ -4,7 +4,7 @@ import type { JSX } from 'react';
 import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import Blocks from '@/content-blocks';
 import ArticleGrid from '@/components/organisms/ArticleGrid';
-import { getGeneralData } from '../api';
+import { getGeneralData } from '../../api';
 import { getManuals, getManualsPage } from './api';
 
 export const generateMetadata = async (): Promise<Metadata> => {

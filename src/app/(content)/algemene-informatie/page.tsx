@@ -4,7 +4,7 @@ import type { JSX } from 'react';
 import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import { generateFaqSchema } from '@/lib/helpers/generateStructuredData';
 import Blocks from '@/content-blocks';
-import { getGeneralData } from '../api';
+import { getGeneralData } from '../../api';
 import { getInfoPage, getYearTheme } from './api';
 
 export const revalidate = 3600;
@@ -45,7 +45,7 @@ const InfoPage = async (): Promise<JSX.Element> => {
   return (
     <>
       <Blocks content={blocks} />
-      {faqSchema && (
+      {faqSchema && faqSchema.mainEntity.length > 0 && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}

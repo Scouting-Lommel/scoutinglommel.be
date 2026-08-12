@@ -10,7 +10,7 @@ import BlockContainer from '@/components/atoms/BlockContainer';
 import Typography from '@/components/atoms/Typography';
 import Hero from '@/components/organisms/Hero';
 import { getManualPage } from './api';
-import { getGeneralData } from '../../api';
+import { getGeneralData } from '../../../api';
 
 type Props = { params: Promise<{ slug: string }> };
 

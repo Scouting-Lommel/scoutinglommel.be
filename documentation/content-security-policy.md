@@ -2,7 +2,7 @@
 
 ## Current state
 
-Security headers are set in `next.config.ts` (`async headers()`):
+Security headers are set in `next.config.mjs` (`async headers()`):
 
 | Header                   | Value                                      |
 | :----------------------- | :----------------------------------------- |
@@ -37,7 +37,7 @@ All JSON-LD blocks (`application/ld+json` in `BreadcrumbJsonLd`, `EventsBlock`, 
 
 ## Evaluation
 
-### Option A — Static pragmatic CSP (via `next.config.ts` `headers()`)
+### Option A — Static pragmatic CSP (via `next.config.mjs` `headers()`)
 
 ```text
 default-src 'self';
@@ -73,7 +73,7 @@ Trade-offs — **not recommended right now**:
 
 ## Decision
 
-**Adopt Option A** — a pragmatic, static CSP in `next.config.ts` — rolled out via `Content-Security-Policy-Report-Only` first, then enforced.
+**Adopt Option A** — a pragmatic, static CSP in `next.config.mjs` — rolled out via `Content-Security-Policy-Report-Only` first, then enforced.
 
 Rationale:
 
@@ -84,5 +84,5 @@ Rationale:
 
 ## Follow-up
 
-- [ ] Add CSP header to `next.config.ts` (report-only on staging first).
+- [ ] Add CSP header to `next.config.mjs` (report-only on staging first).
 - [ ] Optionally migrate GA dataLayer snippet to `/public` to enable strict nonce CSP later.

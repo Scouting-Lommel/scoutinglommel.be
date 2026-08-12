@@ -80,7 +80,8 @@ const generateMetadataForPage = async (
 ): Promise<Metadata> => {
   const siteUrl = await getSiteUrl();
 
-  const pageUrl = `${siteUrl}${path ? '/' + path : ''}${pageMeta?.slug ? '/' + pageMeta?.slug : ''}`;
+  const pathSegments = `${path ? '/' + path : ''}${pageMeta?.slug ? '/' + pageMeta.slug : ''}`;
+  const pageUrl = `${siteUrl}${pathSegments || '/'}`;
   const socialTitle =
     pageMeta?.pageTitle && metaData?.siteName
       ? `${pageMeta.pageTitle} • ${metaData.siteName}`

@@ -6,7 +6,7 @@ import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import Blocks from '@/content-blocks';
 import type { GetGroupPageQuery, NavigationDataQuery } from '@/types/generated/Graphql';
 import { getGroupPage } from './api';
-import { getGeneralData } from '../../api';
+import { getGeneralData } from '../../../api';
 
 type NavigationGroup = NonNullable<NavigationDataQuery['groups'][number]>;
 

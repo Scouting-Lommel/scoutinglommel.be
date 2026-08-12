@@ -57,11 +57,13 @@ export default function middleware(req: NextRequest) {
   const wantsMarkdown = (req.headers.get('accept') ?? '').includes('text/markdown');
 
   if (wantsMarkdown && !req.headers.has('x-markdown-agent') && !skipMarkdown.test(url)) {
-    // Serve a markdown representation of the same URL (RFC 9309 content negotiation)
+    // Serve a markdown representation of the same URL (RFC 9309 content negotiation).
+    // Preserve the original query string so agents can reach parameterized pages.
     const markdownUrl = req.nextUrl.clone();
     markdownUrl.pathname = '/api/markdown';
     markdownUrl.search = '';
-    markdownUrl.searchParams.set('path', url === '/' ? '/' : url.replace(/\/+$/, '') || '/');
+    const path = url === '/' ? '/' : url.replace(/\/+$/, '') || '/';
+    markdownUrl.searchParams.set('path', `${path}${req.nextUrl.search}`);
     return NextResponse.rewrite(markdownUrl);
   }
 

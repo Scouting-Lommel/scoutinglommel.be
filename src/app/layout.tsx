@@ -14,7 +14,6 @@ import {
   transformFooterNavigation,
 } from '@/lib/helpers/transformNavigation';
 import SessionProvider from '@/lib/providers/SessionProvider';
-import BreadcrumbJsonLd from '@/components/atoms/BreadcrumbJsonLd';
 import GlobalAlert from '@/components/atoms/GlobalAlert';
 import SkipToContent from '@/components/atoms/SkipToContent';
 import Footer from '@/components/organisms/Footer';
@@ -145,9 +144,20 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
             </DataProvider>
           </SessionProvider>
         </NextIntlClientProvider>
-        <BreadcrumbJsonLd />
         {process.env.NEXT_PUBLIC_GA_ID && (
           <>
+            <Script id="gtag-consent" strategy="beforeInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('consent', 'default', {
+                  ad_storage: 'denied',
+                  ad_user_data: 'denied',
+                  ad_personalization: 'denied',
+                  analytics_storage: 'denied',
+                });
+              `}
+            </Script>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
               strategy="afterInteractive"
