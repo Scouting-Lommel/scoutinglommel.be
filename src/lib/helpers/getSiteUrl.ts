@@ -20,7 +20,8 @@ export async function getSiteUrl(req?: NextRequest): Promise<string> {
 
   // Prefer the env var so static pages don't opt into dynamic rendering by calling headers()
   if (process.env.SITE_URL) {
-    return process.env.SITE_URL;
+    // Strip trailing slashes so URL concatenation never produces "//" segments
+    return process.env.SITE_URL.replace(/\/+$/, '');
   }
 
   // Fall back to request headers (this opts the route into dynamic rendering)

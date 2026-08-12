@@ -5,7 +5,8 @@ import { getSitemap } from './api';
 const Sitemap = async (): Promise<MetadataRoute.Sitemap> => {
   try {
     const data = await getSitemap();
-    return generateSitemap(data);
+    const sitemap = await generateSitemap(data);
+    return sitemap;
   } catch (error) {
     console.warn('[sitemap] Failed to fetch sitemap data, returning empty sitemap:', error);
     return [];

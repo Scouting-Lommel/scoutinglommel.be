@@ -50,9 +50,42 @@ export default function middleware(req: NextRequest) {
     return groupsMiddleware(req);
   }
 
-  return NextResponse.next();
+  // Never negotiate markdown for API routes, protected pages or static files.
+  // The x-markdown-agent header marks internal fetches from the markdown route
+  // so they are never rewritten back into themselves.
+  const skipMarkdown = /^\/(api|dashboard|inloggen|geen-toegang|playground)\b|^\/favicon\.ico$|^\/robots\.txt$|^\/sitemap\.xml$|\.[a-z0-9]{2,5}$/i;
+  const wantsMarkdown = (req.headers.get('accept') ?? '').includes('text/markdown');
+
+  if (wantsMarkdown && !req.headers.has('x-markdown-agent') && !skipMarkdown.test(url)) {
+    // Serve a markdown representation of the same URL (RFC 9309 content negotiation).
+    // Preserve the original query string so agents can reach parameterized pages.
+    const markdownUrl = req.nextUrl.clone();
+    markdownUrl.pathname = '/api/markdown';
+    markdownUrl.search = '';
+    const path = url === '/' ? '/' : url.replace(/\/+$/, '') || '/';
+    markdownUrl.searchParams.set('path', `${path}${req.nextUrl.search}`);
+    return NextResponse.rewrite(markdownUrl);
+  }
+
+  // Inject pathname so server components (e.g. BreadcrumbJsonLd) can read the current route
+  const requestHeaders = new Headers(req.headers);
+  requestHeaders.set('x-pathname', url);
+
+  // RFC 8288 Link headers: point agents at the sitemap and the markdown
+  // alternative representation of every page (same URL, Accept: text/markdown)
+  const responseHeaders = new Headers();
+  if (!wantsMarkdown && !skipMarkdown.test(url)) {
+    const self = url === '/' ? '</>' : `</${url.slice(1).replace(/\/+$/, '')}>`;
+    responseHeaders.set(
+      'Link',
+      `</sitemap.xml>; rel="sitemap", ${self}; rel="alternate"; type="text/markdown"`,
+    );
+  }
+
+  return NextResponse.next({ request: { headers: requestHeaders }, headers: responseHeaders });
 }
 
 export const config = {
-  matcher: ['/inloggen', '/dashboard/:path*', '/playground'],
+  // Run on all routes except Next.js internals and static assets
+  matcher: ['/((?!_next/static|_next/image|favicon.ico|assets).*)'],
 };

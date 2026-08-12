@@ -1,15 +1,27 @@
 import type { JSX } from 'react';
+import { getEvents } from '@/lib/api/events/api';
+import { formatDate } from '@/lib/helpers/dateTime';
+import { generateEventSchema } from '@/lib/helpers/generateEventSchema';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Activities from '@/components/organisms/Activities';
-import ArticleGrid from '@/components/organisms/ArticleGrid';
 import { EventsBlock as EventsBlockProps } from './types';
 
-const EventsBlock = ({
+const EventsBlock = async ({
   blockTitle,
   initialItems,
   callToAction,
   blockProperties,
-}: EventsBlockProps): JSX.Element => {
+}: EventsBlockProps): Promise<JSX.Element> => {
+  let eventSchema: ReturnType<typeof generateEventSchema> = null;
+
+  try {
+    const today = formatDate(new Date());
+    const { events } = await getEvents(today);
+    eventSchema = generateEventSchema(events);
+  } catch (e) {
+    console.error('Failed to fetch events for Event schema:', e);
+  }
+
   return (
     <>
       <BlockContainer
@@ -24,6 +36,14 @@ const EventsBlock = ({
           <Activities variant="events" initialItems={initialItems} />
         </section>
       </BlockContainer>
+      {eventSchema && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(eventSchema).replace(/</g, '\\u003c'),
+          }}
+        />
+      )}
     </>
   );
 };

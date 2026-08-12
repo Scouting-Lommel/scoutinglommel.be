@@ -1,6 +1,12 @@
 import type { SitemapQuery } from '@/types/generated/Graphql';
+import { getSiteUrl } from './getSiteUrl';
 
-type SitemapEntry = { url: string; lastModified?: string };
+type SitemapEntry = {
+  url: string;
+  lastModified?: string;
+  changeFrequency?: 'weekly' | 'monthly' | 'yearly';
+  priority?: number;
+};
 
 type SitemapPage = {
   slug?: string | null;
@@ -8,14 +14,20 @@ type SitemapPage = {
   pageMeta?: { noIndex?: boolean | null } | null;
 };
 
-const createEntry = (siteUrl: string, slug: string, updatedAt?: string | null): SitemapEntry => {
-  return updatedAt
-    ? { url: `${siteUrl}/${slug}`, lastModified: updatedAt }
-    : { url: `${siteUrl}/${slug}` };
+type SitemapManual = NonNullable<NonNullable<SitemapQuery['manuals']>[number]>;
+
+type SitemapSource = {
+  page?: SitemapPage | null;
+  /** Overrides the URL built from `path` + `slug` (used for the home page, which lives at `/`). */
+  url?: string;
+  /** URL prefix, e.g. `takken` or `verhuur`. */
+  path?: string;
+  changeFrequency: SitemapEntry['changeFrequency'];
+  priority: number;
 };
 
-const generateSitemap = (sitemapData: SitemapQuery): SitemapEntry[] => {
-  const siteUrl = process.env.SITE_URL;
+const generateSitemap = async (sitemapData: SitemapQuery): Promise<SitemapEntry[]> => {
+  const siteUrl = await getSiteUrl();
   if (!siteUrl) return [];
 
   const {
@@ -27,55 +39,57 @@ const generateSitemap = (sitemapData: SitemapQuery): SitemapEntry[] => {
     infoPage,
     registerPage,
     contactPage,
-    articlesPage,
+    manualsOverviewPage,
+    manuals,
+    cookiePolicyPage,
     drugsAlcoholPolicyPage,
     privacyPolicyPage,
   } = sitemapData;
 
-  const out: SitemapEntry[] = [];
+  const sources: SitemapSource[] = [
+    { page: homePage, url: `${siteUrl}/`, changeFrequency: 'weekly', priority: 1.0 },
+    { page: groupsPage, changeFrequency: 'monthly', priority: 0.9 },
+    ...(groups ?? []).map<SitemapSource>((page) => ({ page, path: 'takken', changeFrequency: 'monthly', priority: 0.8 })),
+    { page: rentalPage, changeFrequency: 'monthly', priority: 0.7 },
+    ...(rentalLocations ?? []).map<SitemapSource>((page) => ({ page, path: 'verhuur', changeFrequency: 'monthly', priority: 0.7 })),
+    { page: infoPage, changeFrequency: 'monthly', priority: 0.8 },
+    { page: registerPage, changeFrequency: 'monthly', priority: 0.9 },
+    { page: contactPage, changeFrequency: 'yearly', priority: 0.7 },
+    { page: manualsOverviewPage, changeFrequency: 'monthly', priority: 0.5 },
+    ...(manuals ?? [])
+      .filter((page): page is SitemapManual => !!page && !page.locked)
+      .map<SitemapSource>((page) => ({
+        page,
+        path: 'handleidingen',
+        changeFrequency: 'yearly',
+        priority: 0.4,
+      })),
+    { page: cookiePolicyPage, changeFrequency: 'yearly', priority: 0.3 },
+    { page: drugsAlcoholPolicyPage, changeFrequency: 'yearly', priority: 0.3 },
+    { page: privacyPolicyPage, changeFrequency: 'yearly', priority: 0.3 },
+  ];
 
-  const pushIfIndexable = (page?: SitemapPage | null, path?: string) => {
-    if (!page || page.pageMeta?.noIndex) return;
-    const slug = page.slug;
-    if (!slug) return;
+  return sources.flatMap(({ page, url, path, changeFrequency, priority }) => {
+    if (page) {
+      if (page.pageMeta?.noIndex) return [];
+      const slug = page.slug;
+      if (!url && !slug) return [];
 
-    out.push(createEntry(siteUrl, path ? `${path}/${slug}` : slug, page.updatedAt));
-  };
+      const entryUrl = url ?? (path ? `${siteUrl}/${path}/${slug}` : `${siteUrl}/${slug}`);
 
-  // Home page
-  pushIfIndexable(homePage);
+      return [
+        {
+          url: entryUrl,
+          ...(page.updatedAt ? { lastModified: page.updatedAt } : {}),
+          changeFrequency,
+          priority,
+        },
+      ];
+    }
 
-  // Groups page
-  pushIfIndexable(groupsPage);
-
-  // Group pages
-  groups?.forEach((group) => pushIfIndexable(group, 'takken'));
-
-  // Rental page
-  pushIfIndexable(rentalPage);
-
-  // Rental location pages
-  rentalLocations?.forEach((location) => pushIfIndexable(location, 'verhuur'));
-
-  // Info page
-  pushIfIndexable(infoPage);
-
-  // Register page
-  pushIfIndexable(registerPage);
-
-  // Contact page
-  pushIfIndexable(contactPage);
-
-  // Articles page
-  pushIfIndexable(articlesPage);
-
-  // Drugs and alcohol policy page
-  pushIfIndexable(drugsAlcoholPolicyPage);
-
-  // Privacy policy page
-  pushIfIndexable(privacyPolicyPage);
-
-  return out;
+    if (!url) return [];
+    return [{ url, changeFrequency, priority }];
+  });
 };
 
 export default generateSitemap;

@@ -2,13 +2,13 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Metadata, Viewport } from 'next';
 import { Montserrat, Nunito_Sans } from 'next/font/google';
+import Script from 'next/script';
 import { NextIntlClientProvider } from 'next-intl';
 import type { JSX } from 'react';
 import { defaultLocale } from '@/i18n/locales';
 import { getLayoutData, getSeoData } from '@/lib/api/general/api';
 import { DataProvider } from '@/lib/contexts/DataContext';
 import { generateMetadataForRootLayout } from '@/lib/helpers/generateMetadata';
-import { generateStructuredData } from '@/lib/helpers/generateStructuredData';
 import {
   transformMainNavigation,
   transformFooterNavigation,
@@ -103,6 +103,7 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
 
   return (
     <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
+      <link rel="preconnect" href="https://res.cloudinary.com" />
       <body>
         <NextIntlClientProvider
           messages={{ common: commonMessages, dashboard: dashboardMessages, forms: formsMessages }}
@@ -143,15 +144,34 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
             </DataProvider>
           </SessionProvider>
         </NextIntlClientProvider>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(generateStructuredData(data.generalData)).replace(
-              /</g,
-              '\\u003c',
-            ),
-          }}
-        />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <Script id="gtag-consent" strategy="beforeInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('consent', 'default', {
+                  ad_storage: 'denied',
+                  ad_user_data: 'denied',
+                  ad_personalization: 'denied',
+                  analytics_storage: 'denied',
+                });
+              `}
+            </Script>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+              `}
+            </Script>
+          </>
+        )}
         <Analytics />
         <SpeedInsights />
       </body>

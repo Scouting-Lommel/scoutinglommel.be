@@ -58,7 +58,22 @@ const SITEMAP_QUERY = gql`
         noIndex
       }
     }
-    articlesPage {
+    manualsOverviewPage {
+      updatedAt
+      slug
+      pageMeta {
+        noIndex
+      }
+    }
+    manuals {
+      updatedAt
+      slug
+      locked
+      pageMeta {
+        noIndex
+      }
+    }
+    cookiePolicyPage {
       updatedAt
       slug
       pageMeta {

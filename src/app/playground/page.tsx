@@ -1,26 +1,18 @@
 import { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import type { JSX } from 'react';
-import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Typography from '@/components/atoms/Typography';
 import Form from '@/components/organisms/Forms';
 import Hero from '@/components/organisms/Hero';
-import { getGeneralData } from '../api';
 
-export const generateMetadata = async (): Promise<Metadata> => {
-  const { generalData } = await getGeneralData();
-  if (!generalData) return {};
-
-  const metadata = await generateMetadataForPage(
-    {
-      pageTitle: 'Development playground',
-      pageDescription: 'Development playground',
-    },
-    generalData,
-  );
-
-  return { ...metadata };
+export const metadata: Metadata = {
+  title: 'Development playground',
+  description: 'Development playground',
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 const PlaygroundPage = async (): Promise<JSX.Element> => {
