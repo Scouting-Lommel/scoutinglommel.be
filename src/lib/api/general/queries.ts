@@ -15,6 +15,7 @@ export const NAVIGATION_DATA = gql`
         variant
         enabled
       }
+      maintenanceMode
     }
     groups {
       documentId

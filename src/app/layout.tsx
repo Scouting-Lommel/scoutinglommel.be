@@ -2,6 +2,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { Metadata, Viewport } from 'next';
 import { Montserrat, Nunito_Sans } from 'next/font/google';
+import { headers } from 'next/headers';
 import Script from 'next/script';
 import { NextIntlClientProvider } from 'next-intl';
 import type { JSX } from 'react';
@@ -18,6 +19,7 @@ import GlobalAlert from '@/components/atoms/GlobalAlert';
 import SkipToContent from '@/components/atoms/SkipToContent';
 import Footer from '@/components/organisms/Footer';
 import Header from '@/components/organisms/Header';
+import MaintenancePage from '@/components/organisms/MaintenancePage';
 import commonMessages from '../../locales/nl/common.json';
 import dashboardMessages from '../../locales/nl/dashboard.json';
 import formsMessages from '../../locales/nl/forms.json';
@@ -65,6 +67,66 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
           <main className="sl-main" id="main">
             {children}
           </main>
+        </body>
+      </html>
+    );
+  }
+
+  const pathname = (await headers()).get('x-pathname') ?? '';
+  const isApiRoute = pathname.startsWith('/api');
+
+  if (data?.generalData?.maintenanceMode === true && !isApiRoute) {
+    const logo = data.generalData.logo
+      ? {
+          ...data.generalData.logo,
+          width: data.generalData.logo.width ?? null,
+          height: data.generalData.logo.height ?? null,
+        }
+      : null;
+
+    const socials = (data.generalData.socials ?? [])
+      .filter((social): social is NonNullable<typeof social> => social !== null)
+      .map((social) => ({
+        documentId: social.documentId,
+        title: social.title ?? undefined,
+        link: social.link ?? undefined,
+        icon: social.icon ?? undefined,
+      }));
+
+    return (
+      <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
+        <body>
+          <NextIntlClientProvider
+            messages={{ common: commonMessages, dashboard: dashboardMessages, forms: formsMessages }}
+          >
+            <MaintenancePage logo={logo} socials={socials} />
+          </NextIntlClientProvider>
+          {process.env.NEXT_PUBLIC_GA_ID && (
+            <>
+              <Script id="gtag-consent" strategy="beforeInteractive">{`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('consent', 'default', {
+                  ad_storage: 'denied',
+                  ad_user_data: 'denied',
+                  ad_personalization: 'denied',
+                  analytics_storage: 'denied',
+                });
+              `}</Script>
+              <Script
+                src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+                strategy="afterInteractive"
+              />
+              <Script id="google-analytics" strategy="afterInteractive">{`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}');
+              `}</Script>
+            </>
+          )}
+          <Analytics />
+          <SpeedInsights />
         </body>
       </html>
     );
