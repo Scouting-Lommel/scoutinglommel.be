@@ -16,8 +16,8 @@ type RevalidateWebhookBody = {
 // uid (e.g. "api::general-data.general-data"), so we normalize before matching.
 const STATIC_MODELS = new Set(['general-data', 'group', 'rental-location']);
 
-const normalizeModel = (raw?: string): string => {
-  if (!raw) return '';
+const normalizeModel = (raw: unknown): string => {
+  if (typeof raw !== 'string') return '';
 
   // uid format: api::general-data.general-data -> general-data
   if (raw.includes('::')) {
@@ -48,12 +48,26 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  let body: RevalidateWebhookBody;
+  let rawBody: unknown;
   try {
-    body = await req.json();
+    rawBody = await req.json();
   } catch {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
+
+  if (!rawBody || typeof rawBody !== 'object') {
+    return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
+  }
+
+  const body = rawBody as RevalidateWebhookBody;
+
+  if (
+    (body.model !== undefined && typeof body.model !== 'string') ||
+    (body.uid !== undefined && typeof body.uid !== 'string')
+  ) {
+    return NextResponse.json({ error: 'Invalid model or uid' }, { status: 400 });
+  }
+
   const model = normalizeModel(body.model ?? body.uid);
   const slug: string | undefined = body.entry?.slug;
 
