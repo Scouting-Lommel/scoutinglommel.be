@@ -4,6 +4,7 @@ import { timingSafeEqual } from 'node:crypto';
 
 type RevalidateWebhookBody = {
   model?: string;
+  uid?: string;
   entry?: {
     slug?: string;
     documentId?: string;
@@ -11,7 +12,21 @@ type RevalidateWebhookBody = {
 };
 
 // Models that feed into layout/navigation data (STATIC cache tier)
-const STATIC_MODELS = new Set(['general', 'group', 'rental-location']);
+// Strapi sends either the singular model name (e.g. "general-data") or the full
+// uid (e.g. "api::general-data.general-data"), so we normalize before matching.
+const STATIC_MODELS = new Set(['general-data', 'group', 'rental-location']);
+
+const normalizeModel = (raw?: string): string => {
+  if (!raw) return '';
+
+  // uid format: api::general-data.general-data -> general-data
+  if (raw.includes('::')) {
+    const parts = raw.split('.');
+    return parts[parts.length - 1] ?? raw;
+  }
+
+  return raw;
+};
 
 export const GET = async (): Promise<NextResponse> => {
   return NextResponse.json({ ok: true });
@@ -39,7 +54,7 @@ export const POST = async (req: NextRequest): Promise<NextResponse> => {
   } catch {
     return NextResponse.json({ error: 'Invalid request body' }, { status: 400 });
   }
-  const model: string = body.model ?? '';
+  const model = normalizeModel(body.model ?? body.uid);
   const slug: string | undefined = body.entry?.slug;
 
   if (STATIC_MODELS.has(model)) {
