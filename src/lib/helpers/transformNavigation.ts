@@ -9,20 +9,39 @@ import type { NavItem } from '@/components/molecules/Navigation/types';
 type MainNavigationItem = MainNavigationQuery['renderNavigation'][number];
 type FooterNavigationItem = FooterNavigationQuery['renderNavigation'][number];
 
+type DescribableEntity = {
+  slug: string;
+  description: string;
+};
+
 function derivePageFromPath(path: string | null | undefined): string {
   if (!path || path === '/') return 'home';
   return path.replace(/^\//, '').replace(/-/g, '_');
 }
 
-function getDescriptionFromRelated(
-  related: NonNullable<MainNavigationItem>['related'],
+function deriveSlugFromPath(path: string | null | undefined): string | undefined {
+  if (!path || path === '/') return undefined;
+  const segments = path.replace(/^\//, '').split('/');
+  return segments[segments.length - 1];
+}
+
+function getDescriptionFromPath(
+  path: string | null | undefined,
+  groups: DescribableEntity[],
+  rentalLocations: DescribableEntity[],
 ): string | undefined {
-  if (!related || !('description' in related)) return undefined;
-  return related.description ?? undefined;
+  const slug = deriveSlugFromPath(path);
+  if (!slug) return undefined;
+
+  const entity = [...groups, ...rentalLocations].find((item) => item.slug === slug);
+
+  return entity?.description ?? undefined;
 }
 
 export function transformMainNavigation(
   items: MainNavigationQuery['renderNavigation'] | null | undefined,
+  groups: DescribableEntity[] = [],
+  rentalLocations: DescribableEntity[] = [],
 ): NavItem[] {
   if (!items) return [];
 
@@ -49,7 +68,7 @@ export function transformMainNavigation(
                 child.type === NavigationItemType.External
                   ? (child.externalPath ?? null)
                   : (child.path ?? null),
-              description: getDescriptionFromRelated(child.related),
+              description: getDescriptionFromPath(child.path, groups, rentalLocations),
               modTargetBlank: child.type === NavigationItemType.External,
             }))
           : [],

@@ -133,8 +133,6 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
   }
 
   const globalAlert = data.generalData.globalAlert;
-  const mainNavigation = transformMainNavigation(data.mainNavigation);
-  const footerNavigation = transformFooterNavigation(data.footerNavigation);
 
   const groups = data.groups
     .filter((group): group is NonNullable<(typeof data.groups)[number]> => group !== null)
@@ -153,6 +151,9 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
       description: location.description ?? '',
       slug: location.slug ?? '',
     }));
+
+  const mainNavigation = transformMainNavigation(data.mainNavigation, groups, rentalLocations);
+  const footerNavigation = transformFooterNavigation(data.footerNavigation);
   const contactItems = (data.generalData.contactItems ?? [])
     .filter(
       (item): item is NonNullable<NonNullable<typeof data.generalData.contactItems>[number]> =>
