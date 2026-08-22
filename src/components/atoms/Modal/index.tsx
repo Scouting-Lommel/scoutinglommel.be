@@ -89,7 +89,7 @@ const Modal = ({ id, title, children, open, handleCloseModal }: ModalProps): JSX
           >
             <Icon name="close" size="lg" />
           </button>
-          <div className="t-headline-3 modal__header__title">{title}</div>
+          {title && <div className="t-headline-3 modal__header__title">{title}</div>}
         </div>
         <div className="modal__content">{children}</div>
       </div>

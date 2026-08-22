@@ -14,6 +14,14 @@ const WIE_IS_WIE_QUERY = gql`
         documentId
         firstName
         lastName
+        totem
+        dateOfBirth
+        occupation
+        isStudent
+        fieldOfStudy
+        memberSince
+        leaderSince
+        bio
         isGroupLeader
         image {
           ...ImageFragment

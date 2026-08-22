@@ -37,6 +37,10 @@
 }
 
 .wie-is-wie__leader-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-8);
   padding: 0;
   border: none;
   background: none;
@@ -55,30 +59,36 @@
   }
 }
 
+.wie-is-wie__leader-totem {
+  color: var(--color-neutral-600);
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
 .wie-is-wie__modal-content {
   display: flex;
   flex-direction: column;
-  gap: var(--space-24);
+  gap: var(--space-32);
 
   @media (--mq-from-small) {
     flex-direction: row;
     align-items: flex-start;
-    gap: var(--space-36);
+    gap: var(--space-48);
   }
 }
 
 .wie-is-wie__modal-image {
   position: relative;
   overflow: hidden;
-  width: 8rem;
-  height: 9.6rem;
+  width: 10rem;
+  height: 12rem;
   flex-shrink: 0;
   border-radius: var(--border-radius);
   filter: drop-shadow(var(--drop-shadow-lg));
 
   @media (--mq-from-small) {
-    width: 10rem;
-    height: 12rem;
+    width: 12rem;
+    height: 14.4rem;
   }
 }
 
@@ -95,14 +105,51 @@
   gap: var(--space-8);
 }
 
-.wie-is-wie__modal-group {
+.wie-is-wie__modal-name {
+  margin: 0;
+}
+
+.wie-is-wie__modal-totem {
+  margin: 0;
+  color: var(--color-primary);
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-semibold);
+  font-style: italic;
+}
+
+.wie-is-wie__modal-details {
+  display: grid;
+  grid-template-columns: repeat(2, max-content);
+  gap: var(--space-16) var(--space-96);
+  margin-top: var(--space-16);
+}
+
+.wie-is-wie__modal-detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.wie-is-wie__modal-detail--span-2 {
+  grid-column: span 2;
+}
+
+.wie-is-wie__modal-detail-label {
   color: var(--color-neutral-600);
-  font-size: 0.875rem;
-  font-weight: var(--font-weight-medium);
+  font-size: 0.75rem;
+  font-weight: var(--font-weight-semibold);
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
-.wie-is-wie__modal-function {
-  margin-top: var(--space-4);
+.wie-is-wie__modal-detail-value {
+  margin: 0;
+  color: var(--color-neutral-900);
+  line-height: 1.5;
+}
+
+.wie-is-wie__modal-bio {
+  margin-top: var(--space-16);
+  padding-top: var(--space-16);
+  border-top: 1px solid var(--color-neutral-200);
 }
