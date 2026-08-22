@@ -22,7 +22,11 @@ const toCloudinaryImage = (image: UploadFile): CloudinaryImage => ({
 });
 
 const deriveEmail = (firstName: string, lastName: string): string => {
-  const localPart = `${firstName}.${lastName}`.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9.]/g, '');
+  const localPart = `${firstName}.${lastName}`
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9.]/g, '');
   return `${localPart}@scoutinglommel.be`;
 };
 
@@ -215,11 +219,7 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
       ))}
 
       {selectedLeader && (
-        <Modal
-          id="wie-is-wie-modal"
-          open={!!selectedLeader}
-          handleCloseModal={closeLeaderModal}
-        >
+        <Modal id="wie-is-wie-modal" open={!!selectedLeader} handleCloseModal={closeLeaderModal}>
           <div className="wie-is-wie__modal-content">
             {selectedLeader.image ? (
               <SLImage
@@ -267,9 +267,7 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
               )}
               {selectedLeader.bio && (
                 <div className="wie-is-wie__modal-bio">
-                  <p className="wie-is-wie__modal-detail-label">
-                    Over {selectedLeader.firstName}
-                  </p>
+                  <p className="wie-is-wie__modal-detail-label">Over {selectedLeader.firstName}</p>
                   <Typography data={selectedLeader.bio} />
                 </div>
               )}

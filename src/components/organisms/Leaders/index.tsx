@@ -20,11 +20,7 @@ const Leaders = ({ leaders }: LeadersProps): JSX.Element => {
           const href = `/wie-is-wie?leider=${slugifyLeader(leader.firstName, leader.lastName)}`;
 
           return (
-            <Link
-              key={i}
-              href={href}
-              className="leaders__leader-link"
-            >
+            <Link key={i} href={href} className="leaders__leader-link">
               <Leader
                 firstName={leader.firstName}
                 lastName={leader.lastName}

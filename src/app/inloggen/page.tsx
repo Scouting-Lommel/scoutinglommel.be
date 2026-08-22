@@ -47,12 +47,7 @@ const SignInContent = (): JSX.Element => {
       range.selectNodeContents(subtitle);
       const textRect = range.getBoundingClientRect();
 
-      return (
-        x >= textRect.left &&
-        x <= textRect.right &&
-        y >= textRect.top &&
-        y <= textRect.bottom
-      );
+      return x >= textRect.left && x <= textRect.right && y >= textRect.top && y <= textRect.bottom;
     };
 
     const handleMouseMove = (e: MouseEvent) => {

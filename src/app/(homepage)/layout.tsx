@@ -1,8 +1,15 @@
 import type { JSX } from 'react';
 import { getLayoutData } from '@/lib/api/general/api';
-import { generateStructuredData, generateWebSiteSchema } from '@/lib/helpers/generateStructuredData';
+import {
+  generateStructuredData,
+  generateWebSiteSchema,
+} from '@/lib/helpers/generateStructuredData';
 
-const HomePageLayout = async ({ children }: { children: React.ReactNode }): Promise<JSX.Element> => {
+const HomePageLayout = async ({
+  children,
+}: {
+  children: React.ReactNode;
+}): Promise<JSX.Element> => {
   const data = await getLayoutData();
 
   if (!data?.generalData) return <>{children}</>;

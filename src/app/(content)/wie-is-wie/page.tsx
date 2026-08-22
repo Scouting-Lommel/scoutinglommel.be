@@ -3,9 +3,10 @@ import { notFound } from 'next/navigation';
 import type { JSX } from 'react';
 import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import BlockContainer from '@/components/atoms/BlockContainer';
+import Hero from '@/components/organisms/Hero';
 import WieIsWie from '@/components/organisms/WieIsWie';
-import { getGeneralData } from '../api';
 import { getWieIsWie } from './api';
+import { getGeneralData } from '../../api';
 
 export const revalidate = 3600;
 
@@ -34,9 +35,12 @@ const WieIsWiePage = async (): Promise<JSX.Element> => {
   return (
     <>
       <BlockContainer variant="light" modSmallPadding slug="wie-is-wie">
-        <div className="sl-layout">
-          <h1 className="t-headline-1">Wie is wie?</h1>
-        </div>
+        <Hero
+          title="wie-is-wie"
+          subtitle="Leidingoverzicht"
+          variant="simple"
+          className="sl-layout"
+        />
       </BlockContainer>
       <WieIsWie groups={groups} />
     </>
