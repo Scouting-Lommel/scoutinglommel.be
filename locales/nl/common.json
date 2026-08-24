@@ -71,6 +71,10 @@
     "pricePerPersonPerNight": "Prijs pp/nacht"
   },
   "tryAgain": "Probeer opnieuw",
+  "whoIsWho": {
+    "title": "Wie is wie?",
+    "subtitle": "Leidingoverzicht"
+  },
   "unauthorized": {
     "title": "Je hebt geen toegang tot deze pagina.",
     "button": {
