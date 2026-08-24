@@ -83,6 +83,7 @@
     "labels": {
       "group": "Tak",
       "groupFunction": "Takfunctie",
+      "groupFunctionDescription": "Omschrijving",
       "age": "Leeftijd",
       "ageYears": "{age} jaar",
       "years": "{years}",

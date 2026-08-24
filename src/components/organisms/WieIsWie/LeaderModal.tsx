@@ -38,9 +38,16 @@ const LeaderModal = ({ leader, onClose }: LeaderModalProps): JSX.Element => {
       items.push({ label: 'groupFunction', value: leader.groupFunction.title });
     }
 
+    if (leader.groupFunction?.description) {
+      items.push({
+        label: 'groupFunctionDescription',
+        value: leader.groupFunction.description,
+      });
+    }
+
     const age = calculateAge(leader.dateOfBirth);
     if (age !== null) {
-      items.push({ label: 'age', value: t('labels.age', { age }) });
+      items.push({ label: 'age', value: t('labels.ageYears', { age }) });
     }
 
     if (leader.isStudent && leader.fieldOfStudy) {

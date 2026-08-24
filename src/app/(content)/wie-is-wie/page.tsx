@@ -32,7 +32,7 @@ const WieIsWiePage = async (): Promise<JSX.Element> => {
   const { groups } = await getWieIsWie();
   const t = await getTranslations('common.whoIsWho');
 
-  if (!groups) notFound();
+  if (!groups) return notFound();
 
   return (
     <>

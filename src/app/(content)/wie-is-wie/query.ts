@@ -6,11 +6,11 @@ const WIE_IS_WIE_QUERY = gql`
   ${IMAGE_FRAGMENT}
 
   query GetWieIsWie {
-    groups {
+    groups(pagination: { limit: 100 }) {
       documentId
       name
       slug
-      leaders(filters: { active: { eq: true } }) {
+      leaders(filters: { active: { eq: true } }, pagination: { limit: 100 }) {
         documentId
         firstName
         lastName
