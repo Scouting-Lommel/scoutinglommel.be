@@ -2,7 +2,8 @@
 
 import cn from 'classnames';
 import Image from 'next/image';
-import { useEffect, useMemo, useState, type JSX } from 'react';
+import { useCallback, useEffect, useMemo, useState, type JSX } from 'react';
+import { slugify } from '@/lib/helpers/slugify';
 import type { UploadFile } from '@/types/generated/Graphql';
 import ProfilePicture from '@/assets/img/default-avatar.png';
 import SLImage from '@/components/atoms/Image';
@@ -53,14 +54,6 @@ const formatYearCount = (years?: number | null): string | null => {
   return `${years} jaar`;
 };
 
-const slugifyLeader = (firstName: string, lastName: string): string =>
-  `${firstName}-${lastName}`
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '');
-
 type SelectedLeader = LeaderDetail & { groupName: string };
 
 type DetailItem = {
@@ -93,17 +86,20 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
       (group.leaders?.filter((leader): leader is LeaderDetail => !!leader).length ?? 0) > 0,
   );
 
-  const findLeaderBySlug = (slug: string): SelectedLeader | null => {
-    for (const group of activeGroups) {
-      for (const leader of group.leaders ?? []) {
-        if (!leader) continue;
-        if (slugifyLeader(leader.firstName, leader.lastName) === slug) {
-          return { ...leader, groupName: group.name };
+  const findLeaderBySlug = useCallback(
+    (slug: string): SelectedLeader | null => {
+      for (const group of activeGroups) {
+        for (const leader of group.leaders ?? []) {
+          if (!leader) continue;
+          if (slugify(`${leader.firstName}-${leader.lastName}`) === slug) {
+            return { ...leader, groupName: group.name };
+          }
         }
       }
-    }
-    return null;
-  };
+      return null;
+    },
+    [activeGroups],
+  );
 
   useEffect(() => {
     const leiderSlug = getLeiderSlugFromUrl();
@@ -113,7 +109,7 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
     if (leader) {
       setSelectedLeader(leader);
     }
-  }, []);
+  }, [findLeaderBySlug]);
 
   useEffect(() => {
     const handlePopState = () => {
@@ -129,11 +125,11 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [activeGroups]);
+  }, [findLeaderBySlug]);
 
   const openLeaderModal = (leader: LeaderDetail, groupName: string) => {
     setSelectedLeader({ ...leader, groupName });
-    updateLeiderUrl(slugifyLeader(leader.firstName, leader.lastName));
+    updateLeiderUrl(slugify(`${leader.firstName}-${leader.lastName}`));
   };
 
   const closeLeaderModal = () => {
