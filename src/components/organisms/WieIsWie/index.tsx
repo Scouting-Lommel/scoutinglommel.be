@@ -1,60 +1,13 @@
 'use client';
 
-import cn from 'classnames';
-import Image from 'next/image';
-import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useState, type JSX } from 'react';
 import { slugify } from '@/lib/helpers/slugify';
-import type { UploadFile } from '@/types/generated/Graphql';
-import ProfilePicture from '@/assets/img/default-avatar.png';
-import SLImage from '@/components/atoms/Image';
-import type { CloudinaryImage } from '@/components/atoms/Image/types';
-import SLLink from '@/components/atoms/Link';
-import Modal from '@/components/atoms/Modal';
-import Typography from '@/components/atoms/Typography';
-import Leader from '@/components/molecules/Leader';
 import type { WieIsWie as WieIsWieProps, GroupWithLeaders, LeaderDetail } from './types';
+import LeaderCard from './LeaderCard';
+import LeaderModal from './LeaderModal';
 import './WieIsWie.css';
 
-const toCloudinaryImage = (image: UploadFile): CloudinaryImage => ({
-  ...image,
-  width: image.width ?? null,
-  height: image.height ?? null,
-  ext: image.ext ?? undefined,
-});
-
-const deriveEmail = (firstName: string, lastName: string): string => {
-  const localPart = `${firstName}.${lastName}`
-    .toLowerCase()
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/[^a-z0-9.]/g, '');
-  return `${localPart}@scoutinglommel.be`;
-};
-
-const calculateAge = (dateOfBirth?: string | null): number | null => {
-  if (!dateOfBirth) return null;
-
-  const birthDate = new Date(dateOfBirth);
-  if (Number.isNaN(birthDate.getTime())) return null;
-
-  const today = new Date();
-  let age = today.getFullYear() - birthDate.getFullYear();
-  const monthDifference = today.getMonth() - birthDate.getMonth();
-
-  if (monthDifference < 0 || (monthDifference === 0 && today.getDate() < birthDate.getDate())) {
-    age -= 1;
-  }
-
-  return age;
-};
-
 type SelectedLeader = LeaderDetail & { groupName: string };
-
-type DetailItem = {
-  label: string;
-  value: string;
-};
 
 const getLeiderSlugFromUrl = (): string | null => {
   if (typeof window === 'undefined') return null;
@@ -73,7 +26,6 @@ const updateLeiderUrl = (slug: string | null) => {
 };
 
 const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
-  const t = useTranslations('common.whoIsWho');
   const [selectedLeader, setSelectedLeader] = useState<SelectedLeader | null>(null);
 
   const activeGroups = useMemo(
@@ -137,53 +89,6 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
     updateLeiderUrl(null);
   };
 
-  const leaderDetails = useMemo((): DetailItem[] => {
-    if (!selectedLeader) return [];
-
-    const items: DetailItem[] = [];
-
-    items.push({ label: 'group', value: selectedLeader.groupName });
-
-    if (selectedLeader.groupFunction?.title) {
-      items.push({ label: 'groupFunction', value: selectedLeader.groupFunction.title });
-    }
-
-    const age = calculateAge(selectedLeader.dateOfBirth);
-    if (age !== null) {
-      items.push({ label: 'age', value: t('labels.ageYears', { age }) });
-    }
-
-    if (selectedLeader.isStudent && selectedLeader.fieldOfStudy) {
-      items.push({
-        label: 'study',
-        value: t('labels.study', { fieldOfStudy: selectedLeader.fieldOfStudy }),
-      });
-    } else if (selectedLeader.occupation) {
-      items.push({ label: 'occupation', value: selectedLeader.occupation });
-    }
-
-    if (selectedLeader.memberSince !== null && selectedLeader.memberSince !== undefined) {
-      items.push({
-        label: 'memberSince',
-        value: t('labels.years', { years: selectedLeader.memberSince }),
-      });
-    }
-
-    if (selectedLeader.leaderSince !== null && selectedLeader.leaderSince !== undefined) {
-      items.push({
-        label: 'leaderSince',
-        value: t('labels.years', { years: selectedLeader.leaderSince }),
-      });
-    }
-
-    items.push({
-      label: 'email',
-      value: deriveEmail(selectedLeader.firstName, selectedLeader.lastName),
-    });
-
-    return items;
-  }, [selectedLeader, t]);
-
   return (
     <div className="wie-is-wie">
       {activeGroups.map((group) => (
@@ -200,87 +105,19 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
                   return a.lastName.localeCompare(b.lastName);
                 })
                 .map((leader) => (
-                  <button
+                  <LeaderCard
                     key={leader.documentId}
-                    className="wie-is-wie__leader-btn"
-                    type="button"
-                    onClick={() => openLeaderModal(leader, group.name)}
-                  >
-                    <Leader
-                      firstName={leader.firstName}
-                      lastName={leader.lastName}
-                      image={leader.image ? toCloudinaryImage(leader.image) : undefined}
-                    />
-                    {leader.totem && (
-                      <span className="wie-is-wie__leader-totem">{leader.totem}</span>
-                    )}
-                  </button>
+                    leader={leader}
+                    groupName={group.name}
+                    onClick={openLeaderModal}
+                  />
                 ))}
             </div>
           </div>
         </section>
       ))}
 
-      {selectedLeader && (
-        <Modal id="wie-is-wie-modal" open={!!selectedLeader} handleCloseModal={closeLeaderModal}>
-          <div className="wie-is-wie__modal-content">
-            {selectedLeader.image ? (
-              <SLImage
-                data={toCloudinaryImage(selectedLeader.image)}
-                loadingStrategy="lazy"
-                className="wie-is-wie__modal-image"
-              />
-            ) : (
-              <Image
-                src={ProfilePicture}
-                width={530}
-                height={530}
-                alt={t('defaultProfilePictureAlt')}
-                className="wie-is-wie__modal-image"
-              />
-            )}
-            <div className="wie-is-wie__modal-info">
-              <h2 className="t-headline-2 wie-is-wie__modal-name">
-                {selectedLeader.firstName} {selectedLeader.lastName}
-              </h2>
-              {selectedLeader.totem && (
-                <p className="wie-is-wie__modal-totem">{selectedLeader.totem}</p>
-              )}
-              {leaderDetails.length > 0 && (
-                <dl className="wie-is-wie__modal-details">
-                  {leaderDetails.map(({ label, value }) => (
-                    <div
-                      key={label}
-                      className={cn('wie-is-wie__modal-detail', {
-                        'wie-is-wie__modal-detail--span-2':
-                          label === 'email' ||
-                          (label === 'group' && !selectedLeader.groupFunction?.title),
-                      })}
-                    >
-                      <dt className="wie-is-wie__modal-detail-label">{t(`labels.${label}`)}</dt>
-                      <dd className="wie-is-wie__modal-detail-value">
-                        {label === 'email' ? (
-                          <SLLink href={`mailto:${value}`}>{value}</SLLink>
-                        ) : (
-                          value
-                        )}
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              )}
-              {selectedLeader.bio && (
-                <div className="wie-is-wie__modal-bio">
-                  <p className="wie-is-wie__modal-detail-label">
-                    {t('bioTitle', { firstName: selectedLeader.firstName })}
-                  </p>
-                  <Typography data={selectedLeader.bio} />
-                </div>
-              )}
-            </div>
-          </div>
-        </Modal>
-      )}
+      {selectedLeader && <LeaderModal leader={selectedLeader} onClose={closeLeaderModal} />}
     </div>
   );
 };
