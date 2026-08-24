@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState, type JSX } from 'react';
+import { slugify } from '@/lib/helpers/slugify';
 import type { WieIsWie as WieIsWieProps, GroupWithLeaders, LeaderDetail } from './types';
 import LeaderCard from './LeaderCard';
 import LeaderModal from './LeaderModal';
@@ -8,16 +9,19 @@ import './WieIsWie.css';
 
 type SelectedLeader = LeaderDetail & { groupName: string };
 
-const getLeiderIdFromUrl = (): string | null => {
+const getLeiderSlugFromUrl = (): string | null => {
   if (typeof window === 'undefined') return null;
   return new URLSearchParams(window.location.search).get('leider');
 };
 
-const updateLeiderUrl = (id: string | null, method: 'push' | 'replace' = 'replace') => {
+const getLeaderSlug = (leader: LeaderDetail): string =>
+  slugify(`${leader.firstName}-${leader.lastName}`);
+
+const updateLeiderUrl = (slug: string | null, method: 'push' | 'replace' = 'replace') => {
   if (typeof window === 'undefined') return;
   const url = new URL(window.location.href);
-  if (id) {
-    url.searchParams.set('leider', id);
+  if (slug) {
+    url.searchParams.set('leider', slug);
   } else {
     url.searchParams.delete('leider');
   }
@@ -42,12 +46,12 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
     [groups],
   );
 
-  const findLeaderById = useCallback(
-    (id: string): SelectedLeader | null => {
+  const findLeaderBySlug = useCallback(
+    (slug: string): SelectedLeader | null => {
       for (const group of activeGroups) {
         for (const leader of group.leaders ?? []) {
           if (!leader) continue;
-          if (leader.documentId === id) {
+          if (getLeaderSlug(leader) === slug) {
             return { ...leader, groupName: group.name };
           }
         }
@@ -58,34 +62,34 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
   );
 
   useEffect(() => {
-    const leiderId = getLeiderIdFromUrl();
-    if (!leiderId) return;
+    const leiderSlug = getLeiderSlugFromUrl();
+    if (!leiderSlug) return;
 
-    const leader = findLeaderById(leiderId);
+    const leader = findLeaderBySlug(leiderSlug);
     if (leader) {
       setSelectedLeader(leader);
     }
-  }, [findLeaderById]);
+  }, [findLeaderBySlug]);
 
   useEffect(() => {
     const handlePopState = () => {
-      const leiderId = getLeiderIdFromUrl();
-      if (!leiderId) {
+      const leiderSlug = getLeiderSlugFromUrl();
+      if (!leiderSlug) {
         setSelectedLeader(null);
         return;
       }
 
-      const leader = findLeaderById(leiderId);
+      const leader = findLeaderBySlug(leiderSlug);
       setSelectedLeader(leader);
     };
 
     window.addEventListener('popstate', handlePopState);
     return () => window.removeEventListener('popstate', handlePopState);
-  }, [findLeaderById]);
+  }, [findLeaderBySlug]);
 
   const openLeaderModal = (leader: LeaderDetail, groupName: string) => {
     setSelectedLeader({ ...leader, groupName });
-    updateLeiderUrl(leader.documentId, 'push');
+    updateLeiderUrl(getLeaderSlug(leader), 'push');
   };
 
   const closeLeaderModal = () => {
