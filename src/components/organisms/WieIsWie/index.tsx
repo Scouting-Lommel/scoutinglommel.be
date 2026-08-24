@@ -80,10 +80,14 @@ const updateLeiderUrl = (slug: string | null) => {
 const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
   const [selectedLeader, setSelectedLeader] = useState<SelectedLeader | null>(null);
 
-  const activeGroups = groups.filter(
-    (group): group is GroupWithLeaders =>
-      !!group &&
-      (group.leaders?.filter((leader): leader is LeaderDetail => !!leader).length ?? 0) > 0,
+  const activeGroups = useMemo(
+    () =>
+      groups.filter(
+        (group): group is GroupWithLeaders =>
+          !!group &&
+          (group.leaders?.filter((leader): leader is LeaderDetail => !!leader).length ?? 0) > 0,
+      ),
+    [groups],
   );
 
   const findLeaderBySlug = useCallback(
