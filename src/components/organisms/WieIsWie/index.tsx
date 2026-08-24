@@ -13,7 +13,7 @@ const getLeiderIdFromUrl = (): string | null => {
   return new URLSearchParams(window.location.search).get('leider');
 };
 
-const updateLeiderUrl = (id: string | null) => {
+const updateLeiderUrl = (id: string | null, method: 'push' | 'replace' = 'replace') => {
   if (typeof window === 'undefined') return;
   const url = new URL(window.location.href);
   if (id) {
@@ -21,7 +21,12 @@ const updateLeiderUrl = (id: string | null) => {
   } else {
     url.searchParams.delete('leider');
   }
-  window.history.replaceState({}, '', url);
+
+  if (method === 'push') {
+    window.history.pushState({}, '', url);
+  } else {
+    window.history.replaceState({}, '', url);
+  }
 };
 
 const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
@@ -80,7 +85,7 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
 
   const openLeaderModal = (leader: LeaderDetail, groupName: string) => {
     setSelectedLeader({ ...leader, groupName });
-    updateLeiderUrl(leader.documentId);
+    updateLeiderUrl(leader.documentId, 'push');
   };
 
   const closeLeaderModal = () => {
