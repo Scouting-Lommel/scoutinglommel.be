@@ -3,35 +3,51 @@
   "languages": {
     "TypeScript": {
       "format_on_save": "on",
-      "formatter": [
-        {
-          "code_action": "source.fixAll.eslint"
+      "formatter": {
+        "external": {
+          "command": "node_modules/.bin/prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
         }
-      ]
+      },
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
     },
     "TSX": {
       "format_on_save": "on",
-      "formatter": [
-        {
-          "code_action": "source.fixAll.eslint"
+      "formatter": {
+        "external": {
+          "command": "node_modules/.bin/prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
         }
-      ]
+      },
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
     },
     "JavaScript": {
       "format_on_save": "on",
-      "formatter": [
-        {
-          "code_action": "source.fixAll.eslint"
+      "formatter": {
+        "external": {
+          "command": "node_modules/.bin/prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
         }
-      ]
+      },
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
     },
     "JSX": {
       "format_on_save": "on",
-      "formatter": [
-        {
-          "code_action": "source.fixAll.eslint"
+      "formatter": {
+        "external": {
+          "command": "node_modules/.bin/prettier",
+          "arguments": ["--stdin-filepath", "{buffer_path}"]
         }
-      ]
+      },
+      "code_actions_on_format": {
+        "source.fixAll.eslint": true
+      }
     },
     "JSON": {
       "format_on_save": "on",
