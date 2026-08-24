@@ -51,7 +51,7 @@ const calculateAge = (dateOfBirth?: string | null): number | null => {
 const formatYearCount = (years?: number | null): string | null => {
   if (years === undefined || years === null) return null;
 
-  return `${years} jaar`;
+  return `${years}`;
 };
 
 type SelectedLeader = LeaderDetail & { groupName: string };
@@ -250,7 +250,8 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
                       key={label}
                       className={cn('wie-is-wie__modal-detail', {
                         'wie-is-wie__modal-detail--span-2':
-                          label === 'Tak' && !selectedLeader.groupFunction?.title,
+                          label === 'E-mail' ||
+                          (label === 'Tak' && !selectedLeader.groupFunction?.title),
                       })}
                     >
                       <dt className="wie-is-wie__modal-detail-label">{label}</dt>
