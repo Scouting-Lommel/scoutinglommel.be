@@ -1,0 +1,55 @@
+name: Update GraphQL schema
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-graphql-schema
+  cancel-in-progress: false
+
+jobs:
+  update-schema:
+    # Skip runs triggered by our own schema commit to avoid an infinite loop
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.5.2
+
+      - name: Install dependencies
+        run: pnpm install
+        env:
+          # Avoid the postinstall introspection fetch; we run it explicitly below
+          SKIP_CODEGEN: '1'
+
+      - name: Fetch schema from Strapi staging
+        run: pnpm fetch-schema
+        env:
+          NEXT_PUBLIC_APP_BACKEND_URL: ${{ secrets.NEXT_PUBLIC_APP_BACKEND_URL }}
+          STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
+
+      - name: Commit schema.graphql if changed
+        run: |
+          if git diff --quiet HEAD -- schema.graphql; then
+            echo "schema.graphql is unchanged — nothing to commit"
+          else
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add schema.graphql
+            git commit -m "chore: update schema.graphql from Strapi staging introspection"
+            git push
+          fi

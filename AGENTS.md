@@ -54,6 +54,7 @@ Pages call data functions + pass to Blocks/components
 - `src/lib/api/cache.ts` — Cache configurations: STATIC (7d), DYNAMIC (1h), USER (30m), WRITE (none)
 - `src/lib/api.ts` — `generateApiQuery()` wrapper for type-safe queries
 - `codegen.ts` — GraphQL Code Generator config, outputs to `src/types/generated/Graphql.ts`
+- `schema.graphql` — **committed**; refreshed by CI on push to main (`.github/workflows/update-schema.yml` introspects Strapi **staging**, whose schema mirrors production). Production introspection is disabled, so builds run codegen against the committed schema with `SKIP_FETCH_SCHEMA=1` instead of fetching live.
 
 ### GraphQL Patterns
 - **Fragments** in `src/graphql/*.gql` — one per content block type
@@ -167,7 +168,7 @@ pnpm run storybook    # Start Storybook
 | Edit global styles | `src/assets/styles/global.pcss`, `src/assets/styles/settings/` |
 | Component styles | `{Component}/{Component}.pcss` |
 | Add GraphQL query/fragment | `src/graphql/*.gql` |
-| Regenerate types from schema | `pnpm graphql-codegen` (requires `NEXT_PUBLIC_APP_BACKEND_URL`) |
+| Regenerate types from schema | `pnpm codegen` (uses committed `schema.graphql`; `SKIP_FETCH_SCHEMA=1` skips live introspection) |
 | Edit auth logic | `src/app/api/auth/[...nextauth]/`, `src/middlewares/` |
 | Form validation schemas | `src/components/organisms/Forms/*/types.ts` |
 | Email templates | `src/emails/templates/` |

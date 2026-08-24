@@ -39,7 +39,9 @@ src/**/*.css
 
 # generated graphql types (run pnpm codegen to regenerate)
 src/types/generated/
-schema.graphql
+
+# schema.graphql is committed and refreshed by CI on push to main
+# (see .github/workflows/update-schema.yml)
 
 # typescript
 tsconfig.tsbuildinfo
