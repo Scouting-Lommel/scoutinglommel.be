@@ -71,14 +71,28 @@
     "pricePerPersonPerNight": "Prijs pp/nacht"
   },
   "tryAgain": "Probeer opnieuw",
-  "whoIsWho": {
-    "title": "Wie is wie?",
-    "subtitle": "Leidingoverzicht"
-  },
   "unauthorized": {
     "title": "Je hebt geen toegang tot deze pagina.",
     "button": {
       "label": "Terug naar de homepagina"
     }
+  },
+  "whoIsWho": {
+    "title": "Wie is wie?",
+    "subtitle": "Leidingoverzicht",
+    "labels": {
+      "group": "Tak",
+      "groupFunction": "Takfunctie",
+      "age": "Leeftijd",
+      "ageYears": "{age} jaar",
+      "years": "{years}",
+      "study": "Student {fieldOfStudy}",
+      "occupation": "Beroep",
+      "memberSince": "Actief sinds",
+      "leaderSince": "Leiding sinds",
+      "email": "E-mail"
+    },
+    "bioTitle": "Over {firstName}",
+    "defaultProfilePictureAlt": "Standaard profielfoto"
   }
 }

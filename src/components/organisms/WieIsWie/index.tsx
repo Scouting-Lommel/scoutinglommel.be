@@ -2,6 +2,7 @@
 
 import cn from 'classnames';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { useCallback, useEffect, useMemo, useState, type JSX } from 'react';
 import { slugify } from '@/lib/helpers/slugify';
 import type { UploadFile } from '@/types/generated/Graphql';
@@ -48,12 +49,6 @@ const calculateAge = (dateOfBirth?: string | null): number | null => {
   return age;
 };
 
-const formatYearCount = (years?: number | null): string | null => {
-  if (years === undefined || years === null) return null;
-
-  return `${years}`;
-};
-
 type SelectedLeader = LeaderDetail & { groupName: string };
 
 type DetailItem = {
@@ -78,6 +73,7 @@ const updateLeiderUrl = (slug: string | null) => {
 };
 
 const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
+  const t = useTranslations('common.whoIsWho');
   const [selectedLeader, setSelectedLeader] = useState<SelectedLeader | null>(null);
 
   const activeGroups = useMemo(
@@ -146,40 +142,47 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
 
     const items: DetailItem[] = [];
 
-    items.push({ label: 'Tak', value: selectedLeader.groupName });
+    items.push({ label: 'group', value: selectedLeader.groupName });
 
     if (selectedLeader.groupFunction?.title) {
-      items.push({ label: 'Takfunctie', value: selectedLeader.groupFunction.title });
+      items.push({ label: 'groupFunction', value: selectedLeader.groupFunction.title });
     }
 
     const age = calculateAge(selectedLeader.dateOfBirth);
     if (age !== null) {
-      items.push({ label: 'Leeftijd', value: `${age} jaar` });
+      items.push({ label: 'age', value: t('labels.ageYears', { age }) });
     }
 
     if (selectedLeader.isStudent && selectedLeader.fieldOfStudy) {
-      items.push({ label: 'Studie', value: `Student ${selectedLeader.fieldOfStudy}` });
+      items.push({
+        label: 'study',
+        value: t('labels.study', { fieldOfStudy: selectedLeader.fieldOfStudy }),
+      });
     } else if (selectedLeader.occupation) {
-      items.push({ label: 'Beroep', value: selectedLeader.occupation });
+      items.push({ label: 'occupation', value: selectedLeader.occupation });
     }
 
-    const memberSince = formatYearCount(selectedLeader.memberSince);
-    if (memberSince) {
-      items.push({ label: 'Actief sinds', value: memberSince });
+    if (selectedLeader.memberSince !== null && selectedLeader.memberSince !== undefined) {
+      items.push({
+        label: 'memberSince',
+        value: t('labels.years', { years: selectedLeader.memberSince }),
+      });
     }
 
-    const leaderSince = formatYearCount(selectedLeader.leaderSince);
-    if (leaderSince) {
-      items.push({ label: 'Leiding sinds', value: leaderSince });
+    if (selectedLeader.leaderSince !== null && selectedLeader.leaderSince !== undefined) {
+      items.push({
+        label: 'leaderSince',
+        value: t('labels.years', { years: selectedLeader.leaderSince }),
+      });
     }
 
     items.push({
-      label: 'E-mail',
+      label: 'email',
       value: deriveEmail(selectedLeader.firstName, selectedLeader.lastName),
     });
 
     return items;
-  }, [selectedLeader]);
+  }, [selectedLeader, t]);
 
   return (
     <div className="wie-is-wie">
@@ -232,7 +235,7 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
                 src={ProfilePicture}
                 width={530}
                 height={530}
-                alt="Default profile picture"
+                alt={t('defaultProfilePictureAlt')}
                 className="wie-is-wie__modal-image"
               />
             )}
@@ -250,13 +253,13 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
                       key={label}
                       className={cn('wie-is-wie__modal-detail', {
                         'wie-is-wie__modal-detail--span-2':
-                          label === 'E-mail' ||
-                          (label === 'Tak' && !selectedLeader.groupFunction?.title),
+                          label === 'email' ||
+                          (label === 'group' && !selectedLeader.groupFunction?.title),
                       })}
                     >
-                      <dt className="wie-is-wie__modal-detail-label">{label}</dt>
+                      <dt className="wie-is-wie__modal-detail-label">{t(`labels.${label}`)}</dt>
                       <dd className="wie-is-wie__modal-detail-value">
-                        {label === 'E-mail' ? (
+                        {label === 'email' ? (
                           <SLLink href={`mailto:${value}`}>{value}</SLLink>
                         ) : (
                           value
@@ -268,7 +271,9 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
               )}
               {selectedLeader.bio && (
                 <div className="wie-is-wie__modal-bio">
-                  <p className="wie-is-wie__modal-detail-label">Over {selectedLeader.firstName}</p>
+                  <p className="wie-is-wie__modal-detail-label">
+                    {t('bioTitle', { firstName: selectedLeader.firstName })}
+                  </p>
                   <Typography data={selectedLeader.bio} />
                 </div>
               )}
