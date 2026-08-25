@@ -15,6 +15,11 @@ Frontend to the new and refreshed [Scouting Lommel website](https://www.scouting
 - [NextJS](https://nextjs.org/) frontend application
 - [Strapi](https://strapi.io/) headless CMS backend
 
+## Environments
+
+- **Production** — https://www.scoutinglommel.be — deploys when a `v*` git tag is pushed (see `.github/workflows/deploy-production.yml`).
+- **Staging** — https://staging.scoutinglommel.be — auto-deploys on every push to `main`.
+
 ## Getting started
 
 ### Installation
