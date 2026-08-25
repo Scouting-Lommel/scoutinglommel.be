@@ -1,5 +1,4 @@
 import { DocumentNode, print } from 'graphql';
-import { getCacheOptions } from '@/lib/api/cache';
 
 type GraphQLError = {
   message: string;
@@ -12,7 +11,11 @@ const fetchAPI = async (
   operation: 'query' | 'mutation' = 'query',
 ) => {
   let authHeaders: Record<string, string>;
-  let cacheOptions: ReturnType<typeof getCacheOptions> | { cache: 'no-store' };
+
+  // Never cache CMS responses: caching left data stale for up to 7 days because
+  // the Data Cache engages before headers() marks the route dynamic, and the
+  // revalidate webhook could not reliably invalidate those entries.
+  const cacheOptions = { cache: 'no-store' as const };
 
   switch (operation) {
     case 'mutation': {
@@ -21,34 +24,15 @@ const fetchAPI = async (
         throw new Error('STRAPI_MUTATION_API_TOKEN is required for GraphQL mutations');
       }
       authHeaders = { Authorization: `Bearer ${token}` };
-      cacheOptions = { cache: 'no-store' };
       break;
     }
     default: {
       const token = process.env.STRAPI_API_TOKEN;
       authHeaders = token ? { Authorization: `Bearer ${token}` } : {};
-
-      // Determine cache strategy based on query content.
-      // User data takes precedence over static data so mixed queries
-      // (e.g. groups + activities) do not get cached as static.
-      const queryString = print(query);
-      const isUserData = queryString.includes('activities') || queryString.includes('files');
-      const isStaticData =
-        queryString.includes('generalData') ||
-        queryString.includes('groups') ||
-        queryString.includes('rentalLocations');
-
-      if (isUserData) {
-        cacheOptions = getCacheOptions('USER');
-      } else if (isStaticData) {
-        cacheOptions = getCacheOptions('STATIC');
-      } else {
-        cacheOptions = getCacheOptions('DYNAMIC');
-      }
     }
   }
 
-  const request = async (withAuth: boolean, bypassCache = false) =>
+  const request = async (withAuth: boolean) =>
     fetch(`${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/graphql`, {
       method: 'POST',
       headers: {
@@ -60,7 +44,6 @@ const fetchAPI = async (
         variables,
       }),
       ...cacheOptions,
-      ...(bypassCache ? { cache: 'no-store' as const } : {}),
     });
 
   let res = await request(Object.keys(authHeaders).length > 0);
@@ -81,7 +64,7 @@ const fetchAPI = async (
       `GraphQL auth error (${res.status}), retrying as public request:`,
       json.errors ?? 'HTTP authentication failure',
     );
-    res = await request(false, true);
+    res = await request(false);
     json = await res.json();
   }
 

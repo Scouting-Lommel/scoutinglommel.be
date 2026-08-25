@@ -6,8 +6,6 @@ import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import Blocks from '@/content-blocks';
 import { getHomePage } from './api';
 
-export const revalidate = 3600;
-
 export const generateMetadata = async (): Promise<Metadata> => {
   const [seoData, homePage] = await Promise.all([getSeoData(), getHomePage()]);
 

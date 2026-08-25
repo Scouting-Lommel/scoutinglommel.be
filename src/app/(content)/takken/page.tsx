@@ -6,8 +6,6 @@ import Blocks from '@/content-blocks';
 import { getGroupsPage } from './api';
 import { getGeneralData } from '../../api';
 
-export const revalidate = 3600;
-
 export const generateMetadata = async (): Promise<Metadata> => {
   const { generalData } = await getGeneralData();
   const { groupsPage } = await getGroupsPage();

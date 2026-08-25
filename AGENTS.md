@@ -50,8 +50,8 @@ Pages call data functions + pass to Blocks/components
 ```
 
 **Key files:**
-- `src/api/strapi.ts` — Core GraphQL fetcher with token auth and cache strategy detection
-- `src/lib/api/cache.ts` — Cache configurations: STATIC (7d), DYNAMIC (1h), USER (30m), WRITE (none)
+- `src/api/strapi.ts` — Core GraphQL fetcher with token auth; fetches are always `no-store` so CMS changes appear on the next page load (no Data Cache)
+- `src/lib/api/cache.ts` — `Cache-Control` headers for API route responses only (`getCacheHeaders`)
 - `src/lib/api.ts` — `generateApiQuery()` wrapper for type-safe queries
 - `codegen.ts` — GraphQL Code Generator config, outputs to `src/types/generated/Graphql.ts`
 - `schema.graphql` — **committed**; refreshed by CI on push to main (`.github/workflows/update-schema.yml` introspects Strapi **staging**, whose schema mirrors production). Production introspection is disabled, so builds run codegen against the committed schema with `SKIP_FETCH_SCHEMA=1` instead of fetching live.
@@ -172,7 +172,7 @@ pnpm run storybook    # Start Storybook
 | Edit auth logic | `src/app/api/auth/[...nextauth]/`, `src/middlewares/` |
 | Form validation schemas | `src/components/organisms/Forms/*/types.ts` |
 | Email templates | `src/emails/templates/` |
-| Cache config | `src/lib/api/cache.ts` |
+| API response cache headers | `src/lib/api/cache.ts` |
 
 ## Tools & Integrations
 
@@ -189,5 +189,5 @@ pnpm run storybook    # Start Storybook
 - **Image optimization** uses Next.js Image with remotePatterns for Cloudinary and Strapi uploads
 - **Fonts**: Montserrat + Nunito Sans via next/font (CSS variables)
 - **SVG handling**: `@svgr/webpack` converts SVGs to React components
-- **Route revalidation**: Pages use `export const revalidate = 3600` (1 hour) by default
+- **Content freshness**: GraphQL fetches are `no-store` — CMS edits appear on the next page load. The `/api/revalidate` webhook endpoint is kept only to acknowledge Strapi's webhook config (no cache exists to invalidate)
 - **pnpm only** — `preinstall` hook enforces pnpm via `only-allow`

@@ -2,8 +2,6 @@ import { Metadata } from 'next';
 import type { JSX } from 'react';
 import UnauthorizedBlock from '@/components/organisms/Unauthorized';
 
-export const revalidate = 3600;
-
 export const metadata: Metadata = {
   title: 'Geen toegang tot deze pagina',
   description: 'Scouting Sint-Pieter Lommel',
