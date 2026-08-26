@@ -42,3 +42,5 @@ For detailed instructions, check out the [getting started docs](/documentation/g
 
 - [Vincent Wijshoff](https://github.com/VincentWijshoff)
 - [Seppe Alaerts](https://github.com/seppealaerts)
+
+> Deployment flow: staging auto-deploys on main push; production deploys on v* tags.
