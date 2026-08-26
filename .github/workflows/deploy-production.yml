@@ -1,5 +1,9 @@
 name: Deploy Production
 
+# Rollback: re-tag the previous commit (git tag vX.Y.Z <sha> && git push origin vX.Y.Z)
+# and this workflow re-deploys it. `vercel rollback` is Pro/Enterprise-only, so
+# re-tagging is the rollback path on the hobby plan.
+
 on:
   push:
     tags: ['v*']
