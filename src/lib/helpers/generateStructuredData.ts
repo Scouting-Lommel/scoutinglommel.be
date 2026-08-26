@@ -11,7 +11,7 @@ type StructuredDataInput = {
 const generateStructuredData = (data: StructuredDataInput | null | undefined) => {
   if (!data) return {};
 
-const phoneItem = (data.contactItems ?? []).find((item) => item?.link?.startsWith('tel:'));
+  const phoneItem = (data.contactItems ?? []).find((item) => item?.link?.startsWith('tel:'));
   const telephone = phoneItem?.link?.replace('tel:', '') ?? undefined;
 
   // socials is a v5 flat array: [{ title, link, icon }]

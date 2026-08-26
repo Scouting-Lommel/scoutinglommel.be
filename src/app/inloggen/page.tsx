@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useSearchParams } from 'next/navigation';
 import { getProviders, signIn } from 'next-auth/react';
 import { Suspense, useEffect, useRef, useState, type JSX } from 'react';
@@ -33,7 +34,6 @@ const SignInContent = (): JSX.Element => {
 
   const [showGif, setShowGif] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const gifUrl = typeof letMeInGif === 'string' ? letMeInGif : letMeInGif.src;
   const isInsideRef = useRef(false);
 
   useEffect(() => {
@@ -47,12 +47,7 @@ const SignInContent = (): JSX.Element => {
       range.selectNodeContents(subtitle);
       const textRect = range.getBoundingClientRect();
 
-      return (
-        x >= textRect.left &&
-        x <= textRect.right &&
-        y >= textRect.top &&
-        y <= textRect.bottom
-      );
+      return x >= textRect.left && x <= textRect.right && y >= textRect.top && y <= textRect.bottom;
     };
 
     const handleMouseMove = (e: MouseEvent) => {
@@ -111,7 +106,14 @@ const SignInContent = (): JSX.Element => {
         userSelect: 'none',
       }}
     >
-      <img src={gifUrl} alt="" style={{ width: 200, height: 'auto', borderRadius: 8 }} />
+      <Image
+        src={letMeInGif}
+        alt=""
+        width={200}
+        height={200}
+        unoptimized
+        style={{ borderRadius: 8 }}
+      />
     </div>
   );
 

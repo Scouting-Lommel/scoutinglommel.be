@@ -24,7 +24,15 @@
 }
 
 .modal__inner {
-  padding: var(--space-36);
+  padding: var(--space-20);
+
+  @media (--mq-from-small) {
+    padding: var(--space-24);
+  }
+
+  @media (--mq-from-medium) {
+    padding: var(--space-36);
+  }
 }
 
 .modal__header {

@@ -10,7 +10,7 @@ const Leader = ({ firstName, lastName, image }: LeaderProps): JSX.Element => {
   return (
     <div className="leader__container">
       {image ? (
-        <SLImage data={image} loadingStrategy="lazy" className="leader__image" modMaximisable />
+        <SLImage data={image} loadingStrategy="lazy" className="leader__image" />
       ) : (
         <Image
           src={ProfilePicture}

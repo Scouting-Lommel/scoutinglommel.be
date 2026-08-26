@@ -49,9 +49,19 @@ const generateSitemap = async (sitemapData: SitemapQuery): Promise<SitemapEntry[
   const sources: SitemapSource[] = [
     { page: homePage, url: `${siteUrl}/`, changeFrequency: 'weekly', priority: 1.0 },
     { page: groupsPage, changeFrequency: 'monthly', priority: 0.9 },
-    ...(groups ?? []).map<SitemapSource>((page) => ({ page, path: 'takken', changeFrequency: 'monthly', priority: 0.8 })),
+    ...(groups ?? []).map<SitemapSource>((page) => ({
+      page,
+      path: 'takken',
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    })),
     { page: rentalPage, changeFrequency: 'monthly', priority: 0.7 },
-    ...(rentalLocations ?? []).map<SitemapSource>((page) => ({ page, path: 'verhuur', changeFrequency: 'monthly', priority: 0.7 })),
+    ...(rentalLocations ?? []).map<SitemapSource>((page) => ({
+      page,
+      path: 'verhuur',
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    })),
     { page: infoPage, changeFrequency: 'monthly', priority: 0.8 },
     { page: registerPage, changeFrequency: 'monthly', priority: 0.9 },
     { page: contactPage, changeFrequency: 'yearly', priority: 0.7 },

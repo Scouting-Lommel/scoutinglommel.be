@@ -7,7 +7,9 @@ type EventSchemaInput = {
   endTime?: string | null;
 };
 
-const generateEventSchema = (events: Array<EventSchemaInput | null | undefined> | null | undefined) => {
+const generateEventSchema = (
+  events: Array<EventSchemaInput | null | undefined> | null | undefined,
+) => {
   if (!events || events.length === 0) return null;
 
   const eventSchema = events.flatMap((event) => {
@@ -18,7 +20,9 @@ const generateEventSchema = (events: Array<EventSchemaInput | null | undefined> 
         '@context': 'https://schema.org',
         '@type': 'Event',
         name: event.title,
-        startDate: event.startTime ? `${event.startDate}T${formatTime(event.startTime)}` : event.startDate,
+        startDate: event.startTime
+          ? `${event.startDate}T${formatTime(event.startTime)}`
+          : event.startDate,
         ...(event.endDate
           ? {
               endDate: event.endTime

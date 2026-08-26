@@ -14,7 +14,13 @@ const SLLink = ({
   const linkClassnames = cn('link', `link--${variant}`, className);
 
   let LinkComponent: typeof NextLink | 'a' = NextLink;
-  if (typeof href === 'string' && (href.startsWith('#') || href.startsWith('https://'))) {
+  if (
+    typeof href === 'string' &&
+    (href.startsWith('#') ||
+      href.startsWith('https://') ||
+      href.startsWith('mailto:') ||
+      href.startsWith('tel:'))
+  ) {
     LinkComponent = 'a';
   }
 

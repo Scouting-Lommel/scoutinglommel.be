@@ -24,13 +24,12 @@ const Modal = ({ id, title, children, open, handleCloseModal }: ModalProps): JSX
     const closeKeyDownHandler = (event: KeyboardEvent) => {
       if (event.key !== 'Escape') return;
       closeModal();
-      document.removeEventListener('keydown', closeKeyDownHandler);
     };
 
     const clickHandler = (event: MouseEvent) => {
       const target = event.target as Node;
 
-      if (!modal || !modal.current || !target) {
+      if (!modal.current || !target) {
         return;
       }
 
@@ -54,7 +53,6 @@ const Modal = ({ id, title, children, open, handleCloseModal }: ModalProps): JSX
       }
 
       closeModal();
-      document.removeEventListener('click', clickHandler);
     };
 
     if (open) {
@@ -66,7 +64,7 @@ const Modal = ({ id, title, children, open, handleCloseModal }: ModalProps): JSX
       document.removeEventListener('keydown', closeKeyDownHandler);
       document.removeEventListener('click', clickHandler);
     };
-  });
+  }, [open, id, closeModal]);
 
   useEffect(() => {
     if (open) {
@@ -78,7 +76,7 @@ const Modal = ({ id, title, children, open, handleCloseModal }: ModalProps): JSX
   }, [open, openModal, closeModal]);
 
   return (
-    <dialog className="modal" ref={modal} role="none">
+    <dialog className="modal" ref={modal} role="dialog" aria-modal="true">
       <div id={id} className="modal__inner">
         <div className="modal__header">
           <button
@@ -89,7 +87,7 @@ const Modal = ({ id, title, children, open, handleCloseModal }: ModalProps): JSX
           >
             <Icon name="close" size="lg" />
           </button>
-          <div className="t-headline-3 modal__header__title">{title}</div>
+          {title && <div className="t-headline-3 modal__header__title">{title}</div>}
         </div>
         <div className="modal__content">{children}</div>
       </div>

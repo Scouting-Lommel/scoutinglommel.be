@@ -76,5 +76,32 @@
     "button": {
       "label": "Terug naar de homepagina"
     }
+  },
+  "whoIsWho": {
+    "title": "Wie is wie?",
+    "subtitle": "Leidingoverzicht",
+    "labels": {
+      "group": "Tak",
+      "groupFunction": "Takfunctie",
+      "groupFunctionDescription": "Omschrijving",
+      "age": "Leeftijd",
+      "study": "Studie",
+      "occupation": "Beroep",
+      "memberSince": "Actief sinds",
+      "leaderSince": "Leiding sinds",
+      "email": "E-mail"
+    },
+    "values": {
+      "age": "{age} jaar",
+      "study": "Student {study}",
+      "years": "{years}"
+    },
+    "bioTitle": "Over {firstName}",
+    "defaultProfilePictureAlt": "Standaard profielfoto",
+    "navCta": {
+      "title": "Wie is wie?",
+      "intro": "Wil je weten wie je leiding is of ben je op zoek naar informatie of contactgegevens? Neem een kijkje in onze digitale wie-is-wie.",
+      "ctaLabel": "Onze leiding"
+    }
   }
 }
