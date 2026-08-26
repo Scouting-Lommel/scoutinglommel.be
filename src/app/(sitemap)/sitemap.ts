@@ -3,6 +3,8 @@ import generateSitemap from '@/lib/helpers/generateSitemap';
 import { getSitemap } from './api';
 
 const Sitemap = async (): Promise<MetadataRoute.Sitemap> => {
+  if (process.env.APP_ENV !== 'production') return [];
+
   try {
     const data = await getSitemap();
     const sitemap = await generateSitemap(data);

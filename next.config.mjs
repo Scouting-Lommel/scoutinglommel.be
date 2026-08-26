@@ -1,5 +1,8 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 
+const isStagingBuild =
+  process.env.APP_ENV === 'staging' || process.env.NEXT_PUBLIC_APP_ENV === 'staging';
+
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig = {
@@ -49,6 +52,7 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: [
+          ...(isStagingBuild ? [{ key: 'X-Robots-Tag', value: 'noindex, nofollow' }] : []),
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
           { key: 'X-XSS-Protection', value: '1; mode=block' },
