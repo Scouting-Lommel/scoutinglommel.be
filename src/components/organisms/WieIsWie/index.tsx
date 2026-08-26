@@ -36,12 +36,11 @@ const updateLeiderUrl = (slug: string | null, method: 'push' | 'replace' = 'repl
 const GROUP_ORDER = ['Kapoenen', 'Welpen', 'Akabe', 'Jonggivers', 'Givers', 'Jin'] as const;
 
 const getGroupSortIndex = (name: string): number => {
-  const idx = GROUP_ORDER.indexOf((name as (typeof GROUP_ORDER)[number]));
+  const idx = GROUP_ORDER.indexOf(name as (typeof GROUP_ORDER)[number]);
   return idx >= 0 ? idx : GROUP_ORDER.length;
 };
 
-const sortByLastName = (a: LeaderDetail, b: LeaderDetail) =>
-  a.lastName.localeCompare(b.lastName);
+const sortByLastName = (a: LeaderDetail, b: LeaderDetail) => a.lastName.localeCompare(b.lastName);
 
 const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
   const [selectedLeader, setSelectedLeader] = useState<SelectedLeader | null>(null);

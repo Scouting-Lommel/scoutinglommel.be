@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import type { JSX } from 'react';
 import Button from '@/components/atoms/Button';
 import DropdownItem from '@/components/atoms/DropdownItem';
@@ -5,7 +6,6 @@ import Icon from '@/components/atoms/Icon';
 import Typography from '@/components/atoms/Typography';
 import { Dropdown as DropdownProps, DropdownNavItem, DropdownCta } from './types';
 import './Dropdown.css';
-import { useTranslations } from 'next-intl';
 
 const Dropdown = ({
   itemKey,
