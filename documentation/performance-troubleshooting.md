@@ -20,27 +20,15 @@ The application implements several performance optimizations:
 
 ### Caching Strategy
 
-- **Static Data**: 1-hour cache for navigation/footer data (rarely changes)
-- **Dynamic Data**: 5-minute cache for page content
+- **CMS data**: no server-side caching — Strapi fetches are `no-store` so CMS edits appear on the next page load (see [Data Fetching & Caching](data-fetching-and-caching.md))
+- **Client-side data**: events, activities, files and links are fetched in the browser to offload server CPU
 - **Assets**: CDN caching via Vercel (automatic optimization and edge caching)
 
 ## Caching Strategy
 
-### Next.js ISR Configuration
+### CMS Data
 
-```typescript
-// Static data (navigation/footer)
-next: {
-  revalidate: 3600, // 1 hour
-  tags: ['general-data']
-}
-
-// Dynamic content
-next: {
-  revalidate: 300, // 5 minutes
-  tags: ['dynamic-data']
-}
-```
+There is no ISR/Data Cache for Strapi content. Fetching is always `no-store`; the revalidate webhook is an acknowledgment endpoint only. See [Data Fetching & Caching](data-fetching-and-caching.md) for the full rationale and decision rules.
 
 ### Vercel CDN Configuration
 

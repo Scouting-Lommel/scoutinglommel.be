@@ -208,5 +208,5 @@ Two Vercel environments (team "Scouting Lommel", hobby plan):
 - **Image optimization** uses Next.js Image with remotePatterns for Cloudinary and Strapi uploads
 - **Fonts**: Montserrat + Nunito Sans via next/font (CSS variables)
 - **SVG handling**: `@svgr/webpack` converts SVGs to React components
-- **Content freshness**: GraphQL fetches are `no-store` — CMS edits appear on the next page load. The `/api/revalidate` webhook endpoint is kept only to acknowledge Strapi's webhook config (no cache exists to invalidate)
+- **Content freshness & caching**: GraphQL fetches are `no-store` — CMS edits appear on the next page load. Events/activities/files/links are fetched client-side to offload Vercel CPU. Before adding any server-side caching or changing how these are fetched, read `documentation/data-fetching-and-caching.md` — the previous cache layer caused 7-day-stale content and was removed
 - **pnpm only** — `preinstall` hook enforces pnpm via `only-allow`
