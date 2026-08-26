@@ -15,13 +15,16 @@ export type DropdownItem = {
   modTargetBlank?: boolean;
 };
 
-export type DropdownCta = {
-  title: string;
-  intro: string;
-  ctaLabel: string;
-  ctaLink?: string;
-  ctaOnClick?: MouseEventHandler<HTMLElement>;
-};
+export type DropdownCta =
+  | {
+      title: string;
+      intro: string;
+      ctaLabel: string;
+      ctaLink?: string;
+      ctaOnClick?: MouseEventHandler<HTMLElement>;
+    }
+  | null
+  | undefined;
 
 export type Dropdown = {
   itemKey: number;

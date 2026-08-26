@@ -47,13 +47,13 @@ const LeaderModal = ({ leader, onClose }: LeaderModalProps): JSX.Element => {
 
     const age = calculateAge(leader.dateOfBirth);
     if (age !== null) {
-      items.push({ label: 'age', value: t('labels.ageYears', { age }) });
+      items.push({ label: 'age', value: t('values.age', { age }) });
     }
 
     if (leader.isStudent && leader.fieldOfStudy) {
       items.push({
         label: 'study',
-        value: `Student ${leader.fieldOfStudy}`,
+        value: t('values.study', { study: leader.fieldOfStudy }),
       });
     } else if (leader.occupation) {
       items.push({ label: 'occupation', value: leader.occupation });
@@ -62,14 +62,14 @@ const LeaderModal = ({ leader, onClose }: LeaderModalProps): JSX.Element => {
     if (leader.memberSince !== null && leader.memberSince !== undefined) {
       items.push({
         label: 'memberSince',
-        value: t('labels.years', { years: leader.memberSince }),
+        value: t('values.years', { years: leader.memberSince }),
       });
     }
 
     if (leader.leaderSince !== null && leader.leaderSince !== undefined) {
       items.push({
         label: 'leaderSince',
-        value: t('labels.years', { years: leader.leaderSince }),
+        value: t('values.years', { years: leader.leaderSince }),
       });
     }
 

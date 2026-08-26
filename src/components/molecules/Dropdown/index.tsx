@@ -3,8 +3,9 @@ import Button from '@/components/atoms/Button';
 import DropdownItem from '@/components/atoms/DropdownItem';
 import Icon from '@/components/atoms/Icon';
 import Typography from '@/components/atoms/Typography';
-import { Dropdown as DropdownProps, DropdownNavItem } from './types';
+import { Dropdown as DropdownProps, DropdownNavItem, DropdownCta } from './types';
 import './Dropdown.css';
+import { useTranslations } from 'next-intl';
 
 const Dropdown = ({
   itemKey,
@@ -17,9 +18,19 @@ const Dropdown = ({
   rentalLocations,
   toggleDropdown,
 }: DropdownProps): JSX.Element => {
+  const tWhoIsWho = useTranslations('common.whoIsWho.navCta');
+
   let navItem: DropdownNavItem[] = [];
+  let cta: DropdownCta = dropdownCta;
+
   if (path === '/takken') {
     navItem = groups!;
+    cta = {
+      title: tWhoIsWho('title'),
+      intro: tWhoIsWho('intro'),
+      ctaLabel: tWhoIsWho('ctaLabel'),
+      ctaLink: '/wie-is-wie',
+    };
   }
   if (path === '/verhuur') {
     navItem = rentalLocations!;
@@ -73,14 +84,14 @@ const Dropdown = ({
               />
             )}
           </div>
-          {dropdownCta && (
+          {cta && (
             <div className="dropdown__cta">
-              <p className="dropdown__cta__title t-headline-2">{dropdownCta.title}</p>
-              <Typography data={dropdownCta.intro} className="dropdown__cta__intro" modNoStyle />
+              <p className="dropdown__cta__title t-headline-2">{cta.title}</p>
+              <Typography data={cta.intro} className="dropdown__cta__intro" modNoStyle />
               <Button
-                label={dropdownCta.ctaLabel}
-                href={dropdownCta.ctaLink}
-                onClick={dropdownCta.ctaOnClick}
+                label={cta.ctaLabel}
+                href={cta.ctaLink}
+                onClick={cta.ctaOnClick}
                 modSmall
                 className="dropdown__cta__button"
               />
