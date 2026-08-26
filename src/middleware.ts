@@ -1,11 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server';
 import {
+  IS_STAGING,
   authMiddleware,
   authMiddlewareConfig,
   groupsMiddleware,
   groupsMiddlewareConfig,
   signinMiddleware,
   signinMiddlewareConfig,
+  stagingMiddleware,
 } from './middlewares';
 
 /**
@@ -35,8 +37,13 @@ function matchesPattern(url: string, pattern: string): boolean {
   }
 }
 
-export default function middleware(req: NextRequest) {
+export default async function middleware(req: NextRequest) {
   const url: string = req.nextUrl.pathname;
+
+  if (IS_STAGING) {
+    const gate = await stagingMiddleware(req);
+    if (gate) return gate;
+  }
 
   if (signinMiddlewareConfig.some((item: string) => matchesPattern(url, item))) {
     return signinMiddleware(req);
@@ -53,7 +60,8 @@ export default function middleware(req: NextRequest) {
   // Never negotiate markdown for API routes, protected pages or static files.
   // The x-markdown-agent header marks internal fetches from the markdown route
   // so they are never rewritten back into themselves.
-  const skipMarkdown = /^\/(api|dashboard|inloggen|geen-toegang|playground)\b|^\/favicon\.ico$|^\/robots\.txt$|^\/sitemap\.xml$|\.[a-z0-9]{2,5}$/i;
+  const skipMarkdown =
+    /^\/(api|dashboard|inloggen|geen-toegang|playground)\b|^\/favicon\.ico$|^\/robots\.txt$|^\/sitemap\.xml$|\.[a-z0-9]{2,5}$/i;
   const wantsMarkdown = (req.headers.get('accept') ?? '').includes('text/markdown');
 
   if (wantsMarkdown && !req.headers.has('x-markdown-agent') && !skipMarkdown.test(url)) {
