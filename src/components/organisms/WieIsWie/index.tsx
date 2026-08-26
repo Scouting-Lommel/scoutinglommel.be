@@ -33,18 +33,45 @@ const updateLeiderUrl = (slug: string | null, method: 'push' | 'replace' = 'repl
   }
 };
 
+const GROUP_ORDER = ['Kapoenen', 'Welpen', 'Akabe', 'Jonggivers', 'Givers', 'Jin'] as const;
+
+const getGroupSortIndex = (name: string): number => {
+  const idx = GROUP_ORDER.indexOf((name as (typeof GROUP_ORDER)[number]));
+  return idx >= 0 ? idx : GROUP_ORDER.length;
+};
+
+const sortByLastName = (a: LeaderDetail, b: LeaderDetail) =>
+  a.lastName.localeCompare(b.lastName);
+
 const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
   const [selectedLeader, setSelectedLeader] = useState<SelectedLeader | null>(null);
 
   const activeGroups = useMemo(
     () =>
-      groups.filter(
-        (group): group is GroupWithLeaders =>
-          !!group &&
-          (group.leaders?.filter((leader): leader is LeaderDetail => !!leader).length ?? 0) > 0,
-      ),
+      groups
+        .filter(
+          (group): group is GroupWithLeaders =>
+            !!group &&
+            (group.leaders?.filter((leader): leader is LeaderDetail => !!leader).length ?? 0) > 0,
+        )
+        .sort((a, b) => {
+          const diff = getGroupSortIndex(a.name) - getGroupSortIndex(b.name);
+          return diff !== 0 ? diff : a.name.localeCompare(b.name);
+        }),
     [groups],
   );
+
+  const groepsleiders = useMemo(() => {
+    const leaders: (LeaderDetail & { groupName: string })[] = [];
+    for (const group of activeGroups) {
+      for (const leader of group.leaders ?? []) {
+        if (leader && leader.isGroupLeader) {
+          leaders.push({ ...leader, groupName: group.name });
+        }
+      }
+    }
+    return leaders.sort(sortByLastName);
+  }, [activeGroups]);
 
   const findLeaderBySlug = useCallback(
     (slug: string): SelectedLeader | null => {
@@ -99,6 +126,24 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
 
   return (
     <div className="wie-is-wie">
+      {groepsleiders.length > 0 && (
+        <section className="wie-is-wie__tak">
+          <div className="sl-layout">
+            <h2 className="t-headline-2 wie-is-wie__tak-title">Groepsleiding</h2>
+            <div className="wie-is-wie__leaders">
+              {groepsleiders.map((leader) => (
+                <LeaderCard
+                  key={leader.documentId}
+                  leader={leader}
+                  groupName={leader.groupName}
+                  onClick={openLeaderModal}
+                />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {activeGroups.map((group) => (
         <section key={group.slug ?? group.documentId} className="wie-is-wie__tak">
           <div className="sl-layout">

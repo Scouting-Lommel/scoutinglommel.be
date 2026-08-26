@@ -23,7 +23,6 @@ const LeaderCard = ({ leader, groupName, onClick }: LeaderCardProps): JSX.Elemen
         lastName={leader.lastName}
         image={leader.image ? toCloudinaryImage(leader.image) : undefined}
       />
-      {leader.totem && <span className="wie-is-wie__leader-totem">{leader.totem}</span>}
     </button>
   );
 };
