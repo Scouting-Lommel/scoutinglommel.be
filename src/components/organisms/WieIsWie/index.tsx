@@ -152,9 +152,21 @@ const WieIsWie = ({ groups }: WieIsWieProps): JSX.Element => {
               {[...(group.leaders ?? [])]
                 .filter((leader): leader is LeaderDetail => !!leader)
                 .sort((a, b) => {
-                  if (a.isGroupLeader !== b.isGroupLeader) {
-                    return a.isGroupLeader ? -1 : 1;
+                  const aTitle = a.groupFunction?.title ?? '';
+                  const bTitle = b.groupFunction?.title ?? '';
+                  const aIsTakverantwoordelijke = aTitle === 'Takverantwoordelijke';
+                  const bIsTakverantwoordelijke = bTitle === 'Takverantwoordelijke';
+
+                  if (aIsTakverantwoordelijke !== bIsTakverantwoordelijke) {
+                    return aIsTakverantwoordelijke ? -1 : 1;
                   }
+
+                  if (aTitle !== bTitle) {
+                    if (!aTitle) return 1;
+                    if (!bTitle) return -1;
+                    return aTitle.localeCompare(bTitle);
+                  }
+
                   return a.lastName.localeCompare(b.lastName);
                 })
                 .map((leader) => (
