@@ -53,7 +53,7 @@ const LeaderModal = ({ leader, onClose }: LeaderModalProps): JSX.Element => {
     if (leader.isStudent && leader.fieldOfStudy) {
       items.push({
         label: 'study',
-        value: t('labels.study', { fieldOfStudy: leader.fieldOfStudy }),
+        value: `Student ${leader.fieldOfStudy}`,
       });
     } else if (leader.occupation) {
       items.push({ label: 'occupation', value: leader.occupation });
