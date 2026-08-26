@@ -1,6 +1,7 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 
-const isStagingBuild = process.env.APP_ENV === 'staging' || process.env.NEXT_PUBLIC_APP_ENV === 'staging';
+const isStagingBuild =
+  process.env.APP_ENV === 'staging' || process.env.NEXT_PUBLIC_APP_ENV === 'staging';
 
 const withNextIntl = createNextIntlPlugin();
 
