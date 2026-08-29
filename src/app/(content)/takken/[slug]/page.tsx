@@ -1,28 +1,11 @@
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import type { JSX } from 'react';
-import { getNavigationData } from '@/lib/api/general/api';
 import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import Blocks from '@/content-blocks';
-import type { GetGroupPageQuery, NavigationDataQuery } from '@/types/generated/Graphql';
+import type { GetGroupPageQuery } from '@/types/generated/Graphql';
 import { getGroupPage } from './api';
 import { getGeneralData } from '../../../api';
-
-type NavigationGroup = NonNullable<NavigationDataQuery['groups'][number]>;
-
-export async function generateStaticParams() {
-  try {
-    const data = await getNavigationData();
-    return data.groups
-      .filter((group): group is NavigationGroup => !!group && !!group.slug)
-      .map((group) => ({
-        slug: group.slug,
-      }));
-  } catch (error) {
-    console.warn('[generateStaticParams] Failed to fetch group slugs, falling back to SSR:', error);
-    return [];
-  }
-}
 
 type Props = { params: Promise<{ slug: string }> };
 
