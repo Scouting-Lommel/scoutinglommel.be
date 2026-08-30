@@ -25,6 +25,12 @@
     "5": "Vrijdag",
     "6": "Zaterdag"
   },
+  "error": {
+    "title": "Er ging iets mis bij het laden van deze pagina.",
+    "button": {
+      "label": "Terug naar de homepagina"
+    }
+  },
   "fetchActivitiesError": "Er ging iets fout tijdens het ophalen van de activiteiten. Probeer het later opnieuw.",
   "fetchEventsError": "Er ging iets fout tijdens het ophalen van de evenementen. Probeer het later opnieuw.",
   "fetchFilesError": "Er ging iets fout tijdens het ophalen van de links en bestanden. Probeer het later opnieuw.",

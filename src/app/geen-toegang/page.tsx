@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
+import { getTranslations } from 'next-intl/server';
 import type { JSX } from 'react';
-import UnauthorizedBlock from '@/components/organisms/Unauthorized';
+import ErrorBlock from '@/components/organisms/ErrorBlock';
 
 export const metadata: Metadata = {
   title: 'Geen toegang tot deze pagina',
@@ -11,8 +12,17 @@ export const metadata: Metadata = {
   },
 };
 
-const UnauthorizedPage = (): JSX.Element => {
-  return <UnauthorizedBlock />;
+const UnauthorizedPage = async (): Promise<JSX.Element> => {
+  const t = await getTranslations('common.unauthorized');
+
+  return (
+    <ErrorBlock
+      code="403"
+      heading="Geen toegang"
+      description={t('title')}
+      buttonLabel={t('button.label')}
+    />
+  );
 };
 
 export default UnauthorizedPage;
