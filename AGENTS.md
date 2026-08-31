@@ -13,6 +13,7 @@
 - **Always branch from `main`** or the current feature branch, except when explicitly instructed or when there is a logical reason to do otherwise
 - **Use atomic commits** — each commit should represent a single, complete, reversible change
 - **Work trunk-based** — prefer `rebase` over `merge` to keep history linear and clean
+- **Always format before committing** — run `pnpm exec prettier --write <changed files>` on changed files and verify `pnpm exec prettier --check <files>` passes before committing
 
 ### Commit Amend Rule
 When a change is a direct refinement, correction, or closely related follow-up to the **immediately preceding commit**, amend it rather than creating a new commit.
