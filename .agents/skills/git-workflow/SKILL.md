@@ -11,18 +11,21 @@ This repo's git conventions. Apply them to **every** git operation here. These r
 
 Every piece of work MUST be linked to a Linear ticket (`SL-<number>`). Working without a ticket is FORBIDDEN unless the user explicitly says so.
 
-- **Before starting any work**: verify the ticket exists via the Linear MCP (look up `SL-XXX` by identifier, use its title for the branch slug). If no ticket exists, STOP and ask the user.
+- **Before starting any work**: verify the ticket exists via the Linear MCP (look up `SL-XXX` by identifier, use its title for the branch slug). If no ticket exists, STOP and ask the user. Also check the ticket is a complete contract (context, description, acceptance criteria, out of scope) — if it lacks structure, write out the ticket first, asking the user for input when needed (see the `ticket-writing` skill).
 - **Branch name**: `feature/SL-XXX-short-slug` (e.g. `feature/SL-32-add-user-authentication`) — the branch name is where the ticket lives.
 - **Commit messages**: plain imperative summaries, NO ticket prefix. The branch is already scoped to the ticket, and commits are squashed on merge — the subcommits act as the changelog inside the squashed commit, so repeating the ticket id in each one is noise. The ticket reference lands on main via the PR title/description of the squash merge.
 
 ## Ticket lifecycle (keep status current)
 
-Update the ticket's status in Linear throughout development — never leave it in Backlog while work is happening:
+Update the ticket's status in Linear throughout development — never leave it in Backlog or Todo while work is happening:
 
-- `Backlog` → `In Progress` when you start working on it
-- `In Progress` → `In Review` when the branch/PR is up for review
-- `In Review` → `Done` when merged/completed
-- `Canceled` when the work is abandoned (add a comment saying why)
+- `Backlog` → `Todo` → `In Progress` when you start working on it (a ticket can move into `In Progress` from either `Backlog` or `Todo`)
+- `In Progress` → `In Review` when the branch/PR is up for review — **only with the user's explicit permission** (you can ask, but the user must authorize)
+- `In Review` → `Done` when merged/completed — **only with the user's explicit permission** (you can ask, but the user must authorize)
+- `Canceled` when the work is abandoned (add a comment saying why) — only with the user's explicit permission
+- `Duplicate` when the ticket duplicates another — only with the user's explicit permission
+
+Moving a ticket to `In Review`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
 
 Every ticket must live in a project (e.g. Improvements, Documentation, SEO & GEO) — a ticket without a project is incomplete. See the `ticket-writing` skill for how to write/edit tickets.
 

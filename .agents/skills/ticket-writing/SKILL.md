@@ -10,12 +10,18 @@ Every piece of work in this repo is tracked in Linear (`SL-<number>`). This skil
 ## Non-negotiables
 
 1. **Every ticket lives in a project.** When creating a ticket, always assign it to a project (e.g. Improvements, Documentation, SEO & GEO). A ticket without a project is incomplete.
-2. **Status tracks reality.** Update the ticket's status throughout development — never leave it in Backlog while work is happening:
-   - `Backlog` → `In Progress` when you start working on it
-   - `In Progress` → `In Review` when the PR/branch is up for review
-   - `In Review` → `Done` when merged/completed
-   - `Canceled` when the work is abandoned (with a comment saying why)
+2. **Status tracks reality.** Update the ticket's status throughout development — never leave it in Backlog or Todo while work is happening:
+   - `Backlog` → `Todo` → `In Progress` when you start working on it (a ticket can move into `In Progress` from either `Backlog` or `Todo`)
+   - `In Progress` → `In Review` when the PR/branch is up for review — **only with the user's explicit permission**. You can ask for it, but the user must authorize the move.
+   - `In Review` → `Done` when merged/completed — **only with the user's explicit permission**. You can ask for it, but the user must authorize the move.
+   - `Canceled` when the work is abandoned (with a comment saying why) — only with the user's explicit permission.
+   - `Duplicate` when the ticket duplicates another — only with the user's explicit permission.
+   - Moving a ticket to `In Review`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
 3. **Tickets are written for the next reader** — a human or agent picking it up cold, possibly weeks later.
+
+## Ticket readiness gate (before starting work)
+
+Before starting work on a ticket, check that it has the required structure: context (Goal), description (What to do), acceptance criteria, and out of scope. If the ticket is missing any of these — or the existing content is vague, ambiguous, or incomplete — **write out the ticket first**: fill in the missing structure so the ticket is a complete contract before any work begins. Ask the user for input when needed (when the missing content is a decision only the user can make, or the request is too vague to resolve yourself). Never start work on a ticket that is not a complete contract.
 
 ## Analyst phase (before writing)
 
