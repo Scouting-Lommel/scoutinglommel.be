@@ -13,8 +13,10 @@ concurrency:
 
 jobs:
   update-schema:
-    # Skip runs triggered by our own schema commit to avoid an infinite loop
-    if: github.actor != 'github-actions[bot]'
+    # Skip runs triggered by our own schema commit to avoid an infinite loop.
+    # Check the commit committer (not github.actor) so this also works when the
+    # push is made with a PAT, where the actor is the PAT owner.
+    if: github.event.head_commit.committer.name != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -43,13 +45,21 @@ jobs:
           STRAPI_API_TOKEN: ${{ secrets.STRAPI_API_TOKEN }}
 
       - name: Commit schema.graphql if changed
+        env:
+          # GITHUB_TOKEN cannot bypass branch protection; this token's owner must be
+          # in the branch rule's "Allow specified actors to bypass required pull requests"
+          SCHEMA_UPDATE_TOKEN: ${{ secrets.SCHEMA_UPDATE_TOKEN }}
         run: |
           if git diff --quiet HEAD -- schema.graphql; then
             echo "schema.graphql is unchanged — nothing to commit"
           else
+            if [ -z "${SCHEMA_UPDATE_TOKEN}" ]; then
+              echo "::error::SCHEMA_UPDATE_TOKEN secret is not set. It is required to push to the protected 'main' branch."
+              exit 1
+            fi
             git config user.name "github-actions[bot]"
             git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add schema.graphql
             git commit -m "chore: update schema.graphql from Strapi staging introspection"
-            git push
+            git push "https://x-access-token:${SCHEMA_UPDATE_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" HEAD:main
           fi
