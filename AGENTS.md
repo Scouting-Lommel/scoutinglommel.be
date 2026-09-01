@@ -9,6 +9,8 @@
 
 Every piece of work MUST be linked to a Linear ticket (`SL-<number>`). Working on something without a ticket is FORBIDDEN unless the user explicitly says so. If no ticket exists for the task, STOP and ask the user. Look up/verify tickets via the Linear MCP. Branch names and commit messages must carry the ticket id: branch `feature/SL-XXX-slug`, commit prefix `SL-XXX: `.
 
+Every ticket must live in a project (e.g. Improvements, Documentation, SEO & GEO). Keep the ticket's status current throughout development: `Backlog` → `In Progress` when starting, → `In Review` when the PR is up, → `Done` when merged. See the `ticket-writing` skill for ticket structure and lifecycle rules.
+
 ## Repo skills
 
 Deep reference lives in repo skills (`.agents/skills/`, symlinked for Claude Code) that auto-load on trigger:
@@ -19,6 +21,7 @@ Deep reference lives in repo skills (`.agents/skills/`, symlinked for Claude Cod
 | `deployment` | Deploying, releasing, tagging, rolling back, or touching Vercel/CI-CD config |
 | `data-fetching` | Changing how data is fetched/cached — no-store model, no server cache, client-side fetching rules |
 | `content-blocks` | Adding/editing a content block, GraphQL fragment/query, page, or component |
+| `ticket-writing` | Creating/editing/grooming Linear tickets — structure, status lifecycle, project assignment |
 
 ## Where to Look
 

@@ -15,6 +15,17 @@ Every piece of work MUST be linked to a Linear ticket (`SL-<number>`). Working w
 - **Branch name**: `feature/SL-XXX-short-slug` (e.g. `feature/SL-32-add-user-authentication`).
 - **Commit message**: prefix with the ticket id — `SL-XXX: <imperative summary>` (e.g. `SL-32: add user authentication feature`).
 
+## Ticket lifecycle (keep status current)
+
+Update the ticket's status in Linear throughout development — never leave it in Backlog while work is happening:
+
+- `Backlog` → `In Progress` when you start working on it
+- `In Progress` → `In Review` when the branch/PR is up for review
+- `In Review` → `Done` when merged/completed
+- `Canceled` when the work is abandoned (add a comment saying why)
+
+Every ticket must live in a project (e.g. Improvements, Documentation, SEO & GEO) — a ticket without a project is incomplete. See the `ticket-writing` skill for how to write/edit tickets.
+
 ## Core rules
 
 1. **Fetch before any git operation.** Always `git fetch` (or `git pull`) before creating branches, rebasing, or reviewing PRs — never branch from a stale local branch.
