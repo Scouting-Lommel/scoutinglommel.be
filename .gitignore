@@ -49,6 +49,9 @@ tsconfig.tsbuildinfo
 # claude
 CLAUDE.md
 .claude/
+!.claude/
+!.claude/skills/
+!.claude/skills/**
 
 # opencode
 .omo

@@ -28,9 +28,10 @@ DNS records are managed by [CloudFlare](https://www.cloudflare.com). Other than 
 
 Deployments for this project are fully automated using [Vercel](https://vercel.com) with the following deployment strategy:
 
-- **Automatic deployment:** every push to the `main` branch automatically triggers a build and deployment to the production environment.
+- **Staging:** every push to the `main` branch automatically triggers a build and deployment to the staging environment (`staging.scoutinglommel.be`).
+- **Production:** deploys **only** when a `v*` git tag is pushed, via `.github/workflows/deploy-production.yml` (Vercel CLI: `vercel pull` → `vercel build` → `vercel deploy --prebuilt --prod`). Git auto-deploy is disconnected for production.
 - **Build process:** Vercel automatically runs `pnpm run build` and deploys the built application from the `.next` directory.
-- **Environment:** The application is deployed directly to the production environment on each push to main.
+- **Schema note:** `SKIP_FETCH_SCHEMA=1` must be set on both Vercel projects — builds run codegen against the committed `schema.graphql` (live introspection is disabled on production Strapi). Both projects use Node 24.x.
 
 ### Backend hosting
 
@@ -42,11 +43,12 @@ Errors will be collected in a [Sentry](https://www.sentry.com) dashboard.
 
 ## Environments
 
-This project consists of a single production environment that is automatically updated on each push to the main branch.
+This project consists of two environments:
 
-| Environment | Branch | Purpose        |
-| :---------- | :----- | :------------- |
-| Production  | `main` | Public website |
+| Environment | Branch | Deploy trigger | Purpose        |
+| :---------- | :----- | :------------- | :------------- |
+| Staging     | `main` | Push to `main` | Test environment |
+| Production  | `main` | `v*` git tag   | Public website |
 
 ## Performance & Optimization
 
@@ -61,7 +63,7 @@ The project is configured for Vercel deployment with:
 
 ### Next.js Optimization
 
-- **ISR Caching**: 1-hour cache for static data (navigation/footer), 5-minute for dynamic content
+- **No ISR/Data Cache for CMS content**: Strapi fetches are `no-store` so CMS edits appear on the next page load (see [Data Fetching & Caching](./data-fetching-and-caching.md))
 - **Bundle Splitting**: Dynamic imports for content blocks
 - **Image Optimization**: Next.js Image component with Cloudinary integration
 
