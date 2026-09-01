@@ -22,7 +22,7 @@ Deep reference lives in repo skills (`.agents/skills/`) that auto-load on trigge
 | `data-fetching` | Changing how data is fetched/cached — no-store model, no server cache, client-side fetching rules |
 | `content-blocks` | Adding/editing a content block, GraphQL fragment/query, page, or component |
 | `ticket-writing` | Creating/editing/grooming Linear tickets — structure, status lifecycle, project assignment |
-| `to-tickets`, `to-spec`, `triage`, `wayfinder` | Breaking work into tickets, specs, triage, and large-effort planning |
+| `to-tickets`, `to-spec`, `triage`, `wayfinder` | Breaking work into tickets, specs, triage, and large-effort planning (tracker config: `docs/agents/issue-tracker.md` — this repo uses Linear, prefer `ticket-writing`) |
 | `implement`, `tdd`, `code-review`, `diagnosing-bugs`, `resolving-merge-conflicts` | Implementation, testing, review, debugging, conflict resolution |
 | `writing-for-agents`, `research` | Maintaining AGENTS.md/skills; background research |
 | `copywriting`, `copy-editing` | Writing/refining copy for pages and tickets |

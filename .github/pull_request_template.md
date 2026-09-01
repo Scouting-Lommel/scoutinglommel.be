@@ -4,13 +4,18 @@
 
 :sparkles: Feature / :bug: Bugfix / :art: Refactor / :broom: Maintenance / :ambulance: Critical fix / :memo: Documentation / ...
 
-## Jira ticket(s)
+## Linear ticket(s)
 
-[TICKET-NUMBER](https://scoutinglommel.atlassian.net/browse/TICKET-NUMBER)
+[SL-XXX](https://linear.app/scouting-lommel/issue/SL-XXX)
 
 ## Changes
 
 - ...
+
+## Acceptance criteria
+
+- [ ] All acceptance criteria on the linked ticket are genuinely checked (verified, not assumed)
+- [ ] ...
 
 ## How to test
 

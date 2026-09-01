@@ -70,6 +70,7 @@ ignore:
   - .next
   - .storybook
   - .omo
+  - .omc
   - .playwright-mcp
   - .codegraph
   - node_modules
