@@ -12,8 +12,8 @@ This repo's git conventions. Apply them to **every** git operation here. These r
 Every piece of work MUST be linked to a Linear ticket (`SL-<number>`). Working without a ticket is FORBIDDEN unless the user explicitly says so.
 
 - **Before starting any work**: verify the ticket exists via the Linear MCP (look up `SL-XXX` by identifier, use its title for the branch slug). If no ticket exists, STOP and ask the user.
-- **Branch name**: `feature/SL-XXX-short-slug` (e.g. `feature/SL-32-add-user-authentication`).
-- **Commit message**: prefix with the ticket id — `SL-XXX: <imperative summary>` (e.g. `SL-32: add user authentication feature`).
+- **Branch name**: `feature/SL-XXX-short-slug` (e.g. `feature/SL-32-add-user-authentication`) — the branch name is where the ticket lives.
+- **Commit messages**: plain imperative summaries, NO ticket prefix. The branch is already scoped to the ticket, and commits are squashed on merge — the subcommits act as the changelog inside the squashed commit, so repeating the ticket id in each one is noise. The ticket reference lands on main via the PR title/description of the squash merge.
 
 ## Ticket lifecycle (keep status current)
 
@@ -58,7 +58,7 @@ Amend the **immediately preceding commit** when the change is a direct refinemen
    git pull origin main
    git checkout -b feature/SL-XXX-short-slug
    ```
-2. **Work + commit atomically** — clear, descriptive, present-tense messages prefixed with the ticket id.
+2. **Work + commit atomically** — clear, descriptive, present-tense messages (no ticket prefix; the branch carries the ticket).
 3. **Keep the branch updated**:
    ```bash
    git fetch origin

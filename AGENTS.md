@@ -7,7 +7,7 @@
 
 ## Hard rule: Linear ticket required
 
-Every piece of work MUST be linked to a Linear ticket (`SL-<number>`). Working on something without a ticket is FORBIDDEN unless the user explicitly says so. If no ticket exists for the task, STOP and ask the user. Look up/verify tickets via the Linear MCP. Branch names and commit messages must carry the ticket id: branch `feature/SL-XXX-slug`, commit prefix `SL-XXX: `.
+Every piece of work MUST be linked to a Linear ticket (`SL-<number>`). Working on something without a ticket is FORBIDDEN unless the user explicitly says so. If no ticket exists for the task, STOP and ask the user. Look up/verify tickets via the Linear MCP. The ticket lives in the branch name: `feature/SL-XXX-slug`. Commit messages are plain imperative summaries (no ticket prefix — commits are squashed on merge, and the ticket reference lands on main via the PR).
 
 Every ticket must live in a project (e.g. Improvements, Documentation, SEO & GEO). Keep the ticket's status current throughout development: `Backlog` → `In Progress` when starting, → `In Review` when the PR is up, → `Done` when merged. See the `ticket-writing` skill for ticket structure and lifecycle rules.
 
