@@ -27,6 +27,8 @@ Update the ticket's status in Linear throughout development — never leave it i
 
 Moving a ticket to `In Review`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
 
+**Acceptance criteria must be genuinely checked before `In Review` or `Done`**: every criterion on the ticket must be actually verified (run the command, test the behavior, check the output) — not assumed or claimed — before asking the user to authorize the move. If a criterion cannot be verified, say so and ask how to proceed.
+
 Every ticket must live in a project (e.g. Improvements, Documentation, SEO & GEO) — a ticket without a project is incomplete. See the `ticket-writing` skill for how to write/edit tickets.
 
 ## Core rules

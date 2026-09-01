@@ -17,11 +17,21 @@ Every piece of work in this repo is tracked in Linear (`SL-<number>`). This skil
    - `Canceled` when the work is abandoned (with a comment saying why) — only with the user's explicit permission.
    - `Duplicate` when the ticket duplicates another — only with the user's explicit permission.
    - Moving a ticket to `In Review`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
+3. **Acceptance criteria must be genuinely checked before `In Review` or `Done`.** Every acceptance criterion on the ticket must be verified — actually exercised (run the command, test the behavior, check the output), not assumed or claimed — before the ticket can move to `In Review` or `Done`. If a criterion cannot be verified, say so and ask the user how to proceed; never move the ticket forward with unverified criteria.
 3. **Tickets are written for the next reader** — a human or agent picking it up cold, possibly weeks later.
 
 ## Ticket readiness gate (before starting work)
 
 Before starting work on a ticket, check that it has the required structure: context (Goal), description (What to do), acceptance criteria, and out of scope. If the ticket is missing any of these — or the existing content is vague, ambiguous, or incomplete — **write out the ticket first**: fill in the missing structure so the ticket is a complete contract before any work begins. Ask the user for input when needed (when the missing content is a decision only the user can make, or the request is too vague to resolve yourself). Never start work on a ticket that is not a complete contract.
+
+## Duplicate check (before creating a new ticket)
+
+Before creating a NEW ticket, search Linear for existing tickets that may already cover the work. Use the Linear MCP's server-side search (`list_issues` with a `query` of the intended title/description keywords) — this is one indexed query, fast at any ticket count (20 or 2,000 tickets, same cost). Never fetch the full issue list and scan it client-side — that is the slow path.
+
+If a close match exists (same outcome or scope):
+
+- Do NOT create a duplicate. Surface the existing ticket to the user and let them decide: reuse it, mark the new one as `Duplicate`, or proceed anyway.
+- Only flag close matches — same outcome/scope — not loose keyword overlaps.
 
 ## Analyst phase (before writing)
 
