@@ -5,6 +5,21 @@
       "type": "remote",
       "enabled": true,
       "url": "https://mcp.linear.app/mcp"
+    },
+    "vercel": {
+      "type": "remote",
+      "enabled": true,
+      "url": "https://mcp.vercel.com"
+    },
+    "mdn": {
+      "type": "remote",
+      "enabled": true,
+      "url": "https://mcp.mdn.mozilla.net/"
+    },
+    "specification-website": {
+      "type": "remote",
+      "enabled": true,
+      "url": "https://mcp.specification.website/mcp"
     }
   }
 }

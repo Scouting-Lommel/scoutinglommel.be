@@ -13,7 +13,7 @@ Every ticket must live in a project (e.g. Improvements, Documentation, SEO & GEO
 
 ## Repo skills
 
-Deep reference lives in repo skills (`.agents/skills/`, symlinked for Claude Code) that auto-load on trigger:
+Deep reference lives in repo skills (`.agents/skills/`) that auto-load on trigger. This is the single canonical source — other agents (e.g. Claude Code) should read from `.agents/skills/` directly:
 
 | Skill | When to use |
 |-------|-------------|
@@ -22,6 +22,15 @@ Deep reference lives in repo skills (`.agents/skills/`, symlinked for Claude Cod
 | `data-fetching` | Changing how data is fetched/cached — no-store model, no server cache, client-side fetching rules |
 | `content-blocks` | Adding/editing a content block, GraphQL fragment/query, page, or component |
 | `ticket-writing` | Creating/editing/grooming Linear tickets — structure, status lifecycle, project assignment |
+| `to-tickets`, `to-spec`, `triage`, `wayfinder` | Breaking work into tickets, specs, triage, and large-effort planning |
+| `implement`, `tdd`, `code-review`, `diagnosing-bugs`, `resolving-merge-conflicts` | Implementation, testing, review, debugging, conflict resolution |
+| `writing-for-agents`, `research` | Maintaining AGENTS.md/skills; background research |
+| `copywriting`, `copy-editing` | Writing/refining copy for pages and tickets |
+| `seo-audit`, `ai-seo`, `schema`, `programmatic-seo`, `site-architecture`, `content-strategy`, `competitors`, `analytics`, `directory-submissions`, `marketing-ideas` | SEO & GEO work — audits, AI-search visibility, structured data, content planning |
+
+## MCP servers
+
+Configured in `opencode.json` (all remote, no secrets): `linear` (tickets), `vercel` (deploys), `mdn` (web docs), `specification-website` (agent-readiness audits).
 
 ## Where to Look
 
