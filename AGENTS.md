@@ -22,11 +22,6 @@ Deep reference lives in repo skills (`.agents/skills/`) that auto-load on trigge
 | `data-fetching` | Changing how data is fetched/cached, no-store model, no server cache, client-side fetching rules |
 | `content-blocks` | Adding/editing a content block, GraphQL fragment/query, page, or component |
 | `ticket-writing` | Creating/editing/grooming Linear tickets, structure, status lifecycle, project assignment |
-| `to-tickets`, `to-spec`, `triage`, `wayfinder` | Breaking work into tickets, specs, triage, and large-effort planning (tracker config: `docs/agents/issue-tracker.md`, this repo uses Linear, prefer `ticket-writing`) |
-| `implement`, `tdd`, `code-review`, `diagnosing-bugs`, `resolving-merge-conflicts` | Implementation, testing, review, debugging, conflict resolution |
-| `writing-for-agents`, `research` | Maintaining AGENTS.md/skills; background research |
-| `copywriting`, `copy-editing` | Writing/refining copy for pages and tickets |
-| `seo-audit`, `ai-seo`, `schema`, `programmatic-seo`, `site-architecture`, `content-strategy`, `competitors`, `analytics`, `directory-submissions`, `marketing-ideas` | SEO & GEO work, audits, AI-search visibility, structured data, content planning |
 
 ## MCP servers
 
@@ -121,7 +116,7 @@ pnpm run storybook    # Start Storybook
 - **SVG handling**: `@svgr/webpack` converts SVGs to React components
 - **Content freshness & caching**: GraphQL fetches are `no-store`, CMS edits appear on the next page load. Events/activities/files/links are fetched client-side to offload Vercel CPU. Before adding any server-side caching or changing how these are fetched, read the `data-fetching` skill and `docs/data-fetching-and-caching.md`, the previous cache layer caused 7-day-stale content and was removed
 - **pnpm only**, `preinstall` hook enforces pnpm via `only-allow`
-- **Vendored skills**, the 24 skills under `.agents/skills/` copied from `mattpocock/skills` + `coreyhaines31/marketingskills` are tracked in `skills-lock.json`. Refresh with `npx skills update -p --copy`, then commit. The 5 custom skills (git-workflow, deployment, data-fetching, content-blocks, ticket-writing) have no upstream and stay `local` in the lock.
+- **Repo skills**, 5 custom skills under `.agents/skills/` (git-workflow, deployment, data-fetching, content-blocks, ticket-writing) encode project-specific rules.
 
 ## Documentation
 
