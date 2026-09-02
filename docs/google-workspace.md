@@ -10,7 +10,7 @@
 
 ## Google Workspace
 
-Scouting Lommel is a non-profit youth organisation, so we qualify for [Google Workspace for Non-profits](https://www.google.com/nonprofits/offerings/workspace/). This gives us free access to a suite of tools, including:
+Scouting Lommel is a non-profit youth organisation, so we may be eligible for [Google Workspace for Non-profits](https://www.google.com/nonprofits/offerings/workspace/) (subject to Google verification and country availability). This gives us free access to a suite of tools, including:
 
 - A **Gmail** account for every user, with a custom domain name
 - A **Google Drive** with shared drives
@@ -27,7 +27,7 @@ Every user has a personal email address in the `firstname.lastname@scoutinglomme
 
 ### Groups
 
-Users can belong to one or more groups. A group functions as a mailing list: its address follows the `groupname@scoutinglommel.be` format, and email sent to the group is forwarded to every assigned user. Existing groups include, but are not limited to:
+Users can belong to one or more groups. A group functions as a mailing list: its address follows the `groupname@scoutinglommel.be` format, and group members choose their delivery preference (Each email, Digest, Abridged, or No email); moderation can also delay or reject messages. Existing groups include, but are not limited to:
 
 - `leiding@scoutinglommel.be`
 - `groepsleiding@scoutinglommel.be`

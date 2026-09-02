@@ -26,7 +26,7 @@
 
 ## Requirements
 
-- [Node.js](https://nodejs.org) (v18 or higher, recommended v20)
+- [Node.js](https://nodejs.org) (v24.x, pinned via `.nvmrc` — use `nvm use`)
 - [pnpm](https://pnpm.io) (v8 and up)
 - [NVM](https://github.com/nvm-sh/nvm) (optional but recommended)
 

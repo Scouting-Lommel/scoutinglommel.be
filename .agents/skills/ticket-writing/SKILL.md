@@ -24,7 +24,7 @@ Every piece of work in this repo is tracked in Linear (`SL-<number>`). This skil
    - `Canceled` when the work is abandoned (with a comment saying why). Only with the user's explicit permission.
    - `Duplicate` when the ticket duplicates another. Only with the user's explicit permission.
    - Moving a ticket to `Acceptancy`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
-5. **Acceptance criteria must be genuinely checked before `In Review` or `Done`.** Every acceptance criterion on the ticket must be verified, actually exercised (run the command, test the behavior, check the output), not assumed or claimed, before the ticket can move to `Acceptancy` or `Done`. If a criterion cannot be verified, say so and ask the user how to proceed; never move the ticket forward with unverified criteria.
+5. **Acceptance criteria must be genuinely checked before `Acceptancy` or `Done`.** Every acceptance criterion on the ticket must be verified, actually exercised (run the command, test the behavior, check the output), not assumed or claimed, before the ticket can move to `Acceptancy` or `Done`. If a criterion cannot be verified, say so and ask the user how to proceed; never move the ticket forward with unverified criteria.
 6. **Tickets are written for the next reader**: a human or agent picking it up cold, possibly weeks later.
 
 ## Multi-area tickets (Multi label + sub-issues)

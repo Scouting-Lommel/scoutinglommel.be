@@ -16,6 +16,7 @@ Work for this repo is tracked in **Linear** (workspace: Scouting Lommel, team ke
 These skills assume a GitHub/GitLab/local tracker. This repo uses **Linear** instead:
 
 - **Publishing tickets** (`to-tickets`): publish via the Linear MCP (`linear_save_issue`), one issue per ticket in dependency order, using Linear's native blocking/sub-issue relationships. Apply the `ready-for-agent` triage label if the repo uses it.
-- **Triage** (`triage`): the Linear statuses are `Backlog`, `Todo`, `In Progress`, `In Review`, `Done`, `Canceled`, `Duplicate`. Map the triage roles onto these + Linear labels rather than GitHub issue labels.
+- **Triage** (`triage`): the Linear statuses are `Backlog`, `Todo`, `In Progress`, `In Review`, `Acceptancy`, `Done`, `Canceled`, `Duplicate`. Map the triage roles onto these + Linear labels rather than GitHub issue labels.
+  - Require explicit user permission before moving to `Acceptancy`, `Done`, `Canceled`, or `Duplicate`.
 - **Specs** (`to-spec`): publish the spec as a Linear ticket description (Goal / What to do / Acceptance criteria / Out of scope).
 - When in doubt, prefer the `ticket-writing` skill, it is Linear-native and encodes this repo's exact rules.
