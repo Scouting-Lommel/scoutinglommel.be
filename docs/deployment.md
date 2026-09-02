@@ -11,13 +11,13 @@
 
 ## Resource providers
 
-| Resource       | Provider                                                          | Comments                                                                         |
-| :------------- | :---------------------------------------------------------------- | :------------------------------------------------------------------------------- |
-| DNS            | [CloudFlare](https://www.cloudflare.com/)                         | DNS management with caching & DDoS protection.                                   |
-| Frontend app   | [Vercel](https://vercel.com)                                      | Dynamic hosting with automatic CI/CD for FE app.                                 |
-| Backend CMS    | Self-hosted [Coolify](https://coolify.io) on a [Hetzner](https://www.hetzner.com) VPS | Strapi CMS, containerized via Coolify.                                            |
-| Database       | MySQL database hosted on [Vimexx](https://www.vimexx.be/)         | Both the development and production environments have a separate MySQL database. |
-| E-mail setup   | [Google Workspace for Non-Profits](https://workspace.google.com/) | Check out the [Google Workspace setup docs](/docs/google-workspace.md). |
+| Resource     | Provider                                                                              | Comments                                                                         |
+| :----------- | :------------------------------------------------------------------------------------ | :------------------------------------------------------------------------------- |
+| DNS          | [CloudFlare](https://www.cloudflare.com/)                                             | DNS management with caching & DDoS protection.                                   |
+| Frontend app | [Vercel](https://vercel.com)                                                          | Dynamic hosting with automatic CI/CD for FE app.                                 |
+| Backend CMS  | Self-hosted [Coolify](https://coolify.io) on a [Hetzner](https://www.hetzner.com) VPS | Strapi CMS, containerized via Coolify.                                           |
+| Database     | MySQL database hosted on [Vimexx](https://www.vimexx.be/)                             | Both the development and production environments have a separate MySQL database. |
+| E-mail setup | [Google Workspace for Non-Profits](https://workspace.google.com/)                     | Check out the [Google Workspace setup docs](/docs/google-workspace.md).          |
 
 ### DNS
 
@@ -44,10 +44,10 @@ Sentry was previously implemented but **removed because it did not work** — it
 
 This project consists of two environments:
 
-| Environment | Branch | Deploy trigger | Purpose        |
-| :---------- | :----- | :------------- | :------------- |
+| Environment | Branch | Deploy trigger | Purpose          |
+| :---------- | :----- | :------------- | :--------------- |
 | Staging     | `main` | Push to `main` | Test environment |
-| Production  | `main` | `v*` git tag   | Public website |
+| Production  | `main` | `v*` git tag   | Public website   |
 
 ## Performance & Optimization
 

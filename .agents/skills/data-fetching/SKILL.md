@@ -1,6 +1,6 @@
 ---
 name: data-fetching
-description: "MUST USE before changing how data is fetched or cached in this repo, touching events/activities/files/links fetching, adding any server-side caching, ISR, revalidation, or cache headers. Encodes the no-store content-freshness model and the decision rules that replaced a removed 7-day-stale cache layer. Triggers: caching, cache, no-store, revalidate, ISR, data fetching, fetch, strapi query, client-side fetch."
+description: 'MUST USE before changing how data is fetched or cached in this repo, touching events/activities/files/links fetching, adding any server-side caching, ISR, revalidation, or cache headers. Encodes the no-store content-freshness model and the decision rules that replaced a removed 7-day-stale cache layer. Triggers: caching, cache, no-store, revalidate, ISR, data fetching, fetch, strapi query, client-side fetch.'
 ---
 
 # Data Fetching & Caching (scoutinglommel.be)
@@ -41,7 +41,7 @@ Do not convert these to server-side fetching to "fix" freshness, they are alread
 
 ## Data flow stack
 
-```
+```text
 Strapi CMS (GraphQL endpoint)
     ↓
 src/api/strapi.ts (core fetcher, always no-store)
@@ -54,6 +54,7 @@ Pages call data functions + pass to Blocks/components
 ```
 
 **Key files:**
+
 - `src/api/strapi.ts`, Core GraphQL fetcher with token auth; fetches are always `no-store`
 - `src/lib/api/cache.ts`, `Cache-Control` headers for API route responses only (`getCacheHeaders`)
 - `src/lib/api.ts`, `generateApiQuery()` wrapper for type-safe queries

@@ -64,12 +64,16 @@ Still **protects** against: injected external scripts (only 2 external script ho
 
 ### Option B — Strict nonce-based CSP (via middleware)
 
-Generate a per-request nonce in `src/middleware.ts` (matcher already covers all routes), set the CSP header with `'nonce-<value>'`, apply the nonce to the inline GA snippet via the `<Script nonce={...}>` prop.
+End-to-end nonce flow:
+
+1. `src/middleware.ts` generates a random nonce per request and stores it as the `x-nonce` response header (the middleware matcher already covers all routes).
+2. `src/app/layout.tsx` reads the nonce via `headers()` (`layout.tsx:5,75`) and passes it as the `nonce` prop to every inline `<Script>` component, including the GA dataLayer snippet.
+3. The CSP header in `next.config.mjs` references the same nonce value via `'nonce-<value>'`.
 
 Trade-offs — **not recommended right now**:
 
-- Reading the nonce via `headers()` in the root layout opts **every route into dynamic rendering**, killing ISR (`revalidate = 3600` on all pages) and the static cache the site depends on.
-- Medium-term alternative: serve the GA dataLayer snippet from a real file in `/public` (removing the inline script) — then a strict CSP becomes viable without dynamic rendering. Requires GA snippet refactor + re-verification of the `_next` inline bootstrap scripts.
+- `src/app/layout.tsx` already calls `headers()` at lines 5 and 75, so **every route is already opted into dynamic rendering**. Adding nonce reads does not change this — the incremental impact is only the nonce generation in middleware and threading the value through the CSP header and Script props.
+- Medium-term alternative: serve the GA dataLayer snippet from a real file in `/public` (removing the inline script) — then a strict CSP becomes viable without any additional dynamic overhead. Requires GA snippet refactor + re-verification of the `_next` inline bootstrap scripts.
 
 ## Decision
 
@@ -77,7 +81,7 @@ Trade-offs — **not recommended right now**:
 
 Rationale:
 
-1. Near-zero runtime cost (static header, no middleware change, no dynamic rendering).
+1. Near-zero runtime cost (static header, no middleware change). Routes are already dynamic because `src/app/layout.tsx` calls `headers()` at lines 5 and 75; adding a nonce read in middleware would not change the rendering mode.
 2. Existing `X-Frame-Options: SAMEORIGIN` can eventually be replaced by `frame-ancestors 'self'`.
 3. `'unsafe-inline'` in `script-src` is the pragmatic norm for Next.js App Router apps with inline GA snippets; the remaining directives still raise the bar meaningfully.
 4. Option B is tracked as a follow-up if/when the GA snippet moves to an external file.

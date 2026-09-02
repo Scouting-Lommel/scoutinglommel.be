@@ -44,7 +44,8 @@ server-side fetching would move their CPU cost back onto Vercel functions.
 - If Vercel CPU ever becomes a problem again, the safe lever is a **short bounded revalidate**
   (`next: { revalidate: 60–300 }`) on the layout-data fetches only — fresh within a minute,
   absorbs traffic spikes, no webhook needed. Apply it to a single fetch and measure before
-  spreading it.
+  spreading it. To apply bounded revalidate, thread a cache option through `generateApiQuery`
+  so the layout fetch can use `next: { revalidate: 60–300 }` instead of `cache: 'no-store'`.
 - Keep client-side fetching for events/activities/files/links. It is the CPU offload strategy,
   not a staleness workaround.
 - `revalidate` page exports, `getCacheOptions`, and cache tags are gone — do not reintroduce

@@ -6,13 +6,13 @@ through DNS `SVCB`/`HTTPS` records under `_agents.<zone>`, secured by DNSSEC.
 
 ## Current state — ✅ RESOLVED (2026-08-17)
 
-| Item                                            | Status                                             |
-| ----------------------------------------------- | -------------------------------------------------- |
-| `_index._agents` HTTPS record                   | ✅ Published (`1 . alpn="h2,h3"`, signed)           |
-| Zone signing (Cloudflare)                       | ✅ Active (DNSKEY + valid RRSIGs on all records)    |
-| DS record at `.be` parent (DNS Belgium)         | ✅ Published (`2371 13 2 4A4BC27A...`)              |
-| Validating resolvers return the AD flag         | ✅ Yes (1.1.1.1, 8.8.8.8, 9.9.9.9, Cloudflare DoH)  |
-| isitagentready.com `discoverability.dnsAid`     | ✅ `pass` — site at level 3 (Agent-Readable)        |
+| Item                                        | Status                                             |
+| ------------------------------------------- | -------------------------------------------------- |
+| `_index._agents` HTTPS record               | ✅ Published (`1 . alpn="h2,h3"`, signed)          |
+| Zone signing (Cloudflare)                   | ✅ Active (DNSKEY + valid RRSIGs on all records)   |
+| DS record at `.be` parent (DNS Belgium)     | ✅ Published (`2371 13 2 4A4BC27A...`)             |
+| Validating resolvers return the AD flag     | ✅ Yes (1.1.1.1, 8.8.8.8, 9.9.9.9, Cloudflare DoH) |
+| isitagentready.com `discoverability.dnsAid` | ✅ `pass` — site at level 3 (Agent-Readable)       |
 
 The chain of trust is now complete: the DS record submitted via **Vimexx**
 (key tag `2371`, algorithm 13, KSK public key) was accepted by DNS Belgium
@@ -24,9 +24,9 @@ which are deliberately out of scope for this content site).
 
 Historical context: before the fix, the zone was signed but no DS existed
 in the parent `.be` zone, so validating resolvers treated the zone as
-*insecure* and never set the AD flag — isitagentready.com reported
-*"DNS for AI Discovery (DNS-AID) records found, but DNSSEC was not
-validated"*.
+_insecure_ and never set the AD flag — isitagentready.com reported
+_"DNS for AI Discovery (DNS-AID) records found, but DNSSEC was not
+validated"_.
 
 ## Fix: publish the DS record at the registry
 
@@ -51,7 +51,7 @@ Dashboard → DNS → DNSSEC — but it cannot publish it into the `.be` zone.)
 
    DS record values:
 
-   ```
+   ```text
    Key Tag:     2371
    Algorithm:   13 (ECDSAP256SHA256)
    Digest Type: 2 (SHA-256)
@@ -111,9 +111,9 @@ Then re-run the scan at <https://isitagentready.com> —
 
 ## Records (published)
 
-| Type    | Name                  | Content                                   |
-| ------- | --------------------- | ----------------------------------------- |
-| `HTTPS` | `_index._agents`      | `1 . alpn="h2,h3"`                        |
+| Type    | Name             | Content            |
+| ------- | ---------------- | ------------------ |
+| `HTTPS` | `_index._agents` | `1 . alpn="h2,h3"` |
 
 This is a ServiceMode SVCB record: priority `1`, target `.` (the zone apex —
 the site itself), advertising HTTP/2 and HTTP/3.
