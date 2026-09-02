@@ -119,15 +119,15 @@ pnpm run storybook    # Start Storybook
 - **Image optimization** uses Next.js Image with remotePatterns for Cloudinary and Strapi uploads
 - **Fonts**: Montserrat + Nunito Sans via next/font (CSS variables)
 - **SVG handling**: `@svgr/webpack` converts SVGs to React components
-- **Content freshness & caching**: GraphQL fetches are `no-store` — CMS edits appear on the next page load. Events/activities/files/links are fetched client-side to offload Vercel CPU. Before adding any server-side caching or changing how these are fetched, read the `data-fetching` skill and `documentation/data-fetching-and-caching.md` — the previous cache layer caused 7-day-stale content and was removed
+- **Content freshness & caching**: GraphQL fetches are `no-store` — CMS edits appear on the next page load. Events/activities/files/links are fetched client-side to offload Vercel CPU. Before adding any server-side caching or changing how these are fetched, read the `data-fetching` skill and `docs/data-fetching-and-caching.md` — the previous cache layer caused 7-day-stale content and was removed
 - **pnpm only** — `preinstall` hook enforces pnpm via `only-allow`
 - **Vendored skills** — the 24 skills under `.agents/skills/` copied from `mattpocock/skills` + `coreyhaines31/marketingskills` are tracked in `skills-lock.json`. Refresh with `npx skills update -p --copy`, then commit. The 5 custom skills (git-workflow, deployment, data-fetching, content-blocks, ticket-writing) have no upstream and stay `local` in the lock.
 
 ## Documentation
 
-- `documentation/getting-started.md` — onboarding (install, run, lint)
-- `documentation/deployment.md` — provider map + environment details
-- `documentation/data-fetching-and-caching.md` — caching rationale & decision rules
-- `documentation/development-and-git-flow.md` — branch/PR workflow
+- `docs/getting-started.md` — onboarding (install, run, lint)
+- `docs/deployment.md` — provider map + environment details
+- `docs/data-fetching-and-caching.md` — caching rationale & decision rules
+- `docs/development-and-git-flow.md` — branch/PR workflow
 - `docs/agents/issue-tracker.md` — tracker config for the engineering skills (this repo uses Linear)
-- `documentation/content-security-policy.md`, `documentation/dns-aid.md`, `documentation/google-workspace.md`, `documentation/performance-troubleshooting.md` — ops reference
+- `docs/content-security-policy.md`, `docs/dns-aid.md`, `docs/google-workspace.md`, `docs/performance-troubleshooting.md` — ops reference

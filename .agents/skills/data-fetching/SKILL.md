@@ -62,4 +62,4 @@ Pages call data functions + pass to Blocks/components
 
 ## Reference
 
-Full rationale and history: `documentation/data-fetching-and-caching.md`.
+Full rationale and history: `docs/data-fetching-and-caching.md`.

@@ -3,7 +3,7 @@
 Work for this repo is tracked in **Linear** (workspace: Scouting Lommel, team key `SL-`).
 
 - Tickets are created/edited via the **Linear MCP** (see `opencode.json`) — not `gh issue create`, not local markdown.
-- Ticket structure, lifecycle, and status rules: see the `ticket-writing` skill (`.agents/skills/ticket-writing/SKILL.md`) and the canonical template at `docs/agents/linear-issue-template.md`.
+- Ticket structure, lifecycle, and status rules: see the `ticket-writing` skill (`.agents/skills/ticket-writing/SKILL.md`) and the canonical templates at `docs/agents/linear-issue-template.md` (issues) and `docs/agents/linear-project-template.md` (projects).
 - Every piece of work MUST be linked to a Linear ticket (`SL-<number>`); working without a ticket is forbidden unless the user explicitly says so.
 - Every ticket must carry at least one **Type** label and at least one **Area** label:
   - **Type** (what kind of work, exactly one): `Bug`, `Feature`, or `Improvement`

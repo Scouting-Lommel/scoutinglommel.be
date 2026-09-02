@@ -2,7 +2,7 @@ ls:
   migrations:
     .dir: snake_case
 
-  documentation:
+  docs:
     .dir: kebab-case
     .md: kebab-case
 

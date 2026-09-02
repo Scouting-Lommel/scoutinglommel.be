@@ -9,7 +9,7 @@ Every piece of work in this repo is tracked in Linear (`SL-<number>`). This skil
 
 ## Non-negotiables
 
-1. **Every ticket lives in a project.** When creating a ticket, always assign it to a project (e.g. Improvements, Documentation, SEO & GEO). A ticket without a project is incomplete.
+1. **Every ticket lives in a project.** When creating a ticket, always assign it to a project (e.g. Improvements, Documentation, SEO & GEO). A ticket without a project is incomplete. A project is a bigger feature/story containing issues — see `docs/agents/linear-project-template.md` for when to create a project and its lifecycle.
 2. **Every ticket carries at least one Type label AND one Area label.**
    - **Type** (what kind of work, exactly one): `Bug`, `Feature`, or `Improvement`.
    - **Area** (where it touches, one or more): `Frontend` (Next.js UI/components/blocks/styles), `Backend` (Strapi/API/data), `Manual` (work on the `manual.scoutinglommel.be` repo — the user manual for groepsleiders), `Infra` (Vercel/Coolify/DNS/CI/CD), `Other` (does not fit the above).

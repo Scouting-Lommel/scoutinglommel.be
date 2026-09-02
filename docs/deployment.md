@@ -17,7 +17,7 @@
 | Frontend app   | [Vercel](https://vercel.com)                                      | Dynamic hosting with automatic CI/CD for FE app.                                 |
 | Backend CMS    | Self-hosted [Coolify](https://coolify.io) on a [Hetzner](https://www.hetzner.com) VPS | Strapi CMS, containerized via Coolify.                                            |
 | Database       | MySQL database hosted on [Vimexx](https://www.vimexx.be/)         | Both the development and production environments have a separate MySQL database. |
-| E-mail setup   | [Google Workspace for Non-Profits](https://workspace.google.com/) | Check out the [Google Workspace setup docs](/documentation/google-workspace.md). |
+| E-mail setup   | [Google Workspace for Non-Profits](https://workspace.google.com/) | Check out the [Google Workspace setup docs](/docs/google-workspace.md). |
 
 ### DNS
 

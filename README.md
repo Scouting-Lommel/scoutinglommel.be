@@ -28,7 +28,7 @@ Frontend for the [Scouting Lommel website](https://www.scoutinglommel.be).
 pnpm install
 ```
 
-For detailed instructions and requirements, see the [getting started docs](/documentation/getting-started.md).
+For detailed instructions and requirements, see the [getting started docs](/docs/getting-started.md).
 
 ### Running locally
 
@@ -36,7 +36,7 @@ For detailed instructions and requirements, see the [getting started docs](/docu
 pnpm run dev
 ```
 
-For detailed instructions, see the [getting started docs](/documentation/getting-started.md#running-locally).
+For detailed instructions, see the [getting started docs](/docs/getting-started.md#running-locally).
 
 ## Credits
 

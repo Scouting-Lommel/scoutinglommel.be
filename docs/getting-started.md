@@ -160,7 +160,7 @@ This checks:
 
 ### Deployment
 
-Deployments are fully automated using [Vercel](https://vercel.com). Every push to the `main` branch triggers a staging deployment; production deploys on `v*` tags. For more info, see the [deployment docs](/documentation/deployment.md).
+Deployments are fully automated using [Vercel](https://vercel.com). Every push to the `main` branch triggers a staging deployment; production deploys on `v*` tags. For more info, see the [deployment docs](/docs/deployment.md).
 
 ## Development and git flow
 
