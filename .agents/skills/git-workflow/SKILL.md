@@ -75,7 +75,7 @@ Amend the **immediately preceding commit** when the change is a direct refinemen
    git push origin feature/SL-XXX-short-slug
    git push --force-with-lease origin feature/SL-XXX-short-slug
    ```
-5. **Create a PR** to `main`, clear description, request review from at least one team member. All commits are squashed into a single commit on merge.
+5. **Create a PR** to `main` using the PR template (`.github/pull_request_template.md`), clear description, request review from at least one team member. All commits are squashed into a single commit on merge. Every occurrence of a ticket number in the PR description must be a link to that ticket: `[SL-XXX](https://linear.app/scouting-lommel/issue/SL-XXX)`.
 
 ## Never
 
