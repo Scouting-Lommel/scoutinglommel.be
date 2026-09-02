@@ -7,17 +7,17 @@ description: "MUST USE when adding or editing a content block, GraphQL fragment/
 
 ## Next.js App Router layout
 
-- Route groups: `(homepage)`, `(sitemap)` — organization without affecting URL.
-- Dynamic routes: `[slug]`, `[key]` — for content pages.
-- API routes under `src/app/api/` — NextAuth, form handling, revalidation, email.
-- `src/middleware.ts` — route protection with pattern matching for `/inloggen`, `/dashboard/:path*`, `/playground`.
+- Route groups: `(homepage)`, `(sitemap)`, organization without affecting URL.
+- Dynamic routes: `[slug]`, `[key]`, for content pages.
+- API routes under `src/app/api/`, NextAuth, form handling, revalidation, email.
+- `src/middleware.ts`, route protection with pattern matching for `/inloggen`, `/dashboard/:path*`, `/playground`.
 
 ## GraphQL patterns
 
-- **Fragments** in `src/graphql/*.gql` — one per content block type.
-- **Page queries** in `src/app/{page}/query.ts` — compose fragments with `gql` tag.
+- **Fragments** in `src/graphql/*.gql`, one per content block type.
+- **Page queries** in `src/app/{page}/query.ts`, compose fragments with `gql` tag.
 - **Fragment naming**: `HeroBlockFragment` on `ComponentContentBlocksHeroBlock`.
-- **Field aliases** for namespaced CMS fields — never rename component props to match CMS field names; use GraphQL aliases instead:
+- **Field aliases** for namespaced CMS fields, never rename component props to match CMS field names; use GraphQL aliases instead:
   ```graphql
   fragment HeroBlockFragment on ComponentContentBlocksHeroBlock {
     title: heroTitle
@@ -30,14 +30,14 @@ description: "MUST USE when adding or editing a content block, GraphQL fragment/
 ## Component architecture
 
 **Atomic design:** `src/components/{atoms,molecules,organisms}/`
-- **Atoms** — smallest reusable pieces (Button, Icon, Input, Divider)
-- **Molecules** — composite components (ArticleCard, Breadcrumbs, FaqItem)
-- **Organisms** — complex sections (Hero, Footer, Forms, FileSection)
+- **Atoms**, smallest reusable pieces (Button, Icon, Input, Divider)
+- **Molecules**, composite components (ArticleCard, Breadcrumbs, FaqItem)
+- **Organisms**, complex sections (Hero, Footer, Forms, FileSection)
 
-**Content Blocks:** `src/content-blocks/` — dynamic block components matching GraphQL fragments
+**Content Blocks:** `src/content-blocks/`, dynamic block components matching GraphQL fragments
 - Each block has `index.tsx` + `types.ts`
 - Blocks receive props directly from GraphQL response (via aliases)
-- `src/content-blocks/index.tsx` — dynamic importer mapping `__typename` to components
+- `src/content-blocks/index.tsx`, dynamic importer mapping `__typename` to components
 
 **Type definitions:** Each component directory has `types.ts` with exported types
 - Export pattern: `export type Button = { ... }`
@@ -46,7 +46,7 @@ description: "MUST USE when adding or editing a content block, GraphQL fragment/
 ## Styling
 
 - **PostCSS** with `.pcss` files (NOT Tailwind, no CSS-in-JS, no styled-jsx).
-- **Global styles**: `src/assets/styles/global.pcss` — imports settings, elements, typography, layouts, utilities.
+- **Global styles**: `src/assets/styles/global.pcss`, imports settings, elements, typography, layouts, utilities.
 - **Component styles**: `{Component}/{Component}.pcss` alongside component file.
 - **CSS Custom Properties** in `src/assets/styles/settings/` (colors, spacing, typography, z-index).
 - **Build**: `pnpm run build:css` compiles .pcss to .css.
@@ -65,6 +65,6 @@ description: "MUST USE when adding or editing a content block, GraphQL fragment/
 ## Related
 
 - Data fetching/caching rules: the `data-fetching` skill.
-- i18n: next-intl, single locale Dutch (`nl`) — namespaces `common`, `dashboard`, `forms` in `locales/nl/`.
+- i18n: next-intl, single locale Dutch (`nl`), namespaces `common`, `dashboard`, `forms` in `locales/nl/`.
 - Forms: react-hook-form + yup, custom `FormBuilder`, server-side via API routes, react-turnstile CAPTCHA, @react-email templates.
 - Auth: next-auth v4 Google OAuth, session types in `src/types/next-auth.d.ts`, route protection via `src/middleware.ts`, dashboard routes under `/dashboard/` with role-based access.

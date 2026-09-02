@@ -38,4 +38,4 @@ Re-tag the previous commit and push it (`vercel rollback` is Pro/Enterprise-only
 ## Reference
 
 - Provider map and infrastructure details: `docs/deployment.md`.
-- Release flow is tag-driven — never push to `main` expecting a production deploy.
+- Release flow is tag-driven, never push to `main` expecting a production deploy.

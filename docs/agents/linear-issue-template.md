@@ -6,7 +6,7 @@ Paste the description below into a **Team template** in Linear:
 ## Template description
 
 > Set these template properties in the Linear UI:
-> - **Labels**: leave blank in the template — the creator applies the Type + Area labels to the issue
+> - **Labels**: leave blank in the template, the creator applies the Type + Area labels to the issue
 > - **Status**: `Todo`
 > - Leave assignee/priority/project for the creator to fill
 
@@ -46,7 +46,7 @@ Apply the Type and Area labels to the issue in the Linear UI (they are labels, n
 |-------|-------|---------|
 | `Frontend` | blue | Next.js UI, components, content blocks, styles, pages |
 | `Backend` | purple | Strapi, API, data model, content types |
-| `Manual` | orange | Work on the `manual.scoutinglommel.be` repo — the user manual for groepsleiders |
+| `Manual` | orange | Work on the `manual.scoutinglommel.be` repo, the user manual for groepsleiders |
 | `Infra` | red | Vercel, Coolify/Hetzner, DNS, CI/CD, env/config |
 | `Other` | grey | Does not fit the above |
-| `Multi` | yellow | Spans multiple areas — requires sub-issues, one per area, each with its own single Area label |
+| `Multi` | yellow | Spans multiple areas, requires sub-issues, one per area, each with its own single Area label |

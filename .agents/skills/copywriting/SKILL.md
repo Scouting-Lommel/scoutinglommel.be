@@ -78,6 +78,7 @@ Each section should advance one argument. Build a logical flow down the page.
 - Passive voice constructions?
 - Exclamation points? (remove them)
 - Marketing buzzwords without substance?
+- Em-dashes (—)? (remove them — use commas, colons, or split the sentence instead. Em-dashes are a crutch, not a style.)
 
 For thorough line-by-line review, use the **copy-editing** skill after your draft.
 
