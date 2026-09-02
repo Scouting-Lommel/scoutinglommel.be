@@ -10,7 +10,8 @@ Every piece of work in this repo is tracked in Linear (`SL-<number>`). This skil
 ## Non-negotiables
 
 1. **Every ticket lives in a project.** When creating a ticket, always assign it to a project (e.g. Improvements, Documentation, SEO & GEO). A ticket without a project is incomplete.
-2. **Status tracks reality.** Update the ticket's status throughout development — never leave it in Backlog or Todo while work is happening:
+2. **Every ticket carries at least one area label.** Apply one or more of the workspace area labels so the work area is visible at a glance on the board: `Frontend` (Next.js UI/components/blocks/styles), `Backend` (Strapi/API/data), `Manual` (work on the `manual.scoutinglommel.be` repo — the user manual for groepsleiders), `Infra` (Vercel/Coolify/DNS/CI/CD), `Other` (does not fit the above). A ticket with no area label is incomplete.
+3. **Status tracks reality.** Update the ticket's status throughout development — never leave it in Backlog or Todo while work is happening:
    - `Backlog` → `Todo` → `In Progress` when you start working on it (a ticket can move into `In Progress` from either `Backlog` or `Todo`)
    - `In Progress` → `In Review` when the PR/branch is up for review — **only with the user's explicit permission**. You can ask for it, but the user must authorize the move.
    - `In Review` → `Done` when merged/completed — **only with the user's explicit permission**. You can ask for it, but the user must authorize the move.
@@ -22,7 +23,9 @@ Every piece of work in this repo is tracked in Linear (`SL-<number>`). This skil
 
 ## Ticket readiness gate (before starting work)
 
-Before starting work on a ticket, check that it has the required structure: context (Goal), description (What to do), acceptance criteria, and out of scope. If the ticket is missing any of these — or the existing content is vague, ambiguous, or incomplete — **write out the ticket first**: fill in the missing structure so the ticket is a complete contract before any work begins. Ask the user for input when needed (when the missing content is a decision only the user can make, or the request is too vague to resolve yourself). Never start work on a ticket that is not a complete contract.
+Before starting work on a ticket, check that it has the required structure: context (Goal), description (What to do), acceptance criteria, and out of scope — plus a project and at least one area label (`Frontend`/`Backend`/`Manual`/`Infra`/`Other`). If the ticket is missing any of these — or the existing content is vague, ambiguous, or incomplete — **write out the ticket first**: fill in the missing structure so the ticket is a complete contract before any work begins. Ask the user for input when needed (when the missing content is a decision only the user can make, or the request is too vague to resolve yourself). Never start work on a ticket that is not a complete contract.
+
+The canonical ticket structure lives in the Linear team template (`docs/agents/linear-issue-template.md`) — prefer its shape when writing tickets.
 
 ## Duplicate check (before creating a new ticket)
 
