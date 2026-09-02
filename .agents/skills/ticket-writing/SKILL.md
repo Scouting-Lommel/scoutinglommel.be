@@ -1,6 +1,6 @@
 ---
 name: ticket-writing
-description: "MUST USE when creating, editing, or grooming Linear tickets in this repo — writing ticket titles/descriptions, breaking work into tickets, updating ticket status, or deciding what belongs in a ticket. ALWAYS load the copywriting skill before writing ticket text. Combines analyst-style requirements clarity (hidden constraints, ambiguity) with ticket-writing structure and copywriting principles (clarity over cleverness). Triggers: ticket, linear, create issue, edit issue, SL-, backlog, groom, ticket status, ticket description."
+description: 'MUST USE when creating, editing, or grooming Linear tickets in this repo — writing ticket titles/descriptions, breaking work into tickets, updating ticket status, or deciding what belongs in a ticket. ALWAYS load the copywriting skill before writing ticket text. Combines analyst-style requirements clarity (hidden constraints, ambiguity) with ticket-writing structure and copywriting principles (clarity over cleverness). Triggers: ticket, linear, create issue, edit issue, SL-, backlog, groom, ticket status, ticket description.'
 ---
 
 # Ticket Writing (Linear, scoutinglommel.be)
@@ -16,7 +16,7 @@ Every piece of work in this repo is tracked in Linear (`SL-<number>`). This skil
    - **Area** (where it touches, exactly one): `Frontend` (Next.js UI/components/blocks/styles), `Backend` (Strapi/API/data), `Manual` (work on the `manual.scoutinglommel.be` repo — the user manual for groepsleiders), `Infra` (Vercel/Coolify/DNS/CI/CD), `Other` (does not fit the above), or `Multi` (spans multiple areas — see the multi-area rule below).
    - A ticket missing either a Type or an Area label is incomplete. Fix it before any work starts.
    - **A lowest-level ticket should have exactly ONE Area label.** Multi-area work is expressed with the `Multi` label: a ticket with `Area/Multi` must have sub-issues, one per area, each carrying its own single Area label, and only with the user's explicit approval. Prefer splitting into separate single-area tickets unless the user says otherwise.
-3. **Status tracks reality.** Update the ticket's status throughout development — never leave it in Backlog or Todo while work is happening:
+4. **Status tracks reality.** Update the ticket's status throughout development — never leave it in Backlog or Todo while work is happening:
    - `Backlog` → `Todo` → `In Progress` when you start working on it (a ticket can move into `In Progress` from either `Backlog` or `Todo`)
    - `In Progress` → `In Review` when the PR/branch is up for review. No explicit permission needed, but only valid while a PR is open. If no PR is open, the ticket stays `In Progress`.
    - `In Review` → `Acceptancy` when the change is live on staging. **Only with the user's explicit permission.** You can ask for it, but the user must authorize the move.
@@ -24,12 +24,12 @@ Every piece of work in this repo is tracked in Linear (`SL-<number>`). This skil
    - `Canceled` when the work is abandoned (with a comment saying why). Only with the user's explicit permission.
    - `Duplicate` when the ticket duplicates another. Only with the user's explicit permission.
    - Moving a ticket to `Acceptancy`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
-4. **Acceptance criteria must be genuinely checked before `In Review` or `Done`.** Every acceptance criterion on the ticket must be verified, actually exercised (run the command, test the behavior, check the output), not assumed or claimed, before the ticket can move to `In Review` or `Done`. If a criterion cannot be verified, say so and ask the user how to proceed; never move the ticket forward with unverified criteria.
-5. **Tickets are written for the next reader**: a human or agent picking it up cold, possibly weeks later.
+5. **Acceptance criteria must be genuinely checked before `In Review` or `Done`.** Every acceptance criterion on the ticket must be verified, actually exercised (run the command, test the behavior, check the output), not assumed or claimed, before the ticket can move to `Acceptancy` or `Done`. If a criterion cannot be verified, say so and ask the user how to proceed; never move the ticket forward with unverified criteria.
+6. **Tickets are written for the next reader**: a human or agent picking it up cold, possibly weeks later.
 
 ## Multi-area tickets (Multi label + sub-issues)
 
-A ticket that spans multiple areas carries the **`Area/Multi`** label instead of a single area label. This is allowed **only with the user's explicit approval** (see non-negotiable #2), and the ticket **must** have sub-issues covering every area:
+A ticket that spans multiple areas carries the **`Area/Multi`** label instead of a single area label. This is allowed **only with the user's explicit approval** (see non-negotiable #3), and the ticket **must** have sub-issues covering every area:
 
 - **One sub-issue per area, minimum.** Every area in the work maps to at least one sub-issue (in Linear, via the parent ticket's sub-issues) covering that area's slice. Never let a single sub-issue silently absorb multiple areas.
 - **Sub-issues carry the real area labels.** Each sub-issue gets its own single Area label (`Frontend`, `Backend`, etc.) — the parent carries `Multi`, the sub-issues carry the specifics.
@@ -80,16 +80,20 @@ Follow this shape (markdown):
 
 ```markdown
 ## Goal
+
 <the outcome, from the user's perspective — why does this matter?>
 
 ## What to do
+
 <the concrete work, in order. Reference files/paths where relevant.>
 
 ## Acceptance criteria
+
 - [ ] <checkable, agent-executable criteria — a verifier can tick each one>
 - [ ] <each criterion is a testable behavior, not an activity>
 
 ## Out of scope
+
 <what this ticket deliberately does NOT do — prevents scope creep>
 ```
 
@@ -129,4 +133,4 @@ When a piece of work is bigger than one ticket:
 - `to-spec` — turning a conversation into a spec published to the tracker
 - `wayfinder` — mapping huge efforts as decision tickets
 - `copywriting` — MANDATORY: load before writing/editing any ticket
-- `git-workflow` — the SL- ticket rule for branches/commits (branch `feature/SL-XXX-slug`, commit prefix `SL-XXX: `)
+- `git-workflow` — the SL- ticket rule for branches (branch `feature/SL-XXX-slug`, plain imperative commits)
