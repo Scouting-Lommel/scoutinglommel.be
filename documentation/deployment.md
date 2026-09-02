@@ -15,9 +15,8 @@
 | :------------- | :---------------------------------------------------------------- | :------------------------------------------------------------------------------- |
 | DNS            | [CloudFlare](https://www.cloudflare.com/)                         | DNS management with caching & DDoS protection.                                   |
 | Frontend app   | [Vercel](https://vercel.com)                                      | Dynamic hosting with automatic CI/CD for FE app.                                 |
-| Backend CMS    | [Heroku](https://www.heroku.com)                                  | Dynamic hosting with CI/CD capabilities for BE CMS.                              |
+| Backend CMS    | Self-hosted [Coolify](https://coolify.io) on a [Hetzner](https://www.hetzner.com) VPS | Strapi CMS, containerized via Coolify.                                            |
 | Database       | MySQL database hosted on [Vimexx](https://www.vimexx.be/)         | Both the development and production environments have a separate MySQL database. |
-| Error tracking | [Sentry](https://www.sentry.com)                                  | Error tracking in a Sentry dashboard.                                            |
 | E-mail setup   | [Google Workspace for Non-Profits](https://workspace.google.com/) | Check out the [Google Workspace setup docs](/documentation/google-workspace.md). |
 
 ### DNS
@@ -35,11 +34,11 @@ Deployments for this project are fully automated using [Vercel](https://vercel.c
 
 ### Backend hosting
 
-The website's backend CMS is a [Strapi](https://www.strapi.io) instance and is hosted on [Heroku](https://www.heroku.com). A CI/CD pipeline has been set up for automatic deployment when pushing changes and/or features to the `main` branch.
+The website's backend CMS is a [Strapi](https://www.strapi.io) instance, containerized and deployed on a **self-hosted [Coolify](https://coolify.io) instance running on a [Hetzner](https://www.hetzner.com) VPS**. Deployments are triggered via Coolify's Git integration (push to the backend repo's `main` branch).
 
 ### Error tracking
 
-Errors will be collected in a [Sentry](https://www.sentry.com) dashboard.
+Sentry was previously implemented but **removed because it did not work** — it is not currently active. It may be re-added later; until then, monitoring is limited to Vercel Analytics and browser-side tooling.
 
 ## Environments
 
@@ -70,7 +69,6 @@ The project is configured for Vercel deployment with:
 ### Monitoring
 
 - **Vercel Analytics**: Built-in performance monitoring and insights
-- **Sentry Integration**: Error tracking and performance metrics
 - **Browser Performance**: Lighthouse scores monitored in CI/CD
 
 For detailed performance troubleshooting, see [Performance & Troubleshooting Guide](./performance-troubleshooting.md).

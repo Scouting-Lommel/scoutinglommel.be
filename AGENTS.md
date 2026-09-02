@@ -110,7 +110,7 @@ pnpm run storybook    # Start Storybook
 - **react-email** — Email template development (`pnpm run emails`)
 - **Vercel** — Hosting with Analytics & Speed Insights
 - **Cloudinary** — Image hosting (res.cloudinary.com)
-- **Strapi** — Headless CMS (admin.scoutinglommel.be)
+- **Strapi** — Headless CMS (admin.scoutinglommel.be), self-hosted via Coolify on a Hetzner VPS
 - **Linear MCP** — Ticket lookup/verification (see `opencode.json`)
 
 ## Notes
@@ -121,6 +121,7 @@ pnpm run storybook    # Start Storybook
 - **SVG handling**: `@svgr/webpack` converts SVGs to React components
 - **Content freshness & caching**: GraphQL fetches are `no-store` — CMS edits appear on the next page load. Events/activities/files/links are fetched client-side to offload Vercel CPU. Before adding any server-side caching or changing how these are fetched, read the `data-fetching` skill and `documentation/data-fetching-and-caching.md` — the previous cache layer caused 7-day-stale content and was removed
 - **pnpm only** — `preinstall` hook enforces pnpm via `only-allow`
+- **Vendored skills** — the 24 skills under `.agents/skills/` copied from `mattpocock/skills` + `coreyhaines31/marketingskills` are tracked in `skills-lock.json`. Refresh with `npx skills update -p --copy`, then commit. The 5 custom skills (git-workflow, deployment, data-fetching, content-blocks, ticket-writing) have no upstream and stay `local` in the lock.
 
 ## Documentation
 
@@ -128,4 +129,5 @@ pnpm run storybook    # Start Storybook
 - `documentation/deployment.md` — provider map + environment details
 - `documentation/data-fetching-and-caching.md` — caching rationale & decision rules
 - `documentation/development-and-git-flow.md` — branch/PR workflow
+- `docs/agents/issue-tracker.md` — tracker config for the engineering skills (this repo uses Linear)
 - `documentation/content-security-policy.md`, `documentation/dns-aid.md`, `documentation/google-workspace.md`, `documentation/performance-troubleshooting.md` — ops reference

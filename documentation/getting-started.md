@@ -94,7 +94,7 @@ Contact the project maintainer for the actual values to use in development.
 To run Storybook for component development:
 
 ```bash
-pnpm run storybook:start
+pnpm run storybook
 ```
 
 This will start Storybook on [port 6006](http://localhost:6006) with CSS processing enabled.
