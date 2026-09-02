@@ -8,7 +8,7 @@ Paste the description below into a **Team template** in Linear:
 > Set these template properties in the Linear UI:
 > - **Labels**: leave blank in the template, the creator applies the Type + Area labels to the issue
 > - **Status**: `Todo`
-> - Leave assignee/priority/project for the creator to fill
+> - Leave assignee/priority/project for the creator to fill (assign to the authenticated MCP user for new tickets)
 
 ```markdown
 ## Goal
