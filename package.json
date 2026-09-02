@@ -25,6 +25,7 @@
     "lint": "pnpm run \"/^lint:[^:]+$/\"",
     "preinstall": "npx only-allow pnpm",
     "postinstall": "pnpm codegen",
+    "prebuild": "[ -f src/types/generated/Graphql.ts ] || pnpm codegen",
     "start": "next start",
     "storybook:build": "storybook build",
     "storybook:start": "storybook dev -p 6006",
