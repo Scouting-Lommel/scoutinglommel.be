@@ -1,102 +1,101 @@
-# Development and GIT Flow
+# Development and git flow
 
 ## Overview
 
-We follow a **trunk-based** development approach where `main` is our primary branch. All development work is done in feature branches that are eventually merged back into `main` through Pull Requests (PRs).
+We follow a **trunk-based** development approach where `main` is our primary branch. All development happens in feature branches that are merged back into `main` through Pull Requests (PRs).
 
-> **[Trunk based development](https://trunkbaseddevelopment.com/)**: a source-control branching model, where developers collaborate on code in a single branch called ‘trunk’, resist any pressure to create other long-lived development branches by employing documented techniques. They therefore avoid merge hell, do not break the build, and live happily ever after.
+> **[Trunk-based development](https://trunkbaseddevelopment.com/)**: a branching model where developers collaborate on a single branch called the 'trunk' and resist creating long-lived development branches. This avoids merge hell, keeps the build green, and keeps history linear.
 
-## Workflow Steps
+## Workflow
 
-1. **Create a New Branch**
+1. **Create a branch**
 
-```bash
-git checkout main
-git pull origin main
-git checkout -b your-branch-name
-```
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b your-branch-name
+   ```
 
-2. **Work on Your Changes**
+2. **Work on your changes**
 
-- Make your commits in your feature branch
-- Commit messages should be clear and descriptive
+   - Make commits in your feature branch
+   - Keep commit messages clear and descriptive
 
-3. **Keep Your Branch Updated**
+3. **Keep your branch updated**
 
-```bash
-git fetch origin
-git rebase origin/main
-```
+   ```bash
+   git fetch origin
+   git rebase origin/main
+   ```
 
-- This ensures your branch has the latest changes from `main`
-- Resolve any conflicts that arise during rebase
+   - This keeps your branch in sync with the latest `main`
+   - Resolve any conflicts during the rebase
 
-4. **Push Your Changes**
+4. **Push your changes**
 
-```bash
-git push origin your-branch-name
-```
+   ```bash
+   git push origin your-branch-name
+   ```
 
-5. **Create a Pull Request**
+5. **Create a pull request**
 
-- Create a PR from your branch to `main`
-- Ensure your PR description clearly explains the changes
-- Request review from at least one team member
+   - Open a PR from your branch to `main`
+   - Make sure the PR description clearly explains the changes
+   - Request review from at least one team member
 
-## Requirements for Merging
+## Merging requirements
 
-- ✅ Branch must be up to date with `main` (rebased)
-- ✅ At least 1 approval from another team member
-- ✅ All commits will be squashed into a single commit during merge
+- ✅ Branch is up to date with `main` (rebased)
+- ✅ At least one approval from another team member
+- ✅ All commits are squashed into a single commit on merge
 
-## Important Notes
+## Important notes
 
 - Never push directly to `main`
-- Always create a PR for changes
+- Always open a PR for changes
 - Keep branches focused and short-lived
-- Resolve conflicts through rebasing, not merging
-- All commits in the PR will be squashed into a single commit when merging
+- Resolve conflicts by rebasing, not merging
 
-## Common Commands
+## Common commands
 
 ```bash
 # Update main
 git checkout main
 git pull origin main
 
-# Create new branch
+# Create a new branch
 git checkout -b feature/your-feature-name
 
 # Rebase on main
 git fetch origin
 git rebase origin/main
 
-# Force push after rebase (if branch is already pushed)
+# Force push after rebase (only if the branch is already pushed)
 git push --force-with-lease origin your-branch-name
 ```
 
-## Best Practices
+## Best practices
 
-1. **Branch Naming**
+1. **Branch naming**
 
-- Use descriptive names
-- Include the ticket number in the branch name (SL-[number])
-- Example: feature/SL-32-add-user-authentication
+   - Use descriptive names
+   - Include the ticket number in the branch name (`SL-<number>`)
+   - Example: `feature/SL-32-add-user-authentication`
 
-2. **Commit Messages**
+2. **Commit messages**
 
-- Write clear, concise commit messages
-- Use present tense
-- Example: "Add user authentication feature"
+   - Write clear, concise commit messages
+   - Use present tense
+   - Example: "Add user authentication feature"
 
-3. **Code Review**
+3. **Code review**
 
-- Review PRs promptly
-- Provide constructive feedback
-- Address review comments in a timely manner
+   - Review PRs promptly
+   - Provide constructive feedback
+   - Address review comments in a timely manner
 
-4. **Keep PRs Focused**
+4. **Keep PRs focused**
 
-- Each PR should represent a single piece of work
-- Avoid mixing unrelated changes
-- Break down large changes into smaller PRs when possible
+   - Each PR represents a single piece of work
+   - Avoid mixing unrelated changes
+   - Break large changes into smaller PRs when possible

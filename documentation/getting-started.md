@@ -30,44 +30,44 @@
 - [pnpm](https://pnpm.io) (v8 and up)
 - [NVM](https://github.com/nvm-sh/nvm) (optional but recommended)
 
-> **Important**: Only pnpm is allowed as package manager (enforced by preinstall script). Attempting to use npm or Yarn will fail.
+> **Important**: pnpm is the only allowed package manager (enforced by the preinstall script). Attempting to use npm or Yarn will fail.
 
-### Environment Variables Required
+### Environment variables
 
-Create a `.env` file with the required environment variables. See `.env.example` for the complete list of variables needed.
+Create a `.env` file with the required environment variables — see `.env.example` for the complete list.
 
 Contact the project maintainer for the actual values to use in development.
 
 ## Installation
 
-1. Clone this repo onto your machine and navigate to the local repo
+1. Clone this repo and navigate into it:
 
    ```bash
    git clone https://github.com/Scouting-Lommel/scoutinglommel.be.git
    cd scoutinglommel.be
    ```
 
-2. Copy the example environment file
+2. Copy the example environment file:
 
    ```bash
    cp .env.example .env
    ```
 
-3. Fill in `.env`. For environment values, contact repo owner.
+3. Fill in `.env`. For environment values, contact the repo owner.
 
-4. Set the `Node.js` version (optional but recommended)
+4. Set the `Node.js` version (optional but recommended):
 
    ```bash
    nvm use
    ```
 
-5. Install pnpm (if not already installed)
+5. Install pnpm (if not already installed):
 
    ```bash
    npm install -g pnpm
    ```
 
-6. Install dependencies
+6. Install dependencies:
 
    ```bash
    pnpm install
@@ -76,18 +76,18 @@ Contact the project maintainer for the actual values to use in development.
 ## Running locally
 
 1. [Clone and install](#installation) this repo
-2. Start the development server
+2. Start the development server:
 
    ```bash
    pnpm run dev
    ```
 
-   This will start:
+   This starts:
    - Next.js development server
    - PostCSS watcher for component styles
    - PostCSS watcher for global styles
 
-3. You can now visit the website's frontend on [port 3000](http://localhost:3000).
+3. Visit the website's frontend on [port 3000](http://localhost:3000).
 
 ### Running Storybook
 
@@ -97,11 +97,11 @@ To run Storybook for component development:
 pnpm run storybook
 ```
 
-This will start Storybook on [port 6006](http://localhost:6006) with CSS processing enabled.
+This starts Storybook on [port 6006](http://localhost:6006) with CSS processing enabled.
 
-## Code Quality & Testing
+## Code quality & testing
 
-### Linting and Formatting
+### Linting and formatting
 
 ```bash
 pnpm run lint                   # Run all linters (ESLint, TypeScript, Stylelint, ls-lint)
@@ -111,48 +111,48 @@ pnpm run lint:stylelint         # Stylelint for .pcss files with auto-fix
 pnpm run lint:ls-lint           # File/directory naming conventions
 ```
 
-### Important Linting Rules
+### Linting rules
 
-- **Import Order**: Strictly enforced ESLint rule with specific path group ordering
+- **Import order**: Strictly enforced ESLint rule with specific path group ordering
 - **TypeScript**: Strict mode enabled, all types must be properly defined
 - **CSS**: PostCSS files must follow naming conventions
-- **File Naming**: Directory and file names must follow ls-lint rules
+- **File naming**: Directory and file names must follow ls-lint rules
 
-### Manual Code Quality Checks
+### Manual code quality checks
 
-Before committing, manually run the linting commands:
+Before committing, run the linting commands:
 
 ```bash
 pnpm run lint              # Run all quality checks
 ```
 
-This will check:
+This checks:
 
 - ESLint rules and auto-fix issues
 - TypeScript type checking
 - Stylelint for CSS files
 - File naming conventions (ls-lint)
 
-**Best Practice**: Always run `pnpm run lint` before committing to ensure code quality.
+**Best practice**: always run `pnpm run lint` before committing to ensure code quality.
 
 ## Building the project
 
 ### Local build
 
 1. [Clone and install](#installation) this repo
-2. Produce a production build using `pnpm`
+2. Produce a production build using `pnpm`:
 
    ```bash
    pnpm run build
    ```
 
-   This will:
-   - Run the prebuild script
-   - Build CSS for components
-   - Build global CSS
-   - Build Next.js application
+   This:
+   - Runs the prebuild script
+   - Builds CSS for components
+   - Builds global CSS
+   - Builds the Next.js application
 
-3. Start the app using
+3. Start the app with:
 
    ```bash
    pnpm start
@@ -160,10 +160,10 @@ This will check:
 
 ### Deployment
 
-Deployments for this project are fully automated using [Vercel](https://vercel.com). Every push to the `main` branch automatically triggers a build and deployment. For more info, check out the [deployment docs](/documentation/deployment.md).
+Deployments are fully automated using [Vercel](https://vercel.com). Every push to the `main` branch triggers a staging deployment; production deploys on `v*` tags. For more info, see the [deployment docs](/documentation/deployment.md).
 
-## Development and GIT flow
+## Development and git flow
 
-We follow a trunk-based development approach where `main` is our primary branch. All development work is done in feature branches that are eventually merged back into `main` through Pull Requests (PRs).
+We follow a trunk-based development approach where `main` is our primary branch. All development work happens in feature branches that are merged back into `main` through Pull Requests (PRs).
 
-For more information, read the [Development and GIT flow documentation](./development-and-git-flow.md).
+For more information, read the [Development and git flow documentation](./development-and-git-flow.md).
