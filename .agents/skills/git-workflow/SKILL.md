@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: "MUST USE for ANY git operation in this repo, committing, staging, branching, checkout, rebase, squash, merge, push, pull, fetch, amend, stash, revert, cherry-pick, creating or reviewing PRs, or any git history investigation. Encodes THIS repo's workflow (trunk-based, atomic commits, prettier-format before commit) and the Linear-ticket rule (every branch and commit must reference an SL- ticket). Triggers: commit, branch, rebase, merge, push, pull, fetch, amend, PR, git history, blame, bisect."
+description: "MUST USE for ANY git operation in this repo, committing, staging, branching, checkout, rebase, squash, merge, push, pull, fetch, amend, stash, revert, cherry-pick, creating or reviewing PRs, or any git history investigation. Encodes THIS repo's workflow (trunk-based, atomic commits, prettier-format before commit) and the Linear-ticket rule (every branch must reference an SL- ticket). Triggers: commit, branch, rebase, merge, push, pull, fetch, amend, PR, git history, blame, bisect."
 ---
 
 # Git Workflow (scoutinglommel.be)
@@ -28,7 +28,7 @@ Update the ticket's status in Linear throughout development, never leave it in B
 
 Moving a ticket to `Acceptancy`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
 
-**Acceptance criteria must be genuinely checked before `In Review` or `Done`**: every criterion on the ticket must be actually verified (run the command, test the behavior, check the output), not assumed or claimed, before asking the user to authorize the move. If a criterion cannot be verified, say so and ask how to proceed.
+**Acceptance criteria must be genuinely checked before `Acceptancy` or `Done`**: every criterion on the ticket must be actually verified (run the command, test the behavior, check the output), not assumed or claimed, before asking the user to authorize the move. If a criterion cannot be verified, say so and ask how to proceed.
 
 Every ticket must live in a project (e.g. Improvements, Documentation, SEO & GEO), a ticket without a project is incomplete. See the `ticket-writing` skill for how to write/edit tickets.
 
@@ -46,12 +46,14 @@ Every ticket must live in a project (e.g. Improvements, Documentation, SEO & GEO
 Amend the **immediately preceding commit** when the change is a direct refinement, correction, or closely related follow-up:
 
 **Use `git commit --amend` when:**
+
 - The change fixes a bug in the previous commit
 - The change completes something started in the previous commit
 - The change is a minor adjustment that logically belongs with the previous commit
 - The previous commit has not been pushed to a shared branch yet
 
 **Do NOT amend when:**
+
 - The previous commit has already been pushed to origin and others may have pulled it
 - The change is substantial and deserves its own context in history
 - You need to preserve the history for audit/debugging purposes
@@ -61,7 +63,7 @@ Amend the **immediately preceding commit** when the change is a direct refinemen
 1. **Create a branch** (from latest main):
    ```bash
    git checkout main
-   git pull origin main
+    git pull --ff-only origin main
    git checkout -b feature/SL-XXX-short-slug
    ```
 2. **Work + commit atomically**, clear, descriptive, present-tense messages (no ticket prefix; the branch carries the ticket).

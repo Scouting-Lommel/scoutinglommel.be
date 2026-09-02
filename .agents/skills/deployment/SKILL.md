@@ -1,6 +1,6 @@
 ---
 name: deployment
-description: "MUST USE when deploying, releasing, tagging, rolling back, or touching Vercel/CI-CD configuration for this repo. Covers the two Vercel environments (staging auto-deploy vs production tag-only deploys), the release flow, rollback, and the SKIP_FETCH_SCHEMA build requirement. Triggers: deploy, release, tag, rollback, vercel, production, staging, v* tag."
+description: 'MUST USE when deploying, releasing, tagging, rolling back, or touching Vercel/CI-CD configuration for this repo. Covers the two Vercel environments (staging auto-deploy vs production tag-only deploys), the release flow, rollback, and the SKIP_FETCH_SCHEMA build requirement. Triggers: deploy, release, tag, rollback, vercel, production, staging, v* tag.'
 ---
 
 # Deployment (scoutinglommel.be)
@@ -23,12 +23,14 @@ Two Vercel environments (team "Scouting Lommel", hobby plan):
 ## Release flow (production)
 
 1. Ensure `main` is at the commit you want to ship.
-2. `git tag vX.Y.Z && git push origin vX.Y.Z` (optionally `gh release create vX.Y.Z`).
-3. The `Deploy Production` workflow builds and deploys that exact commit.
+2. Create the tag: `git tag vX.Y.Z`.
+3. Show the tag and ask the user to confirm before pushing: `git tag -l vX.Y.Z && git log -1 vX.Y.Z`.
+4. Only after explicit confirmation: `git push origin vX.Y.Z` (optionally `gh release create vX.Y.Z`).
+5. The `Deploy Production` workflow builds and deploys that exact commit.
 
 ## Rollback (production)
 
-Re-tag the previous commit and push it (`vercel rollback` is Pro/Enterprise-only, unavailable on hobby).
+Create a new, unused tag (e.g. `vX.Y.(Z+1)`) pointing at the previous commit and push that tag — do not reuse or force-push an existing tag. Ask the user to confirm before pushing (`vercel rollback` is Pro/Enterprise-only, unavailable on hobby).
 
 ## Build notes
 

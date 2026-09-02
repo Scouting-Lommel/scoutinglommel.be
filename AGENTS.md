@@ -15,13 +15,13 @@ Every ticket must live in a project (e.g. Improvements, Documentation, SEO & GEO
 
 Deep reference lives in repo skills (`.agents/skills/`) that auto-load on trigger. This is the single canonical source, other agents (e.g. Claude Code) should read from `.agents/skills/` directly:
 
-| Skill | When to use |
-|-------|-------------|
-| `git-workflow` | ANY git operation, branch/commit/rebase/PR. Encodes trunk-based rules + the SL- ticket rule (branch `feature/SL-XXX-slug`, commit prefix `SL-XXX: `) |
-| `deployment` | Deploying, releasing, tagging, rolling back, or touching Vercel/CI-CD config |
-| `data-fetching` | Changing how data is fetched/cached, no-store model, no server cache, client-side fetching rules |
-| `content-blocks` | Adding/editing a content block, GraphQL fragment/query, page, or component |
-| `ticket-writing` | Creating/editing/grooming Linear tickets, structure, status lifecycle, project assignment |
+| Skill            | When to use                                                                                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `git-workflow`   | ANY git operation, branch/commit/rebase/PR. Encodes trunk-based rules + the SL- ticket rule (branch `feature/SL-XXX-slug`, commit plain imperative summaries) |
+| `deployment`     | Deploying, releasing, tagging, rolling back, or touching Vercel/CI-CD config                                                                                  |
+| `data-fetching`  | Changing how data is fetched/cached, no-store model, no server cache, client-side fetching rules                                                              |
+| `content-blocks` | Adding/editing a content block, GraphQL fragment/query, page, or component                                                                                    |
+| `ticket-writing` | Creating/editing/grooming Linear tickets, structure, status lifecycle, project assignment                                                                     |
 
 ## MCP servers
 
@@ -29,18 +29,18 @@ Configured in `opencode.json` (all remote, no secrets): `linear` (tickets), `ver
 
 ## Where to Look
 
-| Task | Location |
-|------|----------|
-| Add/edit a content block | `src/content-blocks/`, `src/graphql/*.gql` |
-| Add a new page | `src/app/{route}/page.tsx`, `src/app/{route}/query.ts`, `src/app/{route}/api.ts` |
-| Edit global styles | `src/assets/styles/global.pcss`, `src/assets/styles/settings/` |
-| Component styles | `{Component}/{Component}.pcss` |
-| Add GraphQL query/fragment | `src/graphql/*.gql` |
+| Task                         | Location                                                                                         |
+| ---------------------------- | ------------------------------------------------------------------------------------------------ |
+| Add/edit a content block     | `src/content-blocks/`, `src/graphql/*.gql`                                                       |
+| Add a new page               | `src/app/{route}/page.tsx`, `src/app/{route}/query.ts`, `src/app/{route}/api.ts`                 |
+| Edit global styles           | `src/assets/styles/global.pcss`, `src/assets/styles/settings/`                                   |
+| Component styles             | `{Component}/{Component}.pcss`                                                                   |
+| Add GraphQL query/fragment   | `src/graphql/*.gql`                                                                              |
 | Regenerate types from schema | `pnpm codegen` (uses committed `schema.graphql`; `SKIP_FETCH_SCHEMA=1` skips live introspection) |
-| Edit auth logic | `src/app/api/auth/[...nextauth]/`, `src/middlewares/` |
-| Form validation schemas | `src/components/organisms/Forms/*/types.ts` |
-| Email templates | `src/emails/templates/` |
-| API response cache headers | `src/lib/api/cache.ts` |
+| Edit auth logic              | `src/app/api/auth/[...nextauth]/`, `src/middlewares/`                                            |
+| Form validation schemas      | `src/components/organisms/Forms/*/types.ts`                                                      |
+| Email templates              | `src/emails/templates/`                                                                          |
+| API response cache headers   | `src/lib/api/cache.ts`                                                                           |
 
 ## Anti-Patterns
 
@@ -54,6 +54,7 @@ Configured in `opencode.json` (all remote, no secrets): `linear` (tickets), `ver
 ## Import Order
 
 Enforced by ESLint `import/order`. Order matters:
+
 1. **External**, npm packages
 2. **Internal**, `@/` aliases, grouped by path:
    - `@/i18n/**` first
@@ -68,6 +69,7 @@ Enforced by ESLint `import/order`. Order matters:
 ## Environment Variables
 
 Required for development (see `.env.example`):
+
 - `NEXT_PUBLIC_APP_BACKEND_URL`, Strapi GraphQL endpoint
 - `STRAPI_API_TOKEN`, For queries (read-only on production)
 - `STRAPI_MUTATION_API_TOKEN`, For mutations
