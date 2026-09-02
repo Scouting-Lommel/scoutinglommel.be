@@ -7,7 +7,7 @@ Work for this repo is tracked in **Linear** (workspace: Scouting Lommel, team ke
 - Every piece of work MUST be linked to a Linear ticket (`SL-<number>`); working without a ticket is forbidden unless the user explicitly says so.
 - Every ticket must carry at least one **Type** label and at least one **Area** label:
   - **Type** (what kind of work, exactly one): `Bug`, `Feature`, or `Improvement`
-  - **Area** (where it touches): `Frontend`, `Backend`, `Manual` (work on the `manual.scoutinglommel.be` repo — the user manual for groepsleiders), `Infra`, or `Other`
+  - **Area** (where it touches, exactly one): `Frontend`, `Backend`, `Manual` (work on the `manual.scoutinglommel.be` repo — the user manual for groepsleiders), `Infra`, `Other`, or `Multi` (spans multiple areas — requires sub-issues, one per area, each with its own single Area label, and the user's explicit approval)
   - So both the work kind and the work area are visible at a glance on the board.
 - Branch naming: `feature/SL-XXX-short-slug`. Commit messages are plain imperative summaries (no ticket prefix — the branch carries the ticket; commits are squashed on merge).
 

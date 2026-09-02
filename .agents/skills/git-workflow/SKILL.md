@@ -20,12 +20,13 @@ Every piece of work MUST be linked to a Linear ticket (`SL-<number>`). Working w
 Update the ticket's status in Linear throughout development — never leave it in Backlog or Todo while work is happening:
 
 - `Backlog` → `Todo` → `In Progress` when you start working on it (a ticket can move into `In Progress` from either `Backlog` or `Todo`)
-- `In Progress` → `In Review` when the branch/PR is up for review — **only with the user's explicit permission** (you can ask, but the user must authorize)
-- `In Review` → `Done` when merged/completed — **only with the user's explicit permission** (you can ask, but the user must authorize)
+- `In Progress` → `In Review` when the branch/PR is up for review — no explicit permission needed, but only valid while a PR is open
+- `In Review` → `Acceptancy` when the change is live on staging — **only with the user's explicit permission** (you can ask, but the user must authorize)
+- `Acceptancy` → `Done` when the change is live on production — **only with the user's explicit permission** (you can ask, but the user must authorize)
 - `Canceled` when the work is abandoned (add a comment saying why) — only with the user's explicit permission
 - `Duplicate` when the ticket duplicates another — only with the user's explicit permission
 
-Moving a ticket to `In Review`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
+Moving a ticket to `Acceptancy`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
 
 **Acceptance criteria must be genuinely checked before `In Review` or `Done`**: every criterion on the ticket must be actually verified (run the command, test the behavior, check the output) — not assumed or claimed — before asking the user to authorize the move. If a criterion cannot be verified, say so and ask how to proceed.
 

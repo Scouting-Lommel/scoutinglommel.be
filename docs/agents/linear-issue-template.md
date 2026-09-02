@@ -40,7 +40,7 @@ Apply the Type and Area labels to the issue in the Linear UI (they are labels, n
 | `Feature` | purple | New capability |
 | `Improvement` | blue | Refinement of existing behavior |
 
-**Area** (where it touches):
+**Area** (where it touches, exactly one):
 
 | Label | Color | Meaning |
 |-------|-------|---------|
@@ -49,3 +49,4 @@ Apply the Type and Area labels to the issue in the Linear UI (they are labels, n
 | `Manual` | orange | Work on the `manual.scoutinglommel.be` repo — the user manual for groepsleiders |
 | `Infra` | red | Vercel, Coolify/Hetzner, DNS, CI/CD, env/config |
 | `Other` | grey | Does not fit the above |
+| `Multi` | yellow | Spans multiple areas — requires sub-issues, one per area, each with its own single Area label |

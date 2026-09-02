@@ -12,33 +12,34 @@ Every piece of work in this repo is tracked in Linear (`SL-<number>`). This skil
 1. **Every ticket lives in a project.** When creating a ticket, always assign it to a project (e.g. Improvements, Documentation, SEO & GEO). A ticket without a project is incomplete. A project is a bigger feature/story containing issues — see `docs/agents/linear-project-template.md` for when to create a project and its lifecycle.
 2. **Every ticket carries at least one Type label AND one Area label.**
    - **Type** (what kind of work, exactly one): `Bug`, `Feature`, or `Improvement`.
-   - **Area** (where it touches, one or more): `Frontend` (Next.js UI/components/blocks/styles), `Backend` (Strapi/API/data), `Manual` (work on the `manual.scoutinglommel.be` repo — the user manual for groepsleiders), `Infra` (Vercel/Coolify/DNS/CI/CD), `Other` (does not fit the above).
+   - **Area** (where it touches, exactly one): `Frontend` (Next.js UI/components/blocks/styles), `Backend` (Strapi/API/data), `Manual` (work on the `manual.scoutinglommel.be` repo — the user manual for groepsleiders), `Infra` (Vercel/Coolify/DNS/CI/CD), `Other` (does not fit the above), or `Multi` (spans multiple areas — see the multi-area rule below).
    - A ticket missing either a Type or an Area label is incomplete — fix it before any work starts.
-   - **A lowest-level ticket should have exactly ONE Area label.** A multi-area ticket is allowed **only if** it has sub-issues covering every area label on it (see "Multi-area tickets" below) — and only with the user's explicit approval. If work spans multiple areas, prefer splitting it into separate single-area tickets (one per area) unless the user says otherwise.
+   - **A lowest-level ticket should have exactly ONE Area label.** Multi-area work is expressed with the `Multi` label: a ticket with `Area/Multi` must have sub-issues, one per area, each carrying its own single Area label — and only with the user's explicit approval. Prefer splitting into separate single-area tickets unless the user says otherwise.
 3. **Status tracks reality.** Update the ticket's status throughout development — never leave it in Backlog or Todo while work is happening:
    - `Backlog` → `Todo` → `In Progress` when you start working on it (a ticket can move into `In Progress` from either `Backlog` or `Todo`)
-   - `In Progress` → `In Review` when the PR/branch is up for review — **only with the user's explicit permission**. You can ask for it, but the user must authorize the move.
-   - `In Review` → `Done` when merged/completed — **only with the user's explicit permission**. You can ask for it, but the user must authorize the move.
+   - `In Progress` → `In Review` when the PR/branch is up for review — no explicit permission needed, but only valid while a PR is open. If no PR is open, the ticket stays `In Progress`.
+   - `In Review` → `Acceptancy` when the change is live on staging — **only with the user's explicit permission**. You can ask for it, but the user must authorize the move.
+   - `Acceptancy` → `Done` when the change is live on production — **only with the user's explicit permission**. You can ask for it, but the user must authorize the move.
    - `Canceled` when the work is abandoned (with a comment saying why) — only with the user's explicit permission.
    - `Duplicate` when the ticket duplicates another — only with the user's explicit permission.
-   - Moving a ticket to `In Review`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
+   - Moving a ticket to `Acceptancy`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
 4. **Acceptance criteria must be genuinely checked before `In Review` or `Done`.** Every acceptance criterion on the ticket must be verified — actually exercised (run the command, test the behavior, check the output), not assumed or claimed — before the ticket can move to `In Review` or `Done`. If a criterion cannot be verified, say so and ask the user how to proceed; never move the ticket forward with unverified criteria.
 5. **Tickets are written for the next reader** — a human or agent picking it up cold, possibly weeks later.
 
-## Multi-area tickets (sub-issue rule)
+## Multi-area tickets (Multi label + sub-issues)
 
-A ticket with **more than one Area label** is allowed **only if** it has **sub-issues for every area label on it** — and only with the user's explicit approval (see non-negotiable #2). If you cannot create a sub-issue for every area, the multi-area ticket is not allowed — split it into separate single-area tickets instead.
+A ticket that spans multiple areas carries the **`Area/Multi`** label instead of a single area label. This is allowed **only with the user's explicit approval** (see non-negotiable #2), and the ticket **must** have sub-issues covering every area:
 
-- **One sub-issue per area, minimum.** Every area label on the ticket must map to at least one sub-issue (in Linear, via the parent ticket's sub-issues) covering that area's slice of the work. Never let a single sub-issue silently absorb multiple areas.
-- **Sub-issues carry the area's labels.** Each sub-issue gets the Type + Area labels for its own scope, so the area split stays visible on the board.
-- **Verify per area.** Acceptance criteria touching an area are checked against that area's sub-issue before the ticket can move to `In Review`.
-- **Prefer splitting.** If the areas are independent enough, split the ticket into separate top-level single-area tickets instead of a multi-area ticket with sub-issues — that is the default; multi-area is the exception.
+- **One sub-issue per area, minimum.** Every area in the work maps to at least one sub-issue (in Linear, via the parent ticket's sub-issues) covering that area's slice. Never let a single sub-issue silently absorb multiple areas.
+- **Sub-issues carry the real area labels.** Each sub-issue gets its own single Area label (`Frontend`, `Backend`, etc.) — the parent carries `Multi`, the sub-issues carry the specifics.
+- **Verify per area.** Acceptance criteria touching an area are checked against that area's sub-issue before the ticket can move to `Acceptancy` or `Done`.
+- **Prefer splitting.** If the areas are independent enough, split the ticket into separate top-level single-area tickets instead of a `Multi` ticket with sub-issues — that is the default; `Multi` is the exception.
 
 (Execution orchestration — e.g. one agent per area — is the orchestrator's concern, not the ticket's.)
 
 ## Ticket readiness gate (before starting work)
 
-Before starting work on a ticket, check that it has the required structure: context (Goal), description (What to do), acceptance criteria, and out of scope — plus a project and at least one **Type** label (`Bug`/`Feature`/`Improvement`) and at least one **Area** label (`Frontend`/`Backend`/`Manual`/`Infra`/`Other`). A lowest-level ticket should have exactly ONE Area label — if it has more than one, confirm the user explicitly approved the multi-area scope before starting. If the ticket is missing any of these — or the existing content is vague, ambiguous, or incomplete — **write out the ticket first**: fill in the missing structure so the ticket is a complete contract before any work begins. Ask the user for input when needed (when the missing content is a decision only the user can make, or the request is too vague to resolve yourself). Never start work on a ticket that is not a complete contract.
+Before starting work on a ticket, check that it has the required structure: context (Goal), description (What to do), acceptance criteria, and out of scope — plus a project and at least one **Type** label (`Bug`/`Feature`/`Improvement`) and at least one **Area** label (`Frontend`/`Backend`/`Manual`/`Infra`/`Other`/`Multi`). A lowest-level ticket should have exactly ONE Area label — if it carries `Multi`, confirm the user explicitly approved the multi-area scope AND that sub-issues exist for every area before starting. If the ticket is missing any of these — or the existing content is vague, ambiguous, or incomplete — **write out the ticket first**: fill in the missing structure so the ticket is a complete contract before any work begins. Ask the user for input when needed (when the missing content is a decision only the user can make, or the request is too vague to resolve yourself). Never start work on a ticket that is not a complete contract.
 
 The canonical ticket structure lives in the Linear team template (`docs/agents/linear-issue-template.md`) — prefer its shape when writing tickets.
 
