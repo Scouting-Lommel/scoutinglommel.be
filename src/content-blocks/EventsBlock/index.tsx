@@ -1,5 +1,6 @@
 import type { JSX } from 'react';
 import { getEvents } from '@/lib/api/events/api';
+import { getFooterData } from '@/lib/api/general/api';
 import { formatDate } from '@/lib/helpers/dateTime';
 import { generateEventSchema } from '@/lib/helpers/generateEventSchema';
 import BlockContainer from '@/components/atoms/BlockContainer';
@@ -16,8 +17,18 @@ const EventsBlock = async ({
 
   try {
     const today = formatDate(new Date());
-    const { events } = await getEvents(today);
-    eventSchema = generateEventSchema(events);
+    const [eventsResult, footerResult] = await Promise.allSettled([
+      getEvents(today),
+      getFooterData(),
+    ]);
+    if (eventsResult.status === 'fulfilled') {
+      const generalData =
+        footerResult.status === 'fulfilled' ? footerResult.value.generalData : null;
+      eventSchema = generateEventSchema(eventsResult.value.events, {
+        name: generalData?.siteName ?? 'Scouting Lommel',
+        address: generalData?.address,
+      });
+    }
   } catch (e) {
     console.error('Failed to fetch events for Event schema:', e);
   }
