@@ -10,8 +10,15 @@ const BreadcrumbJsonLd = async (): Promise<JSX.Element | null> => {
 
   if (!pathname || pathname === '/') return null;
 
-  const breadcrumbs = getBreadcrumbs(pathname);
-  if (breadcrumbs.length <= 1) return null;
+  const rawBreadcrumbs = getBreadcrumbs(pathname);
+  if (rawBreadcrumbs.length <= 1) return null;
+
+  // Resolve href-less crumbs (typically the current page) to the canonical URL
+  // so every ListItem in the schema carries an `item`.
+  const canonicalPath = pathname.replace(/\/+$/, '') || pathname;
+  const breadcrumbs = rawBreadcrumbs.map((crumb) =>
+    crumb.href ? crumb : { ...crumb, href: canonicalPath },
+  );
 
   const siteUrl = await getSiteUrl();
   const schema = generateBreadcrumbSchema(breadcrumbs, siteUrl);
