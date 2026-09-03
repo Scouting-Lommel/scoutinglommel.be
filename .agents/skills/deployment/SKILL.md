@@ -27,6 +27,7 @@ Two Vercel environments (team "Scouting Lommel", hobby plan):
 3. Show the tag and ask the user to confirm before pushing: `git tag -l vX.Y.Z && git log -1 vX.Y.Z`.
 4. Only after explicit confirmation: `git push origin vX.Y.Z` (optionally `gh release create vX.Y.Z`).
 5. The `Deploy Production` workflow builds and deploys that exact commit.
+6. After deploying, check Linear for tickets in `Acceptancy` whose commits are now in the tag. Move them to `Done` (with user permission). Use `git log --oneline vX.Y.Z` to see which commits are in the tag, and match them to Linear tickets.
 
 ## Rollback (production)
 
