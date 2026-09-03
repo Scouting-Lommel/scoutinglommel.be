@@ -9,18 +9,14 @@ export async function GET() {
   const linkset = {
     linkset: [
       {
-        rel: 'sitemap',
-        href: `${siteUrl}/sitemap.xml`,
-      },
-      {
-        rel: 'service-desc',
-        type: 'text/markdown',
-        href: `${siteUrl}/api/markdown`,
-      },
-      {
-        rel: 'service-desc',
-        type: 'text/plain',
-        href: `${siteUrl}/robots.txt`,
+        anchor: siteUrl,
+        'https://www.iana.org/assignments/link-relations/sitemap': [
+          { href: `${siteUrl}/sitemap.xml` },
+        ],
+        'service-desc': [
+          { href: `${siteUrl}/api/markdown`, type: 'text/markdown' },
+          { href: `${siteUrl}/robots.txt`, type: 'text/plain' },
+        ],
       },
     ],
   };
@@ -38,6 +34,7 @@ export async function HEAD() {
     headers: {
       'Content-Type': 'application/linkset+json',
       'Cache-Control': 'public, s-maxage=3600, stale-while-revalidate=86400',
+      Link: `</.well-known/api-catalog>; rel="api-catalog"`,
     },
   });
 }

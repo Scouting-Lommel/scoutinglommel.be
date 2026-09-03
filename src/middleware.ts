@@ -87,7 +87,7 @@ export default async function middleware(req: NextRequest) {
     const self = url === '/' ? '</>' : `</${url.slice(1).replace(/\/+$/, '')}>`;
     responseHeaders.set(
       'Link',
-      `</sitemap.xml>; rel="sitemap", ${self}; rel="alternate"; type="text/markdown", ` +
+      `</sitemap.xml>; rel="https://www.iana.org/assignments/link-relations/sitemap", ${self}; rel="alternate"; type="text/markdown", ` +
         `</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json", ` +
         `</llms.txt>; rel="describedby"; type="text/markdown"`,
     );
