@@ -61,7 +61,7 @@ export default async function middleware(req: NextRequest) {
   // The x-markdown-agent header marks internal fetches from the markdown route
   // so they are never rewritten back into themselves.
   const skipMarkdown =
-    /^\/(api|dashboard|inloggen|geen-toegang|playground)\b|^\/favicon\.ico$|^\/robots\.txt$|^\/sitemap\.xml$|\.[a-z0-9]{2,5}$/i;
+    /^\/(api|dashboard|inloggen|geen-toegang|playground)\b|^\/\.well-known\/|^\/llms\.txt$|^\/favicon\.ico$|^\/robots\.txt$|^\/sitemap\.xml$|\.[a-z0-9]{2,5}$/i;
   const wantsMarkdown = (req.headers.get('accept') ?? '').includes('text/markdown');
 
   if (wantsMarkdown && !req.headers.has('x-markdown-agent') && !skipMarkdown.test(url)) {
@@ -79,14 +79,17 @@ export default async function middleware(req: NextRequest) {
   const requestHeaders = new Headers(req.headers);
   requestHeaders.set('x-pathname', url);
 
-  // RFC 8288 Link headers: point agents at the sitemap and the markdown
-  // alternative representation of every page (same URL, Accept: text/markdown)
+  // RFC 8288 Link headers: point agents at the sitemap, the markdown
+  // alternative representation of every page (same URL, Accept: text/markdown),
+  // the API catalog (RFC 9727) and the curated LLM index.
   const responseHeaders = new Headers();
   if (!wantsMarkdown && !skipMarkdown.test(url)) {
     const self = url === '/' ? '</>' : `</${url.slice(1).replace(/\/+$/, '')}>`;
     responseHeaders.set(
       'Link',
-      `</sitemap.xml>; rel="sitemap", ${self}; rel="alternate"; type="text/markdown"`,
+      `</sitemap.xml>; rel="sitemap", ${self}; rel="alternate"; type="text/markdown", ` +
+        `</.well-known/api-catalog>; rel="api-catalog"; type="application/linkset+json", ` +
+        `</llms.txt>; rel="describedby"; type="text/markdown"`,
     );
   }
 

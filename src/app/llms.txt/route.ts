@@ -4,7 +4,7 @@ export const runtime = 'nodejs';
 
 const body = `# scoutinglommel.be
 
-Scouting Lommel - Website for Scouting Lommel, a Belgian scouting group in Lommel, Limburg.
+> Scouting Lommel - Website for Scouting Lommel, a Belgian scouting group in Lommel, Limburg.
 
 ## Homepage
 
