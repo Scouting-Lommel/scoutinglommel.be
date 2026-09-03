@@ -46,15 +46,15 @@ Vercel automatically handles CDN caching and optimization:
 **Symptoms**: 10+ second first page load
 **Causes**:
 
-- Heroku dyno cold start (free tier only - not applicable with Basic plan)
 - Large uncached GraphQL queries
 - Unoptimized images from Cloudinary
 - Network connectivity issues
+- Backend cold start / container restart on the Coolify host (first request after an idle period)
 
 **Solutions**:
 
 1. Check browser Network tab for slow resources
-2. Verify Heroku dyno status (if you have access to the Heroku dashboard)
+2. Verify the backend (Coolify/Hetzner) container status if you have dashboard access
 3. Optimize Cloudinary image delivery
 4. Test from different networks/locations
 
@@ -64,7 +64,7 @@ Vercel automatically handles CDN caching and optimization:
 **Causes**:
 
 - Database query performance (Vimexx MySQL)
-- Network latency between Heroku ↔ Vimexx
+- Network latency between Hetzner (Coolify) ↔ Vimexx
 - Large GraphQL query responses
 
 **Solutions**:
@@ -118,7 +118,6 @@ export const getLayoutData = async () => {
 ### Tools & Services
 
 - **Vercel Analytics**: Built-in performance metrics and insights
-- **Sentry**: Error tracking and performance monitoring
 - **Browser DevTools**: Lighthouse performance audits
 - **GTmetrix/PageSpeed Insights**: External performance analysis
 
@@ -134,12 +133,12 @@ export const getLayoutData = async () => {
 ### Current Setup
 
 - **Frontend**: Vercel (Global Edge Network)
-- **Backend**: Heroku Basic plan (no sleep time)
+- **Backend**: Self-hosted Coolify on a Hetzner VPS (Strapi CMS)
 - **Database**: Vimexx MySQL (Netherlands)
 - **Images**: Cloudinary CDN
 
 ### Known Limitations
 
 - **Database Location**: Vimexx server location may add latency for international users
-- **Heroku Region**: Ensure Heroku app is in Europe region for optimal database connectivity
+- **VPS Region**: Ensure the Hetzner VPS is in the EU region (e.g. Falkenstein) for optimal database connectivity
 - **Image Optimization**: Cloudinary transformation URLs should include proper sizing parameters

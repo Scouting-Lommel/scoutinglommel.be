@@ -5,119 +5,58 @@
 **Package Manager:** pnpm
 **Node Manager:** nvm (see .nvmrc)
 
-## Git Workflow
+## Hard rule: Linear ticket required
 
-### General Rules
-- **Always fetch** before doing any git operation (`git fetch` or `git pull`)
-- **Always branch from the latest remote** — never branch from a stale local branch
-- **Always branch from `main`** or the current feature branch, except when explicitly instructed or when there is a logical reason to do otherwise
-- **Use atomic commits** — each commit should represent a single, complete, reversible change
-- **Work trunk-based** — prefer `rebase` over `merge` to keep history linear and clean
-- **Always format before committing** — run `pnpm exec prettier --write <changed files>` on changed files and verify `pnpm exec prettier --check <files>` passes before committing
+Every piece of work MUST be linked to a Linear ticket (`SL-<number>`). Working on something without a ticket is FORBIDDEN unless the user explicitly says so. If no ticket exists for the task, STOP and ask the user. Look up/verify tickets via the Linear MCP. The ticket lives in the branch name: `feature/SL-XXX-slug`. Commit messages are plain imperative summaries (no ticket prefix; commits are squashed on merge, and the ticket reference lands on main via the PR).
 
-### Commit Amend Rule
-When a change is a direct refinement, correction, or closely related follow-up to the **immediately preceding commit**, amend it rather than creating a new commit.
+Every ticket must live in a project (e.g. Improvements, Documentation, SEO & GEO), be assigned to the authenticated MCP user (new tickets), and carry at least one **Type** label (`Bug`/`Feature`/`Improvement`) and at least one **Area** label (`Frontend`/`Backend`/`Manual` = work on `manual.scoutinglommel.be`/`Infra`/`Other`/`Multi`). A lowest-level ticket should have exactly ONE Area label. Multi-area work uses the `Multi` label and must have sub-issues, one per area, each with its own single Area label (only with the user's explicit approval). Always load the `copywriting` skill when writing or editing tickets. Keep the ticket's status current throughout development: `Backlog` → `Todo` → `In Progress` when starting, → `In Review` when a PR is open (no permission needed, but only valid with an open PR), → `Acceptancy` when live on staging, → `Done` when live on production. Moving a ticket to `Acceptancy`, `Done`, `Canceled`, or `Duplicate` requires the user's explicit permission. You can ask, but the user must authorize. All acceptance criteria must be genuinely checked (actually verified, not assumed) before a ticket can move to `Acceptancy` or `Done`. Before starting work, ensure the ticket is a complete contract (context, description, acceptance criteria, out of scope). If it lacks structure, write out the ticket first, asking the user for input when needed. If a plan file was created (`.omo/plans/*.md`), attach it in its entirety as a Linear document linked to the ticket before starting implementation. See the `ticket-writing` skill for ticket structure and lifecycle rules.
 
-**Use `git commit --amend` when:**
-- The change fixes a bug in the previous commit
-- The change completes something started in the previous commit
-- The change is a minor adjustment that logically belongs with the previous commit
-- The previous commit has not been pushed to a shared branch yet
+## Repo skills
 
-**Do NOT amend when:**
-- The previous commit has already been pushed to origin and others may have pulled it
-- The change is substantial and deserves its own context in history
-- You need to preserve the history for audit/debugging purposes
+Deep reference lives in repo skills (`.agents/skills/`) that auto-load on trigger. This is the single canonical source, other agents (e.g. Claude Code) should read from `.agents/skills/` directly:
 
-## Architecture
+| Skill            | When to use                                                                                                                                                   |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `git-workflow`   | ANY git operation, branch/commit/rebase/PR. Encodes trunk-based rules + the SL- ticket rule (branch `feature/SL-XXX-slug`, commit plain imperative summaries) |
+| `deployment`     | Deploying, releasing, tagging, rolling back, or touching Vercel/CI-CD config                                                                                  |
+| `data-fetching`  | Changing how data is fetched/cached, no-store model, no server cache, client-side fetching rules                                                              |
+| `content-blocks` | Adding/editing a content block, GraphQL fragment/query, page, or component                                                                                    |
+| `ticket-writing` | Creating/editing/grooming Linear tickets, structure, status lifecycle, project assignment                                                                     |
 
-### Next.js App Router
-- Route groups: `(homepage)`, `(sitemap)` — used for organization without affecting URL
-- Dynamic routes: `[slug]`, `[key]` — for content pages
-- API routes under `src/app/api/` — NextAuth, form handling, revalidation, email
-- `src/middleware.ts` — route protection with pattern matching for `/inloggen`, `/dashboard/:path*`, `/playground`
+## MCP servers
 
-### Data Fetching Stack
-```
-Strapi CMS (GraphQL endpoint)
-    ↓
-src/api/strapi.ts (core fetcher)
-    ↓
-src/lib/api/{domain}/ (cached wrappers with React cache())
-    ↓
-src/app/{page}/api.ts (page-specific data functions)
-    ↓
-Pages call data functions + pass to Blocks/components
-```
+Configured in `opencode.json` (all remote, no secrets): `linear` (tickets), `vercel` (deploys), `mdn` (web docs), `specification-website` (agent-readiness audits).
 
-**Key files:**
-- `src/api/strapi.ts` — Core GraphQL fetcher with token auth; fetches are always `no-store` so CMS changes appear on the next page load (no Data Cache)
-- `src/lib/api/cache.ts` — `Cache-Control` headers for API route responses only (`getCacheHeaders`)
-- `src/lib/api.ts` — `generateApiQuery()` wrapper for type-safe queries
-- `codegen.ts` — GraphQL Code Generator config, outputs to `src/types/generated/Graphql.ts`
-- `schema.graphql` — **committed**; refreshed by CI on push to main (`.github/workflows/update-schema.yml` introspects Strapi **staging**, whose schema mirrors production). Production introspection is disabled, so builds run codegen against the committed schema with `SKIP_FETCH_SCHEMA=1` instead of fetching live.
+## Where to Look
 
-### GraphQL Patterns
-- **Fragments** in `src/graphql/*.gql` — one per content block type
-- **Page queries** in `src/app/{page}/query.ts` — compose fragments with `gql` tag
-- **Fragment naming**: `HeroBlockFragment` on `ComponentContentBlocksHeroBlock`
-- **Field aliases** for namespaced CMS fields:
-  ```graphql
-  fragment HeroBlockFragment on ComponentContentBlocksHeroBlock {
-    title: heroTitle
-    subtitle: heroSubtitle
-    variant: heroVariant
-  }
-  ```
-- `.gql` files loaded via `graphql-tag/loader` in webpack config
+| Task                         | Location                                                                                         |
+| ---------------------------- | ------------------------------------------------------------------------------------------------ |
+| Add/edit a content block     | `src/content-blocks/`, `src/graphql/*.gql`                                                       |
+| Add a new page               | `src/app/{route}/page.tsx`, `src/app/{route}/query.ts`, `src/app/{route}/api.ts`                 |
+| Edit global styles           | `src/assets/styles/global.pcss`, `src/assets/styles/settings/`                                   |
+| Component styles             | `{Component}/{Component}.pcss`                                                                   |
+| Add GraphQL query/fragment   | `src/graphql/*.gql`                                                                              |
+| Regenerate types from schema | `pnpm codegen` (uses committed `schema.graphql`; `SKIP_FETCH_SCHEMA=1` skips live introspection) |
+| Edit auth logic              | `src/app/api/auth/[...nextauth]/`, `src/middlewares/`                                            |
+| Form validation schemas      | `src/components/organisms/Forms/*/types.ts`                                                      |
+| Email templates              | `src/emails/templates/`                                                                          |
+| API response cache headers   | `src/lib/api/cache.ts`                                                                           |
 
-### Component Architecture
-**Atomic design:** `src/components/{atoms,molecules,organisms}/`
-- **Atoms** — smallest reusable pieces (Button, Icon, Input, Divider)
-- **Molecules** — composite components (ArticleCard, Breadcrumbs, FaqItem)
-- **Organisms** — complex sections (Hero, Footer, Forms, FileSection)
+## Anti-Patterns
 
-**Content Blocks:** `src/content-blocks/` — dynamic block components matching GraphQL fragments
-- Each block has `index.tsx` + `types.ts`
-- Blocks receive props directly from GraphQL response (via aliases)
-- `src/content-blocks/index.tsx` — dynamic importer mapping `__typename` to components
-
-**Type definitions:** Each component directory has `types.ts` with exported types
-- Export pattern: `export type Button = { ... }`
-- Component props imported as: `import { Button as ButtonProps } from './types'`
-
-### Styling
-- **PostCSS** with `.pcss` files (NOT Tailwind)
-- **Global styles**: `src/assets/styles/global.pcss` — imports settings, elements, typography, layouts, utilities
-- **Component styles**: `{Component}/{Component}.pcss` alongside component file
-- **CSS Custom Properties** in `src/assets/styles/settings/` (colors, spacing, typography, z-index)
-- **Build**: `pnpm run build:css` compiles .pcss to .css
-- **No CSS-in-JS** — uses PostCSS + CSS custom properties
-
-### i18n
-- **next-intl** for internationalization
-- Single locale: Dutch (`nl`) — `src/i18n/locales.ts`
-- Namespaces: `common`, `dashboard`, `forms` — JSON files in `locales/nl/`
-- Messages loaded in root layout for client components
-
-### Forms
-- **react-hook-form** + **yup** validation
-- Custom `FormBuilder` with configurable field arrays
-- Server-side handling via API routes (`src/app/api/*/route.ts`)
-- **react-turnstile** for CAPTCHA
-- Email templates with **@react-email/components**
-
-### Authentication
-- **next-auth** v4 with Google OAuth
-- Custom session types in `src/types/next-auth.d.ts`
-- Route protection via `src/middleware.ts` (authMiddleware, groupsMiddleware, signinMiddleware)
-- Dashboard routes under `/dashboard/` with role-based access
+- **Never** rename component props to match CMS field names directly, use GraphQL aliases instead
+- **Never** create a new commit for a fixup to the immediately previous commit, amend instead
+- **No `@ts-ignore` or `as any`**, strict TypeScript is enforced
+- **No `eslint-disable` without justification**, project maintains high code quality standards
+- **No HTML `<img>`**, use Next.js `Image` component or custom Image atom
+- **No styled-jsx**, use PostCSS files instead
 
 ## Import Order
 
 Enforced by ESLint `import/order`. Order matters:
-1. **External** — npm packages
-2. **Internal** — `@/` aliases, grouped by path:
+
+1. **External**, npm packages
+2. **Internal**, `@/` aliases, grouped by path:
    - `@/i18n/**` first
    - `@/lib/**` second
    - `@/types/**` after lib
@@ -125,18 +64,19 @@ Enforced by ESLint `import/order`. Order matters:
    - `@/api/**` after assets
    - `@/content-blocks/**` after api
    - `@/components/**` last among internal
-3. **Parent/Sibling** — `../` and `./` imports
+3. **Parent/Sibling**, `../` and `./` imports
 
 ## Environment Variables
 
 Required for development (see `.env.example`):
-- `NEXT_PUBLIC_APP_BACKEND_URL` — Strapi GraphQL endpoint
-- `STRAPI_API_TOKEN` — For queries (read-only on production)
-- `STRAPI_MUTATION_API_TOKEN` — For mutations
-- `STRAPI_UPLOAD_FILE_TOKEN` — For file uploads (server-side only, via `/api/upload` proxy)
-- `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` — Auth
-- `NEXTAUTH_URL`, `NEXTAUTH_SECRET` — NextAuth
-- `MAILGUN_API_KEY` — Email sending
+
+- `NEXT_PUBLIC_APP_BACKEND_URL`, Strapi GraphQL endpoint
+- `STRAPI_API_TOKEN`, For queries (read-only on production)
+- `STRAPI_MUTATION_API_TOKEN`, For mutations
+- `STRAPI_UPLOAD_FILE_TOKEN`, For file uploads (server-side only, via `/api/upload` proxy)
+- `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, Auth
+- `NEXTAUTH_URL`, `NEXTAUTH_SECRET`, NextAuth
+- `MAILGUN_API_KEY`, Email sending
 - Various Google service account keys for Calendar, Sheets, Admin
 
 ## Build & Development
@@ -151,57 +91,24 @@ pnpm run storybook    # Start Storybook
 
 **Note**: `pnpm run lint:typescript` runs `tsc` but also triggers `pnpm install` first, which may fail due to build script approval. Use `npx tsc --noEmit` directly for quick checks.
 
-## Deployment
+## Architecture (compact)
 
-Two Vercel environments (team "Scouting Lommel", hobby plan):
-
-- **Staging** — project `staging.scoutinglommel.be`, URL `staging.scoutinglommel.be`. Auto-deploys on every push to `main` (Vercel Git integration, production branch = `main`). Uses the Strapi **staging** backend (`staging.admin.scoutinglommel.be`). Env vars are a mix of project-level vars and team **shared variables** (Google/Mailgun/Turnstile/Sheets secrets are shared across staging and production). Environment-specific overrides: SITE_URL, NEXT_PUBLIC_APP_ENV, APP_ENV, NEXTAUTH_URL, NEXT_PUBLIC_APP_BACKEND_URL, STRAPI_* tokens, NEXT_PUBLIC_EMAIL_DEV_OVERRIDE; NEXT_PUBLIC_GA_ID omitted; NEXTAUTH_SECRET regenerated.
-- **Production** — project `scoutinglommel.be`, URLs `scoutinglommel.be` / `www.scoutinglommel.be`. Deploys ONLY when a `v*` git tag is pushed, via `.github/workflows/deploy-production.yml` (Vercel CLI: `vercel pull` -> `vercel build` -> `vercel deploy --prebuilt --prod`). Git auto-deploy is disconnected.
-
-**Release flow (production):**
-1. Ensure `main` is at the commit you want to ship.
-2. `git tag vX.Y.Z && git push origin vX.Y.Z` (optionally `gh release create vX.Y.Z`).
-3. The `Deploy Production` workflow builds and deploys that exact commit.
-
-**Rollback (production):** re-tag the previous commit and push it (`vercel rollback` is Pro/Enterprise-only, unavailable on hobby).
-
-**Notes:**
-- `SKIP_FETCH_SCHEMA=1` must be set as an env var on BOTH Vercel projects (builds run codegen against the committed `schema.graphql`; live introspection is disabled on production Strapi).
-- Both projects use build command `pnpm run build` and Node 24.x.
-- Staging's `*.vercel.app` URLs are protected by Vercel Authentication; the custom domain is public but `robots.txt` disallows indexing (non-production).
-
-## Anti-Patterns
-
-- **Never** rename component props to match CMS field names directly — use GraphQL aliases instead
-- **Never** create a new commit for a fixup to the immediately previous commit — amend instead
-- **No `@ts-ignore` or `as any`** — strict TypeScript is enforced
-- **No `eslint-disable` without justification** — project maintains high code quality standards
-- **No HTML `<img>`** — use Next.js `Image` component or custom Image atom
-- **No styled-jsx** — use PostCSS files instead
-
-## Where to Look
-
-| Task | Location |
-|------|----------|
-| Add/edit a content block | `src/content-blocks/`, `src/graphql/*.gql` |
-| Add a new page | `src/app/{route}/page.tsx`, `src/app/{route}/query.ts`, `src/app/{route}/api.ts` |
-| Edit global styles | `src/assets/styles/global.pcss`, `src/assets/styles/settings/` |
-| Component styles | `{Component}/{Component}.pcss` |
-| Add GraphQL query/fragment | `src/graphql/*.gql` |
-| Regenerate types from schema | `pnpm codegen` (uses committed `schema.graphql`; `SKIP_FETCH_SCHEMA=1` skips live introspection) |
-| Edit auth logic | `src/app/api/auth/[...nextauth]/`, `src/middlewares/` |
-| Form validation schemas | `src/components/organisms/Forms/*/types.ts` |
-| Email templates | `src/emails/templates/` |
-| API response cache headers | `src/lib/api/cache.ts` |
+- **Data fetching**: Strapi → `src/api/strapi.ts` (always `no-store`) → `src/lib/api/{domain}/` → `src/app/{page}/api.ts` → pages. No server-side Data Cache, see the `data-fetching` skill before touching caching.
+- **Components**: atomic design `src/components/{atoms,molecules,organisms}/`; content blocks in `src/content-blocks/` (each `index.tsx` + `types.ts`, dynamic importer maps `__typename`). See the `content-blocks` skill.
+- **Styling**: PostCSS `.pcss` (NOT Tailwind), global styles in `src/assets/styles/global.pcss`, component styles co-located, CSS custom properties in `src/assets/styles/settings/`.
+- **i18n**: next-intl, single locale Dutch (`nl`), namespaces `common`, `dashboard`, `forms` in `locales/nl/`.
+- **Forms**: react-hook-form + yup, custom `FormBuilder`, server-side via API routes, react-turnstile CAPTCHA, @react-email templates.
+- **Auth**: next-auth v4 Google OAuth, session types in `src/types/next-auth.d.ts`, route protection via `src/middleware.ts`, dashboard routes under `/dashboard/` with role-based access.
 
 ## Tools & Integrations
 
-- **Storybook** — Component development (`src/**/*.stories.ts`)
-- **Chromatic** — Visual regression testing
-- **react-email** — Email template development (`pnpm run emails`)
-- **Vercel** — Hosting with Analytics & Speed Insights
-- **Cloudinary** — Image hosting (res.cloudinary.com)
-- **Strapi** — Headless CMS (admin.scoutinglommel.be)
+- **Storybook**, Component development (`src/**/*.stories.ts`)
+- **Chromatic**, Visual regression testing
+- **react-email**, Email template development (`pnpm run emails`)
+- **Vercel**, Hosting with Analytics & Speed Insights
+- **Cloudinary**, Image hosting (res.cloudinary.com)
+- **Strapi**, Headless CMS (admin.scoutinglommel.be), self-hosted via Coolify on a Hetzner VPS
+- **Linear MCP**, Ticket lookup/verification (see `opencode.json`)
 
 ## Notes
 
@@ -209,5 +116,15 @@ Two Vercel environments (team "Scouting Lommel", hobby plan):
 - **Image optimization** uses Next.js Image with remotePatterns for Cloudinary and Strapi uploads
 - **Fonts**: Montserrat + Nunito Sans via next/font (CSS variables)
 - **SVG handling**: `@svgr/webpack` converts SVGs to React components
-- **Content freshness & caching**: GraphQL fetches are `no-store` — CMS edits appear on the next page load. Events/activities/files/links are fetched client-side to offload Vercel CPU. Before adding any server-side caching or changing how these are fetched, read `documentation/data-fetching-and-caching.md` — the previous cache layer caused 7-day-stale content and was removed
-- **pnpm only** — `preinstall` hook enforces pnpm via `only-allow`
+- **Content freshness & caching**: GraphQL fetches are `no-store`, CMS edits appear on the next page load. Events/activities/files/links are fetched client-side to offload Vercel CPU. Before adding any server-side caching or changing how these are fetched, read the `data-fetching` skill and `docs/data-fetching-and-caching.md`, the previous cache layer caused 7-day-stale content and was removed
+- **pnpm only**, `preinstall` hook enforces pnpm via `only-allow`
+- **Repo skills**, 5 custom skills under `.agents/skills/` (git-workflow, deployment, data-fetching, content-blocks, ticket-writing) encode project-specific rules.
+
+## Documentation
+
+- `docs/getting-started.md`, onboarding (install, run, lint)
+- `docs/deployment.md`, provider map + environment details
+- `docs/data-fetching-and-caching.md`, caching rationale & decision rules
+- `docs/development-and-git-flow.md`, branch/PR workflow
+- `docs/agents/issue-tracker.md`, tracker config for the engineering skills (this repo uses Linear)
+- `docs/content-security-policy.md`, `docs/dns-aid.md`, `docs/google-workspace.md`, `docs/performance-troubleshooting.md`, ops reference

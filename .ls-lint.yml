@@ -2,7 +2,7 @@ ls:
   migrations:
     .dir: snake_case
 
-  documentation:
+  docs:
     .dir: kebab-case
     .md: kebab-case
 
@@ -70,6 +70,7 @@ ignore:
   - .next
   - .storybook
   - .omo
+  - .omc
   - .playwright-mcp
   - .codegraph
   - node_modules

@@ -1,6 +1,6 @@
 # Scouting Lommel Frontend
 
-Frontend to the new and refreshed [Scouting Lommel website](https://www.scoutinglommel.be).
+Frontend for the [Scouting Lommel website](https://www.scoutinglommel.be).
 
 ## Table of contents
 
@@ -18,7 +18,7 @@ Frontend to the new and refreshed [Scouting Lommel website](https://www.scouting
 ## Environments
 
 - **Production** — https://www.scoutinglommel.be — deploys when a `v*` git tag is pushed (see `.github/workflows/deploy-production.yml`).
-- **Staging** — https://staging.scoutinglommel.be — auto-deploys on every push to `main`.
+- **Staging** — https://staging.scoutinglommel.be — deploys automatically on every push to `main`.
 
 ## Getting started
 
@@ -28,7 +28,7 @@ Frontend to the new and refreshed [Scouting Lommel website](https://www.scouting
 pnpm install
 ```
 
-For detailed instructions and requirements, check out the [getting started docs](/documentation/getting-started.md).
+For detailed instructions and requirements, see the [getting started docs](/docs/getting-started.md).
 
 ### Running locally
 
@@ -36,7 +36,7 @@ For detailed instructions and requirements, check out the [getting started docs]
 pnpm run dev
 ```
 
-For detailed instructions, check out the [getting started docs](/documentation/getting-started.md#running-locally).
+For detailed instructions, see the [getting started docs](/docs/getting-started.md#running-locally).
 
 ## Credits
 
