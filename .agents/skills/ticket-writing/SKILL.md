@@ -20,7 +20,7 @@ Every piece of work in this repo is tracked in Linear (`SL-<number>`). This skil
    - `Backlog` → `Todo` → `In Progress` when you start working on it (a ticket can move into `In Progress` from either `Backlog` or `Todo`)
    - `In Progress` → `In Review` when the PR/branch is up for review. No explicit permission needed, but only valid while a PR is open. If no PR is open, the ticket stays `In Progress`.
    - `In Review` → `Acceptancy` when the change is live on staging. **Only with the user's explicit permission.** You can ask for it, but the user must authorize the move.
-   - `Acceptancy` → `Done` when the change is live on production. **Only with the user's explicit permission.** You can ask for it, but the user must authorize the move.
+    - `Acceptancy` → `Done` when the change is live on production (i.e. included in a production tag). Production deploys happen when a `v*` tag is pushed, so a ticket can only be `Done` when its commits are in a tag. **Only with the user's explicit permission.** Periodically check the board against `git log --tags --oneline` and move eligible tickets to `Done`.
    - `Canceled` when the work is abandoned (with a comment saying why). Only with the user's explicit permission.
    - `Duplicate` when the ticket duplicates another. Only with the user's explicit permission.
    - Moving a ticket to `Acceptancy`, `Done`, `Canceled`, or `Duplicate` without user authorization is forbidden.
