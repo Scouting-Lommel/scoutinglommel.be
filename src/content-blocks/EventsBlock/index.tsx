@@ -7,6 +7,23 @@ import BlockContainer from '@/components/atoms/BlockContainer';
 import Activities from '@/components/organisms/Activities';
 import { EventsBlock as EventsBlockProps } from './types';
 
+// Footer data is fallback-only: bound it so a slow CMS response delays the
+// event schema by at most FOOTER_DATA_TIMEOUT_MS, and return null (omit the
+// fallback Place) when the CMS provides no site name instead of inventing one.
+const FOOTER_DATA_TIMEOUT_MS = 3000;
+
+const getFooterFallback = (): Promise<{ name: string; address?: string | null } | null> =>
+  Promise.race([
+    getFooterData()
+      .then((footerData) => {
+        const siteName = footerData?.generalData?.siteName;
+        if (!siteName) return null;
+        return { name: siteName, address: footerData?.generalData?.address };
+      })
+      .catch(() => null),
+    new Promise<null>((resolve) => setTimeout(() => resolve(null), FOOTER_DATA_TIMEOUT_MS)),
+  ]);
+
 const EventsBlock = async ({
   blockTitle,
   initialItems,
@@ -17,17 +34,15 @@ const EventsBlock = async ({
 
   try {
     const today = formatDate(new Date());
-    const [eventsResult, footerResult] = await Promise.allSettled([
+    const [eventsResult, fallbackResult] = await Promise.allSettled([
       getEvents(today),
-      getFooterData(),
+      getFooterFallback(),
     ]);
     if (eventsResult.status === 'fulfilled') {
-      const generalData =
-        footerResult.status === 'fulfilled' ? footerResult.value.generalData : null;
-      eventSchema = generateEventSchema(eventsResult.value.events, {
-        name: generalData?.siteName ?? 'Scouting Lommel',
-        address: generalData?.address,
-      });
+      eventSchema = generateEventSchema(
+        eventsResult.value.events,
+        fallbackResult.status === 'fulfilled' ? fallbackResult.value : null,
+      );
     }
   } catch (e) {
     console.error('Failed to fetch events for Event schema:', e);

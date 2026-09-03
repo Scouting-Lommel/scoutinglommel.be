@@ -37,19 +37,20 @@ const generateEventSchema = (
     if (!event || !event.title || !event.startDate) return [];
 
     const eventAddress = buildPlaceAddress(event);
-    const location = event.locationName
-      ? {
-          '@type': 'Place',
-          name: event.locationName,
-          ...(eventAddress ? { address: eventAddress } : {}),
-        }
-      : fallbackLocation
+    const location =
+      event.locationName || eventAddress
         ? {
             '@type': 'Place',
-            name: fallbackLocation.name,
-            ...(fallbackLocation.address ? { address: fallbackLocation.address } : {}),
+            ...(event.locationName ? { name: event.locationName } : {}),
+            ...(eventAddress ? { address: eventAddress } : {}),
           }
-        : null;
+        : fallbackLocation
+          ? {
+              '@type': 'Place',
+              name: fallbackLocation.name,
+              ...(fallbackLocation.address ? { address: fallbackLocation.address } : {}),
+            }
+          : null;
 
     return [
       {
