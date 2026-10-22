@@ -15,6 +15,7 @@ import {
   transformFooterNavigation,
 } from '@/lib/helpers/transformNavigation';
 import SessionProvider from '@/lib/providers/SessionProvider';
+import AppVersion from '@/components/atoms/AppVersion';
 import GlobalAlert from '@/components/atoms/GlobalAlert';
 import SkipToContent from '@/components/atoms/SkipToContent';
 import Footer from '@/components/organisms/Footer';
@@ -64,6 +65,7 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
     return (
       <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
         <body>
+          <AppVersion />
           <main className="sl-main" id="main">
             {children}
           </main>
@@ -96,6 +98,7 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
     return (
       <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
         <body>
+          <AppVersion />
           <NextIntlClientProvider
             messages={{
               common: commonMessages,
@@ -172,6 +175,7 @@ const RootLayout = async ({ children }: Props): Promise<JSX.Element> => {
     <html lang={defaultLocale} className={`${montserrat.variable} ${nunitoSans.variable}`}>
       <link rel="preconnect" href="https://res.cloudinary.com" />
       <body>
+        <AppVersion />
         <NextIntlClientProvider
           messages={{ common: commonMessages, dashboard: dashboardMessages, forms: formsMessages }}
         >

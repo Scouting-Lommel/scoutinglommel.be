@@ -1,4 +1,9 @@
 import createNextIntlPlugin from 'next-intl/plugin';
+import { createRequire } from 'node:module';
+
+const nodeRequire = createRequire(import.meta.url);
+const { version: appVersion } = nodeRequire('./package.json');
+const appCommit = (process.env.VERCEL_GIT_COMMIT_SHA ?? process.env.GITHUB_SHA ?? '').slice(0, 7);
 
 const isStagingBuild =
   process.env.APP_ENV === 'staging' || process.env.NEXT_PUBLIC_APP_ENV === 'staging';
@@ -6,6 +11,10 @@ const isStagingBuild =
 const withNextIntl = createNextIntlPlugin();
 
 const nextConfig = {
+  env: {
+    NEXT_PUBLIC_APP_VERSION: appVersion,
+    NEXT_PUBLIC_APP_COMMIT: appCommit || 'dev',
+  },
   transpilePackages: ['lucide-react'],
   reactStrictMode: true,
   distDir: '.next',

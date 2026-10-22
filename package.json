@@ -1,5 +1,6 @@
 {
   "name": "scoutinglommel.be",
+  "version": "2.13.1",
   "private": true,
   "scripts": {
     "build:css": "pnpm run \"/^build:css:[^:]+$/\"",
