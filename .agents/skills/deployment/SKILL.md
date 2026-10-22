@@ -22,21 +22,33 @@ Two Vercel environments (team "Scouting Lommel", hobby plan):
 
 ## Release flow (production)
 
-1. Ensure `main` is at the commit you want to ship.
-2. Create the tag: `git tag vX.Y.Z`.
-3. Show the tag and ask the user to confirm before pushing: `git tag -l vX.Y.Z && git log -1 vX.Y.Z`.
-4. Only after explicit confirmation: `git push origin vX.Y.Z` (optionally `gh release create vX.Y.Z`).
-5. The `Deploy Production` workflow builds and deploys that exact commit.
-6. After deploying, check Linear for tickets in `Acceptancy` whose commits are now in the tag. Move them to `Done` (with user permission). Use `git log --oneline vX.Y.Z` to see which commits are in the tag, and match them to Linear tickets.
+1. Bump `package.json` to the version you are about to release and merge it to `main`.
+2. Ensure `main` is at the commit you want to ship.
+3. Create the tag: `git tag vX.Y.Z`.
+4. Show the tag and ask the user to confirm before pushing: `git tag -l vX.Y.Z && git log -1 vX.Y.Z`.
+5. Only after explicit confirmation: `git push origin vX.Y.Z` (optionally `gh release create vX.Y.Z`).
+6. The `Deploy Production` workflow runs `Verify tag matches package.json version` before install and fails when the tag is not `v${package.json.version}`. That guard is what keeps the console version truthful.
+7. After deploying, check Linear for tickets in `Acceptancy` whose commits are now in the tag. Move them to `Done` (with user permission). Use `git log --oneline vX.Y.Z` to see which commits are in the tag, and match them to Linear tickets.
+8. Create or complete the Linear release for the tag (see below).
+
+## Releases in Linear
+
+Linear releases are the version history: one release per production tag, in the `Website` pipeline.
+
+- `name` and `version`: `vX.Y.Z` / `X.Y.Z`.
+- `commitSha`: the tagged commit.
+- Attach the tickets shipped in the tag (`git log vX.Y.Z`), then mark the release completed after the deploy succeeds.
+- The release pipeline is a one-time workspace setup (Linear UI → Releases), not something the repo creates.
 
 ## Rollback (production)
 
-Create a new, unused tag (e.g. `vX.Y.(Z+1)`) pointing at the previous commit and push that tag — do not reuse or force-push an existing tag. Ask the user to confirm before pushing (`vercel rollback` is Pro/Enterprise-only, unavailable on hobby).
+Revert the offending commits on `main`, bump `package.json` to a new patch version (e.g. `vX.Y.(Z+1)`), merge, then tag that commit and push the tag. Re-tagging an older commit no longer works: it carries the old `package.json` version, and the deploy workflow rejects the mismatch. Do not reuse or force-push an existing tag. Ask the user to confirm before pushing (`vercel rollback` is Pro/Enterprise-only, unavailable on hobby).
 
 ## Build notes
 
 - `SKIP_FETCH_SCHEMA=1` must be set as an env var on BOTH Vercel projects (builds run codegen against the committed `schema.graphql`; live introspection is disabled on production Strapi).
 - Both projects use build command `pnpm run build` and Node 24.x.
+- The root layout logs `[scoutinglommel.be] vX.Y.Z · <sha> · <env>` in the browser console. `NEXT_PUBLIC_APP_VERSION` comes from `package.json`, so the version bump must land before the tag.
 
 ## Reference
 

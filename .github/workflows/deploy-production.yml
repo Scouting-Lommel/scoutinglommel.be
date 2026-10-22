@@ -1,8 +1,10 @@
 name: Deploy Production
 
-# Rollback: re-tag the previous commit (git tag vX.Y.Z <sha> && git push origin vX.Y.Z)
-# and this workflow re-deploys it. `vercel rollback` is Pro/Enterprise-only, so
-# re-tagging is the rollback path on the hobby plan.
+# Rollback: revert the offending commits on main, bump package.json to a new
+# patch version, merge, then tag that commit. Re-tagging an older commit fails
+# the version guard below because that commit carries the old version.
+# `vercel rollback` is Pro/Enterprise-only, so reverting is the rollback path
+# on the hobby plan.
 
 on:
   push:
@@ -26,6 +28,19 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
+
+      - name: Verify tag matches package.json version
+        run: |
+          package_version="$(node -p "require('./package.json').version")"
+          tag_version="${GITHUB_REF_NAME#v}"
+
+          if [ "$package_version" != "$tag_version" ]; then
+            echo "::error::Tag $GITHUB_REF_NAME does not match package.json version $package_version."
+            echo "Bump package.json to $tag_version, merge it to main, then tag that commit."
+            exit 1
+          fi
+
+          echo "Tag $GITHUB_REF_NAME matches package.json version $package_version."
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
