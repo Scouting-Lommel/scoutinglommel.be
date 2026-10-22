@@ -79,6 +79,65 @@ Amend the **immediately preceding commit** when the change is a direct refinemen
    ```
 5. **Create a PR** to `main` using the PR template (`.github/pull_request_template.md`), clear description, request review from at least one team member. The PR title sets the squash-merge commit message, so it MUST follow the format `SL-XXX: Short imperative summary` (e.g. `SL-27: Fix breadcrumbs N/A item name`) — the PR template only fills the PR body, never the title, so set the title explicitly on creation. All commits are squashed into a single commit on merge. Every occurrence of a ticket number in the PR description must be a link to that ticket: `[SL-XXX](https://linear.app/scouting-lommel/issue/SL-XXX)`.
 
+## Stacked PRs
+
+Use a stack when one PR's code depends on another that is not merged yet (e.g. SL-38 → SL-39). A stack lets both be reviewed in parallel while each PR still shows only its own diff.
+
+**Required tooling**: the official [`gh-stack`](https://gh.io/stacks) extension. Install and verify it once per machine:
+
+```bash
+gh extension install github/gh-stack
+gh stack --help
+```
+
+**Never hand-roll a stack with `gh pr create --base <other-branch>`.** That only sets the PR base; nothing restacks the child when the parent merges. Because this repo squash-merges, the parent's commits never become ancestors of `main`, so the child PR starts "containing" already-merged work and conflicts on `pnpm-lock.yaml`.
+
+### Stack workflow
+
+1. **Start or adopt the stack** — existing branches are adopted as-is, bottom layer first:
+
+   ```bash
+   # adopt a stack that already has branches and PRs
+   gh stack init feature/SL-38-short-slug feature/SL-39-short-slug
+
+   # or create the first layer, then add more on top
+   gh stack init feature/SL-38-short-slug
+   gh stack add feature/SL-39-short-slug
+   ```
+
+2. **Submit the stack** — pushes every branch and creates or updates the PRs, each targeting its parent:
+
+   ```bash
+   gh stack submit
+   ```
+
+3. **Work on any layer**, commit normally, then `gh stack submit` again.
+
+4. **After the bottom PR merges**, restack the remainder:
+
+   ```bash
+   gh stack sync
+   ```
+
+   `sync` fetches, fast-forwards the trunk, cascade-rebases each branch onto its parent, force-pushes atomically, and updates the PR base branches. This replaces the manual `rebase --onto` and retargeting.
+
+   If the stack was built by hand with `gh pr create --base`, run `gh stack init <branch>...` once to adopt it before the first `sync`.
+
+### Manual fallback
+
+If the extension is unavailable, the equivalent restack after a lower layer merges is:
+
+```bash
+git fetch origin
+git rebase --onto origin/main <old-base-tip>
+git push --force-with-lease
+gh pr edit <number> --base main
+```
+
+### Squash merges and stacks
+
+PRs merge squashed, so every merged layer lands as a new commit on `main` and its original commits are discarded. That means **each merge of a lower layer requires a restack of the layers above it**; no history rewrite avoids this. Run `gh stack sync` as part of the merge, not as an afterthought.
+
 ## Never
 
 - Push directly to `main`, always a PR.
