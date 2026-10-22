@@ -6,7 +6,7 @@
     "build:css:components": "postcss src/components/**/*.pcss --base src/components --dir src/components --ext css --env production",
     "build:css:global": "postcss src/assets/styles/global.pcss --output src/app/global.css --env production",
     "build:next": "next build",
-    "build": "pnpm run \"/^build:[^:]+$/\"",
+    "build": "pnpm run build:css && pnpm run build:next",
     "chromatic": "npx chromatic --project-token=chpt_8d08d2bcd7ac9cd",
     "fetch-schema": "tsx fetch-schema.ts",
     "codegen": "node scripts/codegen.mjs",
