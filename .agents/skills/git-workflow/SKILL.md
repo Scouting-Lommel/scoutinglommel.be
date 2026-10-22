@@ -105,13 +105,23 @@ gh stack --help
    gh stack add feature/SL-39-short-slug
    ```
 
-2. **Submit the stack** — pushes every branch and creates or updates the PRs, each targeting its parent:
+2. **Submit the stack** — pushes every branch and creates or updates the PRs, each targeting its parent.
+
+   Bare `gh stack submit` opens an interactive editor, so agents and CI must pass `--auto` (no TTY, no editor):
 
    ```bash
-   gh stack submit
+   gh stack submit --auto --open
    ```
 
-3. **Work on any layer**, commit normally, then `gh stack submit` again.
+   - `--auto` skips the editor and derives PR titles from commit messages.
+   - `--open` creates the PRs ready for review. Without it, `--auto` creates them as drafts.
+   - Auto-generated titles do not carry the ticket prefix. Set the required title right after, and fill the body from the PR template:
+
+   ```bash
+   gh pr edit <number> --title "SL-XXX: Short imperative summary" --body-file <path>
+   ```
+
+3. **Work on any layer**, commit normally, then `gh stack submit --auto --open` again.
 
 4. **After the bottom PR merges**, restack the remainder:
 
@@ -125,14 +135,18 @@ gh stack --help
 
 ### Manual fallback
 
-If the extension is unavailable, the equivalent restack after a lower layer merges is:
+If the extension is unavailable, restack **bottom-to-top**. The lowest surviving branch is rebased onto the updated trunk; every branch above it is rebased onto the updated tip of the branch immediately below, and its PR base is set to that branch.
 
 ```bash
 git fetch origin
-git rebase --onto origin/main <old-base-tip>
+
+# Repeat for each surviving layer, from the bottom up:
+git rebase --onto <new-parent-tip> <old-parent-tip>
 git push --force-with-lease
-gh pr edit <number> --base main
+gh pr edit <number> --base <parent-branch>
 ```
+
+For the first surviving child the parent is `main`; for every higher layer it is the branch directly below it. Rebasing every layer onto `main` detaches the upper PRs from the branch below them and corrupts their review diffs.
 
 ### Squash merges and stacks
 
