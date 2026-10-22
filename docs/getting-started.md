@@ -29,6 +29,11 @@
 - [Node.js](https://nodejs.org) (v24.x, pinned via `.nvmrc` — use `nvm use`)
 - [pnpm](https://pnpm.io) (v8 and up)
 - [NVM](https://github.com/nvm-sh/nvm) (optional but recommended)
+- [GitHub CLI](https://cli.github.com) (`gh`) with the [`gh-stack`](https://gh.io/stacks) extension — required for stacked PRs:
+
+  ```bash
+  gh extension install github/gh-stack
+  ```
 
 > **Important**: pnpm is the only allowed package manager (enforced by the preinstall script). Attempting to use npm or Yarn will fail.
 
