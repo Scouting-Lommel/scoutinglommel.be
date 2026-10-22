@@ -121,7 +121,13 @@ gh stack --help
    gh pr edit <number> --title "SL-XXX: Short imperative summary" --body-file <path>
    ```
 
-3. **Work on any layer**, commit normally, then `gh stack submit --auto --open` again.
+3. **Work on any layer**, commit normally, then `gh stack submit --auto --open` again. If the edit landed on a layer that is not the top one, replay the branches above it before submitting — `submit` pushes and updates PRs but does not cascade-rebase:
+
+   ```bash
+   gh stack rebase --upstack
+   gh stack top
+   gh stack submit --auto --open
+   ```
 
 4. **After the bottom PR merges**, restack the remainder:
 
@@ -130,6 +136,8 @@ gh stack --help
    ```
 
    `sync` fetches, fast-forwards the trunk, cascade-rebases each branch onto its parent, force-pushes atomically, and updates the PR base branches. This replaces the manual `rebase --onto` and retargeting.
+
+   In a non-interactive terminal, `sync` **aborts and exits 0** when the local and remote stacks have diverged: it makes no changes and prints `Sync aborted`. Treat that message as a failure and reconcile before continuing, or verify with `gh stack view --json`, which reports `needsRebase` per branch.
 
    If the stack was built by hand with `gh pr create --base`, run `gh stack init <branch>...` once to adopt it before the first `sync`.
 
@@ -141,8 +149,9 @@ If the extension is unavailable, restack **bottom-to-top**. The lowest surviving
 git fetch origin
 
 # Repeat for each surviving layer, from the bottom up:
+git checkout <branch>
 git rebase --onto <new-parent-tip> <old-parent-tip>
-git push --force-with-lease
+git push --force-with-lease origin <branch>
 gh pr edit <number> --base <parent-branch>
 ```
 
