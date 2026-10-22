@@ -29,16 +29,6 @@ Two Vercel environments (team "Scouting Lommel", hobby plan):
 5. Only after explicit confirmation: `git push origin vX.Y.Z` (optionally `gh release create vX.Y.Z`).
 6. The `Deploy Production` workflow runs `Verify tag matches package.json version` before install and fails when the tag is not `v${package.json.version}`. That guard is what keeps the console version truthful.
 7. After deploying, check Linear for tickets in `Acceptancy` whose commits are now in the tag. Move them to `Done` (with user permission). Use `git log --oneline vX.Y.Z` to see which commits are in the tag, and match them to Linear tickets.
-8. Create or complete the Linear release for the tag (see below).
-
-## Releases in Linear
-
-Linear releases are the version history: one release per production tag, in the `Website` pipeline.
-
-- `name` and `version`: `vX.Y.Z` / `X.Y.Z`.
-- `commitSha`: the tagged commit.
-- Attach the tickets shipped in the tag (`git log vX.Y.Z`), then mark the release completed after the deploy succeeds.
-- The release pipeline is a one-time workspace setup (Linear UI → Releases), not something the repo creates.
 
 ## Rollback (production)
 
