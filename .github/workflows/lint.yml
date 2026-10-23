@@ -1,0 +1,53 @@
+name: Lint
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lint-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  # `pnpm install` runs codegen in postinstall. Use the committed schema
+  # instead of live introspection, which is disabled on production Strapi.
+  SKIP_FETCH_SCHEMA: '1'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.5.2
+
+      - name: Install dependencies
+        run: pnpm install
+
+      # `pnpm run lint` passes --fix to ESLint and Stylelint, which would let
+      # fixable errors pass CI. Run the check-only commands instead.
+      - name: ESLint
+        run: pnpm exec eslint .
+
+      - name: Stylelint
+        run: pnpm exec stylelint "**/*.pcss"
+
+      - name: TypeScript
+        run: pnpm exec tsc --noEmit
+
+      - name: ls-lint
+        run: pnpm exec ls-lint

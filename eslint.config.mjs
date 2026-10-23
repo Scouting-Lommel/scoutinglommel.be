@@ -20,7 +20,7 @@ const [baseConfig, ...restConfigs] = compat.extends(
 
 const config = [
   {
-    ignores: ['.next/**', 'out/**', 'storybook-static/**', 'src/types/generated/**'],
+    ignores: ['.next/**', 'out/**', 'storybook-static/**', 'src/types/generated/**', '.delta/**'],
   },
   {
     ...baseConfig,

@@ -73,5 +73,6 @@ ignore:
   - .omc
   - .playwright-mcp
   - .codegraph
+  - .delta
   - node_modules
   - storybook-static
