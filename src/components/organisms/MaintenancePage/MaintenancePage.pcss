@@ -1,17 +1,17 @@
 .maintenance-page {
   display: grid;
-  place-content: center;
   min-height: 100dvh;
   padding: var(--spacing-xl);
   background-color: var(--color-background-light);
+  place-content: center;
 
   &__inner {
     display: flex;
+    width: 100%;
+    max-width: 32rem;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    max-width: 32rem;
-    width: 100%;
   }
 
   &__logo-wrapper {
@@ -19,53 +19,53 @@
   }
 
   &__logo {
-    max-width: 224px;
     width: 100%;
+    max-width: 224px;
     height: auto;
   }
 
   &__title {
-    font-family: var(--font-family-title);
-    font-weight: var(--font-weight-bold);
-    font-size: clamp(1.5rem, 4vw, 2.25rem);
-    color: var(--color-foreground-dark);
     margin-bottom: var(--space-24);
+    color: var(--color-foreground-dark);
+    font-family: var(--font-family-title);
+    font-size: clamp(1.5rem, 4vw, 2.25rem);
+    font-weight: var(--font-weight-bold);
     line-height: 1.2;
   }
 
   &__accent-bar {
     width: 3rem;
     height: 3px;
-    background-color: var(--color-secondary-600);
     border-radius: 2px;
     margin-bottom: var(--space-24);
+    background-color: var(--color-secondary-600);
   }
 
   &__description {
+    max-width: 24rem;
+    margin: 0 auto var(--space-48);
+    color: var(--color-foreground-muted);
     font-family: var(--font-family-body);
     font-size: 1.125rem;
-    color: var(--color-foreground-muted);
-    text-align: center;
     line-height: 1.6;
-    margin: 0 auto var(--space-48);
-    max-width: 24rem;
+    text-align: center;
   }
 
   &__socials {
     display: flex;
-    gap: var(--space-16);
     align-items: center;
     justify-content: center;
+    gap: var(--space-16);
   }
 
   &__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: var(--color-primary-600);
     transition:
       color var(--transition),
       transform var(--transition);
-    display: flex;
-    align-items: center;
-    justify-content: center;
 
     &:hover,
     &:focus-visible {
