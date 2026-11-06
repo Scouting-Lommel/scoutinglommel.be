@@ -33,10 +33,19 @@ export const NAVIGATION_DATA = gql`
 `;
 
 export const FOOTER_DATA = gql`
+  ${IMAGE_FRAGMENT}
+
   query FooterData {
     generalData {
       siteName
+      url
       address
+      logo {
+        ...ImageFragment
+      }
+      image {
+        ...ImageFragment
+      }
       groupNumber
       bankAccountNumber
       vatNumber
