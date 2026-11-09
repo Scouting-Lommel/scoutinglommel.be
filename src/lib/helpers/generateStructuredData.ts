@@ -1,3 +1,4 @@
+import { groupLocation } from '@/lib/constants/groupLocation';
 import { parseCmsAddress } from '@/lib/helpers/parseCmsAddress';
 
 type StructuredDataInput = {
@@ -11,13 +12,6 @@ type StructuredDataInput = {
   socials?: Array<{ title?: string | null; link?: string | null } | null> | null;
 };
 
-const FALLBACK_POSTAL_ADDRESS = {
-  streetAddress: 'Nieuwe Kopen 4',
-  addressLocality: 'Lommel',
-  postalCode: '3920',
-  addressCountry: 'BE',
-};
-
 const generateStructuredData = (data: StructuredDataInput | null | undefined) => {
   if (!data) return {};
 
@@ -28,15 +22,15 @@ const generateStructuredData = (data: StructuredDataInput | null | undefined) =>
   const sameAs = (data.socials ?? []).flatMap((social) => (social?.link ? [social.link] : []));
 
   // The CMS address is the source of truth; the fallback only covers an empty field.
-  const postalAddress = parseCmsAddress(data.address) ?? FALLBACK_POSTAL_ADDRESS;
+  const postalAddress = parseCmsAddress(data.address) ?? groupLocation.postalAddress;
 
   // The coordinates were verified for the fallback address, so only publish them
   // while the CMS still resolves to that same address.
   const hasVerifiedCoordinates =
-    postalAddress.streetAddress === FALLBACK_POSTAL_ADDRESS.streetAddress &&
-    postalAddress.postalCode === FALLBACK_POSTAL_ADDRESS.postalCode &&
-    postalAddress.addressLocality === FALLBACK_POSTAL_ADDRESS.addressLocality &&
-    postalAddress.addressCountry === FALLBACK_POSTAL_ADDRESS.addressCountry;
+    postalAddress.streetAddress === groupLocation.postalAddress.streetAddress &&
+    postalAddress.postalCode === groupLocation.postalAddress.postalCode &&
+    postalAddress.addressLocality === groupLocation.postalAddress.addressLocality &&
+    postalAddress.addressCountry === groupLocation.postalAddress.addressCountry;
 
   return {
     '@context': 'https://schema.org',
@@ -79,9 +73,8 @@ const generateStructuredData = (data: StructuredDataInput | null | undefined) =>
       ? {
           geo: {
             '@type': 'GeoCoordinates',
-            // TODO: verify exact coordinates for Nieuwe Kopen 4, 3920 Lommel via Google Maps
-            latitude: 51.24558081692069,
-            longitude: 5.301134634828866,
+            latitude: groupLocation.coordinates.latitude,
+            longitude: groupLocation.coordinates.longitude,
           },
         }
       : {}),
