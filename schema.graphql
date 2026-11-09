@@ -303,151 +303,6 @@ type ComponentSharedMetaSocial {
   image: UploadFile
 }
 
-type ComponentContentBlocksYearThemeBlock {
-  id: ID!
-  yearThemeTitle: String
-  yearThemeBlockProperties: ComponentGeneralBlockProperties
-  yearThemeCallToAction: ComponentGeneralCallToAction
-}
-
-enum ENUM_COMPONENTCONTENTBLOCKSTEXTIMAGEBLOCK_TEXTIMAGELAYOUT {
-  default
-  reversed
-}
-
-type ComponentContentBlocksTextImageBlock {
-  id: ID!
-  textImageTitle: String
-  textImageContent: String
-  textImageImages_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
-  textImageImages(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
-  textImageLayout: ENUM_COMPONENTCONTENTBLOCKSTEXTIMAGEBLOCK_TEXTIMAGELAYOUT
-  textImageCtaButton: ComponentGeneralButton
-  textImageBlockProperties: ComponentGeneralBlockProperties
-  textImageCallToAction: ComponentGeneralCallToAction
-}
-
-type ComponentContentBlocksTarifsBlock {
-  id: ID!
-  tarifsTitle: String
-  tarifsItems_connection(filters: TarifFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TarifRelationResponseCollection
-  tarifsItems(filters: TarifFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Tarif]!
-  tarifsBlockProperties: ComponentGeneralBlockProperties
-  tarifsCallToAction: ComponentGeneralCallToAction
-}
-
-type ComponentContentBlocksPolicyBlock {
-  id: ID!
-  policyTitle: String
-  policySections(filters: ComponentGeneralPolicySectionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentGeneralPolicySection]
-}
-
-type ComponentContentBlocksMapBlock {
-  id: ID!
-  mapTitle: String
-  mapBlockProperties: ComponentGeneralBlockProperties
-  mapLocation: JSON
-  mapQuery: String
-}
-
-type ComponentContentBlocksLeadersBlock {
-  id: ID!
-  leadersTitle: String
-  leadersBlockProperties: ComponentGeneralBlockProperties
-  leadersCallToAction: ComponentGeneralCallToAction
-}
-
-enum ENUM_COMPONENTCONTENTBLOCKSHEROBLOCK_HEROVARIANT {
-  default
-  large
-  simple
-}
-
-type ComponentContentBlocksHeroBlock {
-  id: ID!
-  heroTitle: String
-  heroSubtitle: String
-  heroCta(filters: ComponentGeneralButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentGeneralButton]
-  heroVariant: ENUM_COMPONENTCONTENTBLOCKSHEROBLOCK_HEROVARIANT
-  heroSocialsCta: ComponentGeneralSocialsCta
-  heroYearTheme: YearTheme
-  heroBgImage: UploadFile
-}
-
-type ComponentContentBlocksGroupsBlock {
-  id: ID!
-  groupsTitle: String
-  groupsItems_connection(filters: GroupFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): GroupRelationResponseCollection
-  groupsItems(filters: GroupFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Group]!
-  groupsBlockProperties: ComponentGeneralBlockProperties
-  groupsCallToAction: ComponentGeneralCallToAction
-}
-
-type ComponentContentBlocksGalleryBlock {
-  id: ID!
-  galleryTitle: String
-  galleryInitialItems: Int
-  galleryImages_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
-  galleryImages(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
-  galleryBlockProperties: ComponentGeneralBlockProperties
-  galleryCallToAction: ComponentGeneralCallToAction
-}
-
-type ComponentContentBlocksFilesBlock {
-  id: ID!
-  filesTitle: String
-  filesBlockProperties: ComponentGeneralBlockProperties
-}
-
-type ComponentContentBlocksFaqBlock {
-  id: ID!
-  faqTitle: String
-  faqItems_connection(filters: FaqItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): FaqItemRelationResponseCollection
-  faqItems(filters: FaqItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [FaqItem]!
-  faqBlockProperties: ComponentGeneralBlockProperties
-  faqBottomText: String
-}
-
-type ComponentContentBlocksEventsBlock {
-  id: ID!
-  eventsTitle: String!
-  eventsInitialItems: Int!
-  eventsBlockProperties: ComponentGeneralBlockProperties
-  eventsCallToAction: ComponentGeneralCallToAction
-}
-
-enum ENUM_COMPONENTCONTENTBLOCKSDIVIDER_DIVIDERVARIANT {
-  default
-  light
-}
-
-type ComponentContentBlocksDivider {
-  id: ID!
-  dividerVariant: ENUM_COMPONENTCONTENTBLOCKSDIVIDER_DIVIDERVARIANT!
-}
-
-type ComponentContentBlocksCalendarBlock {
-  id: ID!
-  calendarTitle: String
-  calendarBlockProperties: ComponentGeneralBlockProperties
-  calendarCallToAction: ComponentGeneralCallToAction
-}
-
-type ComponentContentBlocksArticlesBlock {
-  id: ID!
-  articlesTitle: String
-  articlesBlockProperties: ComponentGeneralBlockProperties
-  articlesCallToAction: ComponentGeneralCallToAction
-}
-
-type ComponentContentBlocksActivitiesBlock {
-  id: ID!
-  activitiesTitle: String
-  activitiesBlockProperties: ComponentGeneralBlockProperties
-  activitiesCallToAction: ComponentGeneralCallToAction
-  activitiesInitialItems: Int
-}
-
 type ComponentGeneralSocialsCta {
   id: ID!
   title: String
@@ -626,6 +481,151 @@ type ComponentGeneralBlockProperties {
   variant: ENUM_COMPONENTGENERALBLOCKPROPERTIES_VARIANT
   orientation: ENUM_COMPONENTGENERALBLOCKPROPERTIES_ORIENTATION
   slug: String
+}
+
+type ComponentContentBlocksYearThemeBlock {
+  id: ID!
+  yearThemeTitle: String
+  yearThemeBlockProperties: ComponentGeneralBlockProperties
+  yearThemeCallToAction: ComponentGeneralCallToAction
+}
+
+enum ENUM_COMPONENTCONTENTBLOCKSTEXTIMAGEBLOCK_TEXTIMAGELAYOUT {
+  default
+  reversed
+}
+
+type ComponentContentBlocksTextImageBlock {
+  id: ID!
+  textImageTitle: String
+  textImageContent: String
+  textImageImages_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+  textImageImages(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+  textImageLayout: ENUM_COMPONENTCONTENTBLOCKSTEXTIMAGEBLOCK_TEXTIMAGELAYOUT
+  textImageCtaButton: ComponentGeneralButton
+  textImageBlockProperties: ComponentGeneralBlockProperties
+  textImageCallToAction: ComponentGeneralCallToAction
+}
+
+type ComponentContentBlocksTarifsBlock {
+  id: ID!
+  tarifsTitle: String
+  tarifsItems_connection(filters: TarifFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): TarifRelationResponseCollection
+  tarifsItems(filters: TarifFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Tarif]!
+  tarifsBlockProperties: ComponentGeneralBlockProperties
+  tarifsCallToAction: ComponentGeneralCallToAction
+}
+
+type ComponentContentBlocksPolicyBlock {
+  id: ID!
+  policyTitle: String
+  policySections(filters: ComponentGeneralPolicySectionFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentGeneralPolicySection]
+}
+
+type ComponentContentBlocksMapBlock {
+  id: ID!
+  mapTitle: String
+  mapBlockProperties: ComponentGeneralBlockProperties
+  mapLocation: JSON
+  mapQuery: String
+}
+
+type ComponentContentBlocksLeadersBlock {
+  id: ID!
+  leadersTitle: String
+  leadersBlockProperties: ComponentGeneralBlockProperties
+  leadersCallToAction: ComponentGeneralCallToAction
+}
+
+enum ENUM_COMPONENTCONTENTBLOCKSHEROBLOCK_HEROVARIANT {
+  default
+  large
+  simple
+}
+
+type ComponentContentBlocksHeroBlock {
+  id: ID!
+  heroTitle: String
+  heroSubtitle: String
+  heroCta(filters: ComponentGeneralButtonFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [ComponentGeneralButton]
+  heroVariant: ENUM_COMPONENTCONTENTBLOCKSHEROBLOCK_HEROVARIANT
+  heroSocialsCta: ComponentGeneralSocialsCta
+  heroYearTheme: YearTheme
+  heroBgImage: UploadFile
+}
+
+type ComponentContentBlocksGroupsBlock {
+  id: ID!
+  groupsTitle: String
+  groupsItems_connection(filters: GroupFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): GroupRelationResponseCollection
+  groupsItems(filters: GroupFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Group]!
+  groupsBlockProperties: ComponentGeneralBlockProperties
+  groupsCallToAction: ComponentGeneralCallToAction
+}
+
+type ComponentContentBlocksGalleryBlock {
+  id: ID!
+  galleryTitle: String
+  galleryInitialItems: Int
+  galleryImages_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): UploadFileRelationResponseCollection
+  galleryImages(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [UploadFile]!
+  galleryBlockProperties: ComponentGeneralBlockProperties
+  galleryCallToAction: ComponentGeneralCallToAction
+}
+
+type ComponentContentBlocksFilesBlock {
+  id: ID!
+  filesTitle: String
+  filesBlockProperties: ComponentGeneralBlockProperties
+}
+
+type ComponentContentBlocksFaqBlock {
+  id: ID!
+  faqTitle: String
+  faqItems_connection(filters: FaqItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): FaqItemRelationResponseCollection
+  faqItems(filters: FaqItemFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [FaqItem]!
+  faqBlockProperties: ComponentGeneralBlockProperties
+  faqBottomText: String
+}
+
+type ComponentContentBlocksEventsBlock {
+  id: ID!
+  eventsTitle: String!
+  eventsInitialItems: Int!
+  eventsBlockProperties: ComponentGeneralBlockProperties
+  eventsCallToAction: ComponentGeneralCallToAction
+}
+
+enum ENUM_COMPONENTCONTENTBLOCKSDIVIDER_DIVIDERVARIANT {
+  default
+  light
+}
+
+type ComponentContentBlocksDivider {
+  id: ID!
+  dividerVariant: ENUM_COMPONENTCONTENTBLOCKSDIVIDER_DIVIDERVARIANT!
+}
+
+type ComponentContentBlocksCalendarBlock {
+  id: ID!
+  calendarTitle: String
+  calendarBlockProperties: ComponentGeneralBlockProperties
+  calendarCallToAction: ComponentGeneralCallToAction
+}
+
+type ComponentContentBlocksArticlesBlock {
+  id: ID!
+  articlesTitle: String
+  articlesBlockProperties: ComponentGeneralBlockProperties
+  articlesCallToAction: ComponentGeneralCallToAction
+}
+
+type ComponentContentBlocksActivitiesBlock {
+  id: ID!
+  activitiesTitle: String
+  activitiesBlockProperties: ComponentGeneralBlockProperties
+  activitiesCallToAction: ComponentGeneralCallToAction
+  activitiesInitialItems: Int
 }
 
 input UploadFileFiltersInput {
@@ -1903,7 +1903,7 @@ type YearThemeEntityResponseCollection {
   pageInfo: Pagination!
 }
 
-union GenericMorph = ComponentSharedMetaSocial | ComponentContentBlocksYearThemeBlock | ComponentContentBlocksTextImageBlock | ComponentContentBlocksTarifsBlock | ComponentContentBlocksPolicyBlock | ComponentContentBlocksMapBlock | ComponentContentBlocksLeadersBlock | ComponentContentBlocksHeroBlock | ComponentContentBlocksGroupsBlock | ComponentContentBlocksGalleryBlock | ComponentContentBlocksFilesBlock | ComponentContentBlocksFaqBlock | ComponentContentBlocksEventsBlock | ComponentContentBlocksDivider | ComponentContentBlocksCalendarBlock | ComponentContentBlocksArticlesBlock | ComponentContentBlocksActivitiesBlock | ComponentGeneralSocialsCta | ComponentGeneralPolicySection | ComponentGeneralPageMeta | ComponentGeneralLink | ComponentGeneralGlobalAlert | ComponentGeneralContactItem | ComponentGeneralCallToAction | ComponentGeneralButton | ComponentGeneralBlockProperties | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | GoogleMapsConfig | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Activity | Article | ArticlesPage | ContactPage | CookiePolicyPage | DrugsAlcoholPolicyPage | Event | FaqItem | GeneralData | Group | GroupFunction | GroupsPage | HomePage | InfoPage | Leader | Manual | ManualsOverviewPage | Member | PrivacyPolicyPage | RegisterPage | RentalLocation | RentalPage | SocialItem | Tarif | YearTheme
+union GenericMorph = ComponentSharedMetaSocial | ComponentGeneralSocialsCta | ComponentGeneralPolicySection | ComponentGeneralPageMeta | ComponentGeneralLink | ComponentGeneralGlobalAlert | ComponentGeneralContactItem | ComponentGeneralCallToAction | ComponentGeneralButton | ComponentGeneralBlockProperties | ComponentContentBlocksYearThemeBlock | ComponentContentBlocksTextImageBlock | ComponentContentBlocksTarifsBlock | ComponentContentBlocksPolicyBlock | ComponentContentBlocksMapBlock | ComponentContentBlocksLeadersBlock | ComponentContentBlocksHeroBlock | ComponentContentBlocksGroupsBlock | ComponentContentBlocksGalleryBlock | ComponentContentBlocksFilesBlock | ComponentContentBlocksFaqBlock | ComponentContentBlocksEventsBlock | ComponentContentBlocksDivider | ComponentContentBlocksCalendarBlock | ComponentContentBlocksArticlesBlock | ComponentContentBlocksActivitiesBlock | UploadFile | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | GoogleMapsConfig | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser | Activity | Article | ArticlesPage | ContactPage | CookiePolicyPage | DrugsAlcoholPolicyPage | Event | FaqItem | GeneralData | Group | GroupFunction | GroupsPage | HomePage | InfoPage | Leader | Manual | ManualsOverviewPage | Member | PrivacyPolicyPage | RegisterPage | RentalLocation | RentalPage | SocialItem | Tarif | YearTheme
 
 input FileInfoInput {
   name: String
