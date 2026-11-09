@@ -1,4 +1,4 @@
-import { Email } from '@/lib/helpers/sendEmail';
+import type { FormEmailPayload } from '@/lib/api/forms/form-email';
 
 type RegisterMemberResponse = {
   message: unknown;
@@ -6,7 +6,7 @@ type RegisterMemberResponse = {
 };
 
 type RegisterMemberProps = {
-  email: Email;
+  payload: FormEmailPayload;
   member: Record<string, unknown>;
   callback: (response: RegisterMemberResponse) => void;
   captchaToken: string;
@@ -15,8 +15,8 @@ type RegisterMemberProps = {
 /**
  * Registers a new member by sending a POST request to the server.
  *
- * @param {Object} params - The parameters for registering a member.
- * @param {string} params.email - The email of the member to register.
+ * @param {Object} params - The parameters required to register a member.
+ * @param {Object} params.payload - The notification content; the server resolves the recipient.
  * @param {Object} params.member - The member details to register.
  * @param {Function} params.callback - The callback function to handle the response.
  * @param {string} params.captchaToken - The captcha token for verification.
@@ -24,7 +24,7 @@ type RegisterMemberProps = {
  * @returns {Promise<void>} A promise that resolves when the registration is complete.
  */
 const registerMember = async ({
-  email,
+  payload,
   member,
   callback,
   captchaToken,
@@ -34,7 +34,7 @@ const registerMember = async ({
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ email, member, captchaToken }),
+    body: JSON.stringify({ ...payload, member, captchaToken }),
   };
 
   const registerMemberRequest = await fetch('/api/register-member', registerMemberRequestData);

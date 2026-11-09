@@ -1,12 +1,12 @@
 import { useTranslations } from 'next-intl';
 import { useContext, type JSX } from 'react';
-import { generalEmailAddress, rentalsEmailAddress } from '@/lib/constants/emailAddress';
+import type { FormEmailPayload, FormEmailRecipient } from '@/lib/api/forms/form-email';
 import { FormStatus } from '@/lib/constants/enums/formStatus';
 import { Groups } from '@/lib/constants/enums/groups';
 import { Recipients } from '@/lib/constants/enums/recipients';
 import { FormContext } from '@/lib/contexts/FormContext';
 import { generateFormDataWithLabel } from '@/lib/helpers/generateFormDataWithLabel';
-import { Email, generateEmail, sendEmail } from '@/lib/helpers/sendEmail';
+import { sendEmail } from '@/lib/helpers/sendEmail';
 import Banner from '@/components/atoms/Banner';
 import { FormField } from '@/components/organisms/Forms/FormBuilder/FormField/types';
 import ContactConfirmation from './Confirmation';
@@ -32,34 +32,32 @@ const Contact = (props: ContactProps): JSX.Element => {
   };
 
   const submitForm = async (data: Record<string, unknown>, formFields: FormField[]) => {
-    let recipient: string;
     const captchaToken = data['captcha-token'] as string;
 
-    switch (data.recipient) {
-      case Recipients.RENTALS: {
-        recipient = rentalsEmailAddress;
-        break;
-      }
-      case Recipients.GROUP: {
-        recipient = `${data.group}@scoutinglommel.be`;
-        break;
-      }
-      default: {
-        recipient = generalEmailAddress;
-      }
-    }
+    const recipient: FormEmailRecipient =
+      data.recipient === Recipients.RENTALS
+        ? 'rentals'
+        : data.recipient === Recipients.GROUP
+          ? 'group'
+          : 'general';
+    const group = recipient === 'group' ? (data.group as Groups) : undefined;
+    const replyTo = data.email as string;
 
     delete data['recipient'];
     delete data['group'];
     delete data['terms-and-conditions'];
     delete data['captcha-token'];
 
-    const email: Email = await generateEmail({
+    const payload: FormEmailPayload = {
+      recipient,
+      ...(group ? { group } : {}),
       formTitle: t('email.title'),
-      formData: generateFormDataWithLabel(data, formFields),
-      to: recipient,
-      replyTo: data.email as string,
-    });
+      formData: generateFormDataWithLabel(data, formFields).map(({ label, data: value }) => ({
+        label,
+        data: String(value ?? ''),
+      })),
+      replyTo,
+    };
 
     const callback = (resp: { status: number }) => {
       if (resp.status === 200) {
@@ -70,7 +68,7 @@ const Contact = (props: ContactProps): JSX.Element => {
       setFormStatus(FormStatus.STATUS_ERROR);
     };
 
-    sendEmail({ email, callback, captchaToken });
+    sendEmail({ payload, callback, captchaToken });
   };
 
   return (

@@ -12,10 +12,10 @@ import type {
 import { Enum_Member_Gender } from '@/types/generated/Graphql';
 import { REGISTER_MEMBER_MUTATION } from './mutations';
 
-type RegisterMemberProps = {
+export type RegisterMemberData = {
   firstName: string;
   lastName: string;
-  birthday: Date;
+  birthday: Date | string;
   memberGroup?: string;
   gender: 'm' | 'v' | 'x';
   telephoneNumber: string;
@@ -40,7 +40,7 @@ export function registerMember({
   city,
   comments,
   workingYear,
-}: RegisterMemberProps): Promise<RegisterMemberMutation> {
+}: RegisterMemberData): Promise<RegisterMemberMutation> {
   return generateApiQuery<RegisterMemberMutation, RegisterMemberMutationVariables>({
     variables: {
       firstName,
@@ -60,20 +60,9 @@ export function registerMember({
   });
 }
 
-export async function registerMemberWithGoogleSheets(memberData: {
-  firstName: string;
-  lastName: string;
-  birthday: Date;
-  memberGroup?: string;
-  gender: 'm' | 'v' | 'x';
-  telephoneNumber: string;
-  email: string;
-  address: string;
-  postalCode: string;
-  city: string;
-  comments: string;
-  workingYear: string;
-}): Promise<void> {
+export async function registerMemberWithGoogleSheets(
+  memberData: RegisterMemberData,
+): Promise<void> {
   try {
     // First, register the member with the existing API
     await registerMember(memberData);

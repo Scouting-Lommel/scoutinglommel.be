@@ -1,11 +1,10 @@
 import { useTranslations } from 'next-intl';
 import { useContext, useState, type JSX } from 'react';
-import { registerEmailAddress } from '@/lib/constants/emailAddress';
+import type { FormEmailPayload } from '@/lib/api/forms/form-email';
 import { FormStatus } from '@/lib/constants/enums/formStatus';
 import { FormContext } from '@/lib/contexts/FormContext';
 import { generateFormDataWithLabel } from '@/lib/helpers/generateFormDataWithLabel';
 import { registerMember } from '@/lib/helpers/registerMember';
-import { Email, generateEmail } from '@/lib/helpers/sendEmail';
 import Banner from '@/components/atoms/Banner';
 import { FormField } from '@/components/organisms/Forms/FormBuilder/FormField/types';
 import RegisterConfirmation from './Confirmation';
@@ -40,11 +39,14 @@ const Register = (props: RegisterProps): JSX.Element => {
       setRegisterPrice(props.leaderPrice);
     }
 
-    const email: Email = await generateEmail({
+    const payload: FormEmailPayload = {
+      recipient: 'register',
       formTitle: t('email.title'),
-      formData: generateFormDataWithLabel(data, formFields),
-      to: registerEmailAddress,
-    });
+      formData: generateFormDataWithLabel(data, formFields).map(({ label, data: value }) => ({
+        label,
+        data: String(value ?? ''),
+      })),
+    };
 
     const callback = (resp: { status: number }) => {
       if (resp.status === 200) {
@@ -56,7 +58,7 @@ const Register = (props: RegisterProps): JSX.Element => {
       setFormStatus(FormStatus.STATUS_ERROR);
     };
 
-    registerMember({ email, member, callback, captchaToken });
+    registerMember({ payload, member, callback, captchaToken });
   };
 
   return (
