@@ -1,8 +1,14 @@
-// Strapi can return relative upload paths; schema.org consumers expect absolute URLs.
+// Resolve a reference against a base URL. `new URL` handles protocol-relative
+// paths, root-relative paths, and bases that contain a path; anything that
+// cannot be resolved is returned unchanged so callers never throw.
 const toAbsoluteUrl = (value: string, baseUrl?: string | null): string => {
-  if (/^https?:\/\//i.test(value)) return value;
   if (!baseUrl) return value;
-  return `${baseUrl.replace(/\/+$/, '')}${value.startsWith('/') ? '' : '/'}${value}`;
+
+  try {
+    return new URL(value, baseUrl).toString();
+  } catch {
+    return value;
+  }
 };
 
 export { toAbsoluteUrl };

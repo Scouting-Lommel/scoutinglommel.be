@@ -2,6 +2,7 @@ import { generateApiQuery } from '@/lib/api';
 import type { GeneralData } from '@/lib/contexts/DataContext';
 import type { EventSiteContext } from '@/lib/helpers/generateEventSchema';
 import { getSiteUrl } from '@/lib/helpers/getSiteUrl';
+import { toAbsoluteUrl } from '@/lib/helpers/toAbsoluteUrl';
 import type {
   EventSiteContextQuery,
   FooterDataQuery,
@@ -49,6 +50,11 @@ const getAbsoluteSiteUrl = async (cmsUrl?: string | null): Promise<string> => {
   return getSiteUrl();
 };
 
+// Strapi's local upload provider serves /uploads from the CMS host, not the
+// frontend, so relative media paths must resolve against the CMS origin.
+const toMediaUrl = (url?: string | null): string | null =>
+  url ? toAbsoluteUrl(url, process.env.NEXT_PUBLIC_APP_BACKEND_URL) : null;
+
 export const getEventSiteContext = async (): Promise<EventSiteContext | null> => {
   const { generalData } = await generateApiQuery<EventSiteContextQuery>({
     query: EVENT_SITE_CONTEXT,
@@ -62,8 +68,8 @@ export const getEventSiteContext = async (): Promise<EventSiteContext | null> =>
   return {
     name: siteName ?? null,
     url: await getAbsoluteSiteUrl(url),
-    imageUrl: image?.url ?? null,
-    logoUrl: logo?.url ?? null,
+    imageUrl: toMediaUrl(image?.url),
+    logoUrl: toMediaUrl(logo?.url),
     address: address ?? null,
   };
 };

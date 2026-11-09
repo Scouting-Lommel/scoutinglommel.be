@@ -1,5 +1,4 @@
 import { parseCmsAddress } from '@/lib/helpers/parseCmsAddress';
-import { toAbsoluteUrl } from '@/lib/helpers/toAbsoluteUrl';
 
 type EventSchemaInput = {
   title: string;
@@ -18,6 +17,7 @@ type EventSchemaInput = {
 type EventSiteContext = {
   name: string | null;
   url: string;
+  // Already resolved to absolute URLs by getEventSiteContext.
   imageUrl?: string | null;
   logoUrl?: string | null;
   address?: string | null;
@@ -44,7 +44,7 @@ const generateEventSchema = (
 
   // Google asks for an image that depicts the event, so the site-wide SEO image
   // is the fallback; the logo is deliberately not used as an event image.
-  const imageUrl = siteContext?.imageUrl ? toAbsoluteUrl(siteContext.imageUrl, siteUrl) : null;
+  const imageUrl = siteContext?.imageUrl ?? null;
 
   // Both nodes describe the same group. Only the organizer carries the site @id,
   // so it merges with the site-wide Organization instead of conflating the
@@ -58,7 +58,7 @@ const generateEventSchema = (
         '@type': 'Organization',
         ...(siteUrl ? { '@id': siteUrl } : {}),
         ...siteIdentity,
-        ...(siteContext?.logoUrl ? { logo: toAbsoluteUrl(siteContext.logoUrl, siteUrl) } : {}),
+        ...(siteContext?.logoUrl ? { logo: siteContext.logoUrl } : {}),
       }
     : null;
 
