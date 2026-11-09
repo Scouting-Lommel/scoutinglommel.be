@@ -1,27 +1,22 @@
 import type { JSX } from 'react';
 import { getEvents } from '@/lib/api/events/api';
-import { getFooterData } from '@/lib/api/general/api';
+import { getEventSiteContext } from '@/lib/api/general/api';
 import { formatDate } from '@/lib/helpers/dateTime';
 import { generateEventSchema } from '@/lib/helpers/generateEventSchema';
+import type { EventSiteContext } from '@/types/EventSiteContext';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Activities from '@/components/organisms/Activities';
 import { EventsBlock as EventsBlockProps } from './types';
 
-// Footer data is fallback-only: bound it so a slow CMS response delays the
-// event schema by at most FOOTER_DATA_TIMEOUT_MS, and return null (omit the
-// fallback Place) when the CMS provides no site name instead of inventing one.
-const FOOTER_DATA_TIMEOUT_MS = 3000;
+// Bound the site-context query so a slow CMS delays the event schema by at most
+// SITE_CONTEXT_TIMEOUT_MS; on failure or timeout the schema omits the site-level
+// fields instead of inventing them.
+const SITE_CONTEXT_TIMEOUT_MS = 3000;
 
-const getFooterFallback = (): Promise<{ name: string; address?: string | null } | null> =>
+const getSiteContext = (): Promise<EventSiteContext | null> =>
   Promise.race([
-    getFooterData()
-      .then((footerData) => {
-        const siteName = footerData?.generalData?.siteName;
-        if (!siteName) return null;
-        return { name: siteName, address: footerData?.generalData?.address };
-      })
-      .catch(() => null),
-    new Promise<null>((resolve) => setTimeout(() => resolve(null), FOOTER_DATA_TIMEOUT_MS)),
+    getEventSiteContext().catch(() => null),
+    new Promise<null>((resolve) => setTimeout(() => resolve(null), SITE_CONTEXT_TIMEOUT_MS)),
   ]);
 
 const EventsBlock = async ({
@@ -34,14 +29,14 @@ const EventsBlock = async ({
 
   try {
     const today = formatDate(new Date());
-    const [eventsResult, fallbackResult] = await Promise.allSettled([
+    const [eventsResult, siteContextResult] = await Promise.allSettled([
       getEvents(today),
-      getFooterFallback(),
+      getSiteContext(),
     ]);
     if (eventsResult.status === 'fulfilled') {
       eventSchema = generateEventSchema(
         eventsResult.value.events,
-        fallbackResult.status === 'fulfilled' ? fallbackResult.value : null,
+        siteContextResult.status === 'fulfilled' ? siteContextResult.value : null,
       );
     }
   } catch (e) {

@@ -1,9 +1,13 @@
+import { groupLocation } from '@/lib/constants/groupLocation';
+import { parseCmsAddress } from '@/lib/helpers/parseCmsAddress';
+
 type StructuredDataInput = {
   url?: string | null;
   siteName?: string | null;
   logo?: { url?: string | null } | null;
   image?: { url?: string | null } | null;
   siteDescription?: string | null;
+  address?: string | null;
   contactItems?: Array<{ label?: string | null; link?: string | null } | null> | null;
   socials?: Array<{ title?: string | null; link?: string | null } | null> | null;
 };
@@ -16,6 +20,17 @@ const generateStructuredData = (data: StructuredDataInput | null | undefined) =>
 
   // socials is a v5 flat array: [{ title, link, icon }]
   const sameAs = (data.socials ?? []).flatMap((social) => (social?.link ? [social.link] : []));
+
+  // The CMS address is the source of truth; the fallback only covers an empty field.
+  const postalAddress = parseCmsAddress(data.address) ?? groupLocation.postalAddress;
+
+  // The coordinates were verified for the fallback address, so only publish them
+  // while the CMS still resolves to that same address.
+  const hasVerifiedCoordinates =
+    postalAddress.streetAddress === groupLocation.postalAddress.streetAddress &&
+    postalAddress.postalCode === groupLocation.postalAddress.postalCode &&
+    postalAddress.addressLocality === groupLocation.postalAddress.addressLocality &&
+    postalAddress.addressCountry === groupLocation.postalAddress.addressCountry;
 
   return {
     '@context': 'https://schema.org',
@@ -52,17 +67,17 @@ const generateStructuredData = (data: StructuredDataInput | null | undefined) =>
     ],
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Nieuwe Kopen 4',
-      addressLocality: 'Lommel',
-      postalCode: '3920',
-      addressCountry: 'BE',
+      ...postalAddress,
     },
-    geo: {
-      '@type': 'GeoCoordinates',
-      // TODO: verify exact coordinates for Nieuwe Kopen 4, 3920 Lommel via Google Maps
-      latitude: 51.24558081692069,
-      longitude: 5.301134634828866,
-    },
+    ...(hasVerifiedCoordinates
+      ? {
+          geo: {
+            '@type': 'GeoCoordinates',
+            latitude: groupLocation.coordinates.latitude,
+            longitude: groupLocation.coordinates.longitude,
+          },
+        }
+      : {}),
     areaServed: [
       { '@type': 'City', name: 'Lommel', sameAs: 'https://www.wikidata.org/wiki/Q194366' },
       { '@type': 'AdministrativeArea', name: 'Limburg' },

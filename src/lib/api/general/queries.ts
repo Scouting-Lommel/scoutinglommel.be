@@ -70,6 +70,24 @@ export const SEO_DATA = gql`
   }
 `;
 
+// Only the events block needs this, so it stays a dedicated query instead of
+// riding along in FOOTER_DATA, which the root layout fetches on every page.
+export const EVENT_SITE_CONTEXT = gql`
+  query EventSiteContext {
+    generalData {
+      siteName
+      url
+      address
+      logo {
+        url
+      }
+      image {
+        url
+      }
+    }
+  }
+`;
+
 export const MAIN_NAVIGATION_QUERY = gql`
   ${NAVIGATION_ITEM_FRAGMENT}
 

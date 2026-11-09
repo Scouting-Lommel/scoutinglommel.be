@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { groupAddress, groupLocation } from '@/lib/constants/groupLocation';
 import Map from '.';
 
 const meta: Meta<typeof Map> = {
@@ -13,16 +14,16 @@ export const Default: Story = {};
 
 export const WithLatAndLng: Story = {
   args: {
-    lat: 51.245269639715815,
-    lng: 5.298043214895838,
+    lat: groupLocation.coordinates.latitude,
+    lng: groupLocation.coordinates.longitude,
     zoom: 16,
-    address: 'Nieuwe Kopen 18, 3920 Lommel',
+    address: groupAddress,
   },
 };
 
 export const WithQueryString: Story = {
   args: {
     query: 'Scouting Lommel',
-    address: 'Nieuwe Kopen 4, 3920 Lommel',
+    address: groupAddress,
   },
 };

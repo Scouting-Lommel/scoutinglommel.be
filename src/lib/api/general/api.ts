@@ -1,6 +1,10 @@
 import { generateApiQuery } from '@/lib/api';
 import type { GeneralData } from '@/lib/contexts/DataContext';
+import { getSiteUrl } from '@/lib/helpers/getSiteUrl';
+import { resolveUrl } from '@/lib/helpers/resolveUrl';
+import type { EventSiteContext } from '@/types/EventSiteContext';
 import type {
+  EventSiteContextQuery,
   FooterDataQuery,
   FooterNavigationQuery,
   MainNavigationQuery,
@@ -11,6 +15,7 @@ import {
   NAVIGATION_DATA,
   FOOTER_DATA,
   SEO_DATA,
+  EVENT_SITE_CONTEXT,
   MAIN_NAVIGATION_QUERY,
   FOOTER_NAVIGATION_QUERY,
 } from './queries';
@@ -36,6 +41,37 @@ export const getSeoData = (): Promise<SeoDataQuery> => {
   return generateApiQuery<SeoDataQuery>({
     query: SEO_DATA,
   });
+};
+
+// The CMS url wins when it is absolute; otherwise fall back to the request/env
+// origin so schema.org always receives an absolute URL.
+const getAbsoluteSiteUrl = async (cmsUrl?: string | null): Promise<string> => {
+  if (cmsUrl && /^https?:\/\//i.test(cmsUrl)) return cmsUrl;
+  return getSiteUrl();
+};
+
+// Strapi's local upload provider serves /uploads from the CMS host, not the
+// frontend, so relative media paths must resolve against the CMS origin.
+const toMediaUrl = (url?: string | null): string | null =>
+  url ? resolveUrl(url, process.env.NEXT_PUBLIC_APP_BACKEND_URL) : null;
+
+export const getEventSiteContext = async (): Promise<EventSiteContext | null> => {
+  const { generalData } = await generateApiQuery<EventSiteContextQuery>({
+    query: EVENT_SITE_CONTEXT,
+  });
+
+  if (!generalData) return null;
+
+  const { siteName, url, address, logo, image } = generalData;
+  if (!siteName && !url && !address && !logo?.url && !image?.url) return null;
+
+  return {
+    name: siteName ?? null,
+    url: await getAbsoluteSiteUrl(url),
+    imageUrl: toMediaUrl(image?.url),
+    logoUrl: toMediaUrl(logo?.url),
+    address: address ?? null,
+  };
 };
 
 export const getMainNavigation = (): Promise<MainNavigationQuery> => {

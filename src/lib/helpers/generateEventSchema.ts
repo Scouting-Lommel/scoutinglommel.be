@@ -1,3 +1,6 @@
+import { parseCmsAddress } from '@/lib/helpers/parseCmsAddress';
+import type { EventSiteContext } from '@/types/EventSiteContext';
+
 type EventSchemaInput = {
   title: string;
   description?: string | null;
@@ -22,16 +25,56 @@ const buildPlaceAddress = (event: EventSchemaInput) => {
   return Object.keys(address).length > 0 ? { '@type': 'PostalAddress', ...address } : null;
 };
 
-type EventLocationFallback = {
-  name: string;
-  address?: string | null;
-};
-
 const generateEventSchema = (
   events: Array<EventSchemaInput | null | undefined> | null | undefined,
-  fallbackLocation?: EventLocationFallback | null,
+  siteContext?: EventSiteContext | null,
 ) => {
   if (!events || events.length === 0) return null;
+
+  const siteUrl = siteContext?.url ?? null;
+  const fallbackAddress = parseCmsAddress(siteContext?.address);
+
+  // Google asks for an image that depicts the event, so the site-wide SEO image
+  // is the fallback; the logo is deliberately not used as an event image.
+  const imageUrl = siteContext?.imageUrl ?? null;
+
+  // Both nodes describe the same group. Only the organizer is identified by the
+  // site URL, so it can merge with the site-wide Organization while the
+  // PerformingGroup stays a separate node.
+  const siteIdentity = siteContext?.name
+    ? { name: siteContext.name, ...(siteUrl ? { url: siteUrl } : {}) }
+    : null;
+
+  const organizer = siteIdentity
+    ? {
+        '@type': 'Organization',
+        ...(siteUrl ? { '@id': siteUrl } : {}),
+        ...siteIdentity,
+        ...(siteContext?.logoUrl ? { logo: siteContext.logoUrl } : {}),
+      }
+    : null;
+
+  const performer = siteIdentity ? { '@type': 'PerformingGroup', ...siteIdentity } : null;
+
+  // Site-level fields are gated on the CMS context: without it we omit them
+  // rather than emitting a partial Offer or a nameless organizer.
+  const siteLevelFields = siteContext
+    ? {
+        ...(imageUrl ? { image: imageUrl } : {}),
+        ...(organizer ? { organizer } : {}),
+        ...(performer ? { performer } : {}),
+        offers: {
+          '@type': 'Offer',
+          // Events are assumed free: the Strapi event type has no price field
+          // yet, so paid events such as the eetfestijn are marked free until it
+          // does.
+          price: 0,
+          priceCurrency: 'EUR',
+          availability: 'https://schema.org/InStock',
+          ...(siteUrl ? { url: siteUrl } : {}),
+        },
+      }
+    : {};
 
   const eventSchema = events.flatMap((event) => {
     if (!event || !event.title || !event.startDate) return [];
@@ -44,11 +87,13 @@ const generateEventSchema = (
             ...(event.locationName ? { name: event.locationName } : {}),
             ...(eventAddress ? { address: eventAddress } : {}),
           }
-        : fallbackLocation
+        : siteContext?.name
           ? {
               '@type': 'Place',
-              name: fallbackLocation.name,
-              ...(fallbackLocation.address ? { address: fallbackLocation.address } : {}),
+              name: siteContext.name,
+              ...(fallbackAddress
+                ? { address: { '@type': 'PostalAddress', ...fallbackAddress } }
+                : {}),
             }
           : null;
 
@@ -70,6 +115,7 @@ const generateEventSchema = (
         eventStatus: 'https://schema.org/EventScheduled',
         eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
         ...(location ? { location } : {}),
+        ...siteLevelFields,
         ...(event.description ? { description: event.description } : {}),
       },
     ];
