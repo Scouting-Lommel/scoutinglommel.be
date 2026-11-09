@@ -33,19 +33,10 @@ export const NAVIGATION_DATA = gql`
 `;
 
 export const FOOTER_DATA = gql`
-  ${IMAGE_FRAGMENT}
-
   query FooterData {
     generalData {
       siteName
-      url
       address
-      logo {
-        ...ImageFragment
-      }
-      image {
-        ...ImageFragment
-      }
       groupNumber
       bankAccountNumber
       vatNumber
@@ -74,6 +65,24 @@ export const SEO_DATA = gql`
       url
       image {
         ...ImageFragment
+      }
+    }
+  }
+`;
+
+// Only the events block needs this, so it stays a dedicated query instead of
+// riding along in FOOTER_DATA, which the root layout fetches on every page.
+export const EVENT_SITE_CONTEXT = gql`
+  query EventSiteContext {
+    generalData {
+      siteName
+      url
+      address
+      logo {
+        url
+      }
+      image {
+        url
       }
     }
   }

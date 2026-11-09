@@ -1,6 +1,9 @@
 import { generateApiQuery } from '@/lib/api';
 import type { GeneralData } from '@/lib/contexts/DataContext';
+import type { EventSiteContext } from '@/lib/helpers/generateEventSchema';
+import { getSiteUrl } from '@/lib/helpers/getSiteUrl';
 import type {
+  EventSiteContextQuery,
   FooterDataQuery,
   FooterNavigationQuery,
   MainNavigationQuery,
@@ -11,6 +14,7 @@ import {
   NAVIGATION_DATA,
   FOOTER_DATA,
   SEO_DATA,
+  EVENT_SITE_CONTEXT,
   MAIN_NAVIGATION_QUERY,
   FOOTER_NAVIGATION_QUERY,
 } from './queries';
@@ -36,6 +40,32 @@ export const getSeoData = (): Promise<SeoDataQuery> => {
   return generateApiQuery<SeoDataQuery>({
     query: SEO_DATA,
   });
+};
+
+// The CMS url wins when it is absolute; otherwise fall back to the request/env
+// origin so schema.org always receives an absolute URL.
+const getAbsoluteSiteUrl = async (cmsUrl?: string | null): Promise<string> => {
+  if (cmsUrl && /^https?:\/\//i.test(cmsUrl)) return cmsUrl;
+  return getSiteUrl();
+};
+
+export const getEventSiteContext = async (): Promise<EventSiteContext | null> => {
+  const { generalData } = await generateApiQuery<EventSiteContextQuery>({
+    query: EVENT_SITE_CONTEXT,
+  });
+
+  if (!generalData) return null;
+
+  const { siteName, url, address, logo, image } = generalData;
+  if (!siteName && !url && !address && !logo?.url && !image?.url) return null;
+
+  return {
+    name: siteName ?? null,
+    url: await getAbsoluteSiteUrl(url),
+    imageUrl: image?.url ?? null,
+    logoUrl: logo?.url ?? null,
+    address: address ?? null,
+  };
 };
 
 export const getMainNavigation = (): Promise<MainNavigationQuery> => {

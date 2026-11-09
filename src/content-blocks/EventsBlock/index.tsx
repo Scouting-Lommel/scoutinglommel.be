@@ -1,9 +1,8 @@
 import type { JSX } from 'react';
 import { getEvents } from '@/lib/api/events/api';
-import { getFooterData } from '@/lib/api/general/api';
+import { getEventSiteContext } from '@/lib/api/general/api';
 import { formatDate } from '@/lib/helpers/dateTime';
 import { generateEventSchema, type EventSiteContext } from '@/lib/helpers/generateEventSchema';
-import { getSiteUrl } from '@/lib/helpers/getSiteUrl';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Activities from '@/components/organisms/Activities';
 import { EventsBlock as EventsBlockProps } from './types';
@@ -15,19 +14,7 @@ const SITE_CONTEXT_TIMEOUT_MS = 3000;
 
 const getSiteContext = (): Promise<EventSiteContext | null> =>
   Promise.race([
-    getFooterData()
-      .then(async (footerData) => {
-        const generalData = footerData?.generalData;
-        if (!generalData?.siteName) return null;
-        return {
-          name: generalData.siteName,
-          url: generalData.url ?? (await getSiteUrl()),
-          imageUrl: generalData.image?.url ?? null,
-          logoUrl: generalData.logo?.url ?? null,
-          address: generalData.address ?? null,
-        };
-      })
-      .catch(() => null),
+    getEventSiteContext().catch(() => null),
     new Promise<null>((resolve) => setTimeout(() => resolve(null), SITE_CONTEXT_TIMEOUT_MS)),
   ]);
 

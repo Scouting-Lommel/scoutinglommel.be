@@ -1,11 +1,21 @@
+import { parseCmsAddress } from '@/lib/helpers/parseCmsAddress';
+
 type StructuredDataInput = {
   url?: string | null;
   siteName?: string | null;
   logo?: { url?: string | null } | null;
   image?: { url?: string | null } | null;
   siteDescription?: string | null;
+  address?: string | null;
   contactItems?: Array<{ label?: string | null; link?: string | null } | null> | null;
   socials?: Array<{ title?: string | null; link?: string | null } | null> | null;
+};
+
+const FALLBACK_POSTAL_ADDRESS = {
+  streetAddress: 'Nieuwe Kopen 4',
+  addressLocality: 'Lommel',
+  postalCode: '3920',
+  addressCountry: 'BE',
 };
 
 const generateStructuredData = (data: StructuredDataInput | null | undefined) => {
@@ -16,6 +26,9 @@ const generateStructuredData = (data: StructuredDataInput | null | undefined) =>
 
   // socials is a v5 flat array: [{ title, link, icon }]
   const sameAs = (data.socials ?? []).flatMap((social) => (social?.link ? [social.link] : []));
+
+  // The CMS address is the source of truth; the fallback only covers an empty field.
+  const postalAddress = parseCmsAddress(data.address) ?? FALLBACK_POSTAL_ADDRESS;
 
   return {
     '@context': 'https://schema.org',
@@ -52,10 +65,7 @@ const generateStructuredData = (data: StructuredDataInput | null | undefined) =>
     ],
     address: {
       '@type': 'PostalAddress',
-      streetAddress: 'Nieuwe Kopen 4',
-      addressLocality: 'Lommel',
-      postalCode: '3920',
-      addressCountry: 'BE',
+      ...postalAddress,
     },
     geo: {
       '@type': 'GeoCoordinates',
