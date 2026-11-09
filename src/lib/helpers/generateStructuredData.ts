@@ -30,6 +30,14 @@ const generateStructuredData = (data: StructuredDataInput | null | undefined) =>
   // The CMS address is the source of truth; the fallback only covers an empty field.
   const postalAddress = parseCmsAddress(data.address) ?? FALLBACK_POSTAL_ADDRESS;
 
+  // The coordinates were verified for the fallback address, so only publish them
+  // while the CMS still resolves to that same address.
+  const hasVerifiedCoordinates =
+    postalAddress.streetAddress === FALLBACK_POSTAL_ADDRESS.streetAddress &&
+    postalAddress.postalCode === FALLBACK_POSTAL_ADDRESS.postalCode &&
+    postalAddress.addressLocality === FALLBACK_POSTAL_ADDRESS.addressLocality &&
+    postalAddress.addressCountry === FALLBACK_POSTAL_ADDRESS.addressCountry;
+
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
@@ -67,12 +75,16 @@ const generateStructuredData = (data: StructuredDataInput | null | undefined) =>
       '@type': 'PostalAddress',
       ...postalAddress,
     },
-    geo: {
-      '@type': 'GeoCoordinates',
-      // TODO: verify exact coordinates for Nieuwe Kopen 4, 3920 Lommel via Google Maps
-      latitude: 51.24558081692069,
-      longitude: 5.301134634828866,
-    },
+    ...(hasVerifiedCoordinates
+      ? {
+          geo: {
+            '@type': 'GeoCoordinates',
+            // TODO: verify exact coordinates for Nieuwe Kopen 4, 3920 Lommel via Google Maps
+            latitude: 51.24558081692069,
+            longitude: 5.301134634828866,
+          },
+        }
+      : {}),
     areaServed: [
       { '@type': 'City', name: 'Lommel', sameAs: 'https://www.wikidata.org/wiki/Q194366' },
       { '@type': 'AdministrativeArea', name: 'Limburg' },
