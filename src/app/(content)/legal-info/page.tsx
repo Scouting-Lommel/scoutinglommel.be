@@ -1,6 +1,6 @@
 import { Metadata } from 'next';
 import type { JSX } from 'react';
-import { groupLocation } from '@/lib/constants/groupLocation';
+import { groupAddress, groupLocation } from '@/lib/constants/groupLocation';
 import { generateMetadataForPage } from '@/lib/helpers/generateMetadata';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Hero from '@/components/organisms/Hero';
@@ -32,9 +32,7 @@ const LegalInfoPage = (): JSX.Element => {
         <div>Ondernemingsnummer: 0410.966.531</div>
         <div>BTW-nummer: BE 0410.966.531</div>
         <div>
-          Adres: {groupLocation.postalAddress.streetAddress},{' '}
-          {groupLocation.postalAddress.postalCode} {groupLocation.postalAddress.addressLocality},{' '}
-          {groupLocation.postalAddress.addressCountry}
+          Adres: {groupAddress}, {groupLocation.postalAddress.addressCountry}
         </div>
       </div>
     </BlockContainer>

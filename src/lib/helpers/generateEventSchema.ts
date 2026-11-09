@@ -1,4 +1,5 @@
 import { parseCmsAddress } from '@/lib/helpers/parseCmsAddress';
+import type { EventSiteContext } from '@/types/EventSiteContext';
 
 type EventSchemaInput = {
   title: string;
@@ -12,15 +13,6 @@ type EventSchemaInput = {
   locationAddressLocality?: string | null;
   locationPostalCode?: string | null;
   locationAddressCountry?: string | null;
-};
-
-type EventSiteContext = {
-  name: string | null;
-  url: string;
-  // Already resolved to absolute URLs by getEventSiteContext.
-  imageUrl?: string | null;
-  logoUrl?: string | null;
-  address?: string | null;
 };
 
 const buildPlaceAddress = (event: EventSchemaInput) => {
@@ -46,9 +38,9 @@ const generateEventSchema = (
   // is the fallback; the logo is deliberately not used as an event image.
   const imageUrl = siteContext?.imageUrl ?? null;
 
-  // Both nodes describe the same group. Only the organizer carries the site @id,
-  // so it merges with the site-wide Organization instead of conflating the
-  // PerformingGroup with it.
+  // Both nodes describe the same group. Only the organizer is identified by the
+  // site URL, so it can merge with the site-wide Organization while the
+  // PerformingGroup stays a separate node.
   const siteIdentity = siteContext?.name
     ? { name: siteContext.name, ...(siteUrl ? { url: siteUrl } : {}) }
     : null;
@@ -73,9 +65,9 @@ const generateEventSchema = (
         ...(performer ? { performer } : {}),
         offers: {
           '@type': 'Offer',
-          // Events are free unless the CMS says otherwise, and the Strapi event
-          // type has no price field yet. This default marks paid events such as
-          // the eetfestijn as free until that field exists.
+          // Events are assumed free: the Strapi event type has no price field
+          // yet, so paid events such as the eetfestijn are marked free until it
+          // does.
           price: 0,
           priceCurrency: 'EUR',
           availability: 'https://schema.org/InStock',
@@ -138,4 +130,3 @@ function formatTime(time: string): string {
 }
 
 export { generateEventSchema };
-export type { EventSiteContext };

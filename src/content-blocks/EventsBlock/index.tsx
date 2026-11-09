@@ -2,14 +2,15 @@ import type { JSX } from 'react';
 import { getEvents } from '@/lib/api/events/api';
 import { getEventSiteContext } from '@/lib/api/general/api';
 import { formatDate } from '@/lib/helpers/dateTime';
-import { generateEventSchema, type EventSiteContext } from '@/lib/helpers/generateEventSchema';
+import { generateEventSchema } from '@/lib/helpers/generateEventSchema';
+import type { EventSiteContext } from '@/types/EventSiteContext';
 import BlockContainer from '@/components/atoms/BlockContainer';
 import Activities from '@/components/organisms/Activities';
 import { EventsBlock as EventsBlockProps } from './types';
 
-// Site context is fallback-only: bound it so a slow CMS response delays the
-// event schema by at most SITE_CONTEXT_TIMEOUT_MS, and return null (omit the
-// site-level fields) when the CMS provides no site name instead of inventing one.
+// Bound the site-context query so a slow CMS delays the event schema by at most
+// SITE_CONTEXT_TIMEOUT_MS; on failure or timeout the schema omits the site-level
+// fields instead of inventing them.
 const SITE_CONTEXT_TIMEOUT_MS = 3000;
 
 const getSiteContext = (): Promise<EventSiteContext | null> =>

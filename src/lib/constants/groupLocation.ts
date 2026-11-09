@@ -14,4 +14,6 @@ const groupLocation = {
   },
 };
 
-export { groupLocation };
+const groupAddress = `${groupLocation.postalAddress.streetAddress}, ${groupLocation.postalAddress.postalCode} ${groupLocation.postalAddress.addressLocality}`;
+
+export { groupLocation, groupAddress };

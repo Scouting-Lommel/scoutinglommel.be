@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { groupLocation } from '@/lib/constants/groupLocation';
+import { groupAddress, groupLocation } from '@/lib/constants/groupLocation';
 import Map from '.';
-
-const groupAddress = `${groupLocation.postalAddress.streetAddress}, ${groupLocation.postalAddress.postalCode} ${groupLocation.postalAddress.addressLocality}`;
 
 const meta: Meta<typeof Map> = {
   title: '3 Components/Atoms/Map',
