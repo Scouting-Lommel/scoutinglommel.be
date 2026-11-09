@@ -43,14 +43,14 @@ address:
 
 ## Environment
 
-| Variable                         | Purpose                                                                     |
-| -------------------------------- | --------------------------------------------------------------------------- |
-| `GOOGLE_GMAIL_SERVICE_ACCOUNT`   | Service account `client_email`                                              |
-| `GOOGLE_GMAIL_PRIVATE_KEY`       | Private key, `\n`-escaped                                                   |
-| `GOOGLE_GMAIL_KEY_ID`            | Optional key id                                                             |
-| `GOOGLE_GMAIL_IMPERSONATE_EMAIL` | Real Workspace mailbox the JWT is signed for                                |
-| `GOOGLE_GMAIL_FROM`              | `Scouting Sint-Pieter Lommel <noreply@scoutinglommel.be>`                   |
-| `NEXT_PUBLIC_EMAIL_DEV_OVERRIDE` | Redirects every notification here (staging/preview)                         |
+| Variable                         | Purpose                                                   |
+| -------------------------------- | --------------------------------------------------------- |
+| `GOOGLE_GMAIL_SERVICE_ACCOUNT`   | Service account `client_email`                            |
+| `GOOGLE_GMAIL_PRIVATE_KEY`       | Private key, `\n`-escaped                                 |
+| `GOOGLE_GMAIL_KEY_ID`            | Optional key id                                           |
+| `GOOGLE_GMAIL_IMPERSONATE_EMAIL` | Real Workspace mailbox the JWT is signed for              |
+| `GOOGLE_GMAIL_FROM`              | `Scouting Sint-Pieter Lommel <noreply@scoutinglommel.be>` |
+| `NEXT_PUBLIC_EMAIL_DEV_OVERRIDE` | Redirects every notification here (staging/preview)       |
 
 The sender identity is **`noreply@scoutinglommel.be`**, added as an alternate email (alias) on
 the impersonated mailbox in the Admin console. A subdomain such as `mail.scoutinglommel.be` was
