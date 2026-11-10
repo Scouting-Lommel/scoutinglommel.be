@@ -76,7 +76,7 @@ Required for development (see `.env.example`):
 - `STRAPI_UPLOAD_FILE_TOKEN`, For file uploads (server-side only, via `/api/upload` proxy)
 - `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, Auth
 - `NEXTAUTH_URL`, `NEXTAUTH_SECRET`, NextAuth
-- `MAILGUN_API_KEY`, Email sending
+- `GOOGLE_GMAIL_SERVICE_ACCOUNT`, `GOOGLE_GMAIL_PRIVATE_KEY`, `GOOGLE_GMAIL_KEY_ID`, `GOOGLE_GMAIL_IMPERSONATE_EMAIL`, `GOOGLE_GMAIL_FROM`, Form notification sending through the Gmail API (see `docs/e-mail-setup.md`)
 - Various Google service account keys for Calendar, Sheets, Admin
 
 ## Build & Development
