@@ -1,3 +1,4 @@
+import { getActivityAnchors } from '@/lib/helpers/getActivityAnchor';
 import { parseCmsAddress } from '@/lib/helpers/parseCmsAddress';
 import type { EventSiteContext } from '@/types/EventSiteContext';
 
@@ -32,6 +33,9 @@ const generateEventSchema = (
 ) => {
   if (!events || events.length === 0) return null;
 
+  // Kept exactly as the CMS returns it: the organizer @id has to match the
+  // site-wide Organization @id built in generateStructuredData. Only the offer
+  // URL normalizes away a trailing slash.
   const siteUrl = siteContext?.url ?? null;
   const fallbackAddress = parseCmsAddress(siteContext?.address);
 
@@ -67,28 +71,30 @@ const generateEventSchema = (
       }
     : {};
 
-  // The offer is per event because validFrom differs per event, so it cannot sit
-  // in the shared site-level object. It stays gated on the site context like the
-  // other site-level fields.
-  const buildOffers = (event: EventSchemaInput) =>
+  // The offer is per event because validFrom and the anchor URL differ per
+  // event, so it cannot sit in the shared site-level object. It stays gated on
+  // the site context like the other site-level fields.
+  const buildOffer = (event: EventSchemaInput, anchor: string) =>
     siteContext
       ? {
-          offers: {
-            '@type': 'Offer',
-            // Admission is free; on-site food and drinks are paid separately.
-            price: 0,
-            priceCurrency: 'EUR',
-            availability: 'https://schema.org/InStock',
-            // There is no ticket sale window, so validity starts at publication.
-            ...(event.publishedAt ? { validFrom: event.publishedAt } : {}),
-            ...(siteUrl ? { url: siteUrl } : {}),
-          },
+          '@type': 'Offer',
+          // Admission is free; on-site food and drinks are paid separately.
+          price: 0,
+          priceCurrency: 'EUR',
+          availability: 'https://schema.org/InStock',
+          // There is no ticket sale window, so validity starts at publication.
+          ...(event.publishedAt ? { validFrom: event.publishedAt } : {}),
+          ...(siteUrl ? { url: `${siteUrl.replace(/\/+$/, '')}/#${anchor}` } : {}),
         }
-      : {};
+      : null;
 
-  const eventSchema = events.flatMap((event) => {
-    if (!event || !event.title || !event.startDate) return [];
+  const validEvents = events.filter((event): event is EventSchemaInput =>
+    Boolean(event?.title && event?.startDate),
+  );
+  const anchors = getActivityAnchors(validEvents);
 
+  const eventSchema = validEvents.map((event, index) => {
+    const offer = buildOffer(event, anchors[index]);
     const eventAddress = buildPlaceAddress(event);
     const location =
       event.locationName || eventAddress
@@ -107,29 +113,27 @@ const generateEventSchema = (
             }
           : null;
 
-    return [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'Event',
-        name: event.title,
-        startDate: event.startTime
-          ? `${event.startDate}T${formatTime(event.startTime)}`
-          : event.startDate,
-        ...(event.endDate
-          ? {
-              endDate: event.endTime
-                ? `${event.endDate}T${formatTime(event.endTime)}`
-                : event.endDate,
-            }
-          : {}),
-        eventStatus: 'https://schema.org/EventScheduled',
-        eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
-        ...(location ? { location } : {}),
-        ...siteLevelFields,
-        ...buildOffers(event),
-        ...(event.description ? { description: event.description } : {}),
-      },
-    ];
+    return {
+      '@context': 'https://schema.org',
+      '@type': 'Event',
+      name: event.title,
+      startDate: event.startTime
+        ? `${event.startDate}T${formatTime(event.startTime)}`
+        : event.startDate,
+      ...(event.endDate
+        ? {
+            endDate: event.endTime
+              ? `${event.endDate}T${formatTime(event.endTime)}`
+              : event.endDate,
+          }
+        : {}),
+      eventStatus: 'https://schema.org/EventScheduled',
+      eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
+      ...(location ? { location } : {}),
+      ...siteLevelFields,
+      ...(offer ? { offers: offer } : {}),
+      ...(event.description ? { description: event.description } : {}),
+    };
   });
 
   return eventSchema.length > 0 ? eventSchema : null;

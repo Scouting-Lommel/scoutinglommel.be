@@ -1,9 +1,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { useCallback, useEffect, useState, type JSX } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState, type JSX } from 'react';
 import { getActivities } from '@/lib/api/activities/api';
 import { getEvents } from '@/lib/api/events/api';
+import { getActivityAnchors } from '@/lib/helpers/getActivityAnchor';
 import Activity from '@/components/atoms/Activity';
 import type { Activity as ActivityItem } from '@/components/atoms/Activity/types';
 import Button from '@/components/atoms/Button';
@@ -12,11 +13,33 @@ import Loader from '@/components/atoms/Loader';
 import { ActivitySection as ActivityProps } from './types';
 import './Activities.css';
 
-const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.Element => {
+const getTodayString = (): string => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+  const day = today.getDate().toString().padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+};
+
+// A malformed fragment such as "#%" throws inside decodeURIComponent; treat it
+// as no hash instead of letting it escape the effect.
+const readHash = (): string => {
+  try {
+    return decodeURIComponent(window.location.hash.replace(/^#/, ''));
+  } catch {
+    return '';
+  }
+};
+
+const Activities = ({ variant, groupSlug, initialItems, date }: ActivityProps): JSX.Element => {
   const [isOpen, setIsOpen] = useState(false);
   const [groupActivities, setActivities] = useState<ActivityItem[] | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<boolean>(false);
+
+  const hasHandledHash = useRef(false);
+  const anchors = useMemo(() => getActivityAnchors(groupActivities ?? []), [groupActivities]);
 
   const t = useTranslations('common');
 
@@ -25,11 +48,7 @@ const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.El
     setError(false);
     setLoading(true);
 
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const dateString = `${year}-${month}-${day}`;
+    const dateString = date ?? getTodayString();
 
     if (!groupSlug) {
       setLoading(false);
@@ -57,18 +76,14 @@ const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.El
       setLoading(false);
       return;
     }
-  }, [groupSlug]);
+  }, [groupSlug, date]);
 
   const fetchEvents = useCallback(async () => {
     setActivities(null);
     setError(false);
     setLoading(true);
 
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    const dateString = `${year}-${month}-${day}`;
+    const dateString = date ?? getTodayString();
 
     try {
       const { events } = await getEvents(dateString);
@@ -97,7 +112,7 @@ const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.El
       setLoading(false);
       return;
     }
-  }, []);
+  }, [date]);
 
   const fetchData = useCallback(async () => {
     switch (variant) {
@@ -116,6 +131,24 @@ const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.El
     fetchData();
   }, [variant, fetchData]);
 
+  useEffect(() => {
+    if (hasHandledHash.current || anchors.length === 0) return;
+
+    const hash = readHash();
+    if (!hash || !anchors.includes(hash)) return;
+
+    const target = document.getElementById(hash);
+    if (target) {
+      target.scrollIntoView({ block: 'start' });
+      hasHandledHash.current = true;
+      return;
+    }
+
+    // The entry may sit behind the "show more" toggle: render the full list and
+    // let the next pass scroll to it.
+    if (!isOpen) setIsOpen(true);
+  }, [anchors, isOpen]);
+
   return (
     <div className="activities">
       {groupActivities && groupActivities.length > 0 && (
@@ -124,7 +157,8 @@ const Activities = ({ variant, groupSlug, initialItems }: ActivityProps): JSX.El
             if (isOpen || i < initialItems) {
               return (
                 <Activity
-                  key={i}
+                  key={anchors[i]}
+                  id={anchors[i]}
                   title={act.title}
                   startDate={act.startDate}
                   startTime={act.startTime}
