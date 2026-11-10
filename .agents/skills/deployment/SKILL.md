@@ -38,7 +38,7 @@ Revert the offending commits on `main`, bump `package.json` to a new patch versi
 
 - `SKIP_FETCH_SCHEMA=1` must be set as an env var on BOTH Vercel projects (builds run codegen against the committed `schema.graphql`; live introspection is disabled on production Strapi).
 - Both projects use build command `pnpm run build` and Node 24.x.
-- The root layout logs `[scoutinglommel.be] vX.Y.Z · <sha> · <env>` in the browser console. `NEXT_PUBLIC_APP_VERSION` comes from `package.json`, so the version bump must land before the tag.
+- The root layout logs `[scoutinglommel.be] vX.Y.Z · <env>` in the browser console. `NEXT_PUBLIC_APP_VERSION` comes from `package.json`, so the version bump must land before the tag.
 
 ## Reference
 
