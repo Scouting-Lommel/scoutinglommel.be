@@ -26,9 +26,9 @@ const EventsBlock = async ({
   blockProperties,
 }: EventsBlockProps): Promise<JSX.Element> => {
   let eventSchema: ReturnType<typeof generateEventSchema> = null;
+  const today = formatDate(new Date());
 
   try {
-    const today = formatDate(new Date());
     const [eventsResult, siteContextResult] = await Promise.allSettled([
       getEvents(today),
       getSiteContext(),
@@ -54,7 +54,7 @@ const EventsBlock = async ({
         <section className="sl-layout">
           <h2 className="t-headline-2 t-align-center">{blockTitle}</h2>
 
-          <Activities variant="events" initialItems={initialItems} />
+          <Activities variant="events" initialItems={initialItems} date={today} />
         </section>
       </BlockContainer>
       {eventSchema && (

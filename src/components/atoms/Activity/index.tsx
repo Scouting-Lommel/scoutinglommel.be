@@ -6,6 +6,7 @@ import { Activity as ActivityProps } from './types';
 import './Activity.css';
 
 const Activity = ({
+  id,
   title,
   startDate,
   startTime,
@@ -50,7 +51,7 @@ const Activity = ({
   })();
 
   return (
-    <article className="activity">
+    <article className="activity" id={id}>
       <div className="activity__header">
         <h3 className="activity__header__title t-headline-3 t-uppercase">{title}</h3>
         <time
