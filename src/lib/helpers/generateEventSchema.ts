@@ -4,6 +4,7 @@ import type { EventSiteContext } from '@/types/EventSiteContext';
 type EventSchemaInput = {
   title: string;
   description?: string | null;
+  publishedAt?: string | null;
   startDate: string;
   startTime?: string | null;
   endDate?: string | null;
@@ -57,24 +58,33 @@ const generateEventSchema = (
   const performer = siteIdentity ? { '@type': 'PerformingGroup', ...siteIdentity } : null;
 
   // Site-level fields are gated on the CMS context: without it we omit them
-  // rather than emitting a partial Offer or a nameless organizer.
+  // rather than emitting a nameless organizer.
   const siteLevelFields = siteContext
     ? {
         ...(imageUrl ? { image: imageUrl } : {}),
         ...(organizer ? { organizer } : {}),
         ...(performer ? { performer } : {}),
-        offers: {
-          '@type': 'Offer',
-          // Events are assumed free: the Strapi event type has no price field
-          // yet, so paid events such as the eetfestijn are marked free until it
-          // does.
-          price: 0,
-          priceCurrency: 'EUR',
-          availability: 'https://schema.org/InStock',
-          ...(siteUrl ? { url: siteUrl } : {}),
-        },
       }
     : {};
+
+  // The offer is per event because validFrom differs per event, so it cannot sit
+  // in the shared site-level object. It stays gated on the site context like the
+  // other site-level fields.
+  const buildOffers = (event: EventSchemaInput) =>
+    siteContext
+      ? {
+          offers: {
+            '@type': 'Offer',
+            // Admission is free; on-site food and drinks are paid separately.
+            price: 0,
+            priceCurrency: 'EUR',
+            availability: 'https://schema.org/InStock',
+            // There is no ticket sale window, so validity starts at publication.
+            ...(event.publishedAt ? { validFrom: event.publishedAt } : {}),
+            ...(siteUrl ? { url: siteUrl } : {}),
+          },
+        }
+      : {};
 
   const eventSchema = events.flatMap((event) => {
     if (!event || !event.title || !event.startDate) return [];
@@ -116,6 +126,7 @@ const generateEventSchema = (
         eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
         ...(location ? { location } : {}),
         ...siteLevelFields,
+        ...buildOffers(event),
         ...(event.description ? { description: event.description } : {}),
       },
     ];
