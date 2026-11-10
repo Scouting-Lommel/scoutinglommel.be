@@ -10,6 +10,7 @@ const GET_EVENTS_QUERY = gql`
       endDate
       endTime
       description
+      publishedAt
     }
   }
 `;
